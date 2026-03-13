@@ -1,0 +1,718 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ==========================================
+// Раздел X ТЗ — Модель данных ВЕТАИ
+// ==========================================
+
+/// Ферма или производственная площадка верхнего уровня
+model Farm {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groups    GroupUnit[]
+  cows      Cow[]
+  events    Event[]
+  economic  EconomicFact[]
+  reportTemplates ReportTemplate[]
+  reportInstances ReportInstance[]
+
+  barns       Barn[]
+  operations  OperationRequest[]
+  dashboards  DashboardSnapshot[]
+}
+
+/// Универсальная сущность группы/секции
+model GroupUnit {
+  id        String   @id @default(cuid())
+  farmId    String
+  name      String
+  type      String   // feeding_group | production_group | section | maternity
+  headCount Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  farm        Farm              @relation(fields: [farmId], references: [id])
+  cows        Cow[]
+  memberships GroupMembership[]
+  events      Event[]
+  feedRecords FeedRecord[]
+}
+
+/// Основной объект учета — корова
+model Cow {
+  id         String   @id @default(cuid())
+  farmId     String
+  groupId    String?
+  barnId     String?
+  number     String   // Бирка / номер
+  name       String?
+  birthDate  DateTime?
+  status     String   @default("active") // active | dry | culled | dead
+  lactation  Int      @default(0)
+  dim        Int      @default(0) // Days in Milk
+  lastCalving DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  farm          Farm              @relation(fields: [farmId], references: [id])
+  group         GroupUnit?        @relation(fields: [groupId], references: [id])
+  barn          Barn?             @relation(fields: [barnId], references: [id])
+  externalIds   ExternalIdentity[]
+  memberships   GroupMembership[]
+  milkRecords   MilkRecord[]
+  events        Event[]
+  observations  Observation[]
+  geneticIndex  GeneticIndexValue[]
+  operations    OperationRequest[]
+  cowEvents     CowEvent[]
+}
+
+/// Сопоставление внутренних ID с внешними системами
+model ExternalIdentity {
+  id         String @id @default(cuid())
+  cowId      String
+  source     String // afimilk | aic | dtm | waikato | 1c
+  externalId String
+
+  cow Cow @relation(fields: [cowId], references: [id])
+
+  @@unique([cowId, source])
+  @@index([externalId, source])
+}
+
+/// История принадлежности коровы к группе
+model GroupMembership {
+  id        String    @id @default(cuid())
+  cowId     String
+  groupId   String
+  startDate DateTime
+  endDate   DateTime?
+  source    String    @default("import")
+
+  cow   Cow       @relation(fields: [cowId], references: [id])
+  group GroupUnit  @relation(fields: [groupId], references: [id])
+
+  @@index([cowId, startDate])
+}
+
+/// Источник данных (AfiFarm, DTM, Waikato, VideoAI, ручной ввод)
+model DataSource {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  type        String   // api | file | manual | video
+  description String?
+  lastSync    DateTime?
+  status      String   @default("active") // active | error | disabled
+  config      String?  // JSON config
+
+  batches IntegrationBatch[]
+}
+
+/// Пакет загрузки данных из источника
+model IntegrationBatch {
+  id          String   @id @default(cuid())
+  sourceId    String
+  filename    String?
+  status      String   @default("pending") // pending | processing | completed | error
+  recordCount Int      @default(0)
+  errors      String?  // JSON array of errors
+  processedAt DateTime?
+  createdAt   DateTime @default(now())
+
+  source      DataSource   @relation(fields: [sourceId], references: [id])
+  milkRecords MilkRecord[]
+  feedRecords FeedRecord[]
+  mixBatches  MixBatch[]
+
+  @@index([sourceId, createdAt])
+}
+
+/// Справочник метрик системы
+model MetricDefinition {
+  id      String @id @default(cuid())
+  code    String @unique // yield_total, scc_avg, feed_cost_per_head
+  name    String
+  unit    String // кг, тыс/мл, ₽, %, балл
+  formula String?
+  source  String? // afimilk | aic | dtm | calculated
+
+  values MetricValue[]
+}
+
+/// Значения метрик, привязанные к объекту и моменту времени
+model MetricValue {
+  id         String   @id @default(cuid())
+  metricId   String
+  objectType String   // farm | group | cow
+  objectId   String   // ID фермы, группы или коровы
+  value      Float
+  timestamp  DateTime
+  source     String   @default("import") // import | calculated | manual | estimated
+  quality    String   @default("ok") // ok | estimated | conflict | missing
+
+  metric MetricDefinition @relation(fields: [metricId], references: [id])
+
+  @@index([metricId, objectType, objectId, timestamp])
+  @@index([timestamp])
+}
+
+/// Запись доения
+model MilkRecord {
+  id           String   @id @default(cuid())
+  cowId        String?
+  cowNumber    String
+  date         DateTime
+  session      Int      @default(1) // 1=утро, 2=день, 3=вечер
+  yield        Float    // кг
+  conductivity Float?
+  scc          Float?   // соматические клетки
+  duration     Float?   // минуты
+  completeness Float?   // %
+  stall        String?
+  source       String   @default("aic") // aic | afimilk | manual
+  batchId      String?
+  createdAt    DateTime @default(now())
+
+  cow   Cow?              @relation(fields: [cowId], references: [id])
+  batch IntegrationBatch?  @relation(fields: [batchId], references: [id])
+
+  @@index([cowNumber, date])
+  @@index([date, session])
+  @@unique([cowNumber, date, session, source])
+}
+
+/// Запись кормления
+model FeedRecord {
+  id             String   @id @default(cuid())
+  groupId        String?
+  groupName      String
+  date           DateTime
+  recipe         String?
+  planned        Float?   // кг запланировано
+  actual         Float?   // кг фактически
+  remainder      Float?   // кг остаток
+  dryMatter      Float?   // кг сухого вещества
+  headCount      Int?     // голов в загоне
+  milkYield      Float?   // надой молока группы кг
+  iofc           Float?   // IOFC ₽
+  feedCostPerHead Float?  // себестоимость корма на 1 голову ₽
+  groupType      String?  // Дойные | Молодняк | Сухостой
+  corrPercent    Float?   // корреляция %
+  targetWeight   Float?   // целевой вес на индикаторе кг
+  feedingCount   Int?     // ежедневное кормление (раз)
+  source         String   @default("dtm")
+  batchId        String?
+  createdAt      DateTime @default(now())
+
+  group GroupUnit?        @relation(fields: [groupId], references: [id])
+  batch IntegrationBatch? @relation(fields: [batchId], references: [id])
+
+  @@index([date, groupName])
+}
+
+// ==========================================
+// Фаза 3 — Расширенная модель кормления
+// ==========================================
+
+/// Рецепт кормления (рацион)
+model FeedRecipe {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  targetDM    Float?   // Целевое СВ, кг
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  ingredients RecipeIngredient[]
+  mixBatches  MixBatch[]
+}
+
+/// Ингредиент корма
+model FeedIngredient {
+  id        String @id @default(cuid())
+  code      String @unique
+  name      String
+  unit      String @default("кг")
+  dmPercent Float? // % сухого вещества
+  costPerKg Float? // стоимость ₽/кг
+
+  recipes      RecipeIngredient[]
+  consumptions IngredientConsumption[]
+}
+
+/// Связь ингредиент ↔ рецепт (план)
+model RecipeIngredient {
+  id           String @id @default(cuid())
+  recipeId     String
+  ingredientId String
+  targetWeight Float  // кг целевой
+  order        Int    @default(0)
+
+  recipe     FeedRecipe     @relation(fields: [recipeId], references: [id])
+  ingredient FeedIngredient @relation(fields: [ingredientId], references: [id])
+
+  @@unique([recipeId, ingredientId])
+}
+
+/// Запись замеса (из DTM «История замеса»)
+model MixBatch {
+  id            String    @id @default(cuid())
+  dtmBatchId    Int?      // ID замеса из DTM
+  recipeId      String?
+  recipeName    String
+  groupCode     String?   // Код загона
+  headCount     Int?      // количество голов
+  date          DateTime
+  startTime     String?   // HH:MM:SS
+  endTime       String?   // HH:MM:SS
+  loadDuration  String?   // 00:27:06
+  mixDuration   String?   // 00:14:13
+  mixer         String?   // Трактор 1/2
+  pauseDuration String?
+  totalDuration String?
+  source        String    @default("dtm")
+  batchId       String?   // IntegrationBatch
+
+  recipe       FeedRecipe?       @relation(fields: [recipeId], references: [id])
+  batch        IntegrationBatch? @relation(fields: [batchId], references: [id])
+  consumptions IngredientConsumption[]
+
+  @@index([date, groupCode])
+}
+
+/// Потребление ингредиента в замесе (DTM «Потребление ингредиентов»)
+model IngredientConsumption {
+  id             String   @id @default(cuid())
+  mixBatchId     String?
+  ingredientId   String?
+  ingredientCode String?  // ID ингредиента из DTM
+  ingredientName String
+  targetWeight   Float?   // план кг
+  indicatorWeight Float?  // целевой вес на индикаторе кг
+  actualWeight   Float?   // факт загружено кг
+  loadedDM       Float?   // загружено СВ кг
+  errorPercent   Float?   // ошибка %
+  errorAbsPercent Float?  // погрешность в % от нагрузки (АБС)
+  totalConsumption Float? // общая потребность кг
+  date           DateTime
+
+  mixBatch   MixBatch?       @relation(fields: [mixBatchId], references: [id])
+  ingredient FeedIngredient? @relation(fields: [ingredientId], references: [id])
+
+  @@index([date, ingredientName])
+}
+
+/// Тип события
+model EventType {
+  id          String @id @default(cuid())
+  code        String @unique
+  name        String
+  category    String // health | reproduction | feeding | milking | system
+  severity    String @default("info") // info | warning | critical
+
+  events Event[]
+}
+
+/// Фактическое событие
+model Event {
+  id          String   @id @default(cuid())
+  typeId      String?
+  cowId       String?
+  groupId     String?
+  farmId      String?
+  severity    String   @default("info")
+  title       String
+  description String?
+  timestamp   DateTime
+  source      String   @default("system")
+  metadata    String?  // JSON
+
+  type  EventType? @relation(fields: [typeId], references: [id])
+  cow   Cow?       @relation(fields: [cowId], references: [id])
+  group GroupUnit? @relation(fields: [groupId], references: [id])
+  farm  Farm?      @relation(fields: [farmId], references: [id])
+
+  @@index([timestamp])
+  @@index([cowId, timestamp])
+  @@index([severity, timestamp])
+}
+
+/// Наблюдения от видеоаналитики/сенсоров
+model Observation {
+  id          String   @id @default(cuid())
+  cowId       String?
+  type        String   // bcs | lameness | activity
+  value       Float
+  confidence  Float?
+  modelVersion String?
+  cameraId    String?
+  videoRef    String?  // ссылка на видеофрагмент
+  timestamp   DateTime
+  verified    Boolean  @default(false)
+
+  cow Cow? @relation(fields: [cowId], references: [id])
+
+  @@index([cowId, type, timestamp])
+}
+
+/// Экономические показатели
+model EconomicFact {
+  id       String   @id @default(cuid())
+  farmId   String
+  type     String   // feed_cost | milk_revenue | gross_margin
+  value    Float
+  period   DateTime
+  source   String   @default("manual")
+
+  farm Farm @relation(fields: [farmId], references: [id])
+
+  @@index([farmId, type, period])
+}
+
+/// Генетические показатели коровы
+model GeneticIndexValue {
+  id      String   @id @default(cuid())
+  cowId   String
+  index   String   // productivity | fertility | health
+  value   Float
+  date    DateTime
+
+  cow Cow @relation(fields: [cowId], references: [id])
+
+  @@index([cowId, index])
+}
+
+// ==========================================
+// Фаза 4 — Модуль Отчетности V2 (Reporting)
+// ==========================================
+
+/// Шаблон отчета
+model ReportTemplate {
+  id                String        @id @default(cuid())
+  code              String
+  name              String
+  description       String?
+  reportType        String        // REGULATORY, BREEDING, VETERINARY, PRODUCTION, MANAGEMENT
+  authority         String        // MINSKHOZ, ROSSTAT, VET_SERVICE, INTERNAL, BREEDING_REGISTRY, OTHER
+  version           String
+  defaultFormat     String        // XLSX, PDF, CSV, JSON
+  isSystem          Boolean       @default(true)
+  isActive          Boolean       @default(true)
+  configJson        String?       // Stored as String (JSON) since SQLite doesn't natively support Json type well without Prisma extensions, or we use String
+  schemaJson        String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  farmId            String?
+  farm              Farm?         @relation(fields: [farmId], references: [id])
+
+  sections          ReportSection[]
+  instances         ReportInstance[]
+
+  @@unique([code, version])
+  @@index([reportType, authority, isActive])
+}
+
+/// Секции шаблона
+model ReportSection {
+  id                String         @id @default(cuid())
+  templateId        String
+  title             String
+  code              String
+  sortOrder         Int
+  configJson        String?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  template          ReportTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  lines             ReportLine[]
+
+  @@index([templateId, sortOrder])
+}
+
+/// Строки/метрики шаблона
+model ReportLine {
+  id                String         @id @default(cuid())
+  sectionId         String
+  code              String
+  label             String
+  valueType         String
+  formula           String?
+  sourceEntity      String?
+  sourceField       String?
+  sortOrder         Int
+  isRequired        Boolean        @default(false)
+  configJson        String?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  section           ReportSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId, sortOrder])
+}
+
+/// Экземпляры отчетов
+model ReportInstance {
+  id                  String            @id @default(cuid())
+  templateId          String
+  farmId              String
+  title               String
+  periodStart         DateTime
+  periodEnd           DateTime
+  reportDate          DateTime
+  status              String            @default("DRAFT") // DRAFT, GENERATED, VALIDATION_ERROR, READY_FOR_REVIEW, APPROVED, EXPORTED, SUBMITTED, ACCEPTED, REJECTED, REVISED
+  format              String            // XLSX, PDF, CSV, JSON
+  versionNumber       Int               @default(1)
+  payloadJson         String?
+  summaryJson         String?
+  fileUrl             String?
+  generatedAt         DateTime?
+  approvedAt          DateTime?
+  submittedAt         DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  createdById         String?
+  approvedById        String?
+
+  template            ReportTemplate    @relation(fields: [templateId], references: [id])
+  farm                Farm              @relation(fields: [farmId], references: [id])
+  validationIssues    ReportValidationIssue[]
+  exports             ReportExportJob[]
+  submissions         ReportSubmission[]
+  auditLogs           ReportAuditLog[]
+
+  @@index([farmId, status])
+  @@index([templateId, periodStart, periodEnd])
+  @@index([reportDate])
+}
+
+/// Ошибки валидации
+model ReportValidationIssue {
+  id                String              @id @default(cuid())
+  reportInstanceId  String
+  severity          String              // INFO, WARNING, ERROR, CRITICAL
+  code              String
+  message           String
+  entityType        String?
+  entityId          String?
+  fieldName         String?
+  detailsJson       String?
+  createdAt         DateTime            @default(now())
+
+  reportInstance    ReportInstance      @relation(fields: [reportInstanceId], references: [id], onDelete: Cascade)
+
+  @@index([reportInstanceId, severity])
+}
+
+/// Экспорт
+model ReportExportJob {
+  id                String          @id @default(cuid())
+  reportInstanceId  String
+  format            String          // XLSX, PDF, CSV, JSON
+  status            String          // PENDING, PROCESSING, COMPLETED, FAILED
+  fileUrl           String?
+  errorMessage      String?
+  createdAt         DateTime        @default(now())
+  completedAt       DateTime?
+
+  reportInstance    ReportInstance  @relation(fields: [reportInstanceId], references: [id], onDelete: Cascade)
+
+  @@index([reportInstanceId, format])
+}
+
+/// Отправка/сабмит
+model ReportSubmission {
+  id                String            @id @default(cuid())
+  reportInstanceId  String
+  channel           String            // MANUAL, FILE_EXPORT, API
+  status            String            @default("NOT_SENT") // NOT_SENT, SENT, ACCEPTED, REJECTED, NEEDS_CORRECTION
+  externalSystem    String?
+  externalId        String?
+  sentAt            DateTime?
+  responseJson      String?
+  errorMessage      String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  reportInstance    ReportInstance    @relation(fields: [reportInstanceId], references: [id], onDelete: Cascade)
+
+  @@index([reportInstanceId, status])
+}
+
+/// Аудит
+model ReportAuditLog {
+  id                String          @id @default(cuid())
+  reportInstanceId  String
+  action            String
+  actorId           String?
+  actorName         String?
+  beforeJson        String?
+  afterJson         String?
+  comment           String?
+  createdAt         DateTime        @default(now())
+
+  reportInstance    ReportInstance  @relation(fields: [reportInstanceId], references: [id], onDelete: Cascade)
+
+  @@index([reportInstanceId, createdAt])
+}
+
+// ==========================================
+// Фаза 5 — Модули "Контроль AfiMilk" и "Инфографика"
+// ==========================================
+
+model Barn {
+  id          String   @id @default(cuid())
+  farmId      String
+  name        String
+  farm        Farm     @relation(fields: [farmId], references: [id])
+  cows        Cow[]
+  operations  OperationRequest[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OperationRequest {
+  id                          String                    @id @default(cuid())
+  farmId                      String
+  barnId                      String?
+  cowId                       String
+  afiCowExternalId            String?
+  operationType               String                    // INSEMINATION, TREATMENT, GROUP_TRANSFER, etc.
+  title                       String
+  description                 String?
+  eventDate                   DateTime
+  dueDate                     DateTime?
+  priority                    String                    @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  source                      String                    @default("MANUAL") // MANUAL, AUTO_RULE, ALERT, IMPORTED, MOBILE_APP
+  status                      String                    @default("CREATED") // DRAFT, CREATED, PENDING_AFIMILK_ENTRY, IN_PROGRESS, ENTERED_IN_AFIMILK, etc.
+  severity                    String?
+  isCriticalForReporting      Boolean                   @default(false)
+  isCriticalForReproduction   Boolean                   @default(false)
+  isCriticalForVeterinary     Boolean                   @default(false)
+  requiresVerification        Boolean                   @default(true)
+  createdById                 String
+  assignedToId                String?
+  confirmedAt                 DateTime?
+  confirmedById               String?
+  rejectedAt                  DateTime?
+  rejectedById                String?
+  rejectionReason             String?
+  externalReference           String?
+  comment                     String?
+  farm                        Farm                      @relation(fields: [farmId], references: [id])
+  barn                        Barn?                     @relation(fields: [barnId], references: [id])
+  cow                         Cow                       @relation(fields: [cowId], references: [id])
+  confirmations               OperationConfirmation[]
+  statusHistory               OperationStatusHistory[]
+  comments                    OperationComment[]
+  attachments                 OperationAttachment[]
+  createdAt                   DateTime                  @default(now())
+  updatedAt                   DateTime                  @updatedAt
+  deletedAt                   DateTime?
+
+  @@index([farmId, status])
+  @@index([assignedToId, status])
+  @@index([cowId, status])
+  @@index([eventDate])
+  @@index([dueDate])
+}
+
+model OperationConfirmation {
+  id                  String   @id @default(cuid())
+  operationRequestId  String
+  confirmedById       String
+  confirmedAt         DateTime
+  confirmationMethod  String
+  afiEntryDate        DateTime?
+  afiEntryNumber      String?
+  note                String?
+  attachmentUrl       String?
+  operationRequest    OperationRequest @relation(fields: [operationRequestId], references: [id])
+  createdAt           DateTime @default(now())
+}
+
+model OperationStatusHistory {
+  id                  String   @id @default(cuid())
+  operationRequestId  String
+  oldStatus           String?
+  newStatus           String
+  changedById         String
+  changeReason        String?
+  operationRequest    OperationRequest @relation(fields: [operationRequestId], references: [id])
+  createdAt           DateTime @default(now())
+}
+
+model OperationComment {
+  id                  String   @id @default(cuid())
+  operationRequestId  String
+  authorId            String
+  text                String
+  operationRequest    OperationRequest @relation(fields: [operationRequestId], references: [id])
+  createdAt           DateTime @default(now())
+}
+
+model OperationAttachment {
+  id                  String   @id @default(cuid())
+  operationRequestId  String
+  fileName            String
+  fileUrl             String
+  fileType            String?
+  uploadedById        String
+  operationRequest    OperationRequest @relation(fields: [operationRequestId], references: [id])
+  createdAt           DateTime @default(now())
+}
+
+model CowEvent {
+  id            String   @id @default(cuid())
+  farmId        String
+  cowId         String
+  eventType     String
+  eventDate     DateTime
+  source        String?
+  metadata      String?  // Stored as String since SQLite lacks native JSON
+  cow           Cow      @relation(fields: [cowId], references: [id])
+  createdAt     DateTime @default(now())
+
+  @@index([farmId, eventType, eventDate])
+  @@index([cowId, eventDate])
+}
+
+model DashboardSnapshot {
+  id                     String   @id @default(cuid())
+  farmId                 String
+  snapshotDate           DateTime
+  totalCows              Int
+  milkingCows            Int
+  dryCows                Int
+  freshCows              Int
+  avgMilkPerCow          Float?
+  totalMilkPerDay        Float?
+  alertCount             Int      @default(0)
+  criticalAlertCount     Int      @default(0)
+  pendingOperations      Int      @default(0)
+  overdueOperations      Int      @default(0)
+  completedOperations    Int      @default(0)
+  treatmentCount7d       Int      @default(0)
+  inseminationCount7d    Int      @default(0)
+  createdAt              DateTime @default(now())
+  
+  farm                   Farm     @relation(fields: [farmId], references: [id])
+
+  @@index([farmId, snapshotDate])
+}
