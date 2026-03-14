@@ -64,6 +64,17 @@ export default function MilkingPage() {
 
   const { milkingSummary, milkingRecords, kpi } = data;
 
+  if (data?.status === "no_data" && dbData?.status === "no_data") {
+    return (
+      <AppLayout title="Учёт молока">
+        <div className="empty-state">
+          <div className="empty-state-icon">📭</div>
+          <div className="empty-state-text">Данные не загружены. Импортируйте AIC в SQLite.</div>
+        </div>
+      </AppLayout>
+    );
+  }
+
   // Группируем файловые записи по номеру доения
   const byMilking: Record<number, any[]> = {};
   for (const r of milkingRecords) {

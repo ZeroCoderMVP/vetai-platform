@@ -101,6 +101,7 @@ export async function GET(request: Request) {
       }));
 
     return NextResponse.json({
+      status: records.length === 0 ? "no_data" : "ok",
       records,
       summary: {
         totalPlanned: Math.round(totalPlanned),

@@ -51,6 +51,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json({
+      status: total === 0 ? "no_data" : "ok",
       events,
       pagination: { page, limit, total, pages: Math.ceil(total / limit) },
       stats,

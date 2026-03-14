@@ -19,6 +19,7 @@ interface AnimalData {
 }
 
 interface FarmData {
+  status?: string;
   totalAnimals: number;
   allCowNumbers: string[];
   afimilk: {
@@ -53,6 +54,17 @@ export default function HerdPage() {
         <div className="empty-state">
           <div className="empty-state-icon">⏳</div>
           <div className="empty-state-text">Загрузка данных стада...</div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  if (data.status === "no_data") {
+    return (
+      <AppLayout title="Стадо">
+        <div className="empty-state">
+          <div className="empty-state-icon">📭</div>
+          <div className="empty-state-text">Данные не загружены. Сначала выполните импорт в SQLite.</div>
         </div>
       </AppLayout>
     );
