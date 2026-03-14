@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { getDataRoot } from "@/lib/runtime-paths";
 import { parseAICFile } from "./parsers/aic";
 import { parseSmartDTM } from "./parsers/dtm";
+import { parseDayMilkDat } from "./parsers/dayMilk";
 
 const DATA_ROOT = getDataRoot();
 
@@ -81,12 +82,19 @@ function hashFile(filePath: string): string {
   return crypto.createHash("sha256").update(content).digest("hex");
 }
 
+function isAfimilkDayMilkFile(filePath: string) {
+  return path.basename(filePath).toUpperCase() === "DAY_MILK.DAT";
+}
+
 function getUnsupportedFileMessage(sourceName: SourceName, filePath: string) {
   const ext = path.extname(filePath).toLowerCase();
 
   switch (sourceName) {
     case "afimilk":
-      return `Unsupported AFI file format '${ext || "<no extension>"}'. Only .json files are imported.`;
+      if (ext === ".m00") {
+        return "unsupported binary format for now";
+      }
+      return `Unsupported AFI file format '${ext || "<no extension>"}'. Supported: .json, DAY_MILK.DAT.`;
     case "aic":
       return `Unsupported AIC file format '${ext || "<no extension>"}'. Only .aic files are imported.`;
     case "dtm":
@@ -99,7 +107,7 @@ function isSupportedFile(sourceName: SourceName, filePath: string) {
 
   switch (sourceName) {
     case "afimilk":
-      return ext === ".json";
+      return ext === ".json" || isAfimilkDayMilkFile(filePath);
     case "aic":
       return ext === ".aic";
     case "dtm":
@@ -290,6 +298,87 @@ async function importAfimilkFile(filePath: string, farm: { id: string }, batchId
       recordCount: stats.recordsRead,
     },
   });
+
+  return stats;
+}
+
+
+async function importAfimilkDayMilkFile(filePath: string, farm: { id: string }, batchId: string): Promise<SourceImportResult> {
+  const stats: ImportStats = {
+    recordsRead: 0,
+    recordsInserted: 0,
+    recordsUpdated: 0,
+    recordsSkipped: 0,
+  };
+
+  const content = fs.readFileSync(filePath, "utf-8");
+  const parsed = parseDayMilkDat(content);
+
+  stats.recordsRead = parsed.rowsRead;
+  stats.recordsSkipped = parsed.rowsSkipped;
+
+  for (const row of parsed.records) {
+    const avg10Total = row.avg10Session1 + row.avg10Session2 + row.avg10Session3;
+    const actualTotal = row.actualSession1 + row.actualSession2 + row.actualSession3;
+
+    const cow = await prisma.cow.findFirst({
+      where: { farmId: farm.id, number: row.cowNumber },
+      select: { id: true },
+    });
+
+    const existing = await prisma.afimilkDayMilk.findUnique({
+      where: {
+        farmId_cowNumber_date: {
+          farmId: farm.id,
+          cowNumber: row.cowNumber,
+          date: row.date,
+        },
+      },
+      select: { id: true },
+    });
+
+    await prisma.afimilkDayMilk.upsert({
+      where: {
+        farmId_cowNumber_date: {
+          farmId: farm.id,
+          cowNumber: row.cowNumber,
+          date: row.date,
+        },
+      },
+      update: {
+        cowId: cow?.id ?? null,
+        avg10Session1: row.avg10Session1,
+        actualSession1: row.actualSession1,
+        avg10Session2: row.avg10Session2,
+        actualSession2: row.actualSession2,
+        avg10Session3: row.avg10Session3,
+        actualSession3: row.actualSession3,
+        avg10Total,
+        actualTotal,
+        batchId,
+        sourceFile: path.basename(filePath),
+      },
+      create: {
+        farmId: farm.id,
+        cowId: cow?.id ?? null,
+        cowNumber: row.cowNumber,
+        date: row.date,
+        avg10Session1: row.avg10Session1,
+        actualSession1: row.actualSession1,
+        avg10Session2: row.avg10Session2,
+        actualSession2: row.actualSession2,
+        avg10Session3: row.avg10Session3,
+        actualSession3: row.actualSession3,
+        avg10Total,
+        actualTotal,
+        batchId,
+        sourceFile: path.basename(filePath),
+      },
+    });
+
+    if (existing) stats.recordsUpdated += 1;
+    else stats.recordsInserted += 1;
+  }
 
   return stats;
 }
@@ -579,7 +668,9 @@ async function executeFileImport(sourceName: SourceName, filePath: string, farm:
     let result: SourceImportResult;
 
     if (sourceName === "afimilk") {
-      result = await importAfimilkFile(filePath, farm, batch.id);
+      result = isAfimilkDayMilkFile(filePath)
+        ? await importAfimilkDayMilkFile(filePath, farm, batch.id)
+        : await importAfimilkFile(filePath, farm, batch.id);
     } else if (sourceName === "aic") {
       result = await importAicFile(filePath, farm, batch.id);
     } else {

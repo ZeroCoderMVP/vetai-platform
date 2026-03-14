@@ -30,10 +30,10 @@ VETAI_ALLOW_MOCK=1 npm run dev
 
 ## Папки ingestion
 
-По умолчанию import-service использует `/data`:
+По умолчанию import-service использует `./data`:
 
 ```text
-/data
+./data
   /inbox
     /afimilk
     /dtm
@@ -63,6 +63,14 @@ curl -X POST http://localhost:3000/api/import
 ```bash
 curl http://localhost:3000/api/import
 ```
+
+
+## Поддержка файлов AFI (Stage 1)
+
+AFI ingestion сейчас поддерживает:
+- `*.json` — текущий импорт событий/списков AFI;
+- `DAY_MILK.DAT` — отдельный импорт в таблицу `AfimilkDayMilk` (не смешивается с `MilkRecord` из AIC);
+- `*.M00` и прочие неподдержанные форматы — файл переносится в `./data/error/afimilk` с причиной `unsupported binary format for now`.
 
 ## Runtime Paths
 

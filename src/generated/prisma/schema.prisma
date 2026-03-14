@@ -24,6 +24,7 @@ model Farm {
 
   groups          GroupUnit[]
   cows            Cow[]
+  afimilkDayMilk  AfimilkDayMilk[]
   events          Event[]
   economic        EconomicFact[]
   reportTemplates ReportTemplate[]
@@ -80,6 +81,7 @@ model Cow {
   memberships    GroupMembership[]
   sectionHistory CowSectionHistory[]
   milkRecords    MilkRecord[]
+  dayMilkRecords AfimilkDayMilk[]
   events         Event[]
   observations   Observation[]
   geneticIndex   GeneticIndexValue[]
@@ -208,10 +210,11 @@ model IntegrationBatch {
   processedAt     DateTime?
   createdAt       DateTime  @default(now())
 
-  dataSource  DataSource   @relation(fields: [sourceId], references: [id])
+  dataSource  DataSource       @relation(fields: [sourceId], references: [id])
   milkRecords MilkRecord[]
   feedRecords FeedRecord[]
   mixBatches  MixBatch[]
+  dayMilk     AfimilkDayMilk[]
 
   @@index([sourceId, createdAt])
 }
@@ -268,6 +271,35 @@ model MilkRecord {
   @@unique([cowNumber, date, session, source])
   @@index([cowNumber, date])
   @@index([date, session])
+}
+
+/// Дневные агрегаты из AFI DAY_MILK.DAT
+model AfimilkDayMilk {
+  id             String   @id @default(cuid())
+  farmId         String
+  cowId          String?
+  cowNumber      String
+  date           DateTime
+  avg10Session1  Float
+  actualSession1 Float
+  avg10Session2  Float
+  actualSession2 Float
+  avg10Session3  Float
+  actualSession3 Float
+  avg10Total     Float
+  actualTotal    Float
+  batchId        String?
+  sourceFile     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  farm  Farm              @relation(fields: [farmId], references: [id])
+  cow   Cow?              @relation(fields: [cowId], references: [id])
+  batch IntegrationBatch? @relation(fields: [batchId], references: [id])
+
+  @@unique([farmId, cowNumber, date])
+  @@index([farmId, date])
+  @@index([cowId, date])
 }
 
 /// Запись кормления
