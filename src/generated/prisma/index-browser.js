@@ -141,6 +141,8 @@ exports.Prisma.CowScalarFieldEnum = {
   farmId: 'farmId',
   groupId: 'groupId',
   barnId: 'barnId',
+  currentSectionId: 'currentSectionId',
+  afiId: 'afiId',
   number: 'number',
   name: 'name',
   birthDate: 'birthDate',
@@ -150,6 +152,39 @@ exports.Prisma.CowScalarFieldEnum = {
   lastCalving: 'lastCalving',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SectionScalarFieldEnum = {
+  id: 'id',
+  farmId: 'farmId',
+  barnId: 'barnId',
+  name: 'name',
+  externalCode: 'externalCode',
+  dtmCode: 'dtmCode',
+  afiCode: 'afiCode',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CowSectionHistoryScalarFieldEnum = {
+  id: 'id',
+  cowId: 'cowId',
+  sectionId: 'sectionId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  source: 'source',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.GroupSectionHistoryScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  sectionId: 'sectionId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  source: 'source',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ExternalIdentityScalarFieldEnum = {
@@ -181,8 +216,17 @@ exports.Prisma.DataSourceScalarFieldEnum = {
 exports.Prisma.IntegrationBatchScalarFieldEnum = {
   id: 'id',
   sourceId: 'sourceId',
+  source: 'source',
   filename: 'filename',
+  fileHash: 'fileHash',
   status: 'status',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  recordsRead: 'recordsRead',
+  recordsInserted: 'recordsInserted',
+  recordsUpdated: 'recordsUpdated',
+  recordsSkipped: 'recordsSkipped',
+  errorMessage: 'errorMessage',
   recordCount: 'recordCount',
   errors: 'errors',
   processedAt: 'processedAt',
@@ -324,6 +368,7 @@ exports.Prisma.EventScalarFieldEnum = {
   typeId: 'typeId',
   cowId: 'cowId',
   groupId: 'groupId',
+  sectionId: 'sectionId',
   farmId: 'farmId',
   severity: 'severity',
   title: 'title',
@@ -609,6 +654,9 @@ exports.Prisma.ModelName = {
   Farm: 'Farm',
   GroupUnit: 'GroupUnit',
   Cow: 'Cow',
+  Section: 'Section',
+  CowSectionHistory: 'CowSectionHistory',
+  GroupSectionHistory: 'GroupSectionHistory',
   ExternalIdentity: 'ExternalIdentity',
   GroupMembership: 'GroupMembership',
   DataSource: 'DataSource',
