@@ -150,6 +150,9 @@ CREATE INDEX IF NOT EXISTS "CowSectionHistory_cowId_startDate_idx" ON "CowSectio
 CREATE INDEX IF NOT EXISTS "CowSectionHistory_sectionId_startDate_idx" ON "CowSectionHistory"("sectionId", "startDate");
 CREATE INDEX IF NOT EXISTS "GroupSectionHistory_groupId_startDate_idx" ON "GroupSectionHistory"("groupId", "startDate");
 CREATE INDEX IF NOT EXISTS "GroupSectionHistory_sectionId_startDate_idx" ON "GroupSectionHistory"("sectionId", "startDate");
+CREATE INDEX IF NOT EXISTS "Event_timestamp_idx" ON "Event"("timestamp");
+CREATE INDEX IF NOT EXISTS "Event_cowId_timestamp_idx" ON "Event"("cowId", "timestamp");
 CREATE INDEX IF NOT EXISTS "Event_groupId_timestamp_idx" ON "Event"("groupId", "timestamp");
 CREATE INDEX IF NOT EXISTS "Event_sectionId_timestamp_idx" ON "Event"("sectionId", "timestamp");
+CREATE INDEX IF NOT EXISTS "Event_severity_timestamp_idx" ON "Event"("severity", "timestamp");
 CREATE INDEX IF NOT EXISTS "IntegrationBatch_sourceId_createdAt_idx" ON "IntegrationBatch"("sourceId", "createdAt");
