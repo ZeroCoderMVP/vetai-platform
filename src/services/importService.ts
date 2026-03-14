@@ -12,12 +12,12 @@ import {
   parsePenEfficiency,
 } from "./parsers/dtm";
 
-const BASE_DIR = path.resolve(process.cwd(), "..");
+const DATA_ROOT = process.env.VETAI_DATA_ROOT || "/data";
 
 const DIRS = {
-  inbox: path.join(BASE_DIR, "INBOX"),
-  processed: path.join(BASE_DIR, "PROCESSED"),
-  error: path.join(BASE_DIR, "ERROR"),
+  inbox: path.join(DATA_ROOT, "inbox"),
+  processed: path.join(DATA_ROOT, "processed"),
+  error: path.join(DATA_ROOT, "error"),
 };
 
 const SOURCES = ["afimilk", "aic", "dtm"] as const;
@@ -468,7 +468,7 @@ export async function seedFromExistingData() {
   const farm = await getOrCreateFarm();
 
   // AFI JSON
-  const afiDir = path.join(BASE_DIR, "AFI");
+  const afiDir = path.join(DIRS.inbox, "afimilk");
   if (fs.existsSync(afiDir)) {
     const afiFiles = fs.readdirSync(afiDir).filter(f => f.endsWith(".json"));
     for (const file of afiFiles) {
@@ -482,7 +482,7 @@ export async function seedFromExistingData() {
   }
 
   // AIC доение
-  const aicDir = path.join(BASE_DIR, "Дойка");
+  const aicDir = path.join(DIRS.inbox, "aic");
   if (fs.existsSync(aicDir)) {
     const aicFiles = fs.readdirSync(aicDir).filter(f => f.toUpperCase().endsWith(".AIC"));
     for (const file of aicFiles) {
@@ -496,7 +496,7 @@ export async function seedFromExistingData() {
   }
 
   // DTM кормление — расширенный импорт
-  const dtmDir = path.join(BASE_DIR, "DTM");
+  const dtmDir = path.join(DIRS.inbox, "dtm");
   if (fs.existsSync(dtmDir)) {
     const dtmFiles = fs.readdirSync(dtmDir).filter(f => 
       f.endsWith(".xlsx") || f.endsWith(".xls")

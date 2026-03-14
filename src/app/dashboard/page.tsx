@@ -6,6 +6,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 
 interface DashboardData {
+  status?: string;
   feeding: {
     totalPlanned: number;
     totalActual: number;
@@ -54,6 +55,7 @@ interface DashboardData {
 }
 
 interface FarmData {
+  status?: string;
   kpi: {
     totalMilkToday: number;
     averageMilkPerCow: number;
@@ -222,6 +224,19 @@ export default function DashboardPage() {
   const kpi = farmData?.kpi;
   const feed = data?.feeding;
   const milk = farmData?.milkingSummary || data?.milking;
+  const hasNoData = data?.status === "no_data" && farmData?.status === "no_data";
+
+
+  if (hasNoData) {
+    return (
+      <AppLayout title="Дашборд">
+        <div className="empty-state">
+          <div className="empty-state-icon">📭</div>
+          <div className="empty-state-text">Данные не загружены. Импортируйте файлы в SQLite через /data/inbox/* и запустите импорт.</div>
+        </div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout title="Дашборд" alertCount={kpi?.herdAlerts || 0}>

@@ -13,20 +13,33 @@ function getDaysAgo(days: number): string {
   return d.toISOString().split("T")[0];
 }
 
+interface UiEvent {
+  id: string;
+  type: string;
+  severity: "danger" | "warning" | "info";
+  cow: string;
+  group: number;
+  description: string;
+  details: string;
+}
+
 export default function EventsPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [eventsData, setEventsData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [dateFrom, setDateFrom] = useState(getDaysAgo(7));
   const [dateTo, setDateTo] = useState(getToday());
 
   useEffect(() => {
-    fetch("/api/farm")
-      .then((res) => res.json())
-      .then((d) => { setData(d); setLoading(false); })
+    Promise.all([
+      fetch("/api/farm").then((res) => res.json()),
+      fetch(`/api/events?from=${dateFrom}&to=${dateTo}&limit=500`).then((res) => res.json()),
+    ])
+      .then(([farm, events]) => { setData(farm); setEventsData(events); setLoading(false); })
       .catch(() => setLoading(false));
-  }, []);
+  }, [dateFrom, dateTo]);
 
   if (loading || !data) {
     return (
@@ -39,64 +52,16 @@ export default function EventsPage() {
     );
   }
 
-  const { afimilk, kpi } = data;
+  const kpi = data?.kpi;
 
-  // Формируем единый список событий
-  interface FarmEvent {
-    type: string;
-    severity: "danger" | "warning" | "info" | "success";
-    cow: string;
-    group: number;
-    description: string;
-    details: string;
-  }
-
-  const events: FarmEvent[] = [];
-
-  afimilk.mastitisSuspects?.items.forEach((i: any) => events.push({
-    type: "mastitis", severity: "danger", cow: i.cow, group: i.group,
-    description: "Подозрение на клинический мастит",
-    details: `Лактация ${i.lactationNumber} · DIM ${i.dim}`
-  }));
-
-  afimilk.ketosisSuspects?.items.forEach((i: any) => events.push({
-    type: "ketosis", severity: "danger", cow: i.cow, group: i.group,
-    description: "Подозрение на кетоз",
-    details: `Лактация ${i.lactationNumber} · DIM ${i.dim}`
-  }));
-
-  afimilk.abortionSuspects?.items.forEach((i: any) => events.push({
-    type: "abortion", severity: "danger", cow: i.cow, group: i.group,
-    description: "Подозрение на аборт",
-    details: `${i.gynStatus} · Лактация ${i.lactationNumber} · DIM ${i.dim}`
-  }));
-
-  afimilk.healthIssues?.items
-    .filter((i: any) => (i.yieldLast24HPercent ?? 0) < -30)
-    .forEach((i: any) => events.push({
-      type: "health", severity: "warning", cow: i.cow, group: i.group,
-      description: `Резкое падение надоя (${i.yieldLast24HPercent}%)`,
-      details: `${i.status} · Лактация ${i.lactationNumber} · DIM ${i.dim}`
-    }));
-
-  afimilk.digestionProblems?.items.forEach((i: any) => events.push({
-    type: "digestion", severity: "warning", cow: i.cow, group: i.group,
-    description: "Проблемы пищеварения",
-    details: `${i.status} · Лактация ${i.lactationNumber} · DIM ${i.dim}`
-  }));
-
-  afimilk.animalsToBreed?.items
-    .filter((i: any) => (i.daysAfterHeat ?? 999) <= 1)
-    .forEach((i: any) => events.push({
-      type: "breed", severity: "info", cow: i.cow, group: i.group,
-      description: "Готова к осеменению (активная охота)",
-      details: `Ср. надой ${i.dailyAverageYield} кг · DIM ${i.dim}`
-    }));
-
-  afimilk.freshCows?.items.forEach((i: any) => events.push({
-    type: "fresh", severity: "info", cow: i.cow, group: i.group,
-    description: "Свежая корова — требуется проверка",
-    details: `Лактация ${i.lactationNumber} · DIM ${i.dim}`
+  const events: UiEvent[] = (eventsData?.events || []).map((event: any): UiEvent => ({
+    id: event.id,
+    type: event.title || "event",
+    severity: event.severity === "critical" ? "danger" : event.severity === "warning" ? "warning" : "info",
+    cow: event.cow?.number || "—",
+    group: Number(event.group?.name || 0) || 0,
+    description: event.title || "Событие",
+    details: event.description || "",
   }));
 
   const filteredEvents = filter === "all" ? events : events.filter(e => {
@@ -109,6 +74,17 @@ export default function EventsPage() {
   const severityIcon: Record<string, string> = {
     danger: "🔴", warning: "🟡", info: "🔵", success: "🟢"
   };
+
+  if (data?.status === "no_data" && eventsData?.status === "no_data") {
+    return (
+      <AppLayout title="События">
+        <div className="empty-state">
+          <div className="empty-state-icon">📭</div>
+          <div className="empty-state-text">Данные не загружены. События появятся после импорта в SQLite.</div>
+        </div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout title="События" alertCount={kpi.herdAlerts}>

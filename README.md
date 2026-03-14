@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VETAI Platform (Stage 1, SQLite-first)
 
-## Getting Started
+Ветка Stage 1 работает в режиме **SQLite-first**:
+- runtime API/UI читают данные из SQLite;
+- файловые источники используются как вход для импорта;
+- mock не включается по умолчанию.
 
-First, run the development server:
+## Запуск локально
 
 ```bash
+npm install
+npx prisma generate
+npx prisma migrate dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Приложение: `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Режим mock (только явный debug fallback)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+По умолчанию mock **выключен**.
 
-## Learn More
+Включить mock fallback:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+VETAI_ALLOW_MOCK=1 npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+При пустой SQLite в основных API возвращается `status: "no_data"`, а UI показывает состояние «данные не загружены».
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Папки ingestion
 
-## Deploy on Vercel
+По умолчанию import-service использует `/data`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+/data
+  /inbox
+    /afimilk
+    /dtm
+    /aic
+  /processed
+    /afimilk
+    /dtm
+    /aic
+  /error
+    /afimilk
+    /dtm
+    /aic
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Можно переопределить корневую папку через `VETAI_DATA_ROOT`.
+
+## Импорт данных
+
+Положите файлы в `inbox/<source>`, затем запустите импорт:
+
+```bash
+curl -X POST http://localhost:3000/api/import
+```
+
+Проверить статус интеграций:
+
+```bash
+curl http://localhost:3000/api/import
+```
