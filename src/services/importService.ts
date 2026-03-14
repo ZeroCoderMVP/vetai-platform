@@ -2,10 +2,11 @@ import * as crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
 import prisma from "@/lib/prisma";
+import { getDataRoot } from "@/lib/runtime-paths";
 import { parseAICFile } from "./parsers/aic";
 import { parseSmartDTM } from "./parsers/dtm";
 
-const DATA_ROOT = process.env.VETAI_DATA_ROOT || "/data";
+const DATA_ROOT = getDataRoot();
 
 const DIRS = {
   inbox: path.join(DATA_ROOT, "inbox"),
@@ -26,6 +27,21 @@ type ImportStats = {
 type SourceImportResult = ImportStats & {
   type?: string;
 };
+
+class ImportFileError extends Error {
+  stats: ImportStats;
+
+  constructor(message: string, stats?: Partial<ImportStats>) {
+    super(message);
+    this.name = "ImportFileError";
+    this.stats = {
+      recordsRead: stats?.recordsRead ?? 0,
+      recordsInserted: stats?.recordsInserted ?? 0,
+      recordsUpdated: stats?.recordsUpdated ?? 0,
+      recordsSkipped: stats?.recordsSkipped ?? 0,
+    };
+  }
+}
 
 export function ensureDirectories() {
   for (const dir of Object.values(DIRS)) {
@@ -63,6 +79,32 @@ function moveFile(filePath: string, destDir: string) {
 function hashFile(filePath: string): string {
   const content = fs.readFileSync(filePath);
   return crypto.createHash("sha256").update(content).digest("hex");
+}
+
+function getUnsupportedFileMessage(sourceName: SourceName, filePath: string) {
+  const ext = path.extname(filePath).toLowerCase();
+
+  switch (sourceName) {
+    case "afimilk":
+      return `Unsupported AFI file format '${ext || "<no extension>"}'. Only .json files are imported.`;
+    case "aic":
+      return `Unsupported AIC file format '${ext || "<no extension>"}'. Only .aic files are imported.`;
+    case "dtm":
+      return `Unsupported DTM file format '${ext || "<no extension>"}'. Supported: .xlsx, .xls, .csv.`;
+  }
+}
+
+function isSupportedFile(sourceName: SourceName, filePath: string) {
+  const ext = path.extname(filePath).toLowerCase();
+
+  switch (sourceName) {
+    case "afimilk":
+      return ext === ".json";
+    case "aic":
+      return ext === ".aic";
+    case "dtm":
+      return ext === ".xlsx" || ext === ".xls" || ext === ".csv";
+  }
 }
 
 async function getOrCreateSource(name: SourceName) {
@@ -184,8 +226,16 @@ async function importAfimilkFile(filePath: string, farm: { id: string }, batchId
     recordsSkipped: 0,
   };
 
-  const content = fs.readFileSync(filePath, "utf-8");
-  const data = JSON.parse(content);
+  let data: any;
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
+    data = JSON.parse(content);
+  } catch (error: any) {
+    throw new ImportFileError(
+      `Failed to parse AFI JSON '${path.basename(filePath)}': ${error instanceof Error ? error.message : String(error)}`,
+      stats,
+    );
+  }
   const reportName = data.reportName || data.Name || path.basename(filePath, path.extname(filePath));
   const items = Array.isArray(data.items) ? data.items : Array.isArray(data.Table) ? data.Table : [];
 
@@ -522,6 +572,10 @@ async function executeFileImport(sourceName: SourceName, filePath: string, farm:
   const batch = await createBatch(sourceName, filePath, fileHash);
 
   try {
+    if (!isSupportedFile(sourceName, filePath)) {
+      throw new ImportFileError(getUnsupportedFileMessage(sourceName, filePath));
+    }
+
     let result: SourceImportResult;
 
     if (sourceName === "afimilk") {
@@ -543,12 +597,16 @@ async function executeFileImport(sourceName: SourceName, filePath: string, farm:
     };
   } catch (error: any) {
     const message = error instanceof Error ? error.message : String(error);
-    await failBatch(batch.id, message, {
-      recordsRead: 0,
-      recordsInserted: 0,
-      recordsUpdated: 0,
-      recordsSkipped: 0,
-    });
+    const stats =
+      error instanceof ImportFileError
+        ? error.stats
+        : {
+            recordsRead: 0,
+            recordsInserted: 0,
+            recordsUpdated: 0,
+            recordsSkipped: 0,
+          };
+    await failBatch(batch.id, message, stats);
     throw error;
   }
 }

@@ -63,3 +63,19 @@ curl -X POST http://localhost:3000/api/import
 ```bash
 curl http://localhost:3000/api/import
 ```
+
+## Runtime Paths
+
+- SQLite source of truth: `./dev.db`
+- Override DB path with `VETAI_DB_PATH`
+- Default import root: `./data`
+- Override import root with `VETAI_DATA_ROOT`
+
+CLI import commands:
+
+```bash
+npm run import:afimilk
+npm run import:aic
+npm run import:dtm
+npm run import:all
+```
