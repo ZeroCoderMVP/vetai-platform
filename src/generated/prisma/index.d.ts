@@ -79,6 +79,11 @@ export type MetricValue = $Result.DefaultSelection<Prisma.$MetricValuePayload>
  */
 export type MilkRecord = $Result.DefaultSelection<Prisma.$MilkRecordPayload>
 /**
+ * Model AfimilkDayMilk
+ * Дневные агрегаты из AFI DAY_MILK.DAT
+ */
+export type AfimilkDayMilk = $Result.DefaultSelection<Prisma.$AfimilkDayMilkPayload>
+/**
  * Model FeedRecord
  * Запись кормления
  */
@@ -464,6 +469,16 @@ export class PrismaClient<
     * ```
     */
   get milkRecord(): Prisma.MilkRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.afimilkDayMilk`: Exposes CRUD operations for the **AfimilkDayMilk** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AfimilkDayMilks
+    * const afimilkDayMilks = await prisma.afimilkDayMilk.findMany()
+    * ```
+    */
+  get afimilkDayMilk(): Prisma.AfimilkDayMilkDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.feedRecord`: Exposes CRUD operations for the **FeedRecord** model.
@@ -1181,6 +1196,7 @@ export namespace Prisma {
     MetricDefinition: 'MetricDefinition',
     MetricValue: 'MetricValue',
     MilkRecord: 'MilkRecord',
+    AfimilkDayMilk: 'AfimilkDayMilk',
     FeedRecord: 'FeedRecord',
     FeedRecipe: 'FeedRecipe',
     FeedIngredient: 'FeedIngredient',
@@ -1223,7 +1239,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "farm" | "groupUnit" | "cow" | "section" | "cowSectionHistory" | "groupSectionHistory" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "dashboardSnapshot"
+      modelProps: "farm" | "groupUnit" | "cow" | "section" | "cowSectionHistory" | "groupSectionHistory" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "afimilkDayMilk" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "dashboardSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2186,6 +2202,80 @@ export namespace Prisma {
           count: {
             args: Prisma.MilkRecordCountArgs<ExtArgs>
             result: $Utils.Optional<MilkRecordCountAggregateOutputType> | number
+          }
+        }
+      }
+      AfimilkDayMilk: {
+        payload: Prisma.$AfimilkDayMilkPayload<ExtArgs>
+        fields: Prisma.AfimilkDayMilkFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AfimilkDayMilkFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AfimilkDayMilkFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          findFirst: {
+            args: Prisma.AfimilkDayMilkFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AfimilkDayMilkFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          findMany: {
+            args: Prisma.AfimilkDayMilkFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>[]
+          }
+          create: {
+            args: Prisma.AfimilkDayMilkCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          createMany: {
+            args: Prisma.AfimilkDayMilkCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AfimilkDayMilkCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>[]
+          }
+          delete: {
+            args: Prisma.AfimilkDayMilkDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          update: {
+            args: Prisma.AfimilkDayMilkUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          deleteMany: {
+            args: Prisma.AfimilkDayMilkDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AfimilkDayMilkUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AfimilkDayMilkUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>[]
+          }
+          upsert: {
+            args: Prisma.AfimilkDayMilkUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AfimilkDayMilkPayload>
+          }
+          aggregate: {
+            args: Prisma.AfimilkDayMilkAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAfimilkDayMilk>
+          }
+          groupBy: {
+            args: Prisma.AfimilkDayMilkGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AfimilkDayMilkGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AfimilkDayMilkCountArgs<ExtArgs>
+            result: $Utils.Optional<AfimilkDayMilkCountAggregateOutputType> | number
           }
         }
       }
@@ -4308,6 +4398,7 @@ export namespace Prisma {
     metricDefinition?: MetricDefinitionOmit
     metricValue?: MetricValueOmit
     milkRecord?: MilkRecordOmit
+    afimilkDayMilk?: AfimilkDayMilkOmit
     feedRecord?: FeedRecordOmit
     feedRecipe?: FeedRecipeOmit
     feedIngredient?: FeedIngredientOmit
@@ -4417,6 +4508,7 @@ export namespace Prisma {
   export type FarmCountOutputType = {
     groups: number
     cows: number
+    afimilkDayMilk: number
     events: number
     economic: number
     reportTemplates: number
@@ -4430,6 +4522,7 @@ export namespace Prisma {
   export type FarmCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     groups?: boolean | FarmCountOutputTypeCountGroupsArgs
     cows?: boolean | FarmCountOutputTypeCountCowsArgs
+    afimilkDayMilk?: boolean | FarmCountOutputTypeCountAfimilkDayMilkArgs
     events?: boolean | FarmCountOutputTypeCountEventsArgs
     economic?: boolean | FarmCountOutputTypeCountEconomicArgs
     reportTemplates?: boolean | FarmCountOutputTypeCountReportTemplatesArgs
@@ -4463,6 +4556,13 @@ export namespace Prisma {
    */
   export type FarmCountOutputTypeCountCowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CowWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountAfimilkDayMilkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AfimilkDayMilkWhereInput
   }
 
   /**
@@ -4598,6 +4698,7 @@ export namespace Prisma {
     memberships: number
     sectionHistory: number
     milkRecords: number
+    dayMilkRecords: number
     events: number
     observations: number
     geneticIndex: number
@@ -4610,6 +4711,7 @@ export namespace Prisma {
     memberships?: boolean | CowCountOutputTypeCountMembershipsArgs
     sectionHistory?: boolean | CowCountOutputTypeCountSectionHistoryArgs
     milkRecords?: boolean | CowCountOutputTypeCountMilkRecordsArgs
+    dayMilkRecords?: boolean | CowCountOutputTypeCountDayMilkRecordsArgs
     events?: boolean | CowCountOutputTypeCountEventsArgs
     observations?: boolean | CowCountOutputTypeCountObservationsArgs
     geneticIndex?: boolean | CowCountOutputTypeCountGeneticIndexArgs
@@ -4654,6 +4756,13 @@ export namespace Prisma {
    */
   export type CowCountOutputTypeCountMilkRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MilkRecordWhereInput
+  }
+
+  /**
+   * CowCountOutputType without action
+   */
+  export type CowCountOutputTypeCountDayMilkRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AfimilkDayMilkWhereInput
   }
 
   /**
@@ -4789,12 +4898,14 @@ export namespace Prisma {
     milkRecords: number
     feedRecords: number
     mixBatches: number
+    dayMilk: number
   }
 
   export type IntegrationBatchCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     milkRecords?: boolean | IntegrationBatchCountOutputTypeCountMilkRecordsArgs
     feedRecords?: boolean | IntegrationBatchCountOutputTypeCountFeedRecordsArgs
     mixBatches?: boolean | IntegrationBatchCountOutputTypeCountMixBatchesArgs
+    dayMilk?: boolean | IntegrationBatchCountOutputTypeCountDayMilkArgs
   }
 
   // Custom InputTypes
@@ -4827,6 +4938,13 @@ export namespace Prisma {
    */
   export type IntegrationBatchCountOutputTypeCountMixBatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MixBatchWhereInput
+  }
+
+  /**
+   * IntegrationBatchCountOutputType without action
+   */
+  export type IntegrationBatchCountOutputTypeCountDayMilkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AfimilkDayMilkWhereInput
   }
 
 
@@ -5409,6 +5527,7 @@ export namespace Prisma {
     updatedAt?: boolean
     groups?: boolean | Farm$groupsArgs<ExtArgs>
     cows?: boolean | Farm$cowsArgs<ExtArgs>
+    afimilkDayMilk?: boolean | Farm$afimilkDayMilkArgs<ExtArgs>
     events?: boolean | Farm$eventsArgs<ExtArgs>
     economic?: boolean | Farm$economicArgs<ExtArgs>
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
@@ -5448,6 +5567,7 @@ export namespace Prisma {
   export type FarmInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     groups?: boolean | Farm$groupsArgs<ExtArgs>
     cows?: boolean | Farm$cowsArgs<ExtArgs>
+    afimilkDayMilk?: boolean | Farm$afimilkDayMilkArgs<ExtArgs>
     events?: boolean | Farm$eventsArgs<ExtArgs>
     economic?: boolean | Farm$economicArgs<ExtArgs>
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
@@ -5466,6 +5586,7 @@ export namespace Prisma {
     objects: {
       groups: Prisma.$GroupUnitPayload<ExtArgs>[]
       cows: Prisma.$CowPayload<ExtArgs>[]
+      afimilkDayMilk: Prisma.$AfimilkDayMilkPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       economic: Prisma.$EconomicFactPayload<ExtArgs>[]
       reportTemplates: Prisma.$ReportTemplatePayload<ExtArgs>[]
@@ -5877,6 +5998,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     groups<T extends Farm$groupsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupUnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cows<T extends Farm$cowsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$cowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    afimilkDayMilk<T extends Farm$afimilkDayMilkArgs<ExtArgs> = {}>(args?: Subset<T, Farm$afimilkDayMilkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Farm$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     economic<T extends Farm$economicArgs<ExtArgs> = {}>(args?: Subset<T, Farm$economicArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EconomicFactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reportTemplates<T extends Farm$reportTemplatesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$reportTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6355,6 +6477,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CowScalarFieldEnum | CowScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.afimilkDayMilk
+   */
+  export type Farm$afimilkDayMilkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    where?: AfimilkDayMilkWhereInput
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
   }
 
   /**
@@ -8134,6 +8280,7 @@ export namespace Prisma {
     memberships?: boolean | Cow$membershipsArgs<ExtArgs>
     sectionHistory?: boolean | Cow$sectionHistoryArgs<ExtArgs>
     milkRecords?: boolean | Cow$milkRecordsArgs<ExtArgs>
+    dayMilkRecords?: boolean | Cow$dayMilkRecordsArgs<ExtArgs>
     events?: boolean | Cow$eventsArgs<ExtArgs>
     observations?: boolean | Cow$observationsArgs<ExtArgs>
     geneticIndex?: boolean | Cow$geneticIndexArgs<ExtArgs>
@@ -8214,6 +8361,7 @@ export namespace Prisma {
     memberships?: boolean | Cow$membershipsArgs<ExtArgs>
     sectionHistory?: boolean | Cow$sectionHistoryArgs<ExtArgs>
     milkRecords?: boolean | Cow$milkRecordsArgs<ExtArgs>
+    dayMilkRecords?: boolean | Cow$dayMilkRecordsArgs<ExtArgs>
     events?: boolean | Cow$eventsArgs<ExtArgs>
     observations?: boolean | Cow$observationsArgs<ExtArgs>
     geneticIndex?: boolean | Cow$geneticIndexArgs<ExtArgs>
@@ -8245,6 +8393,7 @@ export namespace Prisma {
       memberships: Prisma.$GroupMembershipPayload<ExtArgs>[]
       sectionHistory: Prisma.$CowSectionHistoryPayload<ExtArgs>[]
       milkRecords: Prisma.$MilkRecordPayload<ExtArgs>[]
+      dayMilkRecords: Prisma.$AfimilkDayMilkPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       observations: Prisma.$ObservationPayload<ExtArgs>[]
       geneticIndex: Prisma.$GeneticIndexValuePayload<ExtArgs>[]
@@ -8669,6 +8818,7 @@ export namespace Prisma {
     memberships<T extends Cow$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sectionHistory<T extends Cow$sectionHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Cow$sectionHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     milkRecords<T extends Cow$milkRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$milkRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MilkRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dayMilkRecords<T extends Cow$dayMilkRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$dayMilkRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Cow$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     observations<T extends Cow$observationsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$observationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     geneticIndex<T extends Cow$geneticIndexArgs<ExtArgs> = {}>(args?: Subset<T, Cow$geneticIndexArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneticIndexValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9267,6 +9417,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MilkRecordScalarFieldEnum | MilkRecordScalarFieldEnum[]
+  }
+
+  /**
+   * Cow.dayMilkRecords
+   */
+  export type Cow$dayMilkRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    where?: AfimilkDayMilkWhereInput
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
   }
 
   /**
@@ -16408,6 +16582,7 @@ export namespace Prisma {
     milkRecords?: boolean | IntegrationBatch$milkRecordsArgs<ExtArgs>
     feedRecords?: boolean | IntegrationBatch$feedRecordsArgs<ExtArgs>
     mixBatches?: boolean | IntegrationBatch$mixBatchesArgs<ExtArgs>
+    dayMilk?: boolean | IntegrationBatch$dayMilkArgs<ExtArgs>
     _count?: boolean | IntegrationBatchCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["integrationBatch"]>
 
@@ -16479,6 +16654,7 @@ export namespace Prisma {
     milkRecords?: boolean | IntegrationBatch$milkRecordsArgs<ExtArgs>
     feedRecords?: boolean | IntegrationBatch$feedRecordsArgs<ExtArgs>
     mixBatches?: boolean | IntegrationBatch$mixBatchesArgs<ExtArgs>
+    dayMilk?: boolean | IntegrationBatch$dayMilkArgs<ExtArgs>
     _count?: boolean | IntegrationBatchCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IntegrationBatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16495,6 +16671,7 @@ export namespace Prisma {
       milkRecords: Prisma.$MilkRecordPayload<ExtArgs>[]
       feedRecords: Prisma.$FeedRecordPayload<ExtArgs>[]
       mixBatches: Prisma.$MixBatchPayload<ExtArgs>[]
+      dayMilk: Prisma.$AfimilkDayMilkPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16912,6 +17089,7 @@ export namespace Prisma {
     milkRecords<T extends IntegrationBatch$milkRecordsArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$milkRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MilkRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     feedRecords<T extends IntegrationBatch$feedRecordsArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$feedRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mixBatches<T extends IntegrationBatch$mixBatchesArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$mixBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MixBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dayMilk<T extends IntegrationBatch$dayMilkArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$dayMilkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17426,6 +17604,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MixBatchScalarFieldEnum | MixBatchScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationBatch.dayMilk
+   */
+  export type IntegrationBatch$dayMilkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    where?: AfimilkDayMilkWhereInput
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
   }
 
   /**
@@ -20942,6 +21144,1339 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MilkRecordInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AfimilkDayMilk
+   */
+
+  export type AggregateAfimilkDayMilk = {
+    _count: AfimilkDayMilkCountAggregateOutputType | null
+    _avg: AfimilkDayMilkAvgAggregateOutputType | null
+    _sum: AfimilkDayMilkSumAggregateOutputType | null
+    _min: AfimilkDayMilkMinAggregateOutputType | null
+    _max: AfimilkDayMilkMaxAggregateOutputType | null
+  }
+
+  export type AfimilkDayMilkAvgAggregateOutputType = {
+    avg10Session1: number | null
+    actualSession1: number | null
+    avg10Session2: number | null
+    actualSession2: number | null
+    avg10Session3: number | null
+    actualSession3: number | null
+    avg10Total: number | null
+    actualTotal: number | null
+  }
+
+  export type AfimilkDayMilkSumAggregateOutputType = {
+    avg10Session1: number | null
+    actualSession1: number | null
+    avg10Session2: number | null
+    actualSession2: number | null
+    avg10Session3: number | null
+    actualSession3: number | null
+    avg10Total: number | null
+    actualTotal: number | null
+  }
+
+  export type AfimilkDayMilkMinAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    cowId: string | null
+    cowNumber: string | null
+    date: Date | null
+    avg10Session1: number | null
+    actualSession1: number | null
+    avg10Session2: number | null
+    actualSession2: number | null
+    avg10Session3: number | null
+    actualSession3: number | null
+    avg10Total: number | null
+    actualTotal: number | null
+    batchId: string | null
+    sourceFile: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AfimilkDayMilkMaxAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    cowId: string | null
+    cowNumber: string | null
+    date: Date | null
+    avg10Session1: number | null
+    actualSession1: number | null
+    avg10Session2: number | null
+    actualSession2: number | null
+    avg10Session3: number | null
+    actualSession3: number | null
+    avg10Total: number | null
+    actualTotal: number | null
+    batchId: string | null
+    sourceFile: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AfimilkDayMilkCountAggregateOutputType = {
+    id: number
+    farmId: number
+    cowId: number
+    cowNumber: number
+    date: number
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId: number
+    sourceFile: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AfimilkDayMilkAvgAggregateInputType = {
+    avg10Session1?: true
+    actualSession1?: true
+    avg10Session2?: true
+    actualSession2?: true
+    avg10Session3?: true
+    actualSession3?: true
+    avg10Total?: true
+    actualTotal?: true
+  }
+
+  export type AfimilkDayMilkSumAggregateInputType = {
+    avg10Session1?: true
+    actualSession1?: true
+    avg10Session2?: true
+    actualSession2?: true
+    avg10Session3?: true
+    actualSession3?: true
+    avg10Total?: true
+    actualTotal?: true
+  }
+
+  export type AfimilkDayMilkMinAggregateInputType = {
+    id?: true
+    farmId?: true
+    cowId?: true
+    cowNumber?: true
+    date?: true
+    avg10Session1?: true
+    actualSession1?: true
+    avg10Session2?: true
+    actualSession2?: true
+    avg10Session3?: true
+    actualSession3?: true
+    avg10Total?: true
+    actualTotal?: true
+    batchId?: true
+    sourceFile?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AfimilkDayMilkMaxAggregateInputType = {
+    id?: true
+    farmId?: true
+    cowId?: true
+    cowNumber?: true
+    date?: true
+    avg10Session1?: true
+    actualSession1?: true
+    avg10Session2?: true
+    actualSession2?: true
+    avg10Session3?: true
+    actualSession3?: true
+    avg10Total?: true
+    actualTotal?: true
+    batchId?: true
+    sourceFile?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AfimilkDayMilkCountAggregateInputType = {
+    id?: true
+    farmId?: true
+    cowId?: true
+    cowNumber?: true
+    date?: true
+    avg10Session1?: true
+    actualSession1?: true
+    avg10Session2?: true
+    actualSession2?: true
+    avg10Session3?: true
+    actualSession3?: true
+    avg10Total?: true
+    actualTotal?: true
+    batchId?: true
+    sourceFile?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AfimilkDayMilkAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AfimilkDayMilk to aggregate.
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AfimilkDayMilks to fetch.
+     */
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AfimilkDayMilks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AfimilkDayMilks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AfimilkDayMilks
+    **/
+    _count?: true | AfimilkDayMilkCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AfimilkDayMilkAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AfimilkDayMilkSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AfimilkDayMilkMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AfimilkDayMilkMaxAggregateInputType
+  }
+
+  export type GetAfimilkDayMilkAggregateType<T extends AfimilkDayMilkAggregateArgs> = {
+        [P in keyof T & keyof AggregateAfimilkDayMilk]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAfimilkDayMilk[P]>
+      : GetScalarType<T[P], AggregateAfimilkDayMilk[P]>
+  }
+
+
+
+
+  export type AfimilkDayMilkGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AfimilkDayMilkWhereInput
+    orderBy?: AfimilkDayMilkOrderByWithAggregationInput | AfimilkDayMilkOrderByWithAggregationInput[]
+    by: AfimilkDayMilkScalarFieldEnum[] | AfimilkDayMilkScalarFieldEnum
+    having?: AfimilkDayMilkScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AfimilkDayMilkCountAggregateInputType | true
+    _avg?: AfimilkDayMilkAvgAggregateInputType
+    _sum?: AfimilkDayMilkSumAggregateInputType
+    _min?: AfimilkDayMilkMinAggregateInputType
+    _max?: AfimilkDayMilkMaxAggregateInputType
+  }
+
+  export type AfimilkDayMilkGroupByOutputType = {
+    id: string
+    farmId: string
+    cowId: string | null
+    cowNumber: string
+    date: Date
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId: string | null
+    sourceFile: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AfimilkDayMilkCountAggregateOutputType | null
+    _avg: AfimilkDayMilkAvgAggregateOutputType | null
+    _sum: AfimilkDayMilkSumAggregateOutputType | null
+    _min: AfimilkDayMilkMinAggregateOutputType | null
+    _max: AfimilkDayMilkMaxAggregateOutputType | null
+  }
+
+  type GetAfimilkDayMilkGroupByPayload<T extends AfimilkDayMilkGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AfimilkDayMilkGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AfimilkDayMilkGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AfimilkDayMilkGroupByOutputType[P]>
+            : GetScalarType<T[P], AfimilkDayMilkGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AfimilkDayMilkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    cowId?: boolean
+    cowNumber?: boolean
+    date?: boolean
+    avg10Session1?: boolean
+    actualSession1?: boolean
+    avg10Session2?: boolean
+    actualSession2?: boolean
+    avg10Session3?: boolean
+    actualSession3?: boolean
+    avg10Total?: boolean
+    actualTotal?: boolean
+    batchId?: boolean
+    sourceFile?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }, ExtArgs["result"]["afimilkDayMilk"]>
+
+  export type AfimilkDayMilkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    cowId?: boolean
+    cowNumber?: boolean
+    date?: boolean
+    avg10Session1?: boolean
+    actualSession1?: boolean
+    avg10Session2?: boolean
+    actualSession2?: boolean
+    avg10Session3?: boolean
+    actualSession3?: boolean
+    avg10Total?: boolean
+    actualTotal?: boolean
+    batchId?: boolean
+    sourceFile?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }, ExtArgs["result"]["afimilkDayMilk"]>
+
+  export type AfimilkDayMilkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    cowId?: boolean
+    cowNumber?: boolean
+    date?: boolean
+    avg10Session1?: boolean
+    actualSession1?: boolean
+    avg10Session2?: boolean
+    actualSession2?: boolean
+    avg10Session3?: boolean
+    actualSession3?: boolean
+    avg10Total?: boolean
+    actualTotal?: boolean
+    batchId?: boolean
+    sourceFile?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }, ExtArgs["result"]["afimilkDayMilk"]>
+
+  export type AfimilkDayMilkSelectScalar = {
+    id?: boolean
+    farmId?: boolean
+    cowId?: boolean
+    cowNumber?: boolean
+    date?: boolean
+    avg10Session1?: boolean
+    actualSession1?: boolean
+    avg10Session2?: boolean
+    actualSession2?: boolean
+    avg10Session3?: boolean
+    actualSession3?: boolean
+    avg10Total?: boolean
+    actualTotal?: boolean
+    batchId?: boolean
+    sourceFile?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AfimilkDayMilkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "cowId" | "cowNumber" | "date" | "avg10Session1" | "actualSession1" | "avg10Session2" | "actualSession2" | "avg10Session3" | "actualSession3" | "avg10Total" | "actualTotal" | "batchId" | "sourceFile" | "createdAt" | "updatedAt", ExtArgs["result"]["afimilkDayMilk"]>
+  export type AfimilkDayMilkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }
+  export type AfimilkDayMilkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }
+  export type AfimilkDayMilkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | AfimilkDayMilk$cowArgs<ExtArgs>
+    batch?: boolean | AfimilkDayMilk$batchArgs<ExtArgs>
+  }
+
+  export type $AfimilkDayMilkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AfimilkDayMilk"
+    objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
+      cow: Prisma.$CowPayload<ExtArgs> | null
+      batch: Prisma.$IntegrationBatchPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      farmId: string
+      cowId: string | null
+      cowNumber: string
+      date: Date
+      avg10Session1: number
+      actualSession1: number
+      avg10Session2: number
+      actualSession2: number
+      avg10Session3: number
+      actualSession3: number
+      avg10Total: number
+      actualTotal: number
+      batchId: string | null
+      sourceFile: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["afimilkDayMilk"]>
+    composites: {}
+  }
+
+  type AfimilkDayMilkGetPayload<S extends boolean | null | undefined | AfimilkDayMilkDefaultArgs> = $Result.GetResult<Prisma.$AfimilkDayMilkPayload, S>
+
+  type AfimilkDayMilkCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AfimilkDayMilkFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AfimilkDayMilkCountAggregateInputType | true
+    }
+
+  export interface AfimilkDayMilkDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AfimilkDayMilk'], meta: { name: 'AfimilkDayMilk' } }
+    /**
+     * Find zero or one AfimilkDayMilk that matches the filter.
+     * @param {AfimilkDayMilkFindUniqueArgs} args - Arguments to find a AfimilkDayMilk
+     * @example
+     * // Get one AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AfimilkDayMilkFindUniqueArgs>(args: SelectSubset<T, AfimilkDayMilkFindUniqueArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AfimilkDayMilk that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AfimilkDayMilkFindUniqueOrThrowArgs} args - Arguments to find a AfimilkDayMilk
+     * @example
+     * // Get one AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AfimilkDayMilkFindUniqueOrThrowArgs>(args: SelectSubset<T, AfimilkDayMilkFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AfimilkDayMilk that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkFindFirstArgs} args - Arguments to find a AfimilkDayMilk
+     * @example
+     * // Get one AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AfimilkDayMilkFindFirstArgs>(args?: SelectSubset<T, AfimilkDayMilkFindFirstArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AfimilkDayMilk that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkFindFirstOrThrowArgs} args - Arguments to find a AfimilkDayMilk
+     * @example
+     * // Get one AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AfimilkDayMilkFindFirstOrThrowArgs>(args?: SelectSubset<T, AfimilkDayMilkFindFirstOrThrowArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AfimilkDayMilks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AfimilkDayMilks
+     * const afimilkDayMilks = await prisma.afimilkDayMilk.findMany()
+     * 
+     * // Get first 10 AfimilkDayMilks
+     * const afimilkDayMilks = await prisma.afimilkDayMilk.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const afimilkDayMilkWithIdOnly = await prisma.afimilkDayMilk.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AfimilkDayMilkFindManyArgs>(args?: SelectSubset<T, AfimilkDayMilkFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AfimilkDayMilk.
+     * @param {AfimilkDayMilkCreateArgs} args - Arguments to create a AfimilkDayMilk.
+     * @example
+     * // Create one AfimilkDayMilk
+     * const AfimilkDayMilk = await prisma.afimilkDayMilk.create({
+     *   data: {
+     *     // ... data to create a AfimilkDayMilk
+     *   }
+     * })
+     * 
+     */
+    create<T extends AfimilkDayMilkCreateArgs>(args: SelectSubset<T, AfimilkDayMilkCreateArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AfimilkDayMilks.
+     * @param {AfimilkDayMilkCreateManyArgs} args - Arguments to create many AfimilkDayMilks.
+     * @example
+     * // Create many AfimilkDayMilks
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AfimilkDayMilkCreateManyArgs>(args?: SelectSubset<T, AfimilkDayMilkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AfimilkDayMilks and returns the data saved in the database.
+     * @param {AfimilkDayMilkCreateManyAndReturnArgs} args - Arguments to create many AfimilkDayMilks.
+     * @example
+     * // Create many AfimilkDayMilks
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AfimilkDayMilks and only return the `id`
+     * const afimilkDayMilkWithIdOnly = await prisma.afimilkDayMilk.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AfimilkDayMilkCreateManyAndReturnArgs>(args?: SelectSubset<T, AfimilkDayMilkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AfimilkDayMilk.
+     * @param {AfimilkDayMilkDeleteArgs} args - Arguments to delete one AfimilkDayMilk.
+     * @example
+     * // Delete one AfimilkDayMilk
+     * const AfimilkDayMilk = await prisma.afimilkDayMilk.delete({
+     *   where: {
+     *     // ... filter to delete one AfimilkDayMilk
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AfimilkDayMilkDeleteArgs>(args: SelectSubset<T, AfimilkDayMilkDeleteArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AfimilkDayMilk.
+     * @param {AfimilkDayMilkUpdateArgs} args - Arguments to update one AfimilkDayMilk.
+     * @example
+     * // Update one AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AfimilkDayMilkUpdateArgs>(args: SelectSubset<T, AfimilkDayMilkUpdateArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AfimilkDayMilks.
+     * @param {AfimilkDayMilkDeleteManyArgs} args - Arguments to filter AfimilkDayMilks to delete.
+     * @example
+     * // Delete a few AfimilkDayMilks
+     * const { count } = await prisma.afimilkDayMilk.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AfimilkDayMilkDeleteManyArgs>(args?: SelectSubset<T, AfimilkDayMilkDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AfimilkDayMilks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AfimilkDayMilks
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AfimilkDayMilkUpdateManyArgs>(args: SelectSubset<T, AfimilkDayMilkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AfimilkDayMilks and returns the data updated in the database.
+     * @param {AfimilkDayMilkUpdateManyAndReturnArgs} args - Arguments to update many AfimilkDayMilks.
+     * @example
+     * // Update many AfimilkDayMilks
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AfimilkDayMilks and only return the `id`
+     * const afimilkDayMilkWithIdOnly = await prisma.afimilkDayMilk.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AfimilkDayMilkUpdateManyAndReturnArgs>(args: SelectSubset<T, AfimilkDayMilkUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AfimilkDayMilk.
+     * @param {AfimilkDayMilkUpsertArgs} args - Arguments to update or create a AfimilkDayMilk.
+     * @example
+     * // Update or create a AfimilkDayMilk
+     * const afimilkDayMilk = await prisma.afimilkDayMilk.upsert({
+     *   create: {
+     *     // ... data to create a AfimilkDayMilk
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AfimilkDayMilk we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AfimilkDayMilkUpsertArgs>(args: SelectSubset<T, AfimilkDayMilkUpsertArgs<ExtArgs>>): Prisma__AfimilkDayMilkClient<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AfimilkDayMilks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkCountArgs} args - Arguments to filter AfimilkDayMilks to count.
+     * @example
+     * // Count the number of AfimilkDayMilks
+     * const count = await prisma.afimilkDayMilk.count({
+     *   where: {
+     *     // ... the filter for the AfimilkDayMilks we want to count
+     *   }
+     * })
+    **/
+    count<T extends AfimilkDayMilkCountArgs>(
+      args?: Subset<T, AfimilkDayMilkCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AfimilkDayMilkCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AfimilkDayMilk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AfimilkDayMilkAggregateArgs>(args: Subset<T, AfimilkDayMilkAggregateArgs>): Prisma.PrismaPromise<GetAfimilkDayMilkAggregateType<T>>
+
+    /**
+     * Group by AfimilkDayMilk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AfimilkDayMilkGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AfimilkDayMilkGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AfimilkDayMilkGroupByArgs['orderBy'] }
+        : { orderBy?: AfimilkDayMilkGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AfimilkDayMilkGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAfimilkDayMilkGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AfimilkDayMilk model
+   */
+  readonly fields: AfimilkDayMilkFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AfimilkDayMilk.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AfimilkDayMilkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cow<T extends AfimilkDayMilk$cowArgs<ExtArgs> = {}>(args?: Subset<T, AfimilkDayMilk$cowArgs<ExtArgs>>): Prisma__CowClient<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    batch<T extends AfimilkDayMilk$batchArgs<ExtArgs> = {}>(args?: Subset<T, AfimilkDayMilk$batchArgs<ExtArgs>>): Prisma__IntegrationBatchClient<$Result.GetResult<Prisma.$IntegrationBatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AfimilkDayMilk model
+   */
+  interface AfimilkDayMilkFieldRefs {
+    readonly id: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly farmId: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly cowId: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly cowNumber: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly date: FieldRef<"AfimilkDayMilk", 'DateTime'>
+    readonly avg10Session1: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly actualSession1: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly avg10Session2: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly actualSession2: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly avg10Session3: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly actualSession3: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly avg10Total: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly actualTotal: FieldRef<"AfimilkDayMilk", 'Float'>
+    readonly batchId: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly sourceFile: FieldRef<"AfimilkDayMilk", 'String'>
+    readonly createdAt: FieldRef<"AfimilkDayMilk", 'DateTime'>
+    readonly updatedAt: FieldRef<"AfimilkDayMilk", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AfimilkDayMilk findUnique
+   */
+  export type AfimilkDayMilkFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter, which AfimilkDayMilk to fetch.
+     */
+    where: AfimilkDayMilkWhereUniqueInput
+  }
+
+  /**
+   * AfimilkDayMilk findUniqueOrThrow
+   */
+  export type AfimilkDayMilkFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter, which AfimilkDayMilk to fetch.
+     */
+    where: AfimilkDayMilkWhereUniqueInput
+  }
+
+  /**
+   * AfimilkDayMilk findFirst
+   */
+  export type AfimilkDayMilkFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter, which AfimilkDayMilk to fetch.
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AfimilkDayMilks to fetch.
+     */
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AfimilkDayMilks.
+     */
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AfimilkDayMilks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AfimilkDayMilks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AfimilkDayMilks.
+     */
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
+  }
+
+  /**
+   * AfimilkDayMilk findFirstOrThrow
+   */
+  export type AfimilkDayMilkFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter, which AfimilkDayMilk to fetch.
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AfimilkDayMilks to fetch.
+     */
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AfimilkDayMilks.
+     */
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AfimilkDayMilks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AfimilkDayMilks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AfimilkDayMilks.
+     */
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
+  }
+
+  /**
+   * AfimilkDayMilk findMany
+   */
+  export type AfimilkDayMilkFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter, which AfimilkDayMilks to fetch.
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AfimilkDayMilks to fetch.
+     */
+    orderBy?: AfimilkDayMilkOrderByWithRelationInput | AfimilkDayMilkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AfimilkDayMilks.
+     */
+    cursor?: AfimilkDayMilkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AfimilkDayMilks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AfimilkDayMilks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AfimilkDayMilks.
+     */
+    distinct?: AfimilkDayMilkScalarFieldEnum | AfimilkDayMilkScalarFieldEnum[]
+  }
+
+  /**
+   * AfimilkDayMilk create
+   */
+  export type AfimilkDayMilkCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AfimilkDayMilk.
+     */
+    data: XOR<AfimilkDayMilkCreateInput, AfimilkDayMilkUncheckedCreateInput>
+  }
+
+  /**
+   * AfimilkDayMilk createMany
+   */
+  export type AfimilkDayMilkCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AfimilkDayMilks.
+     */
+    data: AfimilkDayMilkCreateManyInput | AfimilkDayMilkCreateManyInput[]
+  }
+
+  /**
+   * AfimilkDayMilk createManyAndReturn
+   */
+  export type AfimilkDayMilkCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * The data used to create many AfimilkDayMilks.
+     */
+    data: AfimilkDayMilkCreateManyInput | AfimilkDayMilkCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AfimilkDayMilk update
+   */
+  export type AfimilkDayMilkUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AfimilkDayMilk.
+     */
+    data: XOR<AfimilkDayMilkUpdateInput, AfimilkDayMilkUncheckedUpdateInput>
+    /**
+     * Choose, which AfimilkDayMilk to update.
+     */
+    where: AfimilkDayMilkWhereUniqueInput
+  }
+
+  /**
+   * AfimilkDayMilk updateMany
+   */
+  export type AfimilkDayMilkUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AfimilkDayMilks.
+     */
+    data: XOR<AfimilkDayMilkUpdateManyMutationInput, AfimilkDayMilkUncheckedUpdateManyInput>
+    /**
+     * Filter which AfimilkDayMilks to update
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * Limit how many AfimilkDayMilks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AfimilkDayMilk updateManyAndReturn
+   */
+  export type AfimilkDayMilkUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * The data used to update AfimilkDayMilks.
+     */
+    data: XOR<AfimilkDayMilkUpdateManyMutationInput, AfimilkDayMilkUncheckedUpdateManyInput>
+    /**
+     * Filter which AfimilkDayMilks to update
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * Limit how many AfimilkDayMilks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AfimilkDayMilk upsert
+   */
+  export type AfimilkDayMilkUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AfimilkDayMilk to update in case it exists.
+     */
+    where: AfimilkDayMilkWhereUniqueInput
+    /**
+     * In case the AfimilkDayMilk found by the `where` argument doesn't exist, create a new AfimilkDayMilk with this data.
+     */
+    create: XOR<AfimilkDayMilkCreateInput, AfimilkDayMilkUncheckedCreateInput>
+    /**
+     * In case the AfimilkDayMilk was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AfimilkDayMilkUpdateInput, AfimilkDayMilkUncheckedUpdateInput>
+  }
+
+  /**
+   * AfimilkDayMilk delete
+   */
+  export type AfimilkDayMilkDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
+    /**
+     * Filter which AfimilkDayMilk to delete.
+     */
+    where: AfimilkDayMilkWhereUniqueInput
+  }
+
+  /**
+   * AfimilkDayMilk deleteMany
+   */
+  export type AfimilkDayMilkDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AfimilkDayMilks to delete
+     */
+    where?: AfimilkDayMilkWhereInput
+    /**
+     * Limit how many AfimilkDayMilks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AfimilkDayMilk.cow
+   */
+  export type AfimilkDayMilk$cowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cow
+     */
+    select?: CowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cow
+     */
+    omit?: CowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowInclude<ExtArgs> | null
+    where?: CowWhereInput
+  }
+
+  /**
+   * AfimilkDayMilk.batch
+   */
+  export type AfimilkDayMilk$batchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationBatch
+     */
+    select?: IntegrationBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationBatch
+     */
+    omit?: IntegrationBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationBatchInclude<ExtArgs> | null
+    where?: IntegrationBatchWhereInput
+  }
+
+  /**
+   * AfimilkDayMilk without action
+   */
+  export type AfimilkDayMilkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AfimilkDayMilk
+     */
+    select?: AfimilkDayMilkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AfimilkDayMilk
+     */
+    omit?: AfimilkDayMilkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AfimilkDayMilkInclude<ExtArgs> | null
   }
 
 
@@ -53232,6 +54767,29 @@ export namespace Prisma {
   export type MilkRecordScalarFieldEnum = (typeof MilkRecordScalarFieldEnum)[keyof typeof MilkRecordScalarFieldEnum]
 
 
+  export const AfimilkDayMilkScalarFieldEnum: {
+    id: 'id',
+    farmId: 'farmId',
+    cowId: 'cowId',
+    cowNumber: 'cowNumber',
+    date: 'date',
+    avg10Session1: 'avg10Session1',
+    actualSession1: 'actualSession1',
+    avg10Session2: 'avg10Session2',
+    actualSession2: 'actualSession2',
+    avg10Session3: 'avg10Session3',
+    actualSession3: 'actualSession3',
+    avg10Total: 'avg10Total',
+    actualTotal: 'actualTotal',
+    batchId: 'batchId',
+    sourceFile: 'sourceFile',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AfimilkDayMilkScalarFieldEnum = (typeof AfimilkDayMilkScalarFieldEnum)[keyof typeof AfimilkDayMilkScalarFieldEnum]
+
+
   export const FeedRecordScalarFieldEnum: {
     id: 'id',
     groupId: 'groupId',
@@ -53752,6 +55310,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Farm"> | Date | string
     groups?: GroupUnitListRelationFilter
     cows?: CowListRelationFilter
+    afimilkDayMilk?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
     economic?: EconomicFactListRelationFilter
     reportTemplates?: ReportTemplateListRelationFilter
@@ -53770,6 +55329,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     groups?: GroupUnitOrderByRelationAggregateInput
     cows?: CowOrderByRelationAggregateInput
+    afimilkDayMilk?: AfimilkDayMilkOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     economic?: EconomicFactOrderByRelationAggregateInput
     reportTemplates?: ReportTemplateOrderByRelationAggregateInput
@@ -53791,6 +55351,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Farm"> | Date | string
     groups?: GroupUnitListRelationFilter
     cows?: CowListRelationFilter
+    afimilkDayMilk?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
     economic?: EconomicFactListRelationFilter
     reportTemplates?: ReportTemplateListRelationFilter
@@ -53937,6 +55498,7 @@ export namespace Prisma {
     memberships?: GroupMembershipListRelationFilter
     sectionHistory?: CowSectionHistoryListRelationFilter
     milkRecords?: MilkRecordListRelationFilter
+    dayMilkRecords?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
     observations?: ObservationListRelationFilter
     geneticIndex?: GeneticIndexValueListRelationFilter
@@ -53968,6 +55530,7 @@ export namespace Prisma {
     memberships?: GroupMembershipOrderByRelationAggregateInput
     sectionHistory?: CowSectionHistoryOrderByRelationAggregateInput
     milkRecords?: MilkRecordOrderByRelationAggregateInput
+    dayMilkRecords?: AfimilkDayMilkOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     observations?: ObservationOrderByRelationAggregateInput
     geneticIndex?: GeneticIndexValueOrderByRelationAggregateInput
@@ -54002,6 +55565,7 @@ export namespace Prisma {
     memberships?: GroupMembershipListRelationFilter
     sectionHistory?: CowSectionHistoryListRelationFilter
     milkRecords?: MilkRecordListRelationFilter
+    dayMilkRecords?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
     observations?: ObservationListRelationFilter
     geneticIndex?: GeneticIndexValueListRelationFilter
@@ -54489,6 +56053,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
     mixBatches?: MixBatchListRelationFilter
+    dayMilk?: AfimilkDayMilkListRelationFilter
   }
 
   export type IntegrationBatchOrderByWithRelationInput = {
@@ -54513,6 +56078,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordOrderByRelationAggregateInput
     feedRecords?: FeedRecordOrderByRelationAggregateInput
     mixBatches?: MixBatchOrderByRelationAggregateInput
+    dayMilk?: AfimilkDayMilkOrderByRelationAggregateInput
   }
 
   export type IntegrationBatchWhereUniqueInput = Prisma.AtLeast<{
@@ -54540,6 +56106,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
     mixBatches?: MixBatchListRelationFilter
+    dayMilk?: AfimilkDayMilkListRelationFilter
   }, "id">
 
   export type IntegrationBatchOrderByWithAggregationInput = {
@@ -54826,6 +56393,130 @@ export namespace Prisma {
     source?: StringWithAggregatesFilter<"MilkRecord"> | string
     batchId?: StringNullableWithAggregatesFilter<"MilkRecord"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"MilkRecord"> | Date | string
+  }
+
+  export type AfimilkDayMilkWhereInput = {
+    AND?: AfimilkDayMilkWhereInput | AfimilkDayMilkWhereInput[]
+    OR?: AfimilkDayMilkWhereInput[]
+    NOT?: AfimilkDayMilkWhereInput | AfimilkDayMilkWhereInput[]
+    id?: StringFilter<"AfimilkDayMilk"> | string
+    farmId?: StringFilter<"AfimilkDayMilk"> | string
+    cowId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    cowNumber?: StringFilter<"AfimilkDayMilk"> | string
+    date?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    avg10Session1?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession1?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session2?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession2?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session3?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession3?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Total?: FloatFilter<"AfimilkDayMilk"> | number
+    actualTotal?: FloatFilter<"AfimilkDayMilk"> | number
+    batchId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    sourceFile?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    createdAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    updatedAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
+    batch?: XOR<IntegrationBatchNullableScalarRelationFilter, IntegrationBatchWhereInput> | null
+  }
+
+  export type AfimilkDayMilkOrderByWithRelationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    cowId?: SortOrderInput | SortOrder
+    cowNumber?: SortOrder
+    date?: SortOrder
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+    batchId?: SortOrderInput | SortOrder
+    sourceFile?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    farm?: FarmOrderByWithRelationInput
+    cow?: CowOrderByWithRelationInput
+    batch?: IntegrationBatchOrderByWithRelationInput
+  }
+
+  export type AfimilkDayMilkWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    farmId_cowNumber_date?: AfimilkDayMilkFarmIdCowNumberDateCompoundUniqueInput
+    AND?: AfimilkDayMilkWhereInput | AfimilkDayMilkWhereInput[]
+    OR?: AfimilkDayMilkWhereInput[]
+    NOT?: AfimilkDayMilkWhereInput | AfimilkDayMilkWhereInput[]
+    farmId?: StringFilter<"AfimilkDayMilk"> | string
+    cowId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    cowNumber?: StringFilter<"AfimilkDayMilk"> | string
+    date?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    avg10Session1?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession1?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session2?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession2?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session3?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession3?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Total?: FloatFilter<"AfimilkDayMilk"> | number
+    actualTotal?: FloatFilter<"AfimilkDayMilk"> | number
+    batchId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    sourceFile?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    createdAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    updatedAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
+    batch?: XOR<IntegrationBatchNullableScalarRelationFilter, IntegrationBatchWhereInput> | null
+  }, "id" | "farmId_cowNumber_date">
+
+  export type AfimilkDayMilkOrderByWithAggregationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    cowId?: SortOrderInput | SortOrder
+    cowNumber?: SortOrder
+    date?: SortOrder
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+    batchId?: SortOrderInput | SortOrder
+    sourceFile?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AfimilkDayMilkCountOrderByAggregateInput
+    _avg?: AfimilkDayMilkAvgOrderByAggregateInput
+    _max?: AfimilkDayMilkMaxOrderByAggregateInput
+    _min?: AfimilkDayMilkMinOrderByAggregateInput
+    _sum?: AfimilkDayMilkSumOrderByAggregateInput
+  }
+
+  export type AfimilkDayMilkScalarWhereWithAggregatesInput = {
+    AND?: AfimilkDayMilkScalarWhereWithAggregatesInput | AfimilkDayMilkScalarWhereWithAggregatesInput[]
+    OR?: AfimilkDayMilkScalarWhereWithAggregatesInput[]
+    NOT?: AfimilkDayMilkScalarWhereWithAggregatesInput | AfimilkDayMilkScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AfimilkDayMilk"> | string
+    farmId?: StringWithAggregatesFilter<"AfimilkDayMilk"> | string
+    cowId?: StringNullableWithAggregatesFilter<"AfimilkDayMilk"> | string | null
+    cowNumber?: StringWithAggregatesFilter<"AfimilkDayMilk"> | string
+    date?: DateTimeWithAggregatesFilter<"AfimilkDayMilk"> | Date | string
+    avg10Session1?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    actualSession1?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    avg10Session2?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    actualSession2?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    avg10Session3?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    actualSession3?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    avg10Total?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    actualTotal?: FloatWithAggregatesFilter<"AfimilkDayMilk"> | number
+    batchId?: StringNullableWithAggregatesFilter<"AfimilkDayMilk"> | string | null
+    sourceFile?: StringNullableWithAggregatesFilter<"AfimilkDayMilk"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AfimilkDayMilk"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AfimilkDayMilk"> | Date | string
   }
 
   export type FeedRecordWhereInput = {
@@ -57198,6 +58889,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -57216,6 +58908,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -57234,6 +58927,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -57252,6 +58946,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -57402,6 +59097,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -57429,6 +59125,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -57456,6 +59153,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -57483,6 +59181,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -57985,6 +59684,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUncheckedCreateInput = {
@@ -58008,6 +59708,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUpdateInput = {
@@ -58031,6 +59732,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateInput = {
@@ -58054,6 +59756,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchCreateManyInput = {
@@ -58373,6 +60076,143 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
     batchId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkCreateInput = {
+    id?: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAfimilkDayMilkInput
+    cow?: CowCreateNestedOneWithoutDayMilkRecordsInput
+    batch?: IntegrationBatchCreateNestedOneWithoutDayMilkInput
+  }
+
+  export type AfimilkDayMilkUncheckedCreateInput = {
+    id?: string
+    farmId: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAfimilkDayMilkNestedInput
+    cow?: CowUpdateOneWithoutDayMilkRecordsNestedInput
+    batch?: IntegrationBatchUpdateOneWithoutDayMilkNestedInput
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkCreateManyInput = {
+    id?: string
+    farmId: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeedRecordCreateInput = {
@@ -61054,6 +62894,12 @@ export namespace Prisma {
     none?: CowWhereInput
   }
 
+  export type AfimilkDayMilkListRelationFilter = {
+    every?: AfimilkDayMilkWhereInput
+    some?: AfimilkDayMilkWhereInput
+    none?: AfimilkDayMilkWhereInput
+  }
+
   export type EventListRelationFilter = {
     every?: EventWhereInput
     some?: EventWhereInput
@@ -61112,6 +62958,10 @@ export namespace Prisma {
   }
 
   export type CowOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AfimilkDayMilkOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -62023,6 +63873,94 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type AfimilkDayMilkFarmIdCowNumberDateCompoundUniqueInput = {
+    farmId: string
+    cowNumber: string
+    date: Date | string
+  }
+
+  export type AfimilkDayMilkCountOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    cowId?: SortOrder
+    cowNumber?: SortOrder
+    date?: SortOrder
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+    batchId?: SortOrder
+    sourceFile?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AfimilkDayMilkAvgOrderByAggregateInput = {
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+  }
+
+  export type AfimilkDayMilkMaxOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    cowId?: SortOrder
+    cowNumber?: SortOrder
+    date?: SortOrder
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+    batchId?: SortOrder
+    sourceFile?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AfimilkDayMilkMinOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    cowId?: SortOrder
+    cowNumber?: SortOrder
+    date?: SortOrder
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
+    batchId?: SortOrder
+    sourceFile?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AfimilkDayMilkSumOrderByAggregateInput = {
+    avg10Session1?: SortOrder
+    actualSession1?: SortOrder
+    avg10Session2?: SortOrder
+    actualSession2?: SortOrder
+    avg10Session3?: SortOrder
+    actualSession3?: SortOrder
+    avg10Total?: SortOrder
+    actualTotal?: SortOrder
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -63526,6 +65464,13 @@ export namespace Prisma {
     connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
   }
 
+  export type AfimilkDayMilkCreateNestedManyWithoutFarmInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput> | AfimilkDayMilkCreateWithoutFarmInput[] | AfimilkDayMilkUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutFarmInput | AfimilkDayMilkCreateOrConnectWithoutFarmInput[]
+    createMany?: AfimilkDayMilkCreateManyFarmInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+  }
+
   export type EventCreateNestedManyWithoutFarmInput = {
     create?: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput> | EventCreateWithoutFarmInput[] | EventUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
@@ -63594,6 +65539,13 @@ export namespace Prisma {
     connectOrCreate?: CowCreateOrConnectWithoutFarmInput | CowCreateOrConnectWithoutFarmInput[]
     createMany?: CowCreateManyFarmInputEnvelope
     connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput> | AfimilkDayMilkCreateWithoutFarmInput[] | AfimilkDayMilkUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutFarmInput | AfimilkDayMilkCreateOrConnectWithoutFarmInput[]
+    createMany?: AfimilkDayMilkCreateManyFarmInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
   }
 
   export type EventUncheckedCreateNestedManyWithoutFarmInput = {
@@ -63690,6 +65642,20 @@ export namespace Prisma {
     update?: CowUpdateWithWhereUniqueWithoutFarmInput | CowUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: CowUpdateManyWithWhereWithoutFarmInput | CowUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
+  }
+
+  export type AfimilkDayMilkUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput> | AfimilkDayMilkCreateWithoutFarmInput[] | AfimilkDayMilkUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutFarmInput | AfimilkDayMilkCreateOrConnectWithoutFarmInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutFarmInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: AfimilkDayMilkCreateManyFarmInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutFarmInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutFarmInput | AfimilkDayMilkUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
   }
 
   export type EventUpdateManyWithoutFarmNestedInput = {
@@ -63830,6 +65796,20 @@ export namespace Prisma {
     update?: CowUpdateWithWhereUniqueWithoutFarmInput | CowUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: CowUpdateManyWithWhereWithoutFarmInput | CowUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput> | AfimilkDayMilkCreateWithoutFarmInput[] | AfimilkDayMilkUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutFarmInput | AfimilkDayMilkCreateOrConnectWithoutFarmInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutFarmInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: AfimilkDayMilkCreateManyFarmInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutFarmInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutFarmInput | AfimilkDayMilkUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
   }
 
   export type EventUncheckedUpdateManyWithoutFarmNestedInput = {
@@ -64232,6 +66212,13 @@ export namespace Prisma {
     connect?: MilkRecordWhereUniqueInput | MilkRecordWhereUniqueInput[]
   }
 
+  export type AfimilkDayMilkCreateNestedManyWithoutCowInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput> | AfimilkDayMilkCreateWithoutCowInput[] | AfimilkDayMilkUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutCowInput | AfimilkDayMilkCreateOrConnectWithoutCowInput[]
+    createMany?: AfimilkDayMilkCreateManyCowInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+  }
+
   export type EventCreateNestedManyWithoutCowInput = {
     create?: XOR<EventCreateWithoutCowInput, EventUncheckedCreateWithoutCowInput> | EventCreateWithoutCowInput[] | EventUncheckedCreateWithoutCowInput[]
     connectOrCreate?: EventCreateOrConnectWithoutCowInput | EventCreateOrConnectWithoutCowInput[]
@@ -64293,6 +66280,13 @@ export namespace Prisma {
     connectOrCreate?: MilkRecordCreateOrConnectWithoutCowInput | MilkRecordCreateOrConnectWithoutCowInput[]
     createMany?: MilkRecordCreateManyCowInputEnvelope
     connect?: MilkRecordWhereUniqueInput | MilkRecordWhereUniqueInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput> | AfimilkDayMilkCreateWithoutCowInput[] | AfimilkDayMilkUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutCowInput | AfimilkDayMilkCreateOrConnectWithoutCowInput[]
+    createMany?: AfimilkDayMilkCreateManyCowInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
   }
 
   export type EventUncheckedCreateNestedManyWithoutCowInput = {
@@ -64428,6 +66422,20 @@ export namespace Prisma {
     deleteMany?: MilkRecordScalarWhereInput | MilkRecordScalarWhereInput[]
   }
 
+  export type AfimilkDayMilkUpdateManyWithoutCowNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput> | AfimilkDayMilkCreateWithoutCowInput[] | AfimilkDayMilkUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutCowInput | AfimilkDayMilkCreateOrConnectWithoutCowInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutCowInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: AfimilkDayMilkCreateManyCowInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutCowInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutCowInput | AfimilkDayMilkUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
+  }
+
   export type EventUpdateManyWithoutCowNestedInput = {
     create?: XOR<EventCreateWithoutCowInput, EventUncheckedCreateWithoutCowInput> | EventCreateWithoutCowInput[] | EventUncheckedCreateWithoutCowInput[]
     connectOrCreate?: EventCreateOrConnectWithoutCowInput | EventCreateOrConnectWithoutCowInput[]
@@ -64552,6 +66560,20 @@ export namespace Prisma {
     update?: MilkRecordUpdateWithWhereUniqueWithoutCowInput | MilkRecordUpdateWithWhereUniqueWithoutCowInput[]
     updateMany?: MilkRecordUpdateManyWithWhereWithoutCowInput | MilkRecordUpdateManyWithWhereWithoutCowInput[]
     deleteMany?: MilkRecordScalarWhereInput | MilkRecordScalarWhereInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput> | AfimilkDayMilkCreateWithoutCowInput[] | AfimilkDayMilkUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutCowInput | AfimilkDayMilkCreateOrConnectWithoutCowInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutCowInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: AfimilkDayMilkCreateManyCowInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutCowInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutCowInput | AfimilkDayMilkUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
   }
 
   export type EventUncheckedUpdateManyWithoutCowNestedInput = {
@@ -64989,6 +67011,13 @@ export namespace Prisma {
     connect?: MixBatchWhereUniqueInput | MixBatchWhereUniqueInput[]
   }
 
+  export type AfimilkDayMilkCreateNestedManyWithoutBatchInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput> | AfimilkDayMilkCreateWithoutBatchInput[] | AfimilkDayMilkUncheckedCreateWithoutBatchInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutBatchInput | AfimilkDayMilkCreateOrConnectWithoutBatchInput[]
+    createMany?: AfimilkDayMilkCreateManyBatchInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+  }
+
   export type MilkRecordUncheckedCreateNestedManyWithoutBatchInput = {
     create?: XOR<MilkRecordCreateWithoutBatchInput, MilkRecordUncheckedCreateWithoutBatchInput> | MilkRecordCreateWithoutBatchInput[] | MilkRecordUncheckedCreateWithoutBatchInput[]
     connectOrCreate?: MilkRecordCreateOrConnectWithoutBatchInput | MilkRecordCreateOrConnectWithoutBatchInput[]
@@ -65008,6 +67037,13 @@ export namespace Prisma {
     connectOrCreate?: MixBatchCreateOrConnectWithoutBatchInput | MixBatchCreateOrConnectWithoutBatchInput[]
     createMany?: MixBatchCreateManyBatchInputEnvelope
     connect?: MixBatchWhereUniqueInput | MixBatchWhereUniqueInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput> | AfimilkDayMilkCreateWithoutBatchInput[] | AfimilkDayMilkUncheckedCreateWithoutBatchInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutBatchInput | AfimilkDayMilkCreateOrConnectWithoutBatchInput[]
+    createMany?: AfimilkDayMilkCreateManyBatchInputEnvelope
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
   }
 
   export type DataSourceUpdateOneRequiredWithoutBatchesNestedInput = {
@@ -65060,6 +67096,20 @@ export namespace Prisma {
     deleteMany?: MixBatchScalarWhereInput | MixBatchScalarWhereInput[]
   }
 
+  export type AfimilkDayMilkUpdateManyWithoutBatchNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput> | AfimilkDayMilkCreateWithoutBatchInput[] | AfimilkDayMilkUncheckedCreateWithoutBatchInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutBatchInput | AfimilkDayMilkCreateOrConnectWithoutBatchInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutBatchInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutBatchInput[]
+    createMany?: AfimilkDayMilkCreateManyBatchInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutBatchInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutBatchInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutBatchInput | AfimilkDayMilkUpdateManyWithWhereWithoutBatchInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
+  }
+
   export type MilkRecordUncheckedUpdateManyWithoutBatchNestedInput = {
     create?: XOR<MilkRecordCreateWithoutBatchInput, MilkRecordUncheckedCreateWithoutBatchInput> | MilkRecordCreateWithoutBatchInput[] | MilkRecordUncheckedCreateWithoutBatchInput[]
     connectOrCreate?: MilkRecordCreateOrConnectWithoutBatchInput | MilkRecordCreateOrConnectWithoutBatchInput[]
@@ -65100,6 +67150,20 @@ export namespace Prisma {
     update?: MixBatchUpdateWithWhereUniqueWithoutBatchInput | MixBatchUpdateWithWhereUniqueWithoutBatchInput[]
     updateMany?: MixBatchUpdateManyWithWhereWithoutBatchInput | MixBatchUpdateManyWithWhereWithoutBatchInput[]
     deleteMany?: MixBatchScalarWhereInput | MixBatchScalarWhereInput[]
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput = {
+    create?: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput> | AfimilkDayMilkCreateWithoutBatchInput[] | AfimilkDayMilkUncheckedCreateWithoutBatchInput[]
+    connectOrCreate?: AfimilkDayMilkCreateOrConnectWithoutBatchInput | AfimilkDayMilkCreateOrConnectWithoutBatchInput[]
+    upsert?: AfimilkDayMilkUpsertWithWhereUniqueWithoutBatchInput | AfimilkDayMilkUpsertWithWhereUniqueWithoutBatchInput[]
+    createMany?: AfimilkDayMilkCreateManyBatchInputEnvelope
+    set?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    disconnect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    delete?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    connect?: AfimilkDayMilkWhereUniqueInput | AfimilkDayMilkWhereUniqueInput[]
+    update?: AfimilkDayMilkUpdateWithWhereUniqueWithoutBatchInput | AfimilkDayMilkUpdateWithWhereUniqueWithoutBatchInput[]
+    updateMany?: AfimilkDayMilkUpdateManyWithWhereWithoutBatchInput | AfimilkDayMilkUpdateManyWithWhereWithoutBatchInput[]
+    deleteMany?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
   }
 
   export type MetricValueCreateNestedManyWithoutMetricInput = {
@@ -65204,6 +67268,52 @@ export namespace Prisma {
     delete?: IntegrationBatchWhereInput | boolean
     connect?: IntegrationBatchWhereUniqueInput
     update?: XOR<XOR<IntegrationBatchUpdateToOneWithWhereWithoutMilkRecordsInput, IntegrationBatchUpdateWithoutMilkRecordsInput>, IntegrationBatchUncheckedUpdateWithoutMilkRecordsInput>
+  }
+
+  export type FarmCreateNestedOneWithoutAfimilkDayMilkInput = {
+    create?: XOR<FarmCreateWithoutAfimilkDayMilkInput, FarmUncheckedCreateWithoutAfimilkDayMilkInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutAfimilkDayMilkInput
+    connect?: FarmWhereUniqueInput
+  }
+
+  export type CowCreateNestedOneWithoutDayMilkRecordsInput = {
+    create?: XOR<CowCreateWithoutDayMilkRecordsInput, CowUncheckedCreateWithoutDayMilkRecordsInput>
+    connectOrCreate?: CowCreateOrConnectWithoutDayMilkRecordsInput
+    connect?: CowWhereUniqueInput
+  }
+
+  export type IntegrationBatchCreateNestedOneWithoutDayMilkInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDayMilkInput, IntegrationBatchUncheckedCreateWithoutDayMilkInput>
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDayMilkInput
+    connect?: IntegrationBatchWhereUniqueInput
+  }
+
+  export type FarmUpdateOneRequiredWithoutAfimilkDayMilkNestedInput = {
+    create?: XOR<FarmCreateWithoutAfimilkDayMilkInput, FarmUncheckedCreateWithoutAfimilkDayMilkInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutAfimilkDayMilkInput
+    upsert?: FarmUpsertWithoutAfimilkDayMilkInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutAfimilkDayMilkInput, FarmUpdateWithoutAfimilkDayMilkInput>, FarmUncheckedUpdateWithoutAfimilkDayMilkInput>
+  }
+
+  export type CowUpdateOneWithoutDayMilkRecordsNestedInput = {
+    create?: XOR<CowCreateWithoutDayMilkRecordsInput, CowUncheckedCreateWithoutDayMilkRecordsInput>
+    connectOrCreate?: CowCreateOrConnectWithoutDayMilkRecordsInput
+    upsert?: CowUpsertWithoutDayMilkRecordsInput
+    disconnect?: CowWhereInput | boolean
+    delete?: CowWhereInput | boolean
+    connect?: CowWhereUniqueInput
+    update?: XOR<XOR<CowUpdateToOneWithWhereWithoutDayMilkRecordsInput, CowUpdateWithoutDayMilkRecordsInput>, CowUncheckedUpdateWithoutDayMilkRecordsInput>
+  }
+
+  export type IntegrationBatchUpdateOneWithoutDayMilkNestedInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDayMilkInput, IntegrationBatchUncheckedCreateWithoutDayMilkInput>
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDayMilkInput
+    upsert?: IntegrationBatchUpsertWithoutDayMilkInput
+    disconnect?: IntegrationBatchWhereInput | boolean
+    delete?: IntegrationBatchWhereInput | boolean
+    connect?: IntegrationBatchWhereUniqueInput
+    update?: XOR<XOR<IntegrationBatchUpdateToOneWithWhereWithoutDayMilkInput, IntegrationBatchUpdateWithoutDayMilkInput>, IntegrationBatchUncheckedUpdateWithoutDayMilkInput>
   }
 
   export type GroupUnitCreateNestedOneWithoutFeedRecordsInput = {
@@ -66863,6 +68973,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -66889,6 +69000,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -66903,6 +69015,53 @@ export namespace Prisma {
 
   export type CowCreateManyFarmInputEnvelope = {
     data: CowCreateManyFarmInput | CowCreateManyFarmInput[]
+  }
+
+  export type AfimilkDayMilkCreateWithoutFarmInput = {
+    id?: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cow?: CowCreateNestedOneWithoutDayMilkRecordsInput
+    batch?: IntegrationBatchCreateNestedOneWithoutDayMilkInput
+  }
+
+  export type AfimilkDayMilkUncheckedCreateWithoutFarmInput = {
+    id?: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkCreateOrConnectWithoutFarmInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    create: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput>
+  }
+
+  export type AfimilkDayMilkCreateManyFarmInputEnvelope = {
+    data: AfimilkDayMilkCreateManyFarmInput | AfimilkDayMilkCreateManyFarmInput[]
   }
 
   export type EventCreateWithoutFarmInput = {
@@ -67340,6 +69499,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Cow"> | Date | string
   }
 
+  export type AfimilkDayMilkUpsertWithWhereUniqueWithoutFarmInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    update: XOR<AfimilkDayMilkUpdateWithoutFarmInput, AfimilkDayMilkUncheckedUpdateWithoutFarmInput>
+    create: XOR<AfimilkDayMilkCreateWithoutFarmInput, AfimilkDayMilkUncheckedCreateWithoutFarmInput>
+  }
+
+  export type AfimilkDayMilkUpdateWithWhereUniqueWithoutFarmInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    data: XOR<AfimilkDayMilkUpdateWithoutFarmInput, AfimilkDayMilkUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type AfimilkDayMilkUpdateManyWithWhereWithoutFarmInput = {
+    where: AfimilkDayMilkScalarWhereInput
+    data: XOR<AfimilkDayMilkUpdateManyMutationInput, AfimilkDayMilkUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type AfimilkDayMilkScalarWhereInput = {
+    AND?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
+    OR?: AfimilkDayMilkScalarWhereInput[]
+    NOT?: AfimilkDayMilkScalarWhereInput | AfimilkDayMilkScalarWhereInput[]
+    id?: StringFilter<"AfimilkDayMilk"> | string
+    farmId?: StringFilter<"AfimilkDayMilk"> | string
+    cowId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    cowNumber?: StringFilter<"AfimilkDayMilk"> | string
+    date?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    avg10Session1?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession1?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session2?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession2?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Session3?: FloatFilter<"AfimilkDayMilk"> | number
+    actualSession3?: FloatFilter<"AfimilkDayMilk"> | number
+    avg10Total?: FloatFilter<"AfimilkDayMilk"> | number
+    actualTotal?: FloatFilter<"AfimilkDayMilk"> | number
+    batchId?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    sourceFile?: StringNullableFilter<"AfimilkDayMilk"> | string | null
+    createdAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+    updatedAt?: DateTimeFilter<"AfimilkDayMilk"> | Date | string
+  }
+
   export type EventUpsertWithWhereUniqueWithoutFarmInput = {
     where: EventWhereUniqueInput
     update: XOR<EventUpdateWithoutFarmInput, EventUncheckedUpdateWithoutFarmInput>
@@ -67638,6 +69836,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -67655,6 +69854,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -67689,6 +69889,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -67715,6 +69916,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -67891,6 +70093,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -67908,6 +70111,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -68056,6 +70260,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -68073,6 +70278,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -68299,6 +70505,53 @@ export namespace Prisma {
     data: MilkRecordCreateManyCowInput | MilkRecordCreateManyCowInput[]
   }
 
+  export type AfimilkDayMilkCreateWithoutCowInput = {
+    id?: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAfimilkDayMilkInput
+    batch?: IntegrationBatchCreateNestedOneWithoutDayMilkInput
+  }
+
+  export type AfimilkDayMilkUncheckedCreateWithoutCowInput = {
+    id?: string
+    farmId: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkCreateOrConnectWithoutCowInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    create: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput>
+  }
+
+  export type AfimilkDayMilkCreateManyCowInputEnvelope = {
+    data: AfimilkDayMilkCreateManyCowInput | AfimilkDayMilkCreateManyCowInput[]
+  }
+
   export type EventCreateWithoutCowInput = {
     id?: string
     severity?: string
@@ -68520,6 +70773,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -68537,6 +70791,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -68769,6 +71024,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"MilkRecord"> | Date | string
   }
 
+  export type AfimilkDayMilkUpsertWithWhereUniqueWithoutCowInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    update: XOR<AfimilkDayMilkUpdateWithoutCowInput, AfimilkDayMilkUncheckedUpdateWithoutCowInput>
+    create: XOR<AfimilkDayMilkCreateWithoutCowInput, AfimilkDayMilkUncheckedCreateWithoutCowInput>
+  }
+
+  export type AfimilkDayMilkUpdateWithWhereUniqueWithoutCowInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    data: XOR<AfimilkDayMilkUpdateWithoutCowInput, AfimilkDayMilkUncheckedUpdateWithoutCowInput>
+  }
+
+  export type AfimilkDayMilkUpdateManyWithWhereWithoutCowInput = {
+    where: AfimilkDayMilkScalarWhereInput
+    data: XOR<AfimilkDayMilkUpdateManyMutationInput, AfimilkDayMilkUncheckedUpdateManyWithoutCowInput>
+  }
+
   export type EventUpsertWithWhereUniqueWithoutCowInput = {
     where: EventWhereUniqueInput
     update: XOR<EventUpdateWithoutCowInput, EventUncheckedUpdateWithoutCowInput>
@@ -68898,6 +71169,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -68915,6 +71187,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -68973,6 +71246,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -68999,6 +71273,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -69125,6 +71400,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -69142,6 +71418,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -69265,6 +71542,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -69291,6 +71569,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -69370,6 +71649,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -69396,6 +71676,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -69621,6 +71902,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -69647,6 +71929,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -69689,6 +71972,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -69715,6 +71999,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -69741,6 +72026,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -69767,6 +72053,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -69844,6 +72131,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -69870,6 +72158,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -69938,6 +72227,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUncheckedCreateWithoutDataSourceInput = {
@@ -69960,6 +72250,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchCreateOrConnectWithoutDataSourceInput = {
@@ -70176,6 +72467,53 @@ export namespace Prisma {
     data: MixBatchCreateManyBatchInput | MixBatchCreateManyBatchInput[]
   }
 
+  export type AfimilkDayMilkCreateWithoutBatchInput = {
+    id?: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAfimilkDayMilkInput
+    cow?: CowCreateNestedOneWithoutDayMilkRecordsInput
+  }
+
+  export type AfimilkDayMilkUncheckedCreateWithoutBatchInput = {
+    id?: string
+    farmId: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkCreateOrConnectWithoutBatchInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    create: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput>
+  }
+
+  export type AfimilkDayMilkCreateManyBatchInputEnvelope = {
+    data: AfimilkDayMilkCreateManyBatchInput | AfimilkDayMilkCreateManyBatchInput[]
+  }
+
   export type DataSourceUpsertWithoutBatchesInput = {
     update: XOR<DataSourceUpdateWithoutBatchesInput, DataSourceUncheckedUpdateWithoutBatchesInput>
     create: XOR<DataSourceCreateWithoutBatchesInput, DataSourceUncheckedCreateWithoutBatchesInput>
@@ -70275,6 +72613,22 @@ export namespace Prisma {
     totalDuration?: StringNullableFilter<"MixBatch"> | string | null
     source?: StringFilter<"MixBatch"> | string
     batchId?: StringNullableFilter<"MixBatch"> | string | null
+  }
+
+  export type AfimilkDayMilkUpsertWithWhereUniqueWithoutBatchInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    update: XOR<AfimilkDayMilkUpdateWithoutBatchInput, AfimilkDayMilkUncheckedUpdateWithoutBatchInput>
+    create: XOR<AfimilkDayMilkCreateWithoutBatchInput, AfimilkDayMilkUncheckedCreateWithoutBatchInput>
+  }
+
+  export type AfimilkDayMilkUpdateWithWhereUniqueWithoutBatchInput = {
+    where: AfimilkDayMilkWhereUniqueInput
+    data: XOR<AfimilkDayMilkUpdateWithoutBatchInput, AfimilkDayMilkUncheckedUpdateWithoutBatchInput>
+  }
+
+  export type AfimilkDayMilkUpdateManyWithWhereWithoutBatchInput = {
+    where: AfimilkDayMilkScalarWhereInput
+    data: XOR<AfimilkDayMilkUpdateManyMutationInput, AfimilkDayMilkUncheckedUpdateManyWithoutBatchInput>
   }
 
   export type MetricValueCreateWithoutMetricInput = {
@@ -70407,6 +72761,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -70433,6 +72788,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -70465,6 +72821,7 @@ export namespace Prisma {
     dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUncheckedCreateWithoutMilkRecordsInput = {
@@ -70487,6 +72844,7 @@ export namespace Prisma {
     createdAt?: Date | string
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchCreateOrConnectWithoutMilkRecordsInput = {
@@ -70524,6 +72882,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -70550,6 +72909,7 @@ export namespace Prisma {
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -70588,6 +72948,7 @@ export namespace Prisma {
     dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateWithoutMilkRecordsInput = {
@@ -70608,6 +72969,327 @@ export namespace Prisma {
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    feedRecords?: FeedRecordUncheckedUpdateManyWithoutBatchNestedInput
+    mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput
+  }
+
+  export type FarmCreateWithoutAfimilkDayMilkInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitCreateNestedManyWithoutFarmInput
+    cows?: CowCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
+    barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutAfimilkDayMilkInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
+    cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
+    barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutAfimilkDayMilkInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutAfimilkDayMilkInput, FarmUncheckedCreateWithoutAfimilkDayMilkInput>
+  }
+
+  export type CowCreateWithoutDayMilkRecordsInput = {
+    id?: string
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutCowsInput
+    group?: GroupUnitCreateNestedOneWithoutCowsInput
+    barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
+    externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    events?: EventCreateNestedManyWithoutCowInput
+    observations?: ObservationCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
+    operations?: OperationRequestCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventCreateNestedManyWithoutCowInput
+  }
+
+  export type CowUncheckedCreateWithoutDayMilkRecordsInput = {
+    id?: string
+    farmId: string
+    groupId?: string | null
+    barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    events?: EventUncheckedCreateNestedManyWithoutCowInput
+    observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
+  }
+
+  export type CowCreateOrConnectWithoutDayMilkRecordsInput = {
+    where: CowWhereUniqueInput
+    create: XOR<CowCreateWithoutDayMilkRecordsInput, CowUncheckedCreateWithoutDayMilkRecordsInput>
+  }
+
+  export type IntegrationBatchCreateWithoutDayMilkInput = {
+    id?: string
+    source?: string | null
+    filename?: string | null
+    fileHash?: string | null
+    status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
+    recordCount?: number
+    errors?: string | null
+    processedAt?: Date | string | null
+    createdAt?: Date | string
+    dataSource: DataSourceCreateNestedOneWithoutBatchesInput
+    milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
+    feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
+    mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
+  }
+
+  export type IntegrationBatchUncheckedCreateWithoutDayMilkInput = {
+    id?: string
+    sourceId: string
+    source?: string | null
+    filename?: string | null
+    fileHash?: string | null
+    status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
+    recordCount?: number
+    errors?: string | null
+    processedAt?: Date | string | null
+    createdAt?: Date | string
+    milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutBatchInput
+    feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutBatchInput
+    mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
+  }
+
+  export type IntegrationBatchCreateOrConnectWithoutDayMilkInput = {
+    where: IntegrationBatchWhereUniqueInput
+    create: XOR<IntegrationBatchCreateWithoutDayMilkInput, IntegrationBatchUncheckedCreateWithoutDayMilkInput>
+  }
+
+  export type FarmUpsertWithoutAfimilkDayMilkInput = {
+    update: XOR<FarmUpdateWithoutAfimilkDayMilkInput, FarmUncheckedUpdateWithoutAfimilkDayMilkInput>
+    create: XOR<FarmCreateWithoutAfimilkDayMilkInput, FarmUncheckedCreateWithoutAfimilkDayMilkInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutAfimilkDayMilkInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutAfimilkDayMilkInput, FarmUncheckedUpdateWithoutAfimilkDayMilkInput>
+  }
+
+  export type FarmUpdateWithoutAfimilkDayMilkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUpdateManyWithoutFarmNestedInput
+    cows?: CowUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
+    barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutAfimilkDayMilkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
+    cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
+    barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type CowUpsertWithoutDayMilkRecordsInput = {
+    update: XOR<CowUpdateWithoutDayMilkRecordsInput, CowUncheckedUpdateWithoutDayMilkRecordsInput>
+    create: XOR<CowCreateWithoutDayMilkRecordsInput, CowUncheckedCreateWithoutDayMilkRecordsInput>
+    where?: CowWhereInput
+  }
+
+  export type CowUpdateToOneWithWhereWithoutDayMilkRecordsInput = {
+    where?: CowWhereInput
+    data: XOR<CowUpdateWithoutDayMilkRecordsInput, CowUncheckedUpdateWithoutDayMilkRecordsInput>
+  }
+
+  export type CowUpdateWithoutDayMilkRecordsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
+    group?: GroupUnitUpdateOneWithoutCowsNestedInput
+    barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
+    externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    events?: EventUpdateManyWithoutCowNestedInput
+    observations?: ObservationUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUpdateManyWithoutCowNestedInput
+  }
+
+  export type CowUncheckedUpdateWithoutDayMilkRecordsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    events?: EventUncheckedUpdateManyWithoutCowNestedInput
+    observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
+  }
+
+  export type IntegrationBatchUpsertWithoutDayMilkInput = {
+    update: XOR<IntegrationBatchUpdateWithoutDayMilkInput, IntegrationBatchUncheckedUpdateWithoutDayMilkInput>
+    create: XOR<IntegrationBatchCreateWithoutDayMilkInput, IntegrationBatchUncheckedCreateWithoutDayMilkInput>
+    where?: IntegrationBatchWhereInput
+  }
+
+  export type IntegrationBatchUpdateToOneWithWhereWithoutDayMilkInput = {
+    where?: IntegrationBatchWhereInput
+    data: XOR<IntegrationBatchUpdateWithoutDayMilkInput, IntegrationBatchUncheckedUpdateWithoutDayMilkInput>
+  }
+
+  export type IntegrationBatchUpdateWithoutDayMilkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    recordCount?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
+    milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
+    feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
+    mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
+  }
+
+  export type IntegrationBatchUncheckedUpdateWithoutDayMilkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    recordCount?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    milkRecords?: MilkRecordUncheckedUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
   }
@@ -70667,6 +73349,7 @@ export namespace Prisma {
     dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUncheckedCreateWithoutFeedRecordsInput = {
@@ -70689,6 +73372,7 @@ export namespace Prisma {
     createdAt?: Date | string
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchCreateOrConnectWithoutFeedRecordsInput = {
@@ -70768,6 +73452,7 @@ export namespace Prisma {
     dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateWithoutFeedRecordsInput = {
@@ -70790,6 +73475,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput
   }
 
   export type RecipeIngredientCreateWithoutRecipeInput = {
@@ -71181,6 +73867,7 @@ export namespace Prisma {
     dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchUncheckedCreateWithoutMixBatchesInput = {
@@ -71203,6 +73890,7 @@ export namespace Prisma {
     createdAt?: Date | string
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutBatchInput
+    dayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutBatchInput
   }
 
   export type IntegrationBatchCreateOrConnectWithoutMixBatchesInput = {
@@ -71313,6 +74001,7 @@ export namespace Prisma {
     dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateWithoutMixBatchesInput = {
@@ -71335,6 +74024,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput
   }
 
   export type IngredientConsumptionUpsertWithWhereUniqueWithoutMixBatchInput = {
@@ -71595,6 +74285,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
@@ -71621,6 +74312,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
@@ -71712,6 +74404,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -71729,6 +74422,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -71801,6 +74495,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
@@ -71827,6 +74522,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
@@ -71936,6 +74632,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -71953,6 +74650,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -71982,6 +74680,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
@@ -72008,6 +74707,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
@@ -72050,6 +74750,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
@@ -72076,6 +74777,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
@@ -72090,6 +74792,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -72107,6 +74810,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -72140,6 +74844,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -72157,6 +74862,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -72186,6 +74892,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
@@ -72212,6 +74919,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
@@ -72254,6 +74962,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
@@ -72280,6 +74989,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
@@ -72294,6 +75004,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -72311,6 +75022,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -72436,6 +75148,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -72453,6 +75166,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -72785,6 +75499,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -72802,6 +75517,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -73012,6 +75728,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -73029,6 +75746,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -73652,6 +76370,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -73669,6 +76388,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -73702,6 +76422,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -73728,6 +76449,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -73885,6 +76607,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -73902,6 +76625,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -73967,6 +76691,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -73984,6 +76709,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -74043,6 +76769,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -74069,6 +76796,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -74209,6 +76937,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -74226,6 +76955,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -74297,6 +77027,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -74323,6 +77054,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -75106,6 +77838,7 @@ export namespace Prisma {
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -75132,6 +77865,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
     sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -75174,6 +77908,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -75200,6 +77935,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -75214,6 +77950,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
@@ -75231,6 +77968,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
@@ -75264,6 +78002,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
@@ -75281,6 +78020,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
@@ -75313,6 +78053,25 @@ export namespace Prisma {
     lactation?: number
     dim?: number
     lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AfimilkDayMilkCreateManyFarmInput = {
+    id?: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -75507,6 +78266,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -75533,6 +78293,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -75553,6 +78314,63 @@ export namespace Prisma {
     lactation?: IntFieldUpdateOperationsInput | number
     dim?: IntFieldUpdateOperationsInput | number
     lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cow?: CowUpdateOneWithoutDayMilkRecordsNestedInput
+    batch?: IntegrationBatchUpdateOneWithoutDayMilkNestedInput
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -76073,6 +78891,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -76099,6 +78918,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -76321,6 +79141,25 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type AfimilkDayMilkCreateManyCowInput = {
+    id?: string
+    farmId: string
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    batchId?: string | null
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type EventCreateManyCowInput = {
     id?: string
     typeId?: string | null
@@ -76511,6 +79350,63 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
     batchId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAfimilkDayMilkNestedInput
+    batch?: IntegrationBatchUpdateOneWithoutDayMilkNestedInput
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EventUpdateWithoutCowInput = {
@@ -76814,6 +79710,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -76840,6 +79737,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -76999,6 +79897,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateWithoutDataSourceInput = {
@@ -77021,6 +79920,7 @@ export namespace Prisma {
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
+    dayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutBatchNestedInput
   }
 
   export type IntegrationBatchUncheckedUpdateManyWithoutDataSourceInput = {
@@ -77096,6 +79996,25 @@ export namespace Prisma {
     pauseDuration?: string | null
     totalDuration?: string | null
     source?: string
+  }
+
+  export type AfimilkDayMilkCreateManyBatchInput = {
+    id?: string
+    farmId: string
+    cowId?: string | null
+    cowNumber: string
+    date: Date | string
+    avg10Session1: number
+    actualSession1: number
+    avg10Session2: number
+    actualSession2: number
+    avg10Session3: number
+    actualSession3: number
+    avg10Total: number
+    actualTotal: number
+    sourceFile?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MilkRecordUpdateWithoutBatchInput = {
@@ -77266,6 +80185,63 @@ export namespace Prisma {
     pauseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     totalDuration?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AfimilkDayMilkUpdateWithoutBatchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAfimilkDayMilkNestedInput
+    cow?: CowUpdateOneWithoutDayMilkRecordsNestedInput
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateWithoutBatchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AfimilkDayMilkUncheckedUpdateManyWithoutBatchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowNumber?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    avg10Session1?: FloatFieldUpdateOperationsInput | number
+    actualSession1?: FloatFieldUpdateOperationsInput | number
+    avg10Session2?: FloatFieldUpdateOperationsInput | number
+    actualSession2?: FloatFieldUpdateOperationsInput | number
+    avg10Session3?: FloatFieldUpdateOperationsInput | number
+    actualSession3?: FloatFieldUpdateOperationsInput | number
+    avg10Total?: FloatFieldUpdateOperationsInput | number
+    actualTotal?: FloatFieldUpdateOperationsInput | number
+    sourceFile?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MetricValueCreateManyMetricInput = {
@@ -78076,6 +81052,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -78102,6 +81079,7 @@ export namespace Prisma {
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
     sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
