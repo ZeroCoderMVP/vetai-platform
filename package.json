@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import:afimilk": "tsx scripts/import.ts afimilk",
+    "import:dtm": "tsx scripts/import.ts dtm",
+    "import:aic": "tsx scripts/import.ts aic",
+    "import:all": "tsx scripts/import.ts all"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.5.0",
@@ -26,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsx": "^4.20.3"
   }
 }
