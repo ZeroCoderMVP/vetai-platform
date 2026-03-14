@@ -30,12 +30,3 @@ CREATE INDEX "AfimilkDayMilk_cowId_date_idx" ON "AfimilkDayMilk"("cowId", "date"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "AfimilkDayMilk_farmId_cowNumber_date_key" ON "AfimilkDayMilk"("farmId", "cowNumber", "date");
-
--- CreateIndex
-CREATE INDEX "Event_timestamp_idx" ON "Event"("timestamp");
-
--- CreateIndex
-CREATE INDEX "Event_cowId_timestamp_idx" ON "Event"("cowId", "timestamp");
-
--- CreateIndex
-CREATE INDEX "Event_severity_timestamp_idx" ON "Event"("severity", "timestamp");
