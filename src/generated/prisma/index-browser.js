@@ -270,6 +270,26 @@ exports.Prisma.MilkRecordScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AfimilkDayMilkScalarFieldEnum = {
+  id: 'id',
+  farmId: 'farmId',
+  cowId: 'cowId',
+  cowNumber: 'cowNumber',
+  date: 'date',
+  avg10Session1: 'avg10Session1',
+  actualSession1: 'actualSession1',
+  avg10Session2: 'avg10Session2',
+  actualSession2: 'actualSession2',
+  avg10Session3: 'avg10Session3',
+  actualSession3: 'actualSession3',
+  avg10Total: 'avg10Total',
+  actualTotal: 'actualTotal',
+  batchId: 'batchId',
+  sourceFile: 'sourceFile',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.FeedRecordScalarFieldEnum = {
   id: 'id',
   groupId: 'groupId',
@@ -664,6 +684,7 @@ exports.Prisma.ModelName = {
   MetricDefinition: 'MetricDefinition',
   MetricValue: 'MetricValue',
   MilkRecord: 'MilkRecord',
+  AfimilkDayMilk: 'AfimilkDayMilk',
   FeedRecord: 'FeedRecord',
   FeedRecipe: 'FeedRecipe',
   FeedIngredient: 'FeedIngredient',
