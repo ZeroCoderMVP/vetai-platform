@@ -73,7 +73,7 @@ async function getOrCreateCow(farmId: string, cowNumber: string) {
   });
   if (!cow) {
     cow = await prisma.cow.create({
-      data: { farmId, number: cowNumber, status: "active" },
+      data: { farmId, number: cowNumber, afiId: cowNumber, status: "active" },
     });
   }
   return cow;
@@ -87,8 +87,10 @@ async function importAfimilkFile(filePath: string, farm: { id: string }) {
   const batch = await prisma.integrationBatch.create({
     data: {
       sourceId: source.id,
+      source: "afimilk",
       filename: path.basename(filePath),
       status: "processing",
+      startedAt: new Date(),
     },
   });
 
@@ -139,7 +141,7 @@ async function importAfimilkFile(filePath: string, farm: { id: string }) {
 
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "completed", recordCount, processedAt: new Date() },
+      data: { status: "completed", recordCount, recordsRead: recordCount, recordsInserted: recordCount, finishedAt: new Date(), processedAt: new Date() },
     });
     await prisma.dataSource.update({
       where: { id: source.id },
@@ -150,7 +152,7 @@ async function importAfimilkFile(filePath: string, farm: { id: string }) {
   } catch (err: any) {
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "error", errors: err.message, processedAt: new Date() },
+      data: { status: "error", errors: err.message, errorMessage: err.message, finishedAt: new Date(), processedAt: new Date() },
     });
     throw err;
   }
@@ -164,8 +166,10 @@ async function importAICFile(filePath: string, farm: { id: string }) {
   const batch = await prisma.integrationBatch.create({
     data: {
       sourceId: source.id,
+      source: "aic",
       filename: path.basename(filePath),
       status: "processing",
+      startedAt: new Date(),
     },
   });
 
@@ -221,7 +225,7 @@ async function importAICFile(filePath: string, farm: { id: string }) {
 
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "completed", recordCount, processedAt: new Date() },
+      data: { status: "completed", recordCount, recordsRead: recordCount, recordsInserted: recordCount, finishedAt: new Date(), processedAt: new Date() },
     });
     await prisma.dataSource.update({
       where: { id: source.id },
@@ -232,7 +236,7 @@ async function importAICFile(filePath: string, farm: { id: string }) {
   } catch (err: any) {
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "error", errors: err.message, processedAt: new Date() },
+      data: { status: "error", errors: err.message, errorMessage: err.message, finishedAt: new Date(), processedAt: new Date() },
     });
     throw err;
   }
@@ -246,8 +250,10 @@ async function importDTMFile(filePath: string, farm: { id: string }) {
   const batch = await prisma.integrationBatch.create({
     data: {
       sourceId: source.id,
+      source: "dtm",
       filename: path.basename(filePath),
       status: "processing",
+      startedAt: new Date(),
     },
   });
 
@@ -396,7 +402,7 @@ async function importDTMFile(filePath: string, farm: { id: string }) {
 
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "completed", recordCount, processedAt: new Date() },
+      data: { status: "completed", recordCount, recordsRead: recordCount, recordsInserted: recordCount, finishedAt: new Date(), processedAt: new Date() },
     });
     await prisma.dataSource.update({
       where: { id: source.id },
@@ -407,7 +413,7 @@ async function importDTMFile(filePath: string, farm: { id: string }) {
   } catch (err: any) {
     await prisma.integrationBatch.update({
       where: { id: batch.id },
-      data: { status: "error", errors: err.message, processedAt: new Date() },
+      data: { status: "error", errors: err.message, errorMessage: err.message, finishedAt: new Date(), processedAt: new Date() },
     });
     throw err;
   }

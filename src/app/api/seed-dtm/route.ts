@@ -32,7 +32,7 @@ export async function GET() {
     const filenameLower = file.toLowerCase();
 
     const batch = await prisma.integrationBatch.create({
-      data: { sourceId: source.id, filename: file, status: "processing" },
+      data: { sourceId: source.id, source: "dtm", filename: file, status: "processing", startedAt: new Date() },
     });
 
     try {
@@ -160,14 +160,14 @@ export async function GET() {
 
       await prisma.integrationBatch.update({
         where: { id: batch.id },
-        data: { status: "completed", recordCount, processedAt: new Date() },
+        data: { status: "completed", recordCount, recordsRead: recordCount, recordsInserted: recordCount, finishedAt: new Date(), processedAt: new Date() },
       });
 
       results.push({ file, type, count: recordCount });
     } catch (err: any) {
       await prisma.integrationBatch.update({
         where: { id: batch.id },
-        data: { status: "error", errors: err.message, processedAt: new Date() },
+        data: { status: "error", errors: err.message, errorMessage: err.message, finishedAt: new Date(), processedAt: new Date() },
       });
       results.push({ file, type: "error", count: 0, error: err.message });
     }

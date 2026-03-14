@@ -20,7 +20,7 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 export type Farm = $Result.DefaultSelection<Prisma.$FarmPayload>
 /**
  * Model GroupUnit
- * Универсальная сущность группы/секции
+ * Логическая производственная группа животных
  */
 export type GroupUnit = $Result.DefaultSelection<Prisma.$GroupUnitPayload>
 /**
@@ -28,6 +28,21 @@ export type GroupUnit = $Result.DefaultSelection<Prisma.$GroupUnitPayload>
  * Основной объект учета — корова
  */
 export type Cow = $Result.DefaultSelection<Prisma.$CowPayload>
+/**
+ * Model Section
+ * Физическая секция/загон размещения животных
+ */
+export type Section = $Result.DefaultSelection<Prisma.$SectionPayload>
+/**
+ * Model CowSectionHistory
+ * История размещения коровы по секциям
+ */
+export type CowSectionHistory = $Result.DefaultSelection<Prisma.$CowSectionHistoryPayload>
+/**
+ * Model GroupSectionHistory
+ * История размещения группы в секции
+ */
+export type GroupSectionHistory = $Result.DefaultSelection<Prisma.$GroupSectionHistoryPayload>
 /**
  * Model ExternalIdentity
  * Сопоставление внутренних ID с внешними системами
@@ -349,6 +364,36 @@ export class PrismaClient<
     * ```
     */
   get cow(): Prisma.CowDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.section`: Exposes CRUD operations for the **Section** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sections
+    * const sections = await prisma.section.findMany()
+    * ```
+    */
+  get section(): Prisma.SectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cowSectionHistory`: Exposes CRUD operations for the **CowSectionHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CowSectionHistories
+    * const cowSectionHistories = await prisma.cowSectionHistory.findMany()
+    * ```
+    */
+  get cowSectionHistory(): Prisma.CowSectionHistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.groupSectionHistory`: Exposes CRUD operations for the **GroupSectionHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GroupSectionHistories
+    * const groupSectionHistories = await prisma.groupSectionHistory.findMany()
+    * ```
+    */
+  get groupSectionHistory(): Prisma.GroupSectionHistoryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.externalIdentity`: Exposes CRUD operations for the **ExternalIdentity** model.
@@ -1126,6 +1171,9 @@ export namespace Prisma {
     Farm: 'Farm',
     GroupUnit: 'GroupUnit',
     Cow: 'Cow',
+    Section: 'Section',
+    CowSectionHistory: 'CowSectionHistory',
+    GroupSectionHistory: 'GroupSectionHistory',
     ExternalIdentity: 'ExternalIdentity',
     GroupMembership: 'GroupMembership',
     DataSource: 'DataSource',
@@ -1175,7 +1223,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "farm" | "groupUnit" | "cow" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "dashboardSnapshot"
+      modelProps: "farm" | "groupUnit" | "cow" | "section" | "cowSectionHistory" | "groupSectionHistory" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "dashboardSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1398,6 +1446,228 @@ export namespace Prisma {
           count: {
             args: Prisma.CowCountArgs<ExtArgs>
             result: $Utils.Optional<CowCountAggregateOutputType> | number
+          }
+        }
+      }
+      Section: {
+        payload: Prisma.$SectionPayload<ExtArgs>
+        fields: Prisma.SectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          findFirst: {
+            args: Prisma.SectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          findMany: {
+            args: Prisma.SectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>[]
+          }
+          create: {
+            args: Prisma.SectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          createMany: {
+            args: Prisma.SectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>[]
+          }
+          delete: {
+            args: Prisma.SectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          update: {
+            args: Prisma.SectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SectionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SectionPayload>
+          }
+          aggregate: {
+            args: Prisma.SectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSection>
+          }
+          groupBy: {
+            args: Prisma.SectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SectionCountArgs<ExtArgs>
+            result: $Utils.Optional<SectionCountAggregateOutputType> | number
+          }
+        }
+      }
+      CowSectionHistory: {
+        payload: Prisma.$CowSectionHistoryPayload<ExtArgs>
+        fields: Prisma.CowSectionHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CowSectionHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CowSectionHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.CowSectionHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CowSectionHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.CowSectionHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.CowSectionHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.CowSectionHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CowSectionHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.CowSectionHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          update: {
+            args: Prisma.CowSectionHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.CowSectionHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CowSectionHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CowSectionHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.CowSectionHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CowSectionHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.CowSectionHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCowSectionHistory>
+          }
+          groupBy: {
+            args: Prisma.CowSectionHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CowSectionHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CowSectionHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<CowSectionHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      GroupSectionHistory: {
+        payload: Prisma.$GroupSectionHistoryPayload<ExtArgs>
+        fields: Prisma.GroupSectionHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GroupSectionHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GroupSectionHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.GroupSectionHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GroupSectionHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.GroupSectionHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.GroupSectionHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.GroupSectionHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GroupSectionHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.GroupSectionHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          update: {
+            args: Prisma.GroupSectionHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.GroupSectionHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GroupSectionHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GroupSectionHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.GroupSectionHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupSectionHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.GroupSectionHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGroupSectionHistory>
+          }
+          groupBy: {
+            args: Prisma.GroupSectionHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GroupSectionHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GroupSectionHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<GroupSectionHistoryCountAggregateOutputType> | number
           }
         }
       }
@@ -4028,6 +4298,9 @@ export namespace Prisma {
     farm?: FarmOmit
     groupUnit?: GroupUnitOmit
     cow?: CowOmit
+    section?: SectionOmit
+    cowSectionHistory?: CowSectionHistoryOmit
+    groupSectionHistory?: GroupSectionHistoryOmit
     externalIdentity?: ExternalIdentityOmit
     groupMembership?: GroupMembershipOmit
     dataSource?: DataSourceOmit
@@ -4149,6 +4422,7 @@ export namespace Prisma {
     reportTemplates: number
     reportInstances: number
     barns: number
+    sections: number
     operations: number
     dashboards: number
   }
@@ -4161,6 +4435,7 @@ export namespace Prisma {
     reportTemplates?: boolean | FarmCountOutputTypeCountReportTemplatesArgs
     reportInstances?: boolean | FarmCountOutputTypeCountReportInstancesArgs
     barns?: boolean | FarmCountOutputTypeCountBarnsArgs
+    sections?: boolean | FarmCountOutputTypeCountSectionsArgs
     operations?: boolean | FarmCountOutputTypeCountOperationsArgs
     dashboards?: boolean | FarmCountOutputTypeCountDashboardsArgs
   }
@@ -4228,6 +4503,13 @@ export namespace Prisma {
   /**
    * FarmCountOutputType without action
    */
+  export type FarmCountOutputTypeCountSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SectionWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
   export type FarmCountOutputTypeCountOperationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OperationRequestWhereInput
   }
@@ -4247,6 +4529,7 @@ export namespace Prisma {
   export type GroupUnitCountOutputType = {
     cows: number
     memberships: number
+    sectionHistory: number
     events: number
     feedRecords: number
   }
@@ -4254,6 +4537,7 @@ export namespace Prisma {
   export type GroupUnitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cows?: boolean | GroupUnitCountOutputTypeCountCowsArgs
     memberships?: boolean | GroupUnitCountOutputTypeCountMembershipsArgs
+    sectionHistory?: boolean | GroupUnitCountOutputTypeCountSectionHistoryArgs
     events?: boolean | GroupUnitCountOutputTypeCountEventsArgs
     feedRecords?: boolean | GroupUnitCountOutputTypeCountFeedRecordsArgs
   }
@@ -4286,6 +4570,13 @@ export namespace Prisma {
   /**
    * GroupUnitCountOutputType without action
    */
+  export type GroupUnitCountOutputTypeCountSectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupSectionHistoryWhereInput
+  }
+
+  /**
+   * GroupUnitCountOutputType without action
+   */
   export type GroupUnitCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventWhereInput
   }
@@ -4305,6 +4596,7 @@ export namespace Prisma {
   export type CowCountOutputType = {
     externalIds: number
     memberships: number
+    sectionHistory: number
     milkRecords: number
     events: number
     observations: number
@@ -4316,6 +4608,7 @@ export namespace Prisma {
   export type CowCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     externalIds?: boolean | CowCountOutputTypeCountExternalIdsArgs
     memberships?: boolean | CowCountOutputTypeCountMembershipsArgs
+    sectionHistory?: boolean | CowCountOutputTypeCountSectionHistoryArgs
     milkRecords?: boolean | CowCountOutputTypeCountMilkRecordsArgs
     events?: boolean | CowCountOutputTypeCountEventsArgs
     observations?: boolean | CowCountOutputTypeCountObservationsArgs
@@ -4347,6 +4640,13 @@ export namespace Prisma {
    */
   export type CowCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GroupMembershipWhereInput
+  }
+
+  /**
+   * CowCountOutputType without action
+   */
+  export type CowCountOutputTypeCountSectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CowSectionHistoryWhereInput
   }
 
   /**
@@ -4389,6 +4689,64 @@ export namespace Prisma {
    */
   export type CowCountOutputTypeCountCowEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CowEventWhereInput
+  }
+
+
+  /**
+   * Count Type SectionCountOutputType
+   */
+
+  export type SectionCountOutputType = {
+    currentCows: number
+    events: number
+    cowSectionHistory: number
+    groupHistory: number
+  }
+
+  export type SectionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    currentCows?: boolean | SectionCountOutputTypeCountCurrentCowsArgs
+    events?: boolean | SectionCountOutputTypeCountEventsArgs
+    cowSectionHistory?: boolean | SectionCountOutputTypeCountCowSectionHistoryArgs
+    groupHistory?: boolean | SectionCountOutputTypeCountGroupHistoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SectionCountOutputType
+     */
+    select?: SectionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountCurrentCowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CowWhereInput
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountCowSectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CowSectionHistoryWhereInput
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountGroupHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupSectionHistoryWhereInput
   }
 
 
@@ -4780,11 +5138,13 @@ export namespace Prisma {
 
   export type BarnCountOutputType = {
     cows: number
+    sections: number
     operations: number
   }
 
   export type BarnCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cows?: boolean | BarnCountOutputTypeCountCowsArgs
+    sections?: boolean | BarnCountOutputTypeCountSectionsArgs
     operations?: boolean | BarnCountOutputTypeCountOperationsArgs
   }
 
@@ -4804,6 +5164,13 @@ export namespace Prisma {
    */
   export type BarnCountOutputTypeCountCowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CowWhereInput
+  }
+
+  /**
+   * BarnCountOutputType without action
+   */
+  export type BarnCountOutputTypeCountSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SectionWhereInput
   }
 
   /**
@@ -5047,6 +5414,7 @@ export namespace Prisma {
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
     reportInstances?: boolean | Farm$reportInstancesArgs<ExtArgs>
     barns?: boolean | Farm$barnsArgs<ExtArgs>
+    sections?: boolean | Farm$sectionsArgs<ExtArgs>
     operations?: boolean | Farm$operationsArgs<ExtArgs>
     dashboards?: boolean | Farm$dashboardsArgs<ExtArgs>
     _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
@@ -5085,6 +5453,7 @@ export namespace Prisma {
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
     reportInstances?: boolean | Farm$reportInstancesArgs<ExtArgs>
     barns?: boolean | Farm$barnsArgs<ExtArgs>
+    sections?: boolean | Farm$sectionsArgs<ExtArgs>
     operations?: boolean | Farm$operationsArgs<ExtArgs>
     dashboards?: boolean | Farm$dashboardsArgs<ExtArgs>
     _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
@@ -5102,6 +5471,7 @@ export namespace Prisma {
       reportTemplates: Prisma.$ReportTemplatePayload<ExtArgs>[]
       reportInstances: Prisma.$ReportInstancePayload<ExtArgs>[]
       barns: Prisma.$BarnPayload<ExtArgs>[]
+      sections: Prisma.$SectionPayload<ExtArgs>[]
       operations: Prisma.$OperationRequestPayload<ExtArgs>[]
       dashboards: Prisma.$DashboardSnapshotPayload<ExtArgs>[]
     }
@@ -5512,6 +5882,7 @@ export namespace Prisma {
     reportTemplates<T extends Farm$reportTemplatesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$reportTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reportInstances<T extends Farm$reportInstancesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$reportInstancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportInstancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     barns<T extends Farm$barnsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$barnsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BarnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sections<T extends Farm$sectionsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     operations<T extends Farm$operationsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$operationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dashboards<T extends Farm$dashboardsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$dashboardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -6107,6 +6478,30 @@ export namespace Prisma {
   }
 
   /**
+   * Farm.sections
+   */
+  export type Farm$sectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    where?: SectionWhereInput
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    cursor?: SectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
+  }
+
+  /**
    * Farm.operations
    */
   export type Farm$operationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6398,6 +6793,7 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     cows?: boolean | GroupUnit$cowsArgs<ExtArgs>
     memberships?: boolean | GroupUnit$membershipsArgs<ExtArgs>
+    sectionHistory?: boolean | GroupUnit$sectionHistoryArgs<ExtArgs>
     events?: boolean | GroupUnit$eventsArgs<ExtArgs>
     feedRecords?: boolean | GroupUnit$feedRecordsArgs<ExtArgs>
     _count?: boolean | GroupUnitCountOutputTypeDefaultArgs<ExtArgs>
@@ -6443,6 +6839,7 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     cows?: boolean | GroupUnit$cowsArgs<ExtArgs>
     memberships?: boolean | GroupUnit$membershipsArgs<ExtArgs>
+    sectionHistory?: boolean | GroupUnit$sectionHistoryArgs<ExtArgs>
     events?: boolean | GroupUnit$eventsArgs<ExtArgs>
     feedRecords?: boolean | GroupUnit$feedRecordsArgs<ExtArgs>
     _count?: boolean | GroupUnitCountOutputTypeDefaultArgs<ExtArgs>
@@ -6460,6 +6857,7 @@ export namespace Prisma {
       farm: Prisma.$FarmPayload<ExtArgs>
       cows: Prisma.$CowPayload<ExtArgs>[]
       memberships: Prisma.$GroupMembershipPayload<ExtArgs>[]
+      sectionHistory: Prisma.$GroupSectionHistoryPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       feedRecords: Prisma.$FeedRecordPayload<ExtArgs>[]
     }
@@ -6869,6 +7267,7 @@ export namespace Prisma {
     farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     cows<T extends GroupUnit$cowsArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnit$cowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     memberships<T extends GroupUnit$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnit$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sectionHistory<T extends GroupUnit$sectionHistoryArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnit$sectionHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends GroupUnit$eventsArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnit$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     feedRecords<T extends GroupUnit$feedRecordsArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnit$feedRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -7355,6 +7754,30 @@ export namespace Prisma {
   }
 
   /**
+   * GroupUnit.sectionHistory
+   */
+  export type GroupUnit$sectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    where?: GroupSectionHistoryWhereInput
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupSectionHistoryScalarFieldEnum | GroupSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
    * GroupUnit.events
    */
   export type GroupUnit$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7448,6 +7871,8 @@ export namespace Prisma {
     farmId: string | null
     groupId: string | null
     barnId: string | null
+    currentSectionId: string | null
+    afiId: string | null
     number: string | null
     name: string | null
     birthDate: Date | null
@@ -7464,6 +7889,8 @@ export namespace Prisma {
     farmId: string | null
     groupId: string | null
     barnId: string | null
+    currentSectionId: string | null
+    afiId: string | null
     number: string | null
     name: string | null
     birthDate: Date | null
@@ -7480,6 +7907,8 @@ export namespace Prisma {
     farmId: number
     groupId: number
     barnId: number
+    currentSectionId: number
+    afiId: number
     number: number
     name: number
     birthDate: number
@@ -7508,6 +7937,8 @@ export namespace Prisma {
     farmId?: true
     groupId?: true
     barnId?: true
+    currentSectionId?: true
+    afiId?: true
     number?: true
     name?: true
     birthDate?: true
@@ -7524,6 +7955,8 @@ export namespace Prisma {
     farmId?: true
     groupId?: true
     barnId?: true
+    currentSectionId?: true
+    afiId?: true
     number?: true
     name?: true
     birthDate?: true
@@ -7540,6 +7973,8 @@ export namespace Prisma {
     farmId?: true
     groupId?: true
     barnId?: true
+    currentSectionId?: true
+    afiId?: true
     number?: true
     name?: true
     birthDate?: true
@@ -7643,6 +8078,8 @@ export namespace Prisma {
     farmId: string
     groupId: string | null
     barnId: string | null
+    currentSectionId: string | null
+    afiId: string
     number: string
     name: string | null
     birthDate: Date | null
@@ -7678,6 +8115,8 @@ export namespace Prisma {
     farmId?: boolean
     groupId?: boolean
     barnId?: boolean
+    currentSectionId?: boolean
+    afiId?: boolean
     number?: boolean
     name?: boolean
     birthDate?: boolean
@@ -7690,8 +8129,10 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
     externalIds?: boolean | Cow$externalIdsArgs<ExtArgs>
     memberships?: boolean | Cow$membershipsArgs<ExtArgs>
+    sectionHistory?: boolean | Cow$sectionHistoryArgs<ExtArgs>
     milkRecords?: boolean | Cow$milkRecordsArgs<ExtArgs>
     events?: boolean | Cow$eventsArgs<ExtArgs>
     observations?: boolean | Cow$observationsArgs<ExtArgs>
@@ -7706,6 +8147,8 @@ export namespace Prisma {
     farmId?: boolean
     groupId?: boolean
     barnId?: boolean
+    currentSectionId?: boolean
+    afiId?: boolean
     number?: boolean
     name?: boolean
     birthDate?: boolean
@@ -7718,6 +8161,7 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
   }, ExtArgs["result"]["cow"]>
 
   export type CowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7725,6 +8169,8 @@ export namespace Prisma {
     farmId?: boolean
     groupId?: boolean
     barnId?: boolean
+    currentSectionId?: boolean
+    afiId?: boolean
     number?: boolean
     name?: boolean
     birthDate?: boolean
@@ -7737,6 +8183,7 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
   }, ExtArgs["result"]["cow"]>
 
   export type CowSelectScalar = {
@@ -7744,6 +8191,8 @@ export namespace Prisma {
     farmId?: boolean
     groupId?: boolean
     barnId?: boolean
+    currentSectionId?: boolean
+    afiId?: boolean
     number?: boolean
     name?: boolean
     birthDate?: boolean
@@ -7755,13 +8204,15 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "groupId" | "barnId" | "number" | "name" | "birthDate" | "status" | "lactation" | "dim" | "lastCalving" | "createdAt" | "updatedAt", ExtArgs["result"]["cow"]>
+  export type CowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "groupId" | "barnId" | "currentSectionId" | "afiId" | "number" | "name" | "birthDate" | "status" | "lactation" | "dim" | "lastCalving" | "createdAt" | "updatedAt", ExtArgs["result"]["cow"]>
   export type CowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
     externalIds?: boolean | Cow$externalIdsArgs<ExtArgs>
     memberships?: boolean | Cow$membershipsArgs<ExtArgs>
+    sectionHistory?: boolean | Cow$sectionHistoryArgs<ExtArgs>
     milkRecords?: boolean | Cow$milkRecordsArgs<ExtArgs>
     events?: boolean | Cow$eventsArgs<ExtArgs>
     observations?: boolean | Cow$observationsArgs<ExtArgs>
@@ -7774,11 +8225,13 @@ export namespace Prisma {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
   }
   export type CowIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     group?: boolean | Cow$groupArgs<ExtArgs>
     barn?: boolean | Cow$barnArgs<ExtArgs>
+    currentSection?: boolean | Cow$currentSectionArgs<ExtArgs>
   }
 
   export type $CowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7787,8 +8240,10 @@ export namespace Prisma {
       farm: Prisma.$FarmPayload<ExtArgs>
       group: Prisma.$GroupUnitPayload<ExtArgs> | null
       barn: Prisma.$BarnPayload<ExtArgs> | null
+      currentSection: Prisma.$SectionPayload<ExtArgs> | null
       externalIds: Prisma.$ExternalIdentityPayload<ExtArgs>[]
       memberships: Prisma.$GroupMembershipPayload<ExtArgs>[]
+      sectionHistory: Prisma.$CowSectionHistoryPayload<ExtArgs>[]
       milkRecords: Prisma.$MilkRecordPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       observations: Prisma.$ObservationPayload<ExtArgs>[]
@@ -7801,6 +8256,8 @@ export namespace Prisma {
       farmId: string
       groupId: string | null
       barnId: string | null
+      currentSectionId: string | null
+      afiId: string
       number: string
       name: string | null
       birthDate: Date | null
@@ -8207,8 +8664,10 @@ export namespace Prisma {
     farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     group<T extends Cow$groupArgs<ExtArgs> = {}>(args?: Subset<T, Cow$groupArgs<ExtArgs>>): Prisma__GroupUnitClient<$Result.GetResult<Prisma.$GroupUnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     barn<T extends Cow$barnArgs<ExtArgs> = {}>(args?: Subset<T, Cow$barnArgs<ExtArgs>>): Prisma__BarnClient<$Result.GetResult<Prisma.$BarnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    currentSection<T extends Cow$currentSectionArgs<ExtArgs> = {}>(args?: Subset<T, Cow$currentSectionArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     externalIds<T extends Cow$externalIdsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$externalIdsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExternalIdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     memberships<T extends Cow$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sectionHistory<T extends Cow$sectionHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Cow$sectionHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     milkRecords<T extends Cow$milkRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$milkRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MilkRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Cow$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     observations<T extends Cow$observationsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$observationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8248,6 +8707,8 @@ export namespace Prisma {
     readonly farmId: FieldRef<"Cow", 'String'>
     readonly groupId: FieldRef<"Cow", 'String'>
     readonly barnId: FieldRef<"Cow", 'String'>
+    readonly currentSectionId: FieldRef<"Cow", 'String'>
+    readonly afiId: FieldRef<"Cow", 'String'>
     readonly number: FieldRef<"Cow", 'String'>
     readonly name: FieldRef<"Cow", 'String'>
     readonly birthDate: FieldRef<"Cow", 'DateTime'>
@@ -8694,6 +9155,25 @@ export namespace Prisma {
   }
 
   /**
+   * Cow.currentSection
+   */
+  export type Cow$currentSectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    where?: SectionWhereInput
+  }
+
+  /**
    * Cow.externalIds
    */
   export type Cow$externalIdsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8739,6 +9219,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GroupMembershipScalarFieldEnum | GroupMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * Cow.sectionHistory
+   */
+  export type Cow$sectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    where?: CowSectionHistoryWhereInput
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    cursor?: CowSectionHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CowSectionHistoryScalarFieldEnum | CowSectionHistoryScalarFieldEnum[]
   }
 
   /**
@@ -8901,6 +9405,3463 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CowInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Section
+   */
+
+  export type AggregateSection = {
+    _count: SectionCountAggregateOutputType | null
+    _min: SectionMinAggregateOutputType | null
+    _max: SectionMaxAggregateOutputType | null
+  }
+
+  export type SectionMinAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    barnId: string | null
+    name: string | null
+    externalCode: string | null
+    dtmCode: string | null
+    afiCode: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SectionMaxAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    barnId: string | null
+    name: string | null
+    externalCode: string | null
+    dtmCode: string | null
+    afiCode: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SectionCountAggregateOutputType = {
+    id: number
+    farmId: number
+    barnId: number
+    name: number
+    externalCode: number
+    dtmCode: number
+    afiCode: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SectionMinAggregateInputType = {
+    id?: true
+    farmId?: true
+    barnId?: true
+    name?: true
+    externalCode?: true
+    dtmCode?: true
+    afiCode?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SectionMaxAggregateInputType = {
+    id?: true
+    farmId?: true
+    barnId?: true
+    name?: true
+    externalCode?: true
+    dtmCode?: true
+    afiCode?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SectionCountAggregateInputType = {
+    id?: true
+    farmId?: true
+    barnId?: true
+    name?: true
+    externalCode?: true
+    dtmCode?: true
+    afiCode?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Section to aggregate.
+     */
+    where?: SectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sections to fetch.
+     */
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sections
+    **/
+    _count?: true | SectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SectionMaxAggregateInputType
+  }
+
+  export type GetSectionAggregateType<T extends SectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSection[P]>
+      : GetScalarType<T[P], AggregateSection[P]>
+  }
+
+
+
+
+  export type SectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SectionWhereInput
+    orderBy?: SectionOrderByWithAggregationInput | SectionOrderByWithAggregationInput[]
+    by: SectionScalarFieldEnum[] | SectionScalarFieldEnum
+    having?: SectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SectionCountAggregateInputType | true
+    _min?: SectionMinAggregateInputType
+    _max?: SectionMaxAggregateInputType
+  }
+
+  export type SectionGroupByOutputType = {
+    id: string
+    farmId: string
+    barnId: string | null
+    name: string
+    externalCode: string | null
+    dtmCode: string | null
+    afiCode: string | null
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: SectionCountAggregateOutputType | null
+    _min: SectionMinAggregateOutputType | null
+    _max: SectionMaxAggregateOutputType | null
+  }
+
+  type GetSectionGroupByPayload<T extends SectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SectionGroupByOutputType[P]>
+            : GetScalarType<T[P], SectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    barnId?: boolean
+    name?: boolean
+    externalCode?: boolean
+    dtmCode?: boolean
+    afiCode?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+    currentCows?: boolean | Section$currentCowsArgs<ExtArgs>
+    events?: boolean | Section$eventsArgs<ExtArgs>
+    cowSectionHistory?: boolean | Section$cowSectionHistoryArgs<ExtArgs>
+    groupHistory?: boolean | Section$groupHistoryArgs<ExtArgs>
+    _count?: boolean | SectionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["section"]>
+
+  export type SectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    barnId?: boolean
+    name?: boolean
+    externalCode?: boolean
+    dtmCode?: boolean
+    afiCode?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+  }, ExtArgs["result"]["section"]>
+
+  export type SectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    barnId?: boolean
+    name?: boolean
+    externalCode?: boolean
+    dtmCode?: boolean
+    afiCode?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+  }, ExtArgs["result"]["section"]>
+
+  export type SectionSelectScalar = {
+    id?: boolean
+    farmId?: boolean
+    barnId?: boolean
+    name?: boolean
+    externalCode?: boolean
+    dtmCode?: boolean
+    afiCode?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "barnId" | "name" | "externalCode" | "dtmCode" | "afiCode" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
+  export type SectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+    currentCows?: boolean | Section$currentCowsArgs<ExtArgs>
+    events?: boolean | Section$eventsArgs<ExtArgs>
+    cowSectionHistory?: boolean | Section$cowSectionHistoryArgs<ExtArgs>
+    groupHistory?: boolean | Section$groupHistoryArgs<ExtArgs>
+    _count?: boolean | SectionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+  }
+  export type SectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    barn?: boolean | Section$barnArgs<ExtArgs>
+  }
+
+  export type $SectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Section"
+    objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
+      barn: Prisma.$BarnPayload<ExtArgs> | null
+      currentCows: Prisma.$CowPayload<ExtArgs>[]
+      events: Prisma.$EventPayload<ExtArgs>[]
+      cowSectionHistory: Prisma.$CowSectionHistoryPayload<ExtArgs>[]
+      groupHistory: Prisma.$GroupSectionHistoryPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      farmId: string
+      barnId: string | null
+      name: string
+      externalCode: string | null
+      dtmCode: string | null
+      afiCode: string | null
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["section"]>
+    composites: {}
+  }
+
+  type SectionGetPayload<S extends boolean | null | undefined | SectionDefaultArgs> = $Result.GetResult<Prisma.$SectionPayload, S>
+
+  type SectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SectionCountAggregateInputType | true
+    }
+
+  export interface SectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Section'], meta: { name: 'Section' } }
+    /**
+     * Find zero or one Section that matches the filter.
+     * @param {SectionFindUniqueArgs} args - Arguments to find a Section
+     * @example
+     * // Get one Section
+     * const section = await prisma.section.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SectionFindUniqueArgs>(args: SelectSubset<T, SectionFindUniqueArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Section that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SectionFindUniqueOrThrowArgs} args - Arguments to find a Section
+     * @example
+     * // Get one Section
+     * const section = await prisma.section.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SectionFindUniqueOrThrowArgs>(args: SelectSubset<T, SectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Section that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionFindFirstArgs} args - Arguments to find a Section
+     * @example
+     * // Get one Section
+     * const section = await prisma.section.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SectionFindFirstArgs>(args?: SelectSubset<T, SectionFindFirstArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Section that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionFindFirstOrThrowArgs} args - Arguments to find a Section
+     * @example
+     * // Get one Section
+     * const section = await prisma.section.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SectionFindFirstOrThrowArgs>(args?: SelectSubset<T, SectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sections
+     * const sections = await prisma.section.findMany()
+     * 
+     * // Get first 10 Sections
+     * const sections = await prisma.section.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sectionWithIdOnly = await prisma.section.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SectionFindManyArgs>(args?: SelectSubset<T, SectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Section.
+     * @param {SectionCreateArgs} args - Arguments to create a Section.
+     * @example
+     * // Create one Section
+     * const Section = await prisma.section.create({
+     *   data: {
+     *     // ... data to create a Section
+     *   }
+     * })
+     * 
+     */
+    create<T extends SectionCreateArgs>(args: SelectSubset<T, SectionCreateArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sections.
+     * @param {SectionCreateManyArgs} args - Arguments to create many Sections.
+     * @example
+     * // Create many Sections
+     * const section = await prisma.section.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SectionCreateManyArgs>(args?: SelectSubset<T, SectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sections and returns the data saved in the database.
+     * @param {SectionCreateManyAndReturnArgs} args - Arguments to create many Sections.
+     * @example
+     * // Create many Sections
+     * const section = await prisma.section.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sections and only return the `id`
+     * const sectionWithIdOnly = await prisma.section.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SectionCreateManyAndReturnArgs>(args?: SelectSubset<T, SectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Section.
+     * @param {SectionDeleteArgs} args - Arguments to delete one Section.
+     * @example
+     * // Delete one Section
+     * const Section = await prisma.section.delete({
+     *   where: {
+     *     // ... filter to delete one Section
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SectionDeleteArgs>(args: SelectSubset<T, SectionDeleteArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Section.
+     * @param {SectionUpdateArgs} args - Arguments to update one Section.
+     * @example
+     * // Update one Section
+     * const section = await prisma.section.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SectionUpdateArgs>(args: SelectSubset<T, SectionUpdateArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sections.
+     * @param {SectionDeleteManyArgs} args - Arguments to filter Sections to delete.
+     * @example
+     * // Delete a few Sections
+     * const { count } = await prisma.section.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SectionDeleteManyArgs>(args?: SelectSubset<T, SectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sections
+     * const section = await prisma.section.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SectionUpdateManyArgs>(args: SelectSubset<T, SectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sections and returns the data updated in the database.
+     * @param {SectionUpdateManyAndReturnArgs} args - Arguments to update many Sections.
+     * @example
+     * // Update many Sections
+     * const section = await prisma.section.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sections and only return the `id`
+     * const sectionWithIdOnly = await prisma.section.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SectionUpdateManyAndReturnArgs>(args: SelectSubset<T, SectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Section.
+     * @param {SectionUpsertArgs} args - Arguments to update or create a Section.
+     * @example
+     * // Update or create a Section
+     * const section = await prisma.section.upsert({
+     *   create: {
+     *     // ... data to create a Section
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Section we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SectionUpsertArgs>(args: SelectSubset<T, SectionUpsertArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionCountArgs} args - Arguments to filter Sections to count.
+     * @example
+     * // Count the number of Sections
+     * const count = await prisma.section.count({
+     *   where: {
+     *     // ... the filter for the Sections we want to count
+     *   }
+     * })
+    **/
+    count<T extends SectionCountArgs>(
+      args?: Subset<T, SectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Section.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SectionAggregateArgs>(args: Subset<T, SectionAggregateArgs>): Prisma.PrismaPromise<GetSectionAggregateType<T>>
+
+    /**
+     * Group by Section.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SectionGroupByArgs['orderBy'] }
+        : { orderBy?: SectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Section model
+   */
+  readonly fields: SectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Section.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    barn<T extends Section$barnArgs<ExtArgs> = {}>(args?: Subset<T, Section$barnArgs<ExtArgs>>): Prisma__BarnClient<$Result.GetResult<Prisma.$BarnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    currentCows<T extends Section$currentCowsArgs<ExtArgs> = {}>(args?: Subset<T, Section$currentCowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    events<T extends Section$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Section$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cowSectionHistory<T extends Section$cowSectionHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Section$cowSectionHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groupHistory<T extends Section$groupHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Section$groupHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Section model
+   */
+  interface SectionFieldRefs {
+    readonly id: FieldRef<"Section", 'String'>
+    readonly farmId: FieldRef<"Section", 'String'>
+    readonly barnId: FieldRef<"Section", 'String'>
+    readonly name: FieldRef<"Section", 'String'>
+    readonly externalCode: FieldRef<"Section", 'String'>
+    readonly dtmCode: FieldRef<"Section", 'String'>
+    readonly afiCode: FieldRef<"Section", 'String'>
+    readonly isActive: FieldRef<"Section", 'Boolean'>
+    readonly createdAt: FieldRef<"Section", 'DateTime'>
+    readonly updatedAt: FieldRef<"Section", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Section findUnique
+   */
+  export type SectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Section to fetch.
+     */
+    where: SectionWhereUniqueInput
+  }
+
+  /**
+   * Section findUniqueOrThrow
+   */
+  export type SectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Section to fetch.
+     */
+    where: SectionWhereUniqueInput
+  }
+
+  /**
+   * Section findFirst
+   */
+  export type SectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Section to fetch.
+     */
+    where?: SectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sections to fetch.
+     */
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sections.
+     */
+    cursor?: SectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sections.
+     */
+    distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
+  }
+
+  /**
+   * Section findFirstOrThrow
+   */
+  export type SectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Section to fetch.
+     */
+    where?: SectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sections to fetch.
+     */
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sections.
+     */
+    cursor?: SectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sections.
+     */
+    distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
+  }
+
+  /**
+   * Section findMany
+   */
+  export type SectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sections to fetch.
+     */
+    where?: SectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sections to fetch.
+     */
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sections.
+     */
+    cursor?: SectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sections.
+     */
+    distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
+  }
+
+  /**
+   * Section create
+   */
+  export type SectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Section.
+     */
+    data: XOR<SectionCreateInput, SectionUncheckedCreateInput>
+  }
+
+  /**
+   * Section createMany
+   */
+  export type SectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sections.
+     */
+    data: SectionCreateManyInput | SectionCreateManyInput[]
+  }
+
+  /**
+   * Section createManyAndReturn
+   */
+  export type SectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sections.
+     */
+    data: SectionCreateManyInput | SectionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Section update
+   */
+  export type SectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Section.
+     */
+    data: XOR<SectionUpdateInput, SectionUncheckedUpdateInput>
+    /**
+     * Choose, which Section to update.
+     */
+    where: SectionWhereUniqueInput
+  }
+
+  /**
+   * Section updateMany
+   */
+  export type SectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sections.
+     */
+    data: XOR<SectionUpdateManyMutationInput, SectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sections to update
+     */
+    where?: SectionWhereInput
+    /**
+     * Limit how many Sections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Section updateManyAndReturn
+   */
+  export type SectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * The data used to update Sections.
+     */
+    data: XOR<SectionUpdateManyMutationInput, SectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sections to update
+     */
+    where?: SectionWhereInput
+    /**
+     * Limit how many Sections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Section upsert
+   */
+  export type SectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Section to update in case it exists.
+     */
+    where: SectionWhereUniqueInput
+    /**
+     * In case the Section found by the `where` argument doesn't exist, create a new Section with this data.
+     */
+    create: XOR<SectionCreateInput, SectionUncheckedCreateInput>
+    /**
+     * In case the Section was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SectionUpdateInput, SectionUncheckedUpdateInput>
+  }
+
+  /**
+   * Section delete
+   */
+  export type SectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    /**
+     * Filter which Section to delete.
+     */
+    where: SectionWhereUniqueInput
+  }
+
+  /**
+   * Section deleteMany
+   */
+  export type SectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sections to delete
+     */
+    where?: SectionWhereInput
+    /**
+     * Limit how many Sections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Section.barn
+   */
+  export type Section$barnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Barn
+     */
+    select?: BarnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Barn
+     */
+    omit?: BarnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BarnInclude<ExtArgs> | null
+    where?: BarnWhereInput
+  }
+
+  /**
+   * Section.currentCows
+   */
+  export type Section$currentCowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cow
+     */
+    select?: CowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cow
+     */
+    omit?: CowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowInclude<ExtArgs> | null
+    where?: CowWhereInput
+    orderBy?: CowOrderByWithRelationInput | CowOrderByWithRelationInput[]
+    cursor?: CowWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CowScalarFieldEnum | CowScalarFieldEnum[]
+  }
+
+  /**
+   * Section.events
+   */
+  export type Section$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Section.cowSectionHistory
+   */
+  export type Section$cowSectionHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    where?: CowSectionHistoryWhereInput
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    cursor?: CowSectionHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CowSectionHistoryScalarFieldEnum | CowSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Section.groupHistory
+   */
+  export type Section$groupHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    where?: GroupSectionHistoryWhereInput
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupSectionHistoryScalarFieldEnum | GroupSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Section without action
+   */
+  export type SectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CowSectionHistory
+   */
+
+  export type AggregateCowSectionHistory = {
+    _count: CowSectionHistoryCountAggregateOutputType | null
+    _min: CowSectionHistoryMinAggregateOutputType | null
+    _max: CowSectionHistoryMaxAggregateOutputType | null
+  }
+
+  export type CowSectionHistoryMinAggregateOutputType = {
+    id: string | null
+    cowId: string | null
+    sectionId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type CowSectionHistoryMaxAggregateOutputType = {
+    id: string | null
+    cowId: string | null
+    sectionId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type CowSectionHistoryCountAggregateOutputType = {
+    id: number
+    cowId: number
+    sectionId: number
+    startDate: number
+    endDate: number
+    source: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CowSectionHistoryMinAggregateInputType = {
+    id?: true
+    cowId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type CowSectionHistoryMaxAggregateInputType = {
+    id?: true
+    cowId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type CowSectionHistoryCountAggregateInputType = {
+    id?: true
+    cowId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CowSectionHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CowSectionHistory to aggregate.
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CowSectionHistories to fetch.
+     */
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CowSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CowSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CowSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CowSectionHistories
+    **/
+    _count?: true | CowSectionHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CowSectionHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CowSectionHistoryMaxAggregateInputType
+  }
+
+  export type GetCowSectionHistoryAggregateType<T extends CowSectionHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateCowSectionHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCowSectionHistory[P]>
+      : GetScalarType<T[P], AggregateCowSectionHistory[P]>
+  }
+
+
+
+
+  export type CowSectionHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CowSectionHistoryWhereInput
+    orderBy?: CowSectionHistoryOrderByWithAggregationInput | CowSectionHistoryOrderByWithAggregationInput[]
+    by: CowSectionHistoryScalarFieldEnum[] | CowSectionHistoryScalarFieldEnum
+    having?: CowSectionHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CowSectionHistoryCountAggregateInputType | true
+    _min?: CowSectionHistoryMinAggregateInputType
+    _max?: CowSectionHistoryMaxAggregateInputType
+  }
+
+  export type CowSectionHistoryGroupByOutputType = {
+    id: string
+    cowId: string
+    sectionId: string
+    startDate: Date
+    endDate: Date | null
+    source: string
+    createdAt: Date
+    _count: CowSectionHistoryCountAggregateOutputType | null
+    _min: CowSectionHistoryMinAggregateOutputType | null
+    _max: CowSectionHistoryMaxAggregateOutputType | null
+  }
+
+  type GetCowSectionHistoryGroupByPayload<T extends CowSectionHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CowSectionHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CowSectionHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CowSectionHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], CowSectionHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CowSectionHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cowId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cowSectionHistory"]>
+
+  export type CowSectionHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cowId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cowSectionHistory"]>
+
+  export type CowSectionHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cowId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cowSectionHistory"]>
+
+  export type CowSectionHistorySelectScalar = {
+    id?: boolean
+    cowId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }
+
+  export type CowSectionHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cowId" | "sectionId" | "startDate" | "endDate" | "source" | "createdAt", ExtArgs["result"]["cowSectionHistory"]>
+  export type CowSectionHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+  export type CowSectionHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+  export type CowSectionHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cow?: boolean | CowDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+
+  export type $CowSectionHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CowSectionHistory"
+    objects: {
+      cow: Prisma.$CowPayload<ExtArgs>
+      section: Prisma.$SectionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cowId: string
+      sectionId: string
+      startDate: Date
+      endDate: Date | null
+      source: string
+      createdAt: Date
+    }, ExtArgs["result"]["cowSectionHistory"]>
+    composites: {}
+  }
+
+  type CowSectionHistoryGetPayload<S extends boolean | null | undefined | CowSectionHistoryDefaultArgs> = $Result.GetResult<Prisma.$CowSectionHistoryPayload, S>
+
+  type CowSectionHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CowSectionHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CowSectionHistoryCountAggregateInputType | true
+    }
+
+  export interface CowSectionHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CowSectionHistory'], meta: { name: 'CowSectionHistory' } }
+    /**
+     * Find zero or one CowSectionHistory that matches the filter.
+     * @param {CowSectionHistoryFindUniqueArgs} args - Arguments to find a CowSectionHistory
+     * @example
+     * // Get one CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CowSectionHistoryFindUniqueArgs>(args: SelectSubset<T, CowSectionHistoryFindUniqueArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CowSectionHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CowSectionHistoryFindUniqueOrThrowArgs} args - Arguments to find a CowSectionHistory
+     * @example
+     * // Get one CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CowSectionHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, CowSectionHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CowSectionHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryFindFirstArgs} args - Arguments to find a CowSectionHistory
+     * @example
+     * // Get one CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CowSectionHistoryFindFirstArgs>(args?: SelectSubset<T, CowSectionHistoryFindFirstArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CowSectionHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryFindFirstOrThrowArgs} args - Arguments to find a CowSectionHistory
+     * @example
+     * // Get one CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CowSectionHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, CowSectionHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CowSectionHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CowSectionHistories
+     * const cowSectionHistories = await prisma.cowSectionHistory.findMany()
+     * 
+     * // Get first 10 CowSectionHistories
+     * const cowSectionHistories = await prisma.cowSectionHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cowSectionHistoryWithIdOnly = await prisma.cowSectionHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CowSectionHistoryFindManyArgs>(args?: SelectSubset<T, CowSectionHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CowSectionHistory.
+     * @param {CowSectionHistoryCreateArgs} args - Arguments to create a CowSectionHistory.
+     * @example
+     * // Create one CowSectionHistory
+     * const CowSectionHistory = await prisma.cowSectionHistory.create({
+     *   data: {
+     *     // ... data to create a CowSectionHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends CowSectionHistoryCreateArgs>(args: SelectSubset<T, CowSectionHistoryCreateArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CowSectionHistories.
+     * @param {CowSectionHistoryCreateManyArgs} args - Arguments to create many CowSectionHistories.
+     * @example
+     * // Create many CowSectionHistories
+     * const cowSectionHistory = await prisma.cowSectionHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CowSectionHistoryCreateManyArgs>(args?: SelectSubset<T, CowSectionHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CowSectionHistories and returns the data saved in the database.
+     * @param {CowSectionHistoryCreateManyAndReturnArgs} args - Arguments to create many CowSectionHistories.
+     * @example
+     * // Create many CowSectionHistories
+     * const cowSectionHistory = await prisma.cowSectionHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CowSectionHistories and only return the `id`
+     * const cowSectionHistoryWithIdOnly = await prisma.cowSectionHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CowSectionHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CowSectionHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CowSectionHistory.
+     * @param {CowSectionHistoryDeleteArgs} args - Arguments to delete one CowSectionHistory.
+     * @example
+     * // Delete one CowSectionHistory
+     * const CowSectionHistory = await prisma.cowSectionHistory.delete({
+     *   where: {
+     *     // ... filter to delete one CowSectionHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CowSectionHistoryDeleteArgs>(args: SelectSubset<T, CowSectionHistoryDeleteArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CowSectionHistory.
+     * @param {CowSectionHistoryUpdateArgs} args - Arguments to update one CowSectionHistory.
+     * @example
+     * // Update one CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CowSectionHistoryUpdateArgs>(args: SelectSubset<T, CowSectionHistoryUpdateArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CowSectionHistories.
+     * @param {CowSectionHistoryDeleteManyArgs} args - Arguments to filter CowSectionHistories to delete.
+     * @example
+     * // Delete a few CowSectionHistories
+     * const { count } = await prisma.cowSectionHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CowSectionHistoryDeleteManyArgs>(args?: SelectSubset<T, CowSectionHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CowSectionHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CowSectionHistories
+     * const cowSectionHistory = await prisma.cowSectionHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CowSectionHistoryUpdateManyArgs>(args: SelectSubset<T, CowSectionHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CowSectionHistories and returns the data updated in the database.
+     * @param {CowSectionHistoryUpdateManyAndReturnArgs} args - Arguments to update many CowSectionHistories.
+     * @example
+     * // Update many CowSectionHistories
+     * const cowSectionHistory = await prisma.cowSectionHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CowSectionHistories and only return the `id`
+     * const cowSectionHistoryWithIdOnly = await prisma.cowSectionHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CowSectionHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, CowSectionHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CowSectionHistory.
+     * @param {CowSectionHistoryUpsertArgs} args - Arguments to update or create a CowSectionHistory.
+     * @example
+     * // Update or create a CowSectionHistory
+     * const cowSectionHistory = await prisma.cowSectionHistory.upsert({
+     *   create: {
+     *     // ... data to create a CowSectionHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CowSectionHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CowSectionHistoryUpsertArgs>(args: SelectSubset<T, CowSectionHistoryUpsertArgs<ExtArgs>>): Prisma__CowSectionHistoryClient<$Result.GetResult<Prisma.$CowSectionHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CowSectionHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryCountArgs} args - Arguments to filter CowSectionHistories to count.
+     * @example
+     * // Count the number of CowSectionHistories
+     * const count = await prisma.cowSectionHistory.count({
+     *   where: {
+     *     // ... the filter for the CowSectionHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends CowSectionHistoryCountArgs>(
+      args?: Subset<T, CowSectionHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CowSectionHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CowSectionHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CowSectionHistoryAggregateArgs>(args: Subset<T, CowSectionHistoryAggregateArgs>): Prisma.PrismaPromise<GetCowSectionHistoryAggregateType<T>>
+
+    /**
+     * Group by CowSectionHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CowSectionHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CowSectionHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CowSectionHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: CowSectionHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CowSectionHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCowSectionHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CowSectionHistory model
+   */
+  readonly fields: CowSectionHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CowSectionHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CowSectionHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cow<T extends CowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CowDefaultArgs<ExtArgs>>): Prisma__CowClient<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    section<T extends SectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SectionDefaultArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CowSectionHistory model
+   */
+  interface CowSectionHistoryFieldRefs {
+    readonly id: FieldRef<"CowSectionHistory", 'String'>
+    readonly cowId: FieldRef<"CowSectionHistory", 'String'>
+    readonly sectionId: FieldRef<"CowSectionHistory", 'String'>
+    readonly startDate: FieldRef<"CowSectionHistory", 'DateTime'>
+    readonly endDate: FieldRef<"CowSectionHistory", 'DateTime'>
+    readonly source: FieldRef<"CowSectionHistory", 'String'>
+    readonly createdAt: FieldRef<"CowSectionHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CowSectionHistory findUnique
+   */
+  export type CowSectionHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CowSectionHistory to fetch.
+     */
+    where: CowSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * CowSectionHistory findUniqueOrThrow
+   */
+  export type CowSectionHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CowSectionHistory to fetch.
+     */
+    where: CowSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * CowSectionHistory findFirst
+   */
+  export type CowSectionHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CowSectionHistory to fetch.
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CowSectionHistories to fetch.
+     */
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CowSectionHistories.
+     */
+    cursor?: CowSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CowSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CowSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CowSectionHistories.
+     */
+    distinct?: CowSectionHistoryScalarFieldEnum | CowSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CowSectionHistory findFirstOrThrow
+   */
+  export type CowSectionHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CowSectionHistory to fetch.
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CowSectionHistories to fetch.
+     */
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CowSectionHistories.
+     */
+    cursor?: CowSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CowSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CowSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CowSectionHistories.
+     */
+    distinct?: CowSectionHistoryScalarFieldEnum | CowSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CowSectionHistory findMany
+   */
+  export type CowSectionHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which CowSectionHistories to fetch.
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CowSectionHistories to fetch.
+     */
+    orderBy?: CowSectionHistoryOrderByWithRelationInput | CowSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CowSectionHistories.
+     */
+    cursor?: CowSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CowSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CowSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CowSectionHistories.
+     */
+    distinct?: CowSectionHistoryScalarFieldEnum | CowSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * CowSectionHistory create
+   */
+  export type CowSectionHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CowSectionHistory.
+     */
+    data: XOR<CowSectionHistoryCreateInput, CowSectionHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * CowSectionHistory createMany
+   */
+  export type CowSectionHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CowSectionHistories.
+     */
+    data: CowSectionHistoryCreateManyInput | CowSectionHistoryCreateManyInput[]
+  }
+
+  /**
+   * CowSectionHistory createManyAndReturn
+   */
+  export type CowSectionHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many CowSectionHistories.
+     */
+    data: CowSectionHistoryCreateManyInput | CowSectionHistoryCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CowSectionHistory update
+   */
+  export type CowSectionHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CowSectionHistory.
+     */
+    data: XOR<CowSectionHistoryUpdateInput, CowSectionHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which CowSectionHistory to update.
+     */
+    where: CowSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * CowSectionHistory updateMany
+   */
+  export type CowSectionHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CowSectionHistories.
+     */
+    data: XOR<CowSectionHistoryUpdateManyMutationInput, CowSectionHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which CowSectionHistories to update
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * Limit how many CowSectionHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CowSectionHistory updateManyAndReturn
+   */
+  export type CowSectionHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update CowSectionHistories.
+     */
+    data: XOR<CowSectionHistoryUpdateManyMutationInput, CowSectionHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which CowSectionHistories to update
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * Limit how many CowSectionHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CowSectionHistory upsert
+   */
+  export type CowSectionHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CowSectionHistory to update in case it exists.
+     */
+    where: CowSectionHistoryWhereUniqueInput
+    /**
+     * In case the CowSectionHistory found by the `where` argument doesn't exist, create a new CowSectionHistory with this data.
+     */
+    create: XOR<CowSectionHistoryCreateInput, CowSectionHistoryUncheckedCreateInput>
+    /**
+     * In case the CowSectionHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CowSectionHistoryUpdateInput, CowSectionHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * CowSectionHistory delete
+   */
+  export type CowSectionHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which CowSectionHistory to delete.
+     */
+    where: CowSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * CowSectionHistory deleteMany
+   */
+  export type CowSectionHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CowSectionHistories to delete
+     */
+    where?: CowSectionHistoryWhereInput
+    /**
+     * Limit how many CowSectionHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CowSectionHistory without action
+   */
+  export type CowSectionHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CowSectionHistory
+     */
+    select?: CowSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CowSectionHistory
+     */
+    omit?: CowSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowSectionHistoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GroupSectionHistory
+   */
+
+  export type AggregateGroupSectionHistory = {
+    _count: GroupSectionHistoryCountAggregateOutputType | null
+    _min: GroupSectionHistoryMinAggregateOutputType | null
+    _max: GroupSectionHistoryMaxAggregateOutputType | null
+  }
+
+  export type GroupSectionHistoryMinAggregateOutputType = {
+    id: string | null
+    groupId: string | null
+    sectionId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type GroupSectionHistoryMaxAggregateOutputType = {
+    id: string | null
+    groupId: string | null
+    sectionId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    source: string | null
+    createdAt: Date | null
+  }
+
+  export type GroupSectionHistoryCountAggregateOutputType = {
+    id: number
+    groupId: number
+    sectionId: number
+    startDate: number
+    endDate: number
+    source: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type GroupSectionHistoryMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type GroupSectionHistoryMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+  }
+
+  export type GroupSectionHistoryCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    sectionId?: true
+    startDate?: true
+    endDate?: true
+    source?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type GroupSectionHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupSectionHistory to aggregate.
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupSectionHistories to fetch.
+     */
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GroupSectionHistories
+    **/
+    _count?: true | GroupSectionHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupSectionHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupSectionHistoryMaxAggregateInputType
+  }
+
+  export type GetGroupSectionHistoryAggregateType<T extends GroupSectionHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroupSectionHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroupSectionHistory[P]>
+      : GetScalarType<T[P], AggregateGroupSectionHistory[P]>
+  }
+
+
+
+
+  export type GroupSectionHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupSectionHistoryWhereInput
+    orderBy?: GroupSectionHistoryOrderByWithAggregationInput | GroupSectionHistoryOrderByWithAggregationInput[]
+    by: GroupSectionHistoryScalarFieldEnum[] | GroupSectionHistoryScalarFieldEnum
+    having?: GroupSectionHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupSectionHistoryCountAggregateInputType | true
+    _min?: GroupSectionHistoryMinAggregateInputType
+    _max?: GroupSectionHistoryMaxAggregateInputType
+  }
+
+  export type GroupSectionHistoryGroupByOutputType = {
+    id: string
+    groupId: string
+    sectionId: string
+    startDate: Date
+    endDate: Date | null
+    source: string
+    createdAt: Date
+    _count: GroupSectionHistoryCountAggregateOutputType | null
+    _min: GroupSectionHistoryMinAggregateOutputType | null
+    _max: GroupSectionHistoryMaxAggregateOutputType | null
+  }
+
+  type GetGroupSectionHistoryGroupByPayload<T extends GroupSectionHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GroupSectionHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupSectionHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupSectionHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupSectionHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupSectionHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupSectionHistory"]>
+
+  export type GroupSectionHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupSectionHistory"]>
+
+  export type GroupSectionHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupSectionHistory"]>
+
+  export type GroupSectionHistorySelectScalar = {
+    id?: boolean
+    groupId?: boolean
+    sectionId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    source?: boolean
+    createdAt?: boolean
+  }
+
+  export type GroupSectionHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "groupId" | "sectionId" | "startDate" | "endDate" | "source" | "createdAt", ExtArgs["result"]["groupSectionHistory"]>
+  export type GroupSectionHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+  export type GroupSectionHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+  export type GroupSectionHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupUnitDefaultArgs<ExtArgs>
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+
+  export type $GroupSectionHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GroupSectionHistory"
+    objects: {
+      group: Prisma.$GroupUnitPayload<ExtArgs>
+      section: Prisma.$SectionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      groupId: string
+      sectionId: string
+      startDate: Date
+      endDate: Date | null
+      source: string
+      createdAt: Date
+    }, ExtArgs["result"]["groupSectionHistory"]>
+    composites: {}
+  }
+
+  type GroupSectionHistoryGetPayload<S extends boolean | null | undefined | GroupSectionHistoryDefaultArgs> = $Result.GetResult<Prisma.$GroupSectionHistoryPayload, S>
+
+  type GroupSectionHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GroupSectionHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GroupSectionHistoryCountAggregateInputType | true
+    }
+
+  export interface GroupSectionHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GroupSectionHistory'], meta: { name: 'GroupSectionHistory' } }
+    /**
+     * Find zero or one GroupSectionHistory that matches the filter.
+     * @param {GroupSectionHistoryFindUniqueArgs} args - Arguments to find a GroupSectionHistory
+     * @example
+     * // Get one GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GroupSectionHistoryFindUniqueArgs>(args: SelectSubset<T, GroupSectionHistoryFindUniqueArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GroupSectionHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GroupSectionHistoryFindUniqueOrThrowArgs} args - Arguments to find a GroupSectionHistory
+     * @example
+     * // Get one GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GroupSectionHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, GroupSectionHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupSectionHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryFindFirstArgs} args - Arguments to find a GroupSectionHistory
+     * @example
+     * // Get one GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GroupSectionHistoryFindFirstArgs>(args?: SelectSubset<T, GroupSectionHistoryFindFirstArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupSectionHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryFindFirstOrThrowArgs} args - Arguments to find a GroupSectionHistory
+     * @example
+     * // Get one GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GroupSectionHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, GroupSectionHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GroupSectionHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GroupSectionHistories
+     * const groupSectionHistories = await prisma.groupSectionHistory.findMany()
+     * 
+     * // Get first 10 GroupSectionHistories
+     * const groupSectionHistories = await prisma.groupSectionHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupSectionHistoryWithIdOnly = await prisma.groupSectionHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GroupSectionHistoryFindManyArgs>(args?: SelectSubset<T, GroupSectionHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GroupSectionHistory.
+     * @param {GroupSectionHistoryCreateArgs} args - Arguments to create a GroupSectionHistory.
+     * @example
+     * // Create one GroupSectionHistory
+     * const GroupSectionHistory = await prisma.groupSectionHistory.create({
+     *   data: {
+     *     // ... data to create a GroupSectionHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends GroupSectionHistoryCreateArgs>(args: SelectSubset<T, GroupSectionHistoryCreateArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GroupSectionHistories.
+     * @param {GroupSectionHistoryCreateManyArgs} args - Arguments to create many GroupSectionHistories.
+     * @example
+     * // Create many GroupSectionHistories
+     * const groupSectionHistory = await prisma.groupSectionHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GroupSectionHistoryCreateManyArgs>(args?: SelectSubset<T, GroupSectionHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GroupSectionHistories and returns the data saved in the database.
+     * @param {GroupSectionHistoryCreateManyAndReturnArgs} args - Arguments to create many GroupSectionHistories.
+     * @example
+     * // Create many GroupSectionHistories
+     * const groupSectionHistory = await prisma.groupSectionHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GroupSectionHistories and only return the `id`
+     * const groupSectionHistoryWithIdOnly = await prisma.groupSectionHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GroupSectionHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, GroupSectionHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GroupSectionHistory.
+     * @param {GroupSectionHistoryDeleteArgs} args - Arguments to delete one GroupSectionHistory.
+     * @example
+     * // Delete one GroupSectionHistory
+     * const GroupSectionHistory = await prisma.groupSectionHistory.delete({
+     *   where: {
+     *     // ... filter to delete one GroupSectionHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GroupSectionHistoryDeleteArgs>(args: SelectSubset<T, GroupSectionHistoryDeleteArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GroupSectionHistory.
+     * @param {GroupSectionHistoryUpdateArgs} args - Arguments to update one GroupSectionHistory.
+     * @example
+     * // Update one GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GroupSectionHistoryUpdateArgs>(args: SelectSubset<T, GroupSectionHistoryUpdateArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GroupSectionHistories.
+     * @param {GroupSectionHistoryDeleteManyArgs} args - Arguments to filter GroupSectionHistories to delete.
+     * @example
+     * // Delete a few GroupSectionHistories
+     * const { count } = await prisma.groupSectionHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GroupSectionHistoryDeleteManyArgs>(args?: SelectSubset<T, GroupSectionHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupSectionHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GroupSectionHistories
+     * const groupSectionHistory = await prisma.groupSectionHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GroupSectionHistoryUpdateManyArgs>(args: SelectSubset<T, GroupSectionHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupSectionHistories and returns the data updated in the database.
+     * @param {GroupSectionHistoryUpdateManyAndReturnArgs} args - Arguments to update many GroupSectionHistories.
+     * @example
+     * // Update many GroupSectionHistories
+     * const groupSectionHistory = await prisma.groupSectionHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GroupSectionHistories and only return the `id`
+     * const groupSectionHistoryWithIdOnly = await prisma.groupSectionHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GroupSectionHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, GroupSectionHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GroupSectionHistory.
+     * @param {GroupSectionHistoryUpsertArgs} args - Arguments to update or create a GroupSectionHistory.
+     * @example
+     * // Update or create a GroupSectionHistory
+     * const groupSectionHistory = await prisma.groupSectionHistory.upsert({
+     *   create: {
+     *     // ... data to create a GroupSectionHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GroupSectionHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GroupSectionHistoryUpsertArgs>(args: SelectSubset<T, GroupSectionHistoryUpsertArgs<ExtArgs>>): Prisma__GroupSectionHistoryClient<$Result.GetResult<Prisma.$GroupSectionHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GroupSectionHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryCountArgs} args - Arguments to filter GroupSectionHistories to count.
+     * @example
+     * // Count the number of GroupSectionHistories
+     * const count = await prisma.groupSectionHistory.count({
+     *   where: {
+     *     // ... the filter for the GroupSectionHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupSectionHistoryCountArgs>(
+      args?: Subset<T, GroupSectionHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupSectionHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GroupSectionHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupSectionHistoryAggregateArgs>(args: Subset<T, GroupSectionHistoryAggregateArgs>): Prisma.PrismaPromise<GetGroupSectionHistoryAggregateType<T>>
+
+    /**
+     * Group by GroupSectionHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupSectionHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupSectionHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupSectionHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: GroupSectionHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupSectionHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupSectionHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GroupSectionHistory model
+   */
+  readonly fields: GroupSectionHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GroupSectionHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GroupSectionHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends GroupUnitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GroupUnitDefaultArgs<ExtArgs>>): Prisma__GroupUnitClient<$Result.GetResult<Prisma.$GroupUnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    section<T extends SectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SectionDefaultArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GroupSectionHistory model
+   */
+  interface GroupSectionHistoryFieldRefs {
+    readonly id: FieldRef<"GroupSectionHistory", 'String'>
+    readonly groupId: FieldRef<"GroupSectionHistory", 'String'>
+    readonly sectionId: FieldRef<"GroupSectionHistory", 'String'>
+    readonly startDate: FieldRef<"GroupSectionHistory", 'DateTime'>
+    readonly endDate: FieldRef<"GroupSectionHistory", 'DateTime'>
+    readonly source: FieldRef<"GroupSectionHistory", 'String'>
+    readonly createdAt: FieldRef<"GroupSectionHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GroupSectionHistory findUnique
+   */
+  export type GroupSectionHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupSectionHistory to fetch.
+     */
+    where: GroupSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * GroupSectionHistory findUniqueOrThrow
+   */
+  export type GroupSectionHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupSectionHistory to fetch.
+     */
+    where: GroupSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * GroupSectionHistory findFirst
+   */
+  export type GroupSectionHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupSectionHistory to fetch.
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupSectionHistories to fetch.
+     */
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupSectionHistories.
+     */
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupSectionHistories.
+     */
+    distinct?: GroupSectionHistoryScalarFieldEnum | GroupSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * GroupSectionHistory findFirstOrThrow
+   */
+  export type GroupSectionHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupSectionHistory to fetch.
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupSectionHistories to fetch.
+     */
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupSectionHistories.
+     */
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupSectionHistories.
+     */
+    distinct?: GroupSectionHistoryScalarFieldEnum | GroupSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * GroupSectionHistory findMany
+   */
+  export type GroupSectionHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupSectionHistories to fetch.
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupSectionHistories to fetch.
+     */
+    orderBy?: GroupSectionHistoryOrderByWithRelationInput | GroupSectionHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GroupSectionHistories.
+     */
+    cursor?: GroupSectionHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupSectionHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupSectionHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupSectionHistories.
+     */
+    distinct?: GroupSectionHistoryScalarFieldEnum | GroupSectionHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * GroupSectionHistory create
+   */
+  export type GroupSectionHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GroupSectionHistory.
+     */
+    data: XOR<GroupSectionHistoryCreateInput, GroupSectionHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * GroupSectionHistory createMany
+   */
+  export type GroupSectionHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GroupSectionHistories.
+     */
+    data: GroupSectionHistoryCreateManyInput | GroupSectionHistoryCreateManyInput[]
+  }
+
+  /**
+   * GroupSectionHistory createManyAndReturn
+   */
+  export type GroupSectionHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many GroupSectionHistories.
+     */
+    data: GroupSectionHistoryCreateManyInput | GroupSectionHistoryCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupSectionHistory update
+   */
+  export type GroupSectionHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GroupSectionHistory.
+     */
+    data: XOR<GroupSectionHistoryUpdateInput, GroupSectionHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which GroupSectionHistory to update.
+     */
+    where: GroupSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * GroupSectionHistory updateMany
+   */
+  export type GroupSectionHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GroupSectionHistories.
+     */
+    data: XOR<GroupSectionHistoryUpdateManyMutationInput, GroupSectionHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupSectionHistories to update
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * Limit how many GroupSectionHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupSectionHistory updateManyAndReturn
+   */
+  export type GroupSectionHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update GroupSectionHistories.
+     */
+    data: XOR<GroupSectionHistoryUpdateManyMutationInput, GroupSectionHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupSectionHistories to update
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * Limit how many GroupSectionHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupSectionHistory upsert
+   */
+  export type GroupSectionHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GroupSectionHistory to update in case it exists.
+     */
+    where: GroupSectionHistoryWhereUniqueInput
+    /**
+     * In case the GroupSectionHistory found by the `where` argument doesn't exist, create a new GroupSectionHistory with this data.
+     */
+    create: XOR<GroupSectionHistoryCreateInput, GroupSectionHistoryUncheckedCreateInput>
+    /**
+     * In case the GroupSectionHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupSectionHistoryUpdateInput, GroupSectionHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * GroupSectionHistory delete
+   */
+  export type GroupSectionHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which GroupSectionHistory to delete.
+     */
+    where: GroupSectionHistoryWhereUniqueInput
+  }
+
+  /**
+   * GroupSectionHistory deleteMany
+   */
+  export type GroupSectionHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupSectionHistories to delete
+     */
+    where?: GroupSectionHistoryWhereInput
+    /**
+     * Limit how many GroupSectionHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupSectionHistory without action
+   */
+  export type GroupSectionHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupSectionHistory
+     */
+    select?: GroupSectionHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupSectionHistory
+     */
+    omit?: GroupSectionHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupSectionHistoryInclude<ExtArgs> | null
   }
 
 
@@ -12146,18 +16107,35 @@ export namespace Prisma {
   }
 
   export type IntegrationBatchAvgAggregateOutputType = {
+    recordsRead: number | null
+    recordsInserted: number | null
+    recordsUpdated: number | null
+    recordsSkipped: number | null
     recordCount: number | null
   }
 
   export type IntegrationBatchSumAggregateOutputType = {
+    recordsRead: number | null
+    recordsInserted: number | null
+    recordsUpdated: number | null
+    recordsSkipped: number | null
     recordCount: number | null
   }
 
   export type IntegrationBatchMinAggregateOutputType = {
     id: string | null
     sourceId: string | null
+    source: string | null
     filename: string | null
+    fileHash: string | null
     status: string | null
+    startedAt: Date | null
+    finishedAt: Date | null
+    recordsRead: number | null
+    recordsInserted: number | null
+    recordsUpdated: number | null
+    recordsSkipped: number | null
+    errorMessage: string | null
     recordCount: number | null
     errors: string | null
     processedAt: Date | null
@@ -12167,8 +16145,17 @@ export namespace Prisma {
   export type IntegrationBatchMaxAggregateOutputType = {
     id: string | null
     sourceId: string | null
+    source: string | null
     filename: string | null
+    fileHash: string | null
     status: string | null
+    startedAt: Date | null
+    finishedAt: Date | null
+    recordsRead: number | null
+    recordsInserted: number | null
+    recordsUpdated: number | null
+    recordsSkipped: number | null
+    errorMessage: string | null
     recordCount: number | null
     errors: string | null
     processedAt: Date | null
@@ -12178,8 +16165,17 @@ export namespace Prisma {
   export type IntegrationBatchCountAggregateOutputType = {
     id: number
     sourceId: number
+    source: number
     filename: number
+    fileHash: number
     status: number
+    startedAt: number
+    finishedAt: number
+    recordsRead: number
+    recordsInserted: number
+    recordsUpdated: number
+    recordsSkipped: number
+    errorMessage: number
     recordCount: number
     errors: number
     processedAt: number
@@ -12189,18 +16185,35 @@ export namespace Prisma {
 
 
   export type IntegrationBatchAvgAggregateInputType = {
+    recordsRead?: true
+    recordsInserted?: true
+    recordsUpdated?: true
+    recordsSkipped?: true
     recordCount?: true
   }
 
   export type IntegrationBatchSumAggregateInputType = {
+    recordsRead?: true
+    recordsInserted?: true
+    recordsUpdated?: true
+    recordsSkipped?: true
     recordCount?: true
   }
 
   export type IntegrationBatchMinAggregateInputType = {
     id?: true
     sourceId?: true
+    source?: true
     filename?: true
+    fileHash?: true
     status?: true
+    startedAt?: true
+    finishedAt?: true
+    recordsRead?: true
+    recordsInserted?: true
+    recordsUpdated?: true
+    recordsSkipped?: true
+    errorMessage?: true
     recordCount?: true
     errors?: true
     processedAt?: true
@@ -12210,8 +16223,17 @@ export namespace Prisma {
   export type IntegrationBatchMaxAggregateInputType = {
     id?: true
     sourceId?: true
+    source?: true
     filename?: true
+    fileHash?: true
     status?: true
+    startedAt?: true
+    finishedAt?: true
+    recordsRead?: true
+    recordsInserted?: true
+    recordsUpdated?: true
+    recordsSkipped?: true
+    errorMessage?: true
     recordCount?: true
     errors?: true
     processedAt?: true
@@ -12221,8 +16243,17 @@ export namespace Prisma {
   export type IntegrationBatchCountAggregateInputType = {
     id?: true
     sourceId?: true
+    source?: true
     filename?: true
+    fileHash?: true
     status?: true
+    startedAt?: true
+    finishedAt?: true
+    recordsRead?: true
+    recordsInserted?: true
+    recordsUpdated?: true
+    recordsSkipped?: true
+    errorMessage?: true
     recordCount?: true
     errors?: true
     processedAt?: true
@@ -12319,8 +16350,17 @@ export namespace Prisma {
   export type IntegrationBatchGroupByOutputType = {
     id: string
     sourceId: string
+    source: string | null
     filename: string | null
+    fileHash: string | null
     status: string
+    startedAt: Date | null
+    finishedAt: Date | null
+    recordsRead: number
+    recordsInserted: number
+    recordsUpdated: number
+    recordsSkipped: number
+    errorMessage: string | null
     recordCount: number
     errors: string | null
     processedAt: Date | null
@@ -12349,13 +16389,22 @@ export namespace Prisma {
   export type IntegrationBatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sourceId?: boolean
+    source?: boolean
     filename?: boolean
+    fileHash?: boolean
     status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    recordsRead?: boolean
+    recordsInserted?: boolean
+    recordsUpdated?: boolean
+    recordsSkipped?: boolean
+    errorMessage?: boolean
     recordCount?: boolean
     errors?: boolean
     processedAt?: boolean
     createdAt?: boolean
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
     milkRecords?: boolean | IntegrationBatch$milkRecordsArgs<ExtArgs>
     feedRecords?: boolean | IntegrationBatch$feedRecordsArgs<ExtArgs>
     mixBatches?: boolean | IntegrationBatch$mixBatchesArgs<ExtArgs>
@@ -12365,57 +16414,84 @@ export namespace Prisma {
   export type IntegrationBatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sourceId?: boolean
+    source?: boolean
     filename?: boolean
+    fileHash?: boolean
     status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    recordsRead?: boolean
+    recordsInserted?: boolean
+    recordsUpdated?: boolean
+    recordsSkipped?: boolean
+    errorMessage?: boolean
     recordCount?: boolean
     errors?: boolean
     processedAt?: boolean
     createdAt?: boolean
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["integrationBatch"]>
 
   export type IntegrationBatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sourceId?: boolean
+    source?: boolean
     filename?: boolean
+    fileHash?: boolean
     status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    recordsRead?: boolean
+    recordsInserted?: boolean
+    recordsUpdated?: boolean
+    recordsSkipped?: boolean
+    errorMessage?: boolean
     recordCount?: boolean
     errors?: boolean
     processedAt?: boolean
     createdAt?: boolean
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["integrationBatch"]>
 
   export type IntegrationBatchSelectScalar = {
     id?: boolean
     sourceId?: boolean
+    source?: boolean
     filename?: boolean
+    fileHash?: boolean
     status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    recordsRead?: boolean
+    recordsInserted?: boolean
+    recordsUpdated?: boolean
+    recordsSkipped?: boolean
+    errorMessage?: boolean
     recordCount?: boolean
     errors?: boolean
     processedAt?: boolean
     createdAt?: boolean
   }
 
-  export type IntegrationBatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sourceId" | "filename" | "status" | "recordCount" | "errors" | "processedAt" | "createdAt", ExtArgs["result"]["integrationBatch"]>
+  export type IntegrationBatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sourceId" | "source" | "filename" | "fileHash" | "status" | "startedAt" | "finishedAt" | "recordsRead" | "recordsInserted" | "recordsUpdated" | "recordsSkipped" | "errorMessage" | "recordCount" | "errors" | "processedAt" | "createdAt", ExtArgs["result"]["integrationBatch"]>
   export type IntegrationBatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
     milkRecords?: boolean | IntegrationBatch$milkRecordsArgs<ExtArgs>
     feedRecords?: boolean | IntegrationBatch$feedRecordsArgs<ExtArgs>
     mixBatches?: boolean | IntegrationBatch$mixBatchesArgs<ExtArgs>
     _count?: boolean | IntegrationBatchCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IntegrationBatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
   }
   export type IntegrationBatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    source?: boolean | DataSourceDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
   }
 
   export type $IntegrationBatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "IntegrationBatch"
     objects: {
-      source: Prisma.$DataSourcePayload<ExtArgs>
+      dataSource: Prisma.$DataSourcePayload<ExtArgs>
       milkRecords: Prisma.$MilkRecordPayload<ExtArgs>[]
       feedRecords: Prisma.$FeedRecordPayload<ExtArgs>[]
       mixBatches: Prisma.$MixBatchPayload<ExtArgs>[]
@@ -12423,8 +16499,17 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       sourceId: string
+      source: string | null
       filename: string | null
+      fileHash: string | null
       status: string
+      startedAt: Date | null
+      finishedAt: Date | null
+      recordsRead: number
+      recordsInserted: number
+      recordsUpdated: number
+      recordsSkipped: number
+      errorMessage: string | null
       recordCount: number
       errors: string | null
       processedAt: Date | null
@@ -12823,7 +16908,7 @@ export namespace Prisma {
    */
   export interface Prisma__IntegrationBatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    source<T extends DataSourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DataSourceDefaultArgs<ExtArgs>>): Prisma__DataSourceClient<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dataSource<T extends DataSourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DataSourceDefaultArgs<ExtArgs>>): Prisma__DataSourceClient<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     milkRecords<T extends IntegrationBatch$milkRecordsArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$milkRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MilkRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     feedRecords<T extends IntegrationBatch$feedRecordsArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$feedRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mixBatches<T extends IntegrationBatch$mixBatchesArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationBatch$mixBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MixBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -12858,8 +16943,17 @@ export namespace Prisma {
   interface IntegrationBatchFieldRefs {
     readonly id: FieldRef<"IntegrationBatch", 'String'>
     readonly sourceId: FieldRef<"IntegrationBatch", 'String'>
+    readonly source: FieldRef<"IntegrationBatch", 'String'>
     readonly filename: FieldRef<"IntegrationBatch", 'String'>
+    readonly fileHash: FieldRef<"IntegrationBatch", 'String'>
     readonly status: FieldRef<"IntegrationBatch", 'String'>
+    readonly startedAt: FieldRef<"IntegrationBatch", 'DateTime'>
+    readonly finishedAt: FieldRef<"IntegrationBatch", 'DateTime'>
+    readonly recordsRead: FieldRef<"IntegrationBatch", 'Int'>
+    readonly recordsInserted: FieldRef<"IntegrationBatch", 'Int'>
+    readonly recordsUpdated: FieldRef<"IntegrationBatch", 'Int'>
+    readonly recordsSkipped: FieldRef<"IntegrationBatch", 'Int'>
+    readonly errorMessage: FieldRef<"IntegrationBatch", 'String'>
     readonly recordCount: FieldRef<"IntegrationBatch", 'Int'>
     readonly errors: FieldRef<"IntegrationBatch", 'String'>
     readonly processedAt: FieldRef<"IntegrationBatch", 'DateTime'>
@@ -25322,6 +29416,7 @@ export namespace Prisma {
     typeId: string | null
     cowId: string | null
     groupId: string | null
+    sectionId: string | null
     farmId: string | null
     severity: string | null
     title: string | null
@@ -25336,6 +29431,7 @@ export namespace Prisma {
     typeId: string | null
     cowId: string | null
     groupId: string | null
+    sectionId: string | null
     farmId: string | null
     severity: string | null
     title: string | null
@@ -25350,6 +29446,7 @@ export namespace Prisma {
     typeId: number
     cowId: number
     groupId: number
+    sectionId: number
     farmId: number
     severity: number
     title: number
@@ -25366,6 +29463,7 @@ export namespace Prisma {
     typeId?: true
     cowId?: true
     groupId?: true
+    sectionId?: true
     farmId?: true
     severity?: true
     title?: true
@@ -25380,6 +29478,7 @@ export namespace Prisma {
     typeId?: true
     cowId?: true
     groupId?: true
+    sectionId?: true
     farmId?: true
     severity?: true
     title?: true
@@ -25394,6 +29493,7 @@ export namespace Prisma {
     typeId?: true
     cowId?: true
     groupId?: true
+    sectionId?: true
     farmId?: true
     severity?: true
     title?: true
@@ -25481,6 +29581,7 @@ export namespace Prisma {
     typeId: string | null
     cowId: string | null
     groupId: string | null
+    sectionId: string | null
     farmId: string | null
     severity: string
     title: string
@@ -25512,6 +29613,7 @@ export namespace Prisma {
     typeId?: boolean
     cowId?: boolean
     groupId?: boolean
+    sectionId?: boolean
     farmId?: boolean
     severity?: boolean
     title?: boolean
@@ -25522,6 +29624,7 @@ export namespace Prisma {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -25530,6 +29633,7 @@ export namespace Prisma {
     typeId?: boolean
     cowId?: boolean
     groupId?: boolean
+    sectionId?: boolean
     farmId?: boolean
     severity?: boolean
     title?: boolean
@@ -25540,6 +29644,7 @@ export namespace Prisma {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -25548,6 +29653,7 @@ export namespace Prisma {
     typeId?: boolean
     cowId?: boolean
     groupId?: boolean
+    sectionId?: boolean
     farmId?: boolean
     severity?: boolean
     title?: boolean
@@ -25558,6 +29664,7 @@ export namespace Prisma {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -25566,6 +29673,7 @@ export namespace Prisma {
     typeId?: boolean
     cowId?: boolean
     groupId?: boolean
+    sectionId?: boolean
     farmId?: boolean
     severity?: boolean
     title?: boolean
@@ -25575,23 +29683,26 @@ export namespace Prisma {
     metadata?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "typeId" | "cowId" | "groupId" | "farmId" | "severity" | "title" | "description" | "timestamp" | "source" | "metadata", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "typeId" | "cowId" | "groupId" | "sectionId" | "farmId" | "severity" | "title" | "description" | "timestamp" | "source" | "metadata", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }
   export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
+    section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
   }
 
@@ -25601,6 +29712,7 @@ export namespace Prisma {
       type: Prisma.$EventTypePayload<ExtArgs> | null
       cow: Prisma.$CowPayload<ExtArgs> | null
       group: Prisma.$GroupUnitPayload<ExtArgs> | null
+      section: Prisma.$SectionPayload<ExtArgs> | null
       farm: Prisma.$FarmPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -25608,6 +29720,7 @@ export namespace Prisma {
       typeId: string | null
       cowId: string | null
       groupId: string | null
+      sectionId: string | null
       farmId: string | null
       severity: string
       title: string
@@ -26012,6 +30125,7 @@ export namespace Prisma {
     type<T extends Event$typeArgs<ExtArgs> = {}>(args?: Subset<T, Event$typeArgs<ExtArgs>>): Prisma__EventTypeClient<$Result.GetResult<Prisma.$EventTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     cow<T extends Event$cowArgs<ExtArgs> = {}>(args?: Subset<T, Event$cowArgs<ExtArgs>>): Prisma__CowClient<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     group<T extends Event$groupArgs<ExtArgs> = {}>(args?: Subset<T, Event$groupArgs<ExtArgs>>): Prisma__GroupUnitClient<$Result.GetResult<Prisma.$GroupUnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    section<T extends Event$sectionArgs<ExtArgs> = {}>(args?: Subset<T, Event$sectionArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     farm<T extends Event$farmArgs<ExtArgs> = {}>(args?: Subset<T, Event$farmArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -26046,6 +30160,7 @@ export namespace Prisma {
     readonly typeId: FieldRef<"Event", 'String'>
     readonly cowId: FieldRef<"Event", 'String'>
     readonly groupId: FieldRef<"Event", 'String'>
+    readonly sectionId: FieldRef<"Event", 'String'>
     readonly farmId: FieldRef<"Event", 'String'>
     readonly severity: FieldRef<"Event", 'String'>
     readonly title: FieldRef<"Event", 'String'>
@@ -26506,6 +30621,25 @@ export namespace Prisma {
      */
     include?: GroupUnitInclude<ExtArgs> | null
     where?: GroupUnitWhereInput
+  }
+
+  /**
+   * Event.section
+   */
+  export type Event$sectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    where?: SectionWhereInput
   }
 
   /**
@@ -39619,6 +43753,7 @@ export namespace Prisma {
     updatedAt?: boolean
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     cows?: boolean | Barn$cowsArgs<ExtArgs>
+    sections?: boolean | Barn$sectionsArgs<ExtArgs>
     operations?: boolean | Barn$operationsArgs<ExtArgs>
     _count?: boolean | BarnCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["barn"]>
@@ -39653,6 +43788,7 @@ export namespace Prisma {
   export type BarnInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     cows?: boolean | Barn$cowsArgs<ExtArgs>
+    sections?: boolean | Barn$sectionsArgs<ExtArgs>
     operations?: boolean | Barn$operationsArgs<ExtArgs>
     _count?: boolean | BarnCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -39668,6 +43804,7 @@ export namespace Prisma {
     objects: {
       farm: Prisma.$FarmPayload<ExtArgs>
       cows: Prisma.$CowPayload<ExtArgs>[]
+      sections: Prisma.$SectionPayload<ExtArgs>[]
       operations: Prisma.$OperationRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -40072,6 +44209,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     cows<T extends Barn$cowsArgs<ExtArgs> = {}>(args?: Subset<T, Barn$cowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sections<T extends Barn$sectionsArgs<ExtArgs> = {}>(args?: Subset<T, Barn$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     operations<T extends Barn$operationsArgs<ExtArgs> = {}>(args?: Subset<T, Barn$operationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -40527,6 +44665,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CowScalarFieldEnum | CowScalarFieldEnum[]
+  }
+
+  /**
+   * Barn.sections
+   */
+  export type Barn$sectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Section
+     */
+    select?: SectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Section
+     */
+    omit?: SectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SectionInclude<ExtArgs> | null
+    where?: SectionWhereInput
+    orderBy?: SectionOrderByWithRelationInput | SectionOrderByWithRelationInput[]
+    cursor?: SectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
   }
 
   /**
@@ -48908,6 +53070,8 @@ export namespace Prisma {
     farmId: 'farmId',
     groupId: 'groupId',
     barnId: 'barnId',
+    currentSectionId: 'currentSectionId',
+    afiId: 'afiId',
     number: 'number',
     name: 'name',
     birthDate: 'birthDate',
@@ -48920,6 +53084,48 @@ export namespace Prisma {
   };
 
   export type CowScalarFieldEnum = (typeof CowScalarFieldEnum)[keyof typeof CowScalarFieldEnum]
+
+
+  export const SectionScalarFieldEnum: {
+    id: 'id',
+    farmId: 'farmId',
+    barnId: 'barnId',
+    name: 'name',
+    externalCode: 'externalCode',
+    dtmCode: 'dtmCode',
+    afiCode: 'afiCode',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
+
+
+  export const CowSectionHistoryScalarFieldEnum: {
+    id: 'id',
+    cowId: 'cowId',
+    sectionId: 'sectionId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    source: 'source',
+    createdAt: 'createdAt'
+  };
+
+  export type CowSectionHistoryScalarFieldEnum = (typeof CowSectionHistoryScalarFieldEnum)[keyof typeof CowSectionHistoryScalarFieldEnum]
+
+
+  export const GroupSectionHistoryScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    sectionId: 'sectionId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    source: 'source',
+    createdAt: 'createdAt'
+  };
+
+  export type GroupSectionHistoryScalarFieldEnum = (typeof GroupSectionHistoryScalarFieldEnum)[keyof typeof GroupSectionHistoryScalarFieldEnum]
 
 
   export const ExternalIdentityScalarFieldEnum: {
@@ -48960,8 +53166,17 @@ export namespace Prisma {
   export const IntegrationBatchScalarFieldEnum: {
     id: 'id',
     sourceId: 'sourceId',
+    source: 'source',
     filename: 'filename',
+    fileHash: 'fileHash',
     status: 'status',
+    startedAt: 'startedAt',
+    finishedAt: 'finishedAt',
+    recordsRead: 'recordsRead',
+    recordsInserted: 'recordsInserted',
+    recordsUpdated: 'recordsUpdated',
+    recordsSkipped: 'recordsSkipped',
+    errorMessage: 'errorMessage',
     recordCount: 'recordCount',
     errors: 'errors',
     processedAt: 'processedAt',
@@ -49136,6 +53351,7 @@ export namespace Prisma {
     typeId: 'typeId',
     cowId: 'cowId',
     groupId: 'groupId',
+    sectionId: 'sectionId',
     farmId: 'farmId',
     severity: 'severity',
     title: 'title',
@@ -49541,6 +53757,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateListRelationFilter
     reportInstances?: ReportInstanceListRelationFilter
     barns?: BarnListRelationFilter
+    sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
     dashboards?: DashboardSnapshotListRelationFilter
   }
@@ -49558,6 +53775,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateOrderByRelationAggregateInput
     reportInstances?: ReportInstanceOrderByRelationAggregateInput
     barns?: BarnOrderByRelationAggregateInput
+    sections?: SectionOrderByRelationAggregateInput
     operations?: OperationRequestOrderByRelationAggregateInput
     dashboards?: DashboardSnapshotOrderByRelationAggregateInput
   }
@@ -49578,6 +53796,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateListRelationFilter
     reportInstances?: ReportInstanceListRelationFilter
     barns?: BarnListRelationFilter
+    sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
     dashboards?: DashboardSnapshotListRelationFilter
   }, "id">
@@ -49619,6 +53838,7 @@ export namespace Prisma {
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     cows?: CowListRelationFilter
     memberships?: GroupMembershipListRelationFilter
+    sectionHistory?: GroupSectionHistoryListRelationFilter
     events?: EventListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
   }
@@ -49635,6 +53855,7 @@ export namespace Prisma {
     farm?: FarmOrderByWithRelationInput
     cows?: CowOrderByRelationAggregateInput
     memberships?: GroupMembershipOrderByRelationAggregateInput
+    sectionHistory?: GroupSectionHistoryOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     feedRecords?: FeedRecordOrderByRelationAggregateInput
   }
@@ -49654,6 +53875,7 @@ export namespace Prisma {
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     cows?: CowListRelationFilter
     memberships?: GroupMembershipListRelationFilter
+    sectionHistory?: GroupSectionHistoryListRelationFilter
     events?: EventListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
   }, "id">
@@ -49696,6 +53918,8 @@ export namespace Prisma {
     farmId?: StringFilter<"Cow"> | string
     groupId?: StringNullableFilter<"Cow"> | string | null
     barnId?: StringNullableFilter<"Cow"> | string | null
+    currentSectionId?: StringNullableFilter<"Cow"> | string | null
+    afiId?: StringFilter<"Cow"> | string
     number?: StringFilter<"Cow"> | string
     name?: StringNullableFilter<"Cow"> | string | null
     birthDate?: DateTimeNullableFilter<"Cow"> | Date | string | null
@@ -49708,8 +53932,10 @@ export namespace Prisma {
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
     barn?: XOR<BarnNullableScalarRelationFilter, BarnWhereInput> | null
+    currentSection?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     externalIds?: ExternalIdentityListRelationFilter
     memberships?: GroupMembershipListRelationFilter
+    sectionHistory?: CowSectionHistoryListRelationFilter
     milkRecords?: MilkRecordListRelationFilter
     events?: EventListRelationFilter
     observations?: ObservationListRelationFilter
@@ -49723,6 +53949,8 @@ export namespace Prisma {
     farmId?: SortOrder
     groupId?: SortOrderInput | SortOrder
     barnId?: SortOrderInput | SortOrder
+    currentSectionId?: SortOrderInput | SortOrder
+    afiId?: SortOrder
     number?: SortOrder
     name?: SortOrderInput | SortOrder
     birthDate?: SortOrderInput | SortOrder
@@ -49735,8 +53963,10 @@ export namespace Prisma {
     farm?: FarmOrderByWithRelationInput
     group?: GroupUnitOrderByWithRelationInput
     barn?: BarnOrderByWithRelationInput
+    currentSection?: SectionOrderByWithRelationInput
     externalIds?: ExternalIdentityOrderByRelationAggregateInput
     memberships?: GroupMembershipOrderByRelationAggregateInput
+    sectionHistory?: CowSectionHistoryOrderByRelationAggregateInput
     milkRecords?: MilkRecordOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     observations?: ObservationOrderByRelationAggregateInput
@@ -49753,6 +53983,8 @@ export namespace Prisma {
     farmId?: StringFilter<"Cow"> | string
     groupId?: StringNullableFilter<"Cow"> | string | null
     barnId?: StringNullableFilter<"Cow"> | string | null
+    currentSectionId?: StringNullableFilter<"Cow"> | string | null
+    afiId?: StringFilter<"Cow"> | string
     number?: StringFilter<"Cow"> | string
     name?: StringNullableFilter<"Cow"> | string | null
     birthDate?: DateTimeNullableFilter<"Cow"> | Date | string | null
@@ -49765,8 +53997,10 @@ export namespace Prisma {
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
     barn?: XOR<BarnNullableScalarRelationFilter, BarnWhereInput> | null
+    currentSection?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     externalIds?: ExternalIdentityListRelationFilter
     memberships?: GroupMembershipListRelationFilter
+    sectionHistory?: CowSectionHistoryListRelationFilter
     milkRecords?: MilkRecordListRelationFilter
     events?: EventListRelationFilter
     observations?: ObservationListRelationFilter
@@ -49780,6 +54014,8 @@ export namespace Prisma {
     farmId?: SortOrder
     groupId?: SortOrderInput | SortOrder
     barnId?: SortOrderInput | SortOrder
+    currentSectionId?: SortOrderInput | SortOrder
+    afiId?: SortOrder
     number?: SortOrder
     name?: SortOrderInput | SortOrder
     birthDate?: SortOrderInput | SortOrder
@@ -49804,6 +54040,8 @@ export namespace Prisma {
     farmId?: StringWithAggregatesFilter<"Cow"> | string
     groupId?: StringNullableWithAggregatesFilter<"Cow"> | string | null
     barnId?: StringNullableWithAggregatesFilter<"Cow"> | string | null
+    currentSectionId?: StringNullableWithAggregatesFilter<"Cow"> | string | null
+    afiId?: StringWithAggregatesFilter<"Cow"> | string
     number?: StringWithAggregatesFilter<"Cow"> | string
     name?: StringNullableWithAggregatesFilter<"Cow"> | string | null
     birthDate?: DateTimeNullableWithAggregatesFilter<"Cow"> | Date | string | null
@@ -49813,6 +54051,238 @@ export namespace Prisma {
     lastCalving?: DateTimeNullableWithAggregatesFilter<"Cow"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Cow"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Cow"> | Date | string
+  }
+
+  export type SectionWhereInput = {
+    AND?: SectionWhereInput | SectionWhereInput[]
+    OR?: SectionWhereInput[]
+    NOT?: SectionWhereInput | SectionWhereInput[]
+    id?: StringFilter<"Section"> | string
+    farmId?: StringFilter<"Section"> | string
+    barnId?: StringNullableFilter<"Section"> | string | null
+    name?: StringFilter<"Section"> | string
+    externalCode?: StringNullableFilter<"Section"> | string | null
+    dtmCode?: StringNullableFilter<"Section"> | string | null
+    afiCode?: StringNullableFilter<"Section"> | string | null
+    isActive?: BoolFilter<"Section"> | boolean
+    createdAt?: DateTimeFilter<"Section"> | Date | string
+    updatedAt?: DateTimeFilter<"Section"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    barn?: XOR<BarnNullableScalarRelationFilter, BarnWhereInput> | null
+    currentCows?: CowListRelationFilter
+    events?: EventListRelationFilter
+    cowSectionHistory?: CowSectionHistoryListRelationFilter
+    groupHistory?: GroupSectionHistoryListRelationFilter
+  }
+
+  export type SectionOrderByWithRelationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    barnId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    externalCode?: SortOrderInput | SortOrder
+    dtmCode?: SortOrderInput | SortOrder
+    afiCode?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    farm?: FarmOrderByWithRelationInput
+    barn?: BarnOrderByWithRelationInput
+    currentCows?: CowOrderByRelationAggregateInput
+    events?: EventOrderByRelationAggregateInput
+    cowSectionHistory?: CowSectionHistoryOrderByRelationAggregateInput
+    groupHistory?: GroupSectionHistoryOrderByRelationAggregateInput
+  }
+
+  export type SectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    farmId_name?: SectionFarmIdNameCompoundUniqueInput
+    AND?: SectionWhereInput | SectionWhereInput[]
+    OR?: SectionWhereInput[]
+    NOT?: SectionWhereInput | SectionWhereInput[]
+    farmId?: StringFilter<"Section"> | string
+    barnId?: StringNullableFilter<"Section"> | string | null
+    name?: StringFilter<"Section"> | string
+    externalCode?: StringNullableFilter<"Section"> | string | null
+    dtmCode?: StringNullableFilter<"Section"> | string | null
+    afiCode?: StringNullableFilter<"Section"> | string | null
+    isActive?: BoolFilter<"Section"> | boolean
+    createdAt?: DateTimeFilter<"Section"> | Date | string
+    updatedAt?: DateTimeFilter<"Section"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    barn?: XOR<BarnNullableScalarRelationFilter, BarnWhereInput> | null
+    currentCows?: CowListRelationFilter
+    events?: EventListRelationFilter
+    cowSectionHistory?: CowSectionHistoryListRelationFilter
+    groupHistory?: GroupSectionHistoryListRelationFilter
+  }, "id" | "farmId_name">
+
+  export type SectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    barnId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    externalCode?: SortOrderInput | SortOrder
+    dtmCode?: SortOrderInput | SortOrder
+    afiCode?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SectionCountOrderByAggregateInput
+    _max?: SectionMaxOrderByAggregateInput
+    _min?: SectionMinOrderByAggregateInput
+  }
+
+  export type SectionScalarWhereWithAggregatesInput = {
+    AND?: SectionScalarWhereWithAggregatesInput | SectionScalarWhereWithAggregatesInput[]
+    OR?: SectionScalarWhereWithAggregatesInput[]
+    NOT?: SectionScalarWhereWithAggregatesInput | SectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Section"> | string
+    farmId?: StringWithAggregatesFilter<"Section"> | string
+    barnId?: StringNullableWithAggregatesFilter<"Section"> | string | null
+    name?: StringWithAggregatesFilter<"Section"> | string
+    externalCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
+    dtmCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
+    afiCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
+    isActive?: BoolWithAggregatesFilter<"Section"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Section"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Section"> | Date | string
+  }
+
+  export type CowSectionHistoryWhereInput = {
+    AND?: CowSectionHistoryWhereInput | CowSectionHistoryWhereInput[]
+    OR?: CowSectionHistoryWhereInput[]
+    NOT?: CowSectionHistoryWhereInput | CowSectionHistoryWhereInput[]
+    id?: StringFilter<"CowSectionHistory"> | string
+    cowId?: StringFilter<"CowSectionHistory"> | string
+    sectionId?: StringFilter<"CowSectionHistory"> | string
+    startDate?: DateTimeFilter<"CowSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"CowSectionHistory"> | Date | string | null
+    source?: StringFilter<"CowSectionHistory"> | string
+    createdAt?: DateTimeFilter<"CowSectionHistory"> | Date | string
+    cow?: XOR<CowScalarRelationFilter, CowWhereInput>
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }
+
+  export type CowSectionHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    cowId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    cow?: CowOrderByWithRelationInput
+    section?: SectionOrderByWithRelationInput
+  }
+
+  export type CowSectionHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CowSectionHistoryWhereInput | CowSectionHistoryWhereInput[]
+    OR?: CowSectionHistoryWhereInput[]
+    NOT?: CowSectionHistoryWhereInput | CowSectionHistoryWhereInput[]
+    cowId?: StringFilter<"CowSectionHistory"> | string
+    sectionId?: StringFilter<"CowSectionHistory"> | string
+    startDate?: DateTimeFilter<"CowSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"CowSectionHistory"> | Date | string | null
+    source?: StringFilter<"CowSectionHistory"> | string
+    createdAt?: DateTimeFilter<"CowSectionHistory"> | Date | string
+    cow?: XOR<CowScalarRelationFilter, CowWhereInput>
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }, "id">
+
+  export type CowSectionHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    cowId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    _count?: CowSectionHistoryCountOrderByAggregateInput
+    _max?: CowSectionHistoryMaxOrderByAggregateInput
+    _min?: CowSectionHistoryMinOrderByAggregateInput
+  }
+
+  export type CowSectionHistoryScalarWhereWithAggregatesInput = {
+    AND?: CowSectionHistoryScalarWhereWithAggregatesInput | CowSectionHistoryScalarWhereWithAggregatesInput[]
+    OR?: CowSectionHistoryScalarWhereWithAggregatesInput[]
+    NOT?: CowSectionHistoryScalarWhereWithAggregatesInput | CowSectionHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CowSectionHistory"> | string
+    cowId?: StringWithAggregatesFilter<"CowSectionHistory"> | string
+    sectionId?: StringWithAggregatesFilter<"CowSectionHistory"> | string
+    startDate?: DateTimeWithAggregatesFilter<"CowSectionHistory"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"CowSectionHistory"> | Date | string | null
+    source?: StringWithAggregatesFilter<"CowSectionHistory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CowSectionHistory"> | Date | string
+  }
+
+  export type GroupSectionHistoryWhereInput = {
+    AND?: GroupSectionHistoryWhereInput | GroupSectionHistoryWhereInput[]
+    OR?: GroupSectionHistoryWhereInput[]
+    NOT?: GroupSectionHistoryWhereInput | GroupSectionHistoryWhereInput[]
+    id?: StringFilter<"GroupSectionHistory"> | string
+    groupId?: StringFilter<"GroupSectionHistory"> | string
+    sectionId?: StringFilter<"GroupSectionHistory"> | string
+    startDate?: DateTimeFilter<"GroupSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"GroupSectionHistory"> | Date | string | null
+    source?: StringFilter<"GroupSectionHistory"> | string
+    createdAt?: DateTimeFilter<"GroupSectionHistory"> | Date | string
+    group?: XOR<GroupUnitScalarRelationFilter, GroupUnitWhereInput>
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }
+
+  export type GroupSectionHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    group?: GroupUnitOrderByWithRelationInput
+    section?: SectionOrderByWithRelationInput
+  }
+
+  export type GroupSectionHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GroupSectionHistoryWhereInput | GroupSectionHistoryWhereInput[]
+    OR?: GroupSectionHistoryWhereInput[]
+    NOT?: GroupSectionHistoryWhereInput | GroupSectionHistoryWhereInput[]
+    groupId?: StringFilter<"GroupSectionHistory"> | string
+    sectionId?: StringFilter<"GroupSectionHistory"> | string
+    startDate?: DateTimeFilter<"GroupSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"GroupSectionHistory"> | Date | string | null
+    source?: StringFilter<"GroupSectionHistory"> | string
+    createdAt?: DateTimeFilter<"GroupSectionHistory"> | Date | string
+    group?: XOR<GroupUnitScalarRelationFilter, GroupUnitWhereInput>
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }, "id">
+
+  export type GroupSectionHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    _count?: GroupSectionHistoryCountOrderByAggregateInput
+    _max?: GroupSectionHistoryMaxOrderByAggregateInput
+    _min?: GroupSectionHistoryMinOrderByAggregateInput
+  }
+
+  export type GroupSectionHistoryScalarWhereWithAggregatesInput = {
+    AND?: GroupSectionHistoryScalarWhereWithAggregatesInput | GroupSectionHistoryScalarWhereWithAggregatesInput[]
+    OR?: GroupSectionHistoryScalarWhereWithAggregatesInput[]
+    NOT?: GroupSectionHistoryScalarWhereWithAggregatesInput | GroupSectionHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GroupSectionHistory"> | string
+    groupId?: StringWithAggregatesFilter<"GroupSectionHistory"> | string
+    sectionId?: StringWithAggregatesFilter<"GroupSectionHistory"> | string
+    startDate?: DateTimeWithAggregatesFilter<"GroupSectionHistory"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"GroupSectionHistory"> | Date | string | null
+    source?: StringWithAggregatesFilter<"GroupSectionHistory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"GroupSectionHistory"> | Date | string
   }
 
   export type ExternalIdentityWhereInput = {
@@ -50000,13 +54470,22 @@ export namespace Prisma {
     NOT?: IntegrationBatchWhereInput | IntegrationBatchWhereInput[]
     id?: StringFilter<"IntegrationBatch"> | string
     sourceId?: StringFilter<"IntegrationBatch"> | string
+    source?: StringNullableFilter<"IntegrationBatch"> | string | null
     filename?: StringNullableFilter<"IntegrationBatch"> | string | null
+    fileHash?: StringNullableFilter<"IntegrationBatch"> | string | null
     status?: StringFilter<"IntegrationBatch"> | string
+    startedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    recordsRead?: IntFilter<"IntegrationBatch"> | number
+    recordsInserted?: IntFilter<"IntegrationBatch"> | number
+    recordsUpdated?: IntFilter<"IntegrationBatch"> | number
+    recordsSkipped?: IntFilter<"IntegrationBatch"> | number
+    errorMessage?: StringNullableFilter<"IntegrationBatch"> | string | null
     recordCount?: IntFilter<"IntegrationBatch"> | number
     errors?: StringNullableFilter<"IntegrationBatch"> | string | null
     processedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
     createdAt?: DateTimeFilter<"IntegrationBatch"> | Date | string
-    source?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
     milkRecords?: MilkRecordListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
     mixBatches?: MixBatchListRelationFilter
@@ -50015,13 +54494,22 @@ export namespace Prisma {
   export type IntegrationBatchOrderByWithRelationInput = {
     id?: SortOrder
     sourceId?: SortOrder
+    source?: SortOrderInput | SortOrder
     filename?: SortOrderInput | SortOrder
+    fileHash?: SortOrderInput | SortOrder
     status?: SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
+    errorMessage?: SortOrderInput | SortOrder
     recordCount?: SortOrder
     errors?: SortOrderInput | SortOrder
     processedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    source?: DataSourceOrderByWithRelationInput
+    dataSource?: DataSourceOrderByWithRelationInput
     milkRecords?: MilkRecordOrderByRelationAggregateInput
     feedRecords?: FeedRecordOrderByRelationAggregateInput
     mixBatches?: MixBatchOrderByRelationAggregateInput
@@ -50033,13 +54521,22 @@ export namespace Prisma {
     OR?: IntegrationBatchWhereInput[]
     NOT?: IntegrationBatchWhereInput | IntegrationBatchWhereInput[]
     sourceId?: StringFilter<"IntegrationBatch"> | string
+    source?: StringNullableFilter<"IntegrationBatch"> | string | null
     filename?: StringNullableFilter<"IntegrationBatch"> | string | null
+    fileHash?: StringNullableFilter<"IntegrationBatch"> | string | null
     status?: StringFilter<"IntegrationBatch"> | string
+    startedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    recordsRead?: IntFilter<"IntegrationBatch"> | number
+    recordsInserted?: IntFilter<"IntegrationBatch"> | number
+    recordsUpdated?: IntFilter<"IntegrationBatch"> | number
+    recordsSkipped?: IntFilter<"IntegrationBatch"> | number
+    errorMessage?: StringNullableFilter<"IntegrationBatch"> | string | null
     recordCount?: IntFilter<"IntegrationBatch"> | number
     errors?: StringNullableFilter<"IntegrationBatch"> | string | null
     processedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
     createdAt?: DateTimeFilter<"IntegrationBatch"> | Date | string
-    source?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
     milkRecords?: MilkRecordListRelationFilter
     feedRecords?: FeedRecordListRelationFilter
     mixBatches?: MixBatchListRelationFilter
@@ -50048,8 +54545,17 @@ export namespace Prisma {
   export type IntegrationBatchOrderByWithAggregationInput = {
     id?: SortOrder
     sourceId?: SortOrder
+    source?: SortOrderInput | SortOrder
     filename?: SortOrderInput | SortOrder
+    fileHash?: SortOrderInput | SortOrder
     status?: SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
+    errorMessage?: SortOrderInput | SortOrder
     recordCount?: SortOrder
     errors?: SortOrderInput | SortOrder
     processedAt?: SortOrderInput | SortOrder
@@ -50067,8 +54573,17 @@ export namespace Prisma {
     NOT?: IntegrationBatchScalarWhereWithAggregatesInput | IntegrationBatchScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"IntegrationBatch"> | string
     sourceId?: StringWithAggregatesFilter<"IntegrationBatch"> | string
+    source?: StringNullableWithAggregatesFilter<"IntegrationBatch"> | string | null
     filename?: StringNullableWithAggregatesFilter<"IntegrationBatch"> | string | null
+    fileHash?: StringNullableWithAggregatesFilter<"IntegrationBatch"> | string | null
     status?: StringWithAggregatesFilter<"IntegrationBatch"> | string
+    startedAt?: DateTimeNullableWithAggregatesFilter<"IntegrationBatch"> | Date | string | null
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"IntegrationBatch"> | Date | string | null
+    recordsRead?: IntWithAggregatesFilter<"IntegrationBatch"> | number
+    recordsInserted?: IntWithAggregatesFilter<"IntegrationBatch"> | number
+    recordsUpdated?: IntWithAggregatesFilter<"IntegrationBatch"> | number
+    recordsSkipped?: IntWithAggregatesFilter<"IntegrationBatch"> | number
+    errorMessage?: StringNullableWithAggregatesFilter<"IntegrationBatch"> | string | null
     recordCount?: IntWithAggregatesFilter<"IntegrationBatch"> | number
     errors?: StringNullableWithAggregatesFilter<"IntegrationBatch"> | string | null
     processedAt?: DateTimeNullableWithAggregatesFilter<"IntegrationBatch"> | Date | string | null
@@ -50925,6 +55440,7 @@ export namespace Prisma {
     typeId?: StringNullableFilter<"Event"> | string | null
     cowId?: StringNullableFilter<"Event"> | string | null
     groupId?: StringNullableFilter<"Event"> | string | null
+    sectionId?: StringNullableFilter<"Event"> | string | null
     farmId?: StringNullableFilter<"Event"> | string | null
     severity?: StringFilter<"Event"> | string
     title?: StringFilter<"Event"> | string
@@ -50935,6 +55451,7 @@ export namespace Prisma {
     type?: XOR<EventTypeNullableScalarRelationFilter, EventTypeWhereInput> | null
     cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
+    section?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
   }
 
@@ -50943,6 +55460,7 @@ export namespace Prisma {
     typeId?: SortOrderInput | SortOrder
     cowId?: SortOrderInput | SortOrder
     groupId?: SortOrderInput | SortOrder
+    sectionId?: SortOrderInput | SortOrder
     farmId?: SortOrderInput | SortOrder
     severity?: SortOrder
     title?: SortOrder
@@ -50953,6 +55471,7 @@ export namespace Prisma {
     type?: EventTypeOrderByWithRelationInput
     cow?: CowOrderByWithRelationInput
     group?: GroupUnitOrderByWithRelationInput
+    section?: SectionOrderByWithRelationInput
     farm?: FarmOrderByWithRelationInput
   }
 
@@ -50964,6 +55483,7 @@ export namespace Prisma {
     typeId?: StringNullableFilter<"Event"> | string | null
     cowId?: StringNullableFilter<"Event"> | string | null
     groupId?: StringNullableFilter<"Event"> | string | null
+    sectionId?: StringNullableFilter<"Event"> | string | null
     farmId?: StringNullableFilter<"Event"> | string | null
     severity?: StringFilter<"Event"> | string
     title?: StringFilter<"Event"> | string
@@ -50974,6 +55494,7 @@ export namespace Prisma {
     type?: XOR<EventTypeNullableScalarRelationFilter, EventTypeWhereInput> | null
     cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
+    section?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
   }, "id">
 
@@ -50982,6 +55503,7 @@ export namespace Prisma {
     typeId?: SortOrderInput | SortOrder
     cowId?: SortOrderInput | SortOrder
     groupId?: SortOrderInput | SortOrder
+    sectionId?: SortOrderInput | SortOrder
     farmId?: SortOrderInput | SortOrder
     severity?: SortOrder
     title?: SortOrder
@@ -51002,6 +55524,7 @@ export namespace Prisma {
     typeId?: StringNullableWithAggregatesFilter<"Event"> | string | null
     cowId?: StringNullableWithAggregatesFilter<"Event"> | string | null
     groupId?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    sectionId?: StringNullableWithAggregatesFilter<"Event"> | string | null
     farmId?: StringNullableWithAggregatesFilter<"Event"> | string | null
     severity?: StringWithAggregatesFilter<"Event"> | string
     title?: StringWithAggregatesFilter<"Event"> | string
@@ -51964,6 +56487,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Barn"> | Date | string
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     cows?: CowListRelationFilter
+    sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
   }
 
@@ -51975,6 +56499,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     farm?: FarmOrderByWithRelationInput
     cows?: CowOrderByRelationAggregateInput
+    sections?: SectionOrderByRelationAggregateInput
     operations?: OperationRequestOrderByRelationAggregateInput
   }
 
@@ -51989,6 +56514,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Barn"> | Date | string
     farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     cows?: CowListRelationFilter
+    sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
   }, "id">
 
@@ -52677,6 +57203,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -52694,6 +57221,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -52711,6 +57239,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -52728,6 +57257,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -52767,6 +57297,7 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutGroupsInput
     cows?: CowCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     events?: EventCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
   }
@@ -52782,6 +57313,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     events?: EventUncheckedCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
   }
@@ -52797,6 +57329,7 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
     cows?: CowUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     events?: EventUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
   }
@@ -52812,6 +57345,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     events?: EventUncheckedUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
   }
@@ -52850,6 +57384,7 @@ export namespace Prisma {
 
   export type CowCreateInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -52862,8 +57397,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -52877,6 +57414,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -52888,6 +57427,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -52898,6 +57438,7 @@ export namespace Prisma {
 
   export type CowUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52910,8 +57451,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -52925,6 +57468,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52936,6 +57481,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -52949,6 +57495,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -52962,6 +57510,7 @@ export namespace Prisma {
 
   export type CowUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52978,6 +57527,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52987,6 +57538,247 @@ export namespace Prisma {
     lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SectionCreateInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionCreateManyInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SectionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SectionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CowSectionHistoryCreateInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    cow: CowCreateNestedOneWithoutSectionHistoryInput
+    section: SectionCreateNestedOneWithoutCowSectionHistoryInput
+  }
+
+  export type CowSectionHistoryUncheckedCreateInput = {
+    id?: string
+    cowId: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type CowSectionHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cow?: CowUpdateOneRequiredWithoutSectionHistoryNestedInput
+    section?: SectionUpdateOneRequiredWithoutCowSectionHistoryNestedInput
+  }
+
+  export type CowSectionHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CowSectionHistoryCreateManyInput = {
+    id?: string
+    cowId: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type CowSectionHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CowSectionHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryCreateInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    group: GroupUnitCreateNestedOneWithoutSectionHistoryInput
+    section: SectionCreateNestedOneWithoutGroupHistoryInput
+  }
+
+  export type GroupSectionHistoryUncheckedCreateInput = {
+    id?: string
+    groupId: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type GroupSectionHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUnitUpdateOneRequiredWithoutSectionHistoryNestedInput
+    section?: SectionUpdateOneRequiredWithoutGroupHistoryNestedInput
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryCreateManyInput = {
+    id?: string
+    groupId: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type GroupSectionHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ExternalIdentityCreateInput = {
@@ -53106,7 +57898,7 @@ export namespace Prisma {
     lastSync?: Date | string | null
     status?: string
     config?: string | null
-    batches?: IntegrationBatchCreateNestedManyWithoutSourceInput
+    batches?: IntegrationBatchCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUncheckedCreateInput = {
@@ -53117,7 +57909,7 @@ export namespace Prisma {
     lastSync?: Date | string | null
     status?: string
     config?: string | null
-    batches?: IntegrationBatchUncheckedCreateNestedManyWithoutSourceInput
+    batches?: IntegrationBatchUncheckedCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUpdateInput = {
@@ -53128,7 +57920,7 @@ export namespace Prisma {
     lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
-    batches?: IntegrationBatchUpdateManyWithoutSourceNestedInput
+    batches?: IntegrationBatchUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceUncheckedUpdateInput = {
@@ -53139,7 +57931,7 @@ export namespace Prisma {
     lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
-    batches?: IntegrationBatchUncheckedUpdateManyWithoutSourceNestedInput
+    batches?: IntegrationBatchUncheckedUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceCreateManyInput = {
@@ -53174,13 +57966,22 @@ export namespace Prisma {
 
   export type IntegrationBatchCreateInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
     createdAt?: Date | string
-    source: DataSourceCreateNestedOneWithoutBatchesInput
+    dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
@@ -53189,8 +57990,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedCreateInput = {
     id?: string
     sourceId: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -53202,13 +58012,22 @@ export namespace Prisma {
 
   export type IntegrationBatchUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    source?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
@@ -53217,8 +58036,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53231,8 +58059,17 @@ export namespace Prisma {
   export type IntegrationBatchCreateManyInput = {
     id?: string
     sourceId: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -53241,8 +58078,17 @@ export namespace Prisma {
 
   export type IntegrationBatchUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53252,8 +58098,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54198,6 +59053,7 @@ export namespace Prisma {
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
   }
 
@@ -54206,6 +59062,7 @@ export namespace Prisma {
     typeId?: string | null
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -54226,6 +59083,7 @@ export namespace Prisma {
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
   }
 
@@ -54234,6 +59092,7 @@ export namespace Prisma {
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -54248,6 +59107,7 @@ export namespace Prisma {
     typeId?: string | null
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -54272,6 +59132,7 @@ export namespace Prisma {
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -55340,6 +60201,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutBarnsInput
     cows?: CowCreateNestedManyWithoutBarnInput
+    sections?: SectionCreateNestedManyWithoutBarnInput
     operations?: OperationRequestCreateNestedManyWithoutBarnInput
   }
 
@@ -55350,6 +60212,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutBarnInput
+    sections?: SectionUncheckedCreateNestedManyWithoutBarnInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutBarnInput
   }
 
@@ -55360,6 +60223,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutBarnsNestedInput
     cows?: CowUpdateManyWithoutBarnNestedInput
+    sections?: SectionUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUpdateManyWithoutBarnNestedInput
   }
 
@@ -55370,6 +60234,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutBarnNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutBarnNestedInput
   }
 
@@ -56219,6 +61084,12 @@ export namespace Prisma {
     none?: BarnWhereInput
   }
 
+  export type SectionListRelationFilter = {
+    every?: SectionWhereInput
+    some?: SectionWhereInput
+    none?: SectionWhereInput
+  }
+
   export type OperationRequestListRelationFilter = {
     every?: OperationRequestWhereInput
     some?: OperationRequestWhereInput
@@ -56261,6 +61132,10 @@ export namespace Prisma {
   }
 
   export type BarnOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SectionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -56371,6 +61246,12 @@ export namespace Prisma {
     none?: GroupMembershipWhereInput
   }
 
+  export type GroupSectionHistoryListRelationFilter = {
+    every?: GroupSectionHistoryWhereInput
+    some?: GroupSectionHistoryWhereInput
+    none?: GroupSectionHistoryWhereInput
+  }
+
   export type FeedRecordListRelationFilter = {
     every?: FeedRecordWhereInput
     some?: FeedRecordWhereInput
@@ -56378,6 +61259,10 @@ export namespace Prisma {
   }
 
   export type GroupMembershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupSectionHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -56471,10 +61356,21 @@ export namespace Prisma {
     isNot?: BarnWhereInput | null
   }
 
+  export type SectionNullableScalarRelationFilter = {
+    is?: SectionWhereInput | null
+    isNot?: SectionWhereInput | null
+  }
+
   export type ExternalIdentityListRelationFilter = {
     every?: ExternalIdentityWhereInput
     some?: ExternalIdentityWhereInput
     none?: ExternalIdentityWhereInput
+  }
+
+  export type CowSectionHistoryListRelationFilter = {
+    every?: CowSectionHistoryWhereInput
+    some?: CowSectionHistoryWhereInput
+    none?: CowSectionHistoryWhereInput
   }
 
   export type MilkRecordListRelationFilter = {
@@ -56505,6 +61401,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CowSectionHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type MilkRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -56526,6 +61426,8 @@ export namespace Prisma {
     farmId?: SortOrder
     groupId?: SortOrder
     barnId?: SortOrder
+    currentSectionId?: SortOrder
+    afiId?: SortOrder
     number?: SortOrder
     name?: SortOrder
     birthDate?: SortOrder
@@ -56547,6 +61449,8 @@ export namespace Prisma {
     farmId?: SortOrder
     groupId?: SortOrder
     barnId?: SortOrder
+    currentSectionId?: SortOrder
+    afiId?: SortOrder
     number?: SortOrder
     name?: SortOrder
     birthDate?: SortOrder
@@ -56563,6 +61467,8 @@ export namespace Prisma {
     farmId?: SortOrder
     groupId?: SortOrder
     barnId?: SortOrder
+    currentSectionId?: SortOrder
+    afiId?: SortOrder
     number?: SortOrder
     name?: SortOrder
     birthDate?: SortOrder
@@ -56593,9 +61499,123 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type SectionFarmIdNameCompoundUniqueInput = {
+    farmId: string
+    name: string
+  }
+
+  export type SectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    barnId?: SortOrder
+    name?: SortOrder
+    externalCode?: SortOrder
+    dtmCode?: SortOrder
+    afiCode?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    barnId?: SortOrder
+    name?: SortOrder
+    externalCode?: SortOrder
+    dtmCode?: SortOrder
+    afiCode?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    barnId?: SortOrder
+    name?: SortOrder
+    externalCode?: SortOrder
+    dtmCode?: SortOrder
+    afiCode?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type CowScalarRelationFilter = {
     is?: CowWhereInput
     isNot?: CowWhereInput
+  }
+
+  export type SectionScalarRelationFilter = {
+    is?: SectionWhereInput
+    isNot?: SectionWhereInput
+  }
+
+  export type CowSectionHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    cowId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CowSectionHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cowId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CowSectionHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    cowId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GroupUnitScalarRelationFilter = {
+    is?: GroupUnitWhereInput
+    isNot?: GroupUnitWhereInput
+  }
+
+  export type GroupSectionHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GroupSectionHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GroupSectionHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    sectionId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type ExternalIdentityCowIdSourceCompoundUniqueInput = {
@@ -56622,11 +61642,6 @@ export namespace Prisma {
     cowId?: SortOrder
     source?: SortOrder
     externalId?: SortOrder
-  }
-
-  export type GroupUnitScalarRelationFilter = {
-    is?: GroupUnitWhereInput
-    isNot?: GroupUnitWhereInput
   }
 
   export type GroupMembershipCountOrderByAggregateInput = {
@@ -56714,8 +61729,17 @@ export namespace Prisma {
   export type IntegrationBatchCountOrderByAggregateInput = {
     id?: SortOrder
     sourceId?: SortOrder
+    source?: SortOrder
     filename?: SortOrder
+    fileHash?: SortOrder
     status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
+    errorMessage?: SortOrder
     recordCount?: SortOrder
     errors?: SortOrder
     processedAt?: SortOrder
@@ -56723,14 +61747,27 @@ export namespace Prisma {
   }
 
   export type IntegrationBatchAvgOrderByAggregateInput = {
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
     recordCount?: SortOrder
   }
 
   export type IntegrationBatchMaxOrderByAggregateInput = {
     id?: SortOrder
     sourceId?: SortOrder
+    source?: SortOrder
     filename?: SortOrder
+    fileHash?: SortOrder
     status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
+    errorMessage?: SortOrder
     recordCount?: SortOrder
     errors?: SortOrder
     processedAt?: SortOrder
@@ -56740,8 +61777,17 @@ export namespace Prisma {
   export type IntegrationBatchMinOrderByAggregateInput = {
     id?: SortOrder
     sourceId?: SortOrder
+    source?: SortOrder
     filename?: SortOrder
+    fileHash?: SortOrder
     status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
+    errorMessage?: SortOrder
     recordCount?: SortOrder
     errors?: SortOrder
     processedAt?: SortOrder
@@ -56749,6 +61795,10 @@ export namespace Prisma {
   }
 
   export type IntegrationBatchSumOrderByAggregateInput = {
+    recordsRead?: SortOrder
+    recordsInserted?: SortOrder
+    recordsUpdated?: SortOrder
+    recordsSkipped?: SortOrder
     recordCount?: SortOrder
   }
 
@@ -57432,6 +62482,7 @@ export namespace Prisma {
     typeId?: SortOrder
     cowId?: SortOrder
     groupId?: SortOrder
+    sectionId?: SortOrder
     farmId?: SortOrder
     severity?: SortOrder
     title?: SortOrder
@@ -57446,6 +62497,7 @@ export namespace Prisma {
     typeId?: SortOrder
     cowId?: SortOrder
     groupId?: SortOrder
+    sectionId?: SortOrder
     farmId?: SortOrder
     severity?: SortOrder
     title?: SortOrder
@@ -57460,6 +62512,7 @@ export namespace Prisma {
     typeId?: SortOrder
     cowId?: SortOrder
     groupId?: SortOrder
+    sectionId?: SortOrder
     farmId?: SortOrder
     severity?: SortOrder
     title?: SortOrder
@@ -58508,6 +63561,13 @@ export namespace Prisma {
     connect?: BarnWhereUniqueInput | BarnWhereUniqueInput[]
   }
 
+  export type SectionCreateNestedManyWithoutFarmInput = {
+    create?: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput> | SectionCreateWithoutFarmInput[] | SectionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutFarmInput | SectionCreateOrConnectWithoutFarmInput[]
+    createMany?: SectionCreateManyFarmInputEnvelope
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+  }
+
   export type OperationRequestCreateNestedManyWithoutFarmInput = {
     create?: XOR<OperationRequestCreateWithoutFarmInput, OperationRequestUncheckedCreateWithoutFarmInput> | OperationRequestCreateWithoutFarmInput[] | OperationRequestUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: OperationRequestCreateOrConnectWithoutFarmInput | OperationRequestCreateOrConnectWithoutFarmInput[]
@@ -58569,6 +63629,13 @@ export namespace Prisma {
     connectOrCreate?: BarnCreateOrConnectWithoutFarmInput | BarnCreateOrConnectWithoutFarmInput[]
     createMany?: BarnCreateManyFarmInputEnvelope
     connect?: BarnWhereUniqueInput | BarnWhereUniqueInput[]
+  }
+
+  export type SectionUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput> | SectionCreateWithoutFarmInput[] | SectionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutFarmInput | SectionCreateOrConnectWithoutFarmInput[]
+    createMany?: SectionCreateManyFarmInputEnvelope
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
   }
 
   export type OperationRequestUncheckedCreateNestedManyWithoutFarmInput = {
@@ -58693,6 +63760,20 @@ export namespace Prisma {
     update?: BarnUpdateWithWhereUniqueWithoutFarmInput | BarnUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: BarnUpdateManyWithWhereWithoutFarmInput | BarnUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: BarnScalarWhereInput | BarnScalarWhereInput[]
+  }
+
+  export type SectionUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput> | SectionCreateWithoutFarmInput[] | SectionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutFarmInput | SectionCreateOrConnectWithoutFarmInput[]
+    upsert?: SectionUpsertWithWhereUniqueWithoutFarmInput | SectionUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: SectionCreateManyFarmInputEnvelope
+    set?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    disconnect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    delete?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    update?: SectionUpdateWithWhereUniqueWithoutFarmInput | SectionUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: SectionUpdateManyWithWhereWithoutFarmInput | SectionUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
   }
 
   export type OperationRequestUpdateManyWithoutFarmNestedInput = {
@@ -58821,6 +63902,20 @@ export namespace Prisma {
     deleteMany?: BarnScalarWhereInput | BarnScalarWhereInput[]
   }
 
+  export type SectionUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput> | SectionCreateWithoutFarmInput[] | SectionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutFarmInput | SectionCreateOrConnectWithoutFarmInput[]
+    upsert?: SectionUpsertWithWhereUniqueWithoutFarmInput | SectionUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: SectionCreateManyFarmInputEnvelope
+    set?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    disconnect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    delete?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    update?: SectionUpdateWithWhereUniqueWithoutFarmInput | SectionUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: SectionUpdateManyWithWhereWithoutFarmInput | SectionUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
+  }
+
   export type OperationRequestUncheckedUpdateManyWithoutFarmNestedInput = {
     create?: XOR<OperationRequestCreateWithoutFarmInput, OperationRequestUncheckedCreateWithoutFarmInput> | OperationRequestCreateWithoutFarmInput[] | OperationRequestUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: OperationRequestCreateOrConnectWithoutFarmInput | OperationRequestCreateOrConnectWithoutFarmInput[]
@@ -58869,6 +63964,13 @@ export namespace Prisma {
     connect?: GroupMembershipWhereUniqueInput | GroupMembershipWhereUniqueInput[]
   }
 
+  export type GroupSectionHistoryCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput> | GroupSectionHistoryCreateWithoutGroupInput[] | GroupSectionHistoryUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutGroupInput | GroupSectionHistoryCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupSectionHistoryCreateManyGroupInputEnvelope
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+  }
+
   export type EventCreateNestedManyWithoutGroupInput = {
     create?: XOR<EventCreateWithoutGroupInput, EventUncheckedCreateWithoutGroupInput> | EventCreateWithoutGroupInput[] | EventUncheckedCreateWithoutGroupInput[]
     connectOrCreate?: EventCreateOrConnectWithoutGroupInput | EventCreateOrConnectWithoutGroupInput[]
@@ -58895,6 +63997,13 @@ export namespace Prisma {
     connectOrCreate?: GroupMembershipCreateOrConnectWithoutGroupInput | GroupMembershipCreateOrConnectWithoutGroupInput[]
     createMany?: GroupMembershipCreateManyGroupInputEnvelope
     connect?: GroupMembershipWhereUniqueInput | GroupMembershipWhereUniqueInput[]
+  }
+
+  export type GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput> | GroupSectionHistoryCreateWithoutGroupInput[] | GroupSectionHistoryUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutGroupInput | GroupSectionHistoryCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupSectionHistoryCreateManyGroupInputEnvelope
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
   }
 
   export type EventUncheckedCreateNestedManyWithoutGroupInput = {
@@ -58959,6 +64068,20 @@ export namespace Prisma {
     deleteMany?: GroupMembershipScalarWhereInput | GroupMembershipScalarWhereInput[]
   }
 
+  export type GroupSectionHistoryUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput> | GroupSectionHistoryCreateWithoutGroupInput[] | GroupSectionHistoryUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutGroupInput | GroupSectionHistoryCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupSectionHistoryUpsertWithWhereUniqueWithoutGroupInput | GroupSectionHistoryUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupSectionHistoryCreateManyGroupInputEnvelope
+    set?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    disconnect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    delete?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    update?: GroupSectionHistoryUpdateWithWhereUniqueWithoutGroupInput | GroupSectionHistoryUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupSectionHistoryUpdateManyWithWhereWithoutGroupInput | GroupSectionHistoryUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+  }
+
   export type EventUpdateManyWithoutGroupNestedInput = {
     create?: XOR<EventCreateWithoutGroupInput, EventUncheckedCreateWithoutGroupInput> | EventCreateWithoutGroupInput[] | EventUncheckedCreateWithoutGroupInput[]
     connectOrCreate?: EventCreateOrConnectWithoutGroupInput | EventCreateOrConnectWithoutGroupInput[]
@@ -59015,6 +64138,20 @@ export namespace Prisma {
     deleteMany?: GroupMembershipScalarWhereInput | GroupMembershipScalarWhereInput[]
   }
 
+  export type GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput> | GroupSectionHistoryCreateWithoutGroupInput[] | GroupSectionHistoryUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutGroupInput | GroupSectionHistoryCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupSectionHistoryUpsertWithWhereUniqueWithoutGroupInput | GroupSectionHistoryUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupSectionHistoryCreateManyGroupInputEnvelope
+    set?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    disconnect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    delete?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    update?: GroupSectionHistoryUpdateWithWhereUniqueWithoutGroupInput | GroupSectionHistoryUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupSectionHistoryUpdateManyWithWhereWithoutGroupInput | GroupSectionHistoryUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+  }
+
   export type EventUncheckedUpdateManyWithoutGroupNestedInput = {
     create?: XOR<EventCreateWithoutGroupInput, EventUncheckedCreateWithoutGroupInput> | EventCreateWithoutGroupInput[] | EventUncheckedCreateWithoutGroupInput[]
     connectOrCreate?: EventCreateOrConnectWithoutGroupInput | EventCreateOrConnectWithoutGroupInput[]
@@ -59061,6 +64198,12 @@ export namespace Prisma {
     connect?: BarnWhereUniqueInput
   }
 
+  export type SectionCreateNestedOneWithoutCurrentCowsInput = {
+    create?: XOR<SectionCreateWithoutCurrentCowsInput, SectionUncheckedCreateWithoutCurrentCowsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutCurrentCowsInput
+    connect?: SectionWhereUniqueInput
+  }
+
   export type ExternalIdentityCreateNestedManyWithoutCowInput = {
     create?: XOR<ExternalIdentityCreateWithoutCowInput, ExternalIdentityUncheckedCreateWithoutCowInput> | ExternalIdentityCreateWithoutCowInput[] | ExternalIdentityUncheckedCreateWithoutCowInput[]
     connectOrCreate?: ExternalIdentityCreateOrConnectWithoutCowInput | ExternalIdentityCreateOrConnectWithoutCowInput[]
@@ -59073,6 +64216,13 @@ export namespace Prisma {
     connectOrCreate?: GroupMembershipCreateOrConnectWithoutCowInput | GroupMembershipCreateOrConnectWithoutCowInput[]
     createMany?: GroupMembershipCreateManyCowInputEnvelope
     connect?: GroupMembershipWhereUniqueInput | GroupMembershipWhereUniqueInput[]
+  }
+
+  export type CowSectionHistoryCreateNestedManyWithoutCowInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput> | CowSectionHistoryCreateWithoutCowInput[] | CowSectionHistoryUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutCowInput | CowSectionHistoryCreateOrConnectWithoutCowInput[]
+    createMany?: CowSectionHistoryCreateManyCowInputEnvelope
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
   }
 
   export type MilkRecordCreateNestedManyWithoutCowInput = {
@@ -59129,6 +64279,13 @@ export namespace Prisma {
     connectOrCreate?: GroupMembershipCreateOrConnectWithoutCowInput | GroupMembershipCreateOrConnectWithoutCowInput[]
     createMany?: GroupMembershipCreateManyCowInputEnvelope
     connect?: GroupMembershipWhereUniqueInput | GroupMembershipWhereUniqueInput[]
+  }
+
+  export type CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput> | CowSectionHistoryCreateWithoutCowInput[] | CowSectionHistoryUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutCowInput | CowSectionHistoryCreateOrConnectWithoutCowInput[]
+    createMany?: CowSectionHistoryCreateManyCowInputEnvelope
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
   }
 
   export type MilkRecordUncheckedCreateNestedManyWithoutCowInput = {
@@ -59205,6 +64362,16 @@ export namespace Prisma {
     update?: XOR<XOR<BarnUpdateToOneWithWhereWithoutCowsInput, BarnUpdateWithoutCowsInput>, BarnUncheckedUpdateWithoutCowsInput>
   }
 
+  export type SectionUpdateOneWithoutCurrentCowsNestedInput = {
+    create?: XOR<SectionCreateWithoutCurrentCowsInput, SectionUncheckedCreateWithoutCurrentCowsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutCurrentCowsInput
+    upsert?: SectionUpsertWithoutCurrentCowsInput
+    disconnect?: SectionWhereInput | boolean
+    delete?: SectionWhereInput | boolean
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutCurrentCowsInput, SectionUpdateWithoutCurrentCowsInput>, SectionUncheckedUpdateWithoutCurrentCowsInput>
+  }
+
   export type ExternalIdentityUpdateManyWithoutCowNestedInput = {
     create?: XOR<ExternalIdentityCreateWithoutCowInput, ExternalIdentityUncheckedCreateWithoutCowInput> | ExternalIdentityCreateWithoutCowInput[] | ExternalIdentityUncheckedCreateWithoutCowInput[]
     connectOrCreate?: ExternalIdentityCreateOrConnectWithoutCowInput | ExternalIdentityCreateOrConnectWithoutCowInput[]
@@ -59231,6 +64398,20 @@ export namespace Prisma {
     update?: GroupMembershipUpdateWithWhereUniqueWithoutCowInput | GroupMembershipUpdateWithWhereUniqueWithoutCowInput[]
     updateMany?: GroupMembershipUpdateManyWithWhereWithoutCowInput | GroupMembershipUpdateManyWithWhereWithoutCowInput[]
     deleteMany?: GroupMembershipScalarWhereInput | GroupMembershipScalarWhereInput[]
+  }
+
+  export type CowSectionHistoryUpdateManyWithoutCowNestedInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput> | CowSectionHistoryCreateWithoutCowInput[] | CowSectionHistoryUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutCowInput | CowSectionHistoryCreateOrConnectWithoutCowInput[]
+    upsert?: CowSectionHistoryUpsertWithWhereUniqueWithoutCowInput | CowSectionHistoryUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: CowSectionHistoryCreateManyCowInputEnvelope
+    set?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    disconnect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    delete?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    update?: CowSectionHistoryUpdateWithWhereUniqueWithoutCowInput | CowSectionHistoryUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: CowSectionHistoryUpdateManyWithWhereWithoutCowInput | CowSectionHistoryUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
   }
 
   export type MilkRecordUpdateManyWithoutCowNestedInput = {
@@ -59345,6 +64526,20 @@ export namespace Prisma {
     deleteMany?: GroupMembershipScalarWhereInput | GroupMembershipScalarWhereInput[]
   }
 
+  export type CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput> | CowSectionHistoryCreateWithoutCowInput[] | CowSectionHistoryUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutCowInput | CowSectionHistoryCreateOrConnectWithoutCowInput[]
+    upsert?: CowSectionHistoryUpsertWithWhereUniqueWithoutCowInput | CowSectionHistoryUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: CowSectionHistoryCreateManyCowInputEnvelope
+    set?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    disconnect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    delete?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    update?: CowSectionHistoryUpdateWithWhereUniqueWithoutCowInput | CowSectionHistoryUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: CowSectionHistoryUpdateManyWithWhereWithoutCowInput | CowSectionHistoryUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
+  }
+
   export type MilkRecordUncheckedUpdateManyWithoutCowNestedInput = {
     create?: XOR<MilkRecordCreateWithoutCowInput, MilkRecordUncheckedCreateWithoutCowInput> | MilkRecordCreateWithoutCowInput[] | MilkRecordUncheckedCreateWithoutCowInput[]
     connectOrCreate?: MilkRecordCreateOrConnectWithoutCowInput | MilkRecordCreateOrConnectWithoutCowInput[]
@@ -59429,6 +64624,260 @@ export namespace Prisma {
     deleteMany?: CowEventScalarWhereInput | CowEventScalarWhereInput[]
   }
 
+  export type FarmCreateNestedOneWithoutSectionsInput = {
+    create?: XOR<FarmCreateWithoutSectionsInput, FarmUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutSectionsInput
+    connect?: FarmWhereUniqueInput
+  }
+
+  export type BarnCreateNestedOneWithoutSectionsInput = {
+    create?: XOR<BarnCreateWithoutSectionsInput, BarnUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: BarnCreateOrConnectWithoutSectionsInput
+    connect?: BarnWhereUniqueInput
+  }
+
+  export type CowCreateNestedManyWithoutCurrentSectionInput = {
+    create?: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput> | CowCreateWithoutCurrentSectionInput[] | CowUncheckedCreateWithoutCurrentSectionInput[]
+    connectOrCreate?: CowCreateOrConnectWithoutCurrentSectionInput | CowCreateOrConnectWithoutCurrentSectionInput[]
+    createMany?: CowCreateManyCurrentSectionInputEnvelope
+    connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+  }
+
+  export type EventCreateNestedManyWithoutSectionInput = {
+    create?: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput> | EventCreateWithoutSectionInput[] | EventUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutSectionInput | EventCreateOrConnectWithoutSectionInput[]
+    createMany?: EventCreateManySectionInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type CowSectionHistoryCreateNestedManyWithoutSectionInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput> | CowSectionHistoryCreateWithoutSectionInput[] | CowSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutSectionInput | CowSectionHistoryCreateOrConnectWithoutSectionInput[]
+    createMany?: CowSectionHistoryCreateManySectionInputEnvelope
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+  }
+
+  export type GroupSectionHistoryCreateNestedManyWithoutSectionInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput> | GroupSectionHistoryCreateWithoutSectionInput[] | GroupSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutSectionInput | GroupSectionHistoryCreateOrConnectWithoutSectionInput[]
+    createMany?: GroupSectionHistoryCreateManySectionInputEnvelope
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+  }
+
+  export type CowUncheckedCreateNestedManyWithoutCurrentSectionInput = {
+    create?: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput> | CowCreateWithoutCurrentSectionInput[] | CowUncheckedCreateWithoutCurrentSectionInput[]
+    connectOrCreate?: CowCreateOrConnectWithoutCurrentSectionInput | CowCreateOrConnectWithoutCurrentSectionInput[]
+    createMany?: CowCreateManyCurrentSectionInputEnvelope
+    connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutSectionInput = {
+    create?: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput> | EventCreateWithoutSectionInput[] | EventUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutSectionInput | EventCreateOrConnectWithoutSectionInput[]
+    createMany?: EventCreateManySectionInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput> | CowSectionHistoryCreateWithoutSectionInput[] | CowSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutSectionInput | CowSectionHistoryCreateOrConnectWithoutSectionInput[]
+    createMany?: CowSectionHistoryCreateManySectionInputEnvelope
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+  }
+
+  export type GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput> | GroupSectionHistoryCreateWithoutSectionInput[] | GroupSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutSectionInput | GroupSectionHistoryCreateOrConnectWithoutSectionInput[]
+    createMany?: GroupSectionHistoryCreateManySectionInputEnvelope
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+  }
+
+  export type FarmUpdateOneRequiredWithoutSectionsNestedInput = {
+    create?: XOR<FarmCreateWithoutSectionsInput, FarmUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutSectionsInput
+    upsert?: FarmUpsertWithoutSectionsInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutSectionsInput, FarmUpdateWithoutSectionsInput>, FarmUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type BarnUpdateOneWithoutSectionsNestedInput = {
+    create?: XOR<BarnCreateWithoutSectionsInput, BarnUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: BarnCreateOrConnectWithoutSectionsInput
+    upsert?: BarnUpsertWithoutSectionsInput
+    disconnect?: BarnWhereInput | boolean
+    delete?: BarnWhereInput | boolean
+    connect?: BarnWhereUniqueInput
+    update?: XOR<XOR<BarnUpdateToOneWithWhereWithoutSectionsInput, BarnUpdateWithoutSectionsInput>, BarnUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type CowUpdateManyWithoutCurrentSectionNestedInput = {
+    create?: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput> | CowCreateWithoutCurrentSectionInput[] | CowUncheckedCreateWithoutCurrentSectionInput[]
+    connectOrCreate?: CowCreateOrConnectWithoutCurrentSectionInput | CowCreateOrConnectWithoutCurrentSectionInput[]
+    upsert?: CowUpsertWithWhereUniqueWithoutCurrentSectionInput | CowUpsertWithWhereUniqueWithoutCurrentSectionInput[]
+    createMany?: CowCreateManyCurrentSectionInputEnvelope
+    set?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    disconnect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    delete?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    update?: CowUpdateWithWhereUniqueWithoutCurrentSectionInput | CowUpdateWithWhereUniqueWithoutCurrentSectionInput[]
+    updateMany?: CowUpdateManyWithWhereWithoutCurrentSectionInput | CowUpdateManyWithWhereWithoutCurrentSectionInput[]
+    deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
+  }
+
+  export type EventUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput> | EventCreateWithoutSectionInput[] | EventUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutSectionInput | EventCreateOrConnectWithoutSectionInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutSectionInput | EventUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: EventCreateManySectionInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutSectionInput | EventUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutSectionInput | EventUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type CowSectionHistoryUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput> | CowSectionHistoryCreateWithoutSectionInput[] | CowSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutSectionInput | CowSectionHistoryCreateOrConnectWithoutSectionInput[]
+    upsert?: CowSectionHistoryUpsertWithWhereUniqueWithoutSectionInput | CowSectionHistoryUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: CowSectionHistoryCreateManySectionInputEnvelope
+    set?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    disconnect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    delete?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    update?: CowSectionHistoryUpdateWithWhereUniqueWithoutSectionInput | CowSectionHistoryUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: CowSectionHistoryUpdateManyWithWhereWithoutSectionInput | CowSectionHistoryUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
+  }
+
+  export type GroupSectionHistoryUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput> | GroupSectionHistoryCreateWithoutSectionInput[] | GroupSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutSectionInput | GroupSectionHistoryCreateOrConnectWithoutSectionInput[]
+    upsert?: GroupSectionHistoryUpsertWithWhereUniqueWithoutSectionInput | GroupSectionHistoryUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: GroupSectionHistoryCreateManySectionInputEnvelope
+    set?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    disconnect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    delete?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    update?: GroupSectionHistoryUpdateWithWhereUniqueWithoutSectionInput | GroupSectionHistoryUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: GroupSectionHistoryUpdateManyWithWhereWithoutSectionInput | GroupSectionHistoryUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+  }
+
+  export type CowUncheckedUpdateManyWithoutCurrentSectionNestedInput = {
+    create?: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput> | CowCreateWithoutCurrentSectionInput[] | CowUncheckedCreateWithoutCurrentSectionInput[]
+    connectOrCreate?: CowCreateOrConnectWithoutCurrentSectionInput | CowCreateOrConnectWithoutCurrentSectionInput[]
+    upsert?: CowUpsertWithWhereUniqueWithoutCurrentSectionInput | CowUpsertWithWhereUniqueWithoutCurrentSectionInput[]
+    createMany?: CowCreateManyCurrentSectionInputEnvelope
+    set?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    disconnect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    delete?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+    update?: CowUpdateWithWhereUniqueWithoutCurrentSectionInput | CowUpdateWithWhereUniqueWithoutCurrentSectionInput[]
+    updateMany?: CowUpdateManyWithWhereWithoutCurrentSectionInput | CowUpdateManyWithWhereWithoutCurrentSectionInput[]
+    deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
+  }
+
+  export type EventUncheckedUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput> | EventCreateWithoutSectionInput[] | EventUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutSectionInput | EventCreateOrConnectWithoutSectionInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutSectionInput | EventUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: EventCreateManySectionInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutSectionInput | EventUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutSectionInput | EventUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput> | CowSectionHistoryCreateWithoutSectionInput[] | CowSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: CowSectionHistoryCreateOrConnectWithoutSectionInput | CowSectionHistoryCreateOrConnectWithoutSectionInput[]
+    upsert?: CowSectionHistoryUpsertWithWhereUniqueWithoutSectionInput | CowSectionHistoryUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: CowSectionHistoryCreateManySectionInputEnvelope
+    set?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    disconnect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    delete?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    connect?: CowSectionHistoryWhereUniqueInput | CowSectionHistoryWhereUniqueInput[]
+    update?: CowSectionHistoryUpdateWithWhereUniqueWithoutSectionInput | CowSectionHistoryUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: CowSectionHistoryUpdateManyWithWhereWithoutSectionInput | CowSectionHistoryUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput> | GroupSectionHistoryCreateWithoutSectionInput[] | GroupSectionHistoryUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: GroupSectionHistoryCreateOrConnectWithoutSectionInput | GroupSectionHistoryCreateOrConnectWithoutSectionInput[]
+    upsert?: GroupSectionHistoryUpsertWithWhereUniqueWithoutSectionInput | GroupSectionHistoryUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: GroupSectionHistoryCreateManySectionInputEnvelope
+    set?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    disconnect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    delete?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    connect?: GroupSectionHistoryWhereUniqueInput | GroupSectionHistoryWhereUniqueInput[]
+    update?: GroupSectionHistoryUpdateWithWhereUniqueWithoutSectionInput | GroupSectionHistoryUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: GroupSectionHistoryUpdateManyWithWhereWithoutSectionInput | GroupSectionHistoryUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+  }
+
+  export type CowCreateNestedOneWithoutSectionHistoryInput = {
+    create?: XOR<CowCreateWithoutSectionHistoryInput, CowUncheckedCreateWithoutSectionHistoryInput>
+    connectOrCreate?: CowCreateOrConnectWithoutSectionHistoryInput
+    connect?: CowWhereUniqueInput
+  }
+
+  export type SectionCreateNestedOneWithoutCowSectionHistoryInput = {
+    create?: XOR<SectionCreateWithoutCowSectionHistoryInput, SectionUncheckedCreateWithoutCowSectionHistoryInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutCowSectionHistoryInput
+    connect?: SectionWhereUniqueInput
+  }
+
+  export type CowUpdateOneRequiredWithoutSectionHistoryNestedInput = {
+    create?: XOR<CowCreateWithoutSectionHistoryInput, CowUncheckedCreateWithoutSectionHistoryInput>
+    connectOrCreate?: CowCreateOrConnectWithoutSectionHistoryInput
+    upsert?: CowUpsertWithoutSectionHistoryInput
+    connect?: CowWhereUniqueInput
+    update?: XOR<XOR<CowUpdateToOneWithWhereWithoutSectionHistoryInput, CowUpdateWithoutSectionHistoryInput>, CowUncheckedUpdateWithoutSectionHistoryInput>
+  }
+
+  export type SectionUpdateOneRequiredWithoutCowSectionHistoryNestedInput = {
+    create?: XOR<SectionCreateWithoutCowSectionHistoryInput, SectionUncheckedCreateWithoutCowSectionHistoryInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutCowSectionHistoryInput
+    upsert?: SectionUpsertWithoutCowSectionHistoryInput
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutCowSectionHistoryInput, SectionUpdateWithoutCowSectionHistoryInput>, SectionUncheckedUpdateWithoutCowSectionHistoryInput>
+  }
+
+  export type GroupUnitCreateNestedOneWithoutSectionHistoryInput = {
+    create?: XOR<GroupUnitCreateWithoutSectionHistoryInput, GroupUnitUncheckedCreateWithoutSectionHistoryInput>
+    connectOrCreate?: GroupUnitCreateOrConnectWithoutSectionHistoryInput
+    connect?: GroupUnitWhereUniqueInput
+  }
+
+  export type SectionCreateNestedOneWithoutGroupHistoryInput = {
+    create?: XOR<SectionCreateWithoutGroupHistoryInput, SectionUncheckedCreateWithoutGroupHistoryInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutGroupHistoryInput
+    connect?: SectionWhereUniqueInput
+  }
+
+  export type GroupUnitUpdateOneRequiredWithoutSectionHistoryNestedInput = {
+    create?: XOR<GroupUnitCreateWithoutSectionHistoryInput, GroupUnitUncheckedCreateWithoutSectionHistoryInput>
+    connectOrCreate?: GroupUnitCreateOrConnectWithoutSectionHistoryInput
+    upsert?: GroupUnitUpsertWithoutSectionHistoryInput
+    connect?: GroupUnitWhereUniqueInput
+    update?: XOR<XOR<GroupUnitUpdateToOneWithWhereWithoutSectionHistoryInput, GroupUnitUpdateWithoutSectionHistoryInput>, GroupUnitUncheckedUpdateWithoutSectionHistoryInput>
+  }
+
+  export type SectionUpdateOneRequiredWithoutGroupHistoryNestedInput = {
+    create?: XOR<SectionCreateWithoutGroupHistoryInput, SectionUncheckedCreateWithoutGroupHistoryInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutGroupHistoryInput
+    upsert?: SectionUpsertWithoutGroupHistoryInput
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutGroupHistoryInput, SectionUpdateWithoutGroupHistoryInput>, SectionUncheckedUpdateWithoutGroupHistoryInput>
+  }
+
   export type CowCreateNestedOneWithoutExternalIdsInput = {
     create?: XOR<CowCreateWithoutExternalIdsInput, CowUncheckedCreateWithoutExternalIdsInput>
     connectOrCreate?: CowCreateOrConnectWithoutExternalIdsInput
@@ -59471,45 +64920,45 @@ export namespace Prisma {
     update?: XOR<XOR<GroupUnitUpdateToOneWithWhereWithoutMembershipsInput, GroupUnitUpdateWithoutMembershipsInput>, GroupUnitUncheckedUpdateWithoutMembershipsInput>
   }
 
-  export type IntegrationBatchCreateNestedManyWithoutSourceInput = {
-    create?: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput> | IntegrationBatchCreateWithoutSourceInput[] | IntegrationBatchUncheckedCreateWithoutSourceInput[]
-    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutSourceInput | IntegrationBatchCreateOrConnectWithoutSourceInput[]
-    createMany?: IntegrationBatchCreateManySourceInputEnvelope
+  export type IntegrationBatchCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
+    createMany?: IntegrationBatchCreateManyDataSourceInputEnvelope
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
   }
 
-  export type IntegrationBatchUncheckedCreateNestedManyWithoutSourceInput = {
-    create?: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput> | IntegrationBatchCreateWithoutSourceInput[] | IntegrationBatchUncheckedCreateWithoutSourceInput[]
-    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutSourceInput | IntegrationBatchCreateOrConnectWithoutSourceInput[]
-    createMany?: IntegrationBatchCreateManySourceInputEnvelope
+  export type IntegrationBatchUncheckedCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
+    createMany?: IntegrationBatchCreateManyDataSourceInputEnvelope
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
   }
 
-  export type IntegrationBatchUpdateManyWithoutSourceNestedInput = {
-    create?: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput> | IntegrationBatchCreateWithoutSourceInput[] | IntegrationBatchUncheckedCreateWithoutSourceInput[]
-    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutSourceInput | IntegrationBatchCreateOrConnectWithoutSourceInput[]
-    upsert?: IntegrationBatchUpsertWithWhereUniqueWithoutSourceInput | IntegrationBatchUpsertWithWhereUniqueWithoutSourceInput[]
-    createMany?: IntegrationBatchCreateManySourceInputEnvelope
+  export type IntegrationBatchUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
+    upsert?: IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput | IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: IntegrationBatchCreateManyDataSourceInputEnvelope
     set?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     disconnect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     delete?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
-    update?: IntegrationBatchUpdateWithWhereUniqueWithoutSourceInput | IntegrationBatchUpdateWithWhereUniqueWithoutSourceInput[]
-    updateMany?: IntegrationBatchUpdateManyWithWhereWithoutSourceInput | IntegrationBatchUpdateManyWithWhereWithoutSourceInput[]
+    update?: IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput | IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput | IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput[]
     deleteMany?: IntegrationBatchScalarWhereInput | IntegrationBatchScalarWhereInput[]
   }
 
-  export type IntegrationBatchUncheckedUpdateManyWithoutSourceNestedInput = {
-    create?: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput> | IntegrationBatchCreateWithoutSourceInput[] | IntegrationBatchUncheckedCreateWithoutSourceInput[]
-    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutSourceInput | IntegrationBatchCreateOrConnectWithoutSourceInput[]
-    upsert?: IntegrationBatchUpsertWithWhereUniqueWithoutSourceInput | IntegrationBatchUpsertWithWhereUniqueWithoutSourceInput[]
-    createMany?: IntegrationBatchCreateManySourceInputEnvelope
+  export type IntegrationBatchUncheckedUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
+    upsert?: IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput | IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: IntegrationBatchCreateManyDataSourceInputEnvelope
     set?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     disconnect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     delete?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
-    update?: IntegrationBatchUpdateWithWhereUniqueWithoutSourceInput | IntegrationBatchUpdateWithWhereUniqueWithoutSourceInput[]
-    updateMany?: IntegrationBatchUpdateManyWithWhereWithoutSourceInput | IntegrationBatchUpdateManyWithWhereWithoutSourceInput[]
+    update?: IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput | IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput | IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput[]
     deleteMany?: IntegrationBatchScalarWhereInput | IntegrationBatchScalarWhereInput[]
   }
 
@@ -60159,6 +65608,12 @@ export namespace Prisma {
     connect?: GroupUnitWhereUniqueInput
   }
 
+  export type SectionCreateNestedOneWithoutEventsInput = {
+    create?: XOR<SectionCreateWithoutEventsInput, SectionUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutEventsInput
+    connect?: SectionWhereUniqueInput
+  }
+
   export type FarmCreateNestedOneWithoutEventsInput = {
     create?: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
     connectOrCreate?: FarmCreateOrConnectWithoutEventsInput
@@ -60193,6 +65648,16 @@ export namespace Prisma {
     delete?: GroupUnitWhereInput | boolean
     connect?: GroupUnitWhereUniqueInput
     update?: XOR<XOR<GroupUnitUpdateToOneWithWhereWithoutEventsInput, GroupUnitUpdateWithoutEventsInput>, GroupUnitUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type SectionUpdateOneWithoutEventsNestedInput = {
+    create?: XOR<SectionCreateWithoutEventsInput, SectionUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutEventsInput
+    upsert?: SectionUpsertWithoutEventsInput
+    disconnect?: SectionWhereInput | boolean
+    delete?: SectionWhereInput | boolean
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutEventsInput, SectionUpdateWithoutEventsInput>, SectionUncheckedUpdateWithoutEventsInput>
   }
 
   export type FarmUpdateOneWithoutEventsNestedInput = {
@@ -60684,6 +66149,13 @@ export namespace Prisma {
     connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
   }
 
+  export type SectionCreateNestedManyWithoutBarnInput = {
+    create?: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput> | SectionCreateWithoutBarnInput[] | SectionUncheckedCreateWithoutBarnInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutBarnInput | SectionCreateOrConnectWithoutBarnInput[]
+    createMany?: SectionCreateManyBarnInputEnvelope
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+  }
+
   export type OperationRequestCreateNestedManyWithoutBarnInput = {
     create?: XOR<OperationRequestCreateWithoutBarnInput, OperationRequestUncheckedCreateWithoutBarnInput> | OperationRequestCreateWithoutBarnInput[] | OperationRequestUncheckedCreateWithoutBarnInput[]
     connectOrCreate?: OperationRequestCreateOrConnectWithoutBarnInput | OperationRequestCreateOrConnectWithoutBarnInput[]
@@ -60696,6 +66168,13 @@ export namespace Prisma {
     connectOrCreate?: CowCreateOrConnectWithoutBarnInput | CowCreateOrConnectWithoutBarnInput[]
     createMany?: CowCreateManyBarnInputEnvelope
     connect?: CowWhereUniqueInput | CowWhereUniqueInput[]
+  }
+
+  export type SectionUncheckedCreateNestedManyWithoutBarnInput = {
+    create?: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput> | SectionCreateWithoutBarnInput[] | SectionUncheckedCreateWithoutBarnInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutBarnInput | SectionCreateOrConnectWithoutBarnInput[]
+    createMany?: SectionCreateManyBarnInputEnvelope
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
   }
 
   export type OperationRequestUncheckedCreateNestedManyWithoutBarnInput = {
@@ -60727,6 +66206,20 @@ export namespace Prisma {
     deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
   }
 
+  export type SectionUpdateManyWithoutBarnNestedInput = {
+    create?: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput> | SectionCreateWithoutBarnInput[] | SectionUncheckedCreateWithoutBarnInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutBarnInput | SectionCreateOrConnectWithoutBarnInput[]
+    upsert?: SectionUpsertWithWhereUniqueWithoutBarnInput | SectionUpsertWithWhereUniqueWithoutBarnInput[]
+    createMany?: SectionCreateManyBarnInputEnvelope
+    set?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    disconnect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    delete?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    update?: SectionUpdateWithWhereUniqueWithoutBarnInput | SectionUpdateWithWhereUniqueWithoutBarnInput[]
+    updateMany?: SectionUpdateManyWithWhereWithoutBarnInput | SectionUpdateManyWithWhereWithoutBarnInput[]
+    deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
+  }
+
   export type OperationRequestUpdateManyWithoutBarnNestedInput = {
     create?: XOR<OperationRequestCreateWithoutBarnInput, OperationRequestUncheckedCreateWithoutBarnInput> | OperationRequestCreateWithoutBarnInput[] | OperationRequestUncheckedCreateWithoutBarnInput[]
     connectOrCreate?: OperationRequestCreateOrConnectWithoutBarnInput | OperationRequestCreateOrConnectWithoutBarnInput[]
@@ -60753,6 +66246,20 @@ export namespace Prisma {
     update?: CowUpdateWithWhereUniqueWithoutBarnInput | CowUpdateWithWhereUniqueWithoutBarnInput[]
     updateMany?: CowUpdateManyWithWhereWithoutBarnInput | CowUpdateManyWithWhereWithoutBarnInput[]
     deleteMany?: CowScalarWhereInput | CowScalarWhereInput[]
+  }
+
+  export type SectionUncheckedUpdateManyWithoutBarnNestedInput = {
+    create?: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput> | SectionCreateWithoutBarnInput[] | SectionUncheckedCreateWithoutBarnInput[]
+    connectOrCreate?: SectionCreateOrConnectWithoutBarnInput | SectionCreateOrConnectWithoutBarnInput[]
+    upsert?: SectionUpsertWithWhereUniqueWithoutBarnInput | SectionUpsertWithWhereUniqueWithoutBarnInput[]
+    createMany?: SectionCreateManyBarnInputEnvelope
+    set?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    disconnect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    delete?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
+    update?: SectionUpdateWithWhereUniqueWithoutBarnInput | SectionUpdateWithWhereUniqueWithoutBarnInput[]
+    updateMany?: SectionUpdateManyWithWhereWithoutBarnInput | SectionUpdateManyWithWhereWithoutBarnInput[]
+    deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
   }
 
   export type OperationRequestUncheckedUpdateManyWithoutBarnNestedInput = {
@@ -61308,6 +66815,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cows?: CowCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     events?: EventCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
   }
@@ -61322,6 +66830,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     events?: EventUncheckedCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
   }
@@ -61337,6 +66846,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutFarmInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -61348,8 +66858,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -61362,6 +66874,8 @@ export namespace Prisma {
     id?: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -61373,6 +66887,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -61401,6 +66916,7 @@ export namespace Prisma {
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
   }
 
   export type EventUncheckedCreateWithoutFarmInput = {
@@ -61408,6 +66924,7 @@ export namespace Prisma {
     typeId?: string | null
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     severity?: string
     title: string
     description?: string | null
@@ -61564,6 +67081,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowCreateNestedManyWithoutBarnInput
+    sections?: SectionCreateNestedManyWithoutBarnInput
     operations?: OperationRequestCreateNestedManyWithoutBarnInput
   }
 
@@ -61573,6 +67091,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutBarnInput
+    sections?: SectionUncheckedCreateNestedManyWithoutBarnInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutBarnInput
   }
 
@@ -61583,6 +67102,47 @@ export namespace Prisma {
 
   export type BarnCreateManyFarmInputEnvelope = {
     data: BarnCreateManyFarmInput | BarnCreateManyFarmInput[]
+  }
+
+  export type SectionCreateWithoutFarmInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutFarmInput = {
+    id?: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutFarmInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput>
+  }
+
+  export type SectionCreateManyFarmInputEnvelope = {
+    data: SectionCreateManyFarmInput | SectionCreateManyFarmInput[]
   }
 
   export type OperationRequestCreateWithoutFarmInput = {
@@ -61767,6 +67327,8 @@ export namespace Prisma {
     farmId?: StringFilter<"Cow"> | string
     groupId?: StringNullableFilter<"Cow"> | string | null
     barnId?: StringNullableFilter<"Cow"> | string | null
+    currentSectionId?: StringNullableFilter<"Cow"> | string | null
+    afiId?: StringFilter<"Cow"> | string
     number?: StringFilter<"Cow"> | string
     name?: StringNullableFilter<"Cow"> | string | null
     birthDate?: DateTimeNullableFilter<"Cow"> | Date | string | null
@@ -61802,6 +67364,7 @@ export namespace Prisma {
     typeId?: StringNullableFilter<"Event"> | string | null
     cowId?: StringNullableFilter<"Event"> | string | null
     groupId?: StringNullableFilter<"Event"> | string | null
+    sectionId?: StringNullableFilter<"Event"> | string | null
     farmId?: StringNullableFilter<"Event"> | string | null
     severity?: StringFilter<"Event"> | string
     title?: StringFilter<"Event"> | string
@@ -61945,6 +67508,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Barn"> | Date | string
   }
 
+  export type SectionUpsertWithWhereUniqueWithoutFarmInput = {
+    where: SectionWhereUniqueInput
+    update: XOR<SectionUpdateWithoutFarmInput, SectionUncheckedUpdateWithoutFarmInput>
+    create: XOR<SectionCreateWithoutFarmInput, SectionUncheckedCreateWithoutFarmInput>
+  }
+
+  export type SectionUpdateWithWhereUniqueWithoutFarmInput = {
+    where: SectionWhereUniqueInput
+    data: XOR<SectionUpdateWithoutFarmInput, SectionUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type SectionUpdateManyWithWhereWithoutFarmInput = {
+    where: SectionScalarWhereInput
+    data: XOR<SectionUpdateManyMutationInput, SectionUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type SectionScalarWhereInput = {
+    AND?: SectionScalarWhereInput | SectionScalarWhereInput[]
+    OR?: SectionScalarWhereInput[]
+    NOT?: SectionScalarWhereInput | SectionScalarWhereInput[]
+    id?: StringFilter<"Section"> | string
+    farmId?: StringFilter<"Section"> | string
+    barnId?: StringNullableFilter<"Section"> | string | null
+    name?: StringFilter<"Section"> | string
+    externalCode?: StringNullableFilter<"Section"> | string | null
+    dtmCode?: StringNullableFilter<"Section"> | string | null
+    afiCode?: StringNullableFilter<"Section"> | string | null
+    isActive?: BoolFilter<"Section"> | boolean
+    createdAt?: DateTimeFilter<"Section"> | Date | string
+    updatedAt?: DateTimeFilter<"Section"> | Date | string
+  }
+
   export type OperationRequestUpsertWithWhereUniqueWithoutFarmInput = {
     where: OperationRequestWhereUniqueInput
     update: XOR<OperationRequestUpdateWithoutFarmInput, OperationRequestUncheckedUpdateWithoutFarmInput>
@@ -62048,6 +67643,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -62064,6 +67660,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -62075,6 +67672,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutGroupInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -62086,8 +67684,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -62100,6 +67700,8 @@ export namespace Prisma {
     id?: string
     farmId: string
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -62111,6 +67713,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -62153,6 +67756,33 @@ export namespace Prisma {
     data: GroupMembershipCreateManyGroupInput | GroupMembershipCreateManyGroupInput[]
   }
 
+  export type GroupSectionHistoryCreateWithoutGroupInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    section: SectionCreateNestedOneWithoutGroupHistoryInput
+  }
+
+  export type GroupSectionHistoryUncheckedCreateWithoutGroupInput = {
+    id?: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type GroupSectionHistoryCreateOrConnectWithoutGroupInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    create: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupSectionHistoryCreateManyGroupInputEnvelope = {
+    data: GroupSectionHistoryCreateManyGroupInput | GroupSectionHistoryCreateManyGroupInput[]
+  }
+
   export type EventCreateWithoutGroupInput = {
     id?: string
     severity?: string
@@ -62163,6 +67793,7 @@ export namespace Prisma {
     metadata?: string | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
   }
 
@@ -62170,6 +67801,7 @@ export namespace Prisma {
     id?: string
     typeId?: string | null
     cowId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -62264,6 +67896,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -62280,6 +67913,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -62326,6 +67960,35 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"GroupMembership"> | Date | string
     endDate?: DateTimeNullableFilter<"GroupMembership"> | Date | string | null
     source?: StringFilter<"GroupMembership"> | string
+  }
+
+  export type GroupSectionHistoryUpsertWithWhereUniqueWithoutGroupInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    update: XOR<GroupSectionHistoryUpdateWithoutGroupInput, GroupSectionHistoryUncheckedUpdateWithoutGroupInput>
+    create: XOR<GroupSectionHistoryCreateWithoutGroupInput, GroupSectionHistoryUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupSectionHistoryUpdateWithWhereUniqueWithoutGroupInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    data: XOR<GroupSectionHistoryUpdateWithoutGroupInput, GroupSectionHistoryUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type GroupSectionHistoryUpdateManyWithWhereWithoutGroupInput = {
+    where: GroupSectionHistoryScalarWhereInput
+    data: XOR<GroupSectionHistoryUpdateManyMutationInput, GroupSectionHistoryUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type GroupSectionHistoryScalarWhereInput = {
+    AND?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+    OR?: GroupSectionHistoryScalarWhereInput[]
+    NOT?: GroupSectionHistoryScalarWhereInput | GroupSectionHistoryScalarWhereInput[]
+    id?: StringFilter<"GroupSectionHistory"> | string
+    groupId?: StringFilter<"GroupSectionHistory"> | string
+    sectionId?: StringFilter<"GroupSectionHistory"> | string
+    startDate?: DateTimeFilter<"GroupSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"GroupSectionHistory"> | Date | string | null
+    source?: StringFilter<"GroupSectionHistory"> | string
+    createdAt?: DateTimeFilter<"GroupSectionHistory"> | Date | string
   }
 
   export type EventUpsertWithWhereUniqueWithoutGroupInput = {
@@ -62398,6 +68061,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -62414,6 +68078,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -62433,6 +68098,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutGroupsInput
     memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     events?: EventCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
   }
@@ -62447,6 +68113,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     events?: EventUncheckedCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
   }
@@ -62462,6 +68129,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutBarnsInput
+    sections?: SectionCreateNestedManyWithoutBarnInput
     operations?: OperationRequestCreateNestedManyWithoutBarnInput
   }
 
@@ -62471,12 +68139,50 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sections?: SectionUncheckedCreateNestedManyWithoutBarnInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutBarnInput
   }
 
   export type BarnCreateOrConnectWithoutCowsInput = {
     where: BarnWhereUniqueInput
     create: XOR<BarnCreateWithoutCowsInput, BarnUncheckedCreateWithoutCowsInput>
+  }
+
+  export type SectionCreateWithoutCurrentCowsInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutCurrentCowsInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutCurrentCowsInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutCurrentCowsInput, SectionUncheckedCreateWithoutCurrentCowsInput>
   }
 
   export type ExternalIdentityCreateWithoutCowInput = {
@@ -62523,6 +68229,33 @@ export namespace Prisma {
 
   export type GroupMembershipCreateManyCowInputEnvelope = {
     data: GroupMembershipCreateManyCowInput | GroupMembershipCreateManyCowInput[]
+  }
+
+  export type CowSectionHistoryCreateWithoutCowInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    section: SectionCreateNestedOneWithoutCowSectionHistoryInput
+  }
+
+  export type CowSectionHistoryUncheckedCreateWithoutCowInput = {
+    id?: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type CowSectionHistoryCreateOrConnectWithoutCowInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    create: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput>
+  }
+
+  export type CowSectionHistoryCreateManyCowInputEnvelope = {
+    data: CowSectionHistoryCreateManyCowInput | CowSectionHistoryCreateManyCowInput[]
   }
 
   export type MilkRecordCreateWithoutCowInput = {
@@ -62576,6 +68309,7 @@ export namespace Prisma {
     metadata?: string | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
   }
 
@@ -62583,6 +68317,7 @@ export namespace Prisma {
     id?: string
     typeId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -62790,6 +68525,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -62806,6 +68542,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -62831,6 +68568,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
     memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     events?: EventUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
   }
@@ -62845,6 +68583,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     events?: EventUncheckedUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
   }
@@ -62866,6 +68605,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutBarnsNestedInput
+    sections?: SectionUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUpdateManyWithoutBarnNestedInput
   }
 
@@ -62875,7 +68615,51 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUncheckedUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutBarnNestedInput
+  }
+
+  export type SectionUpsertWithoutCurrentCowsInput = {
+    update: XOR<SectionUpdateWithoutCurrentCowsInput, SectionUncheckedUpdateWithoutCurrentCowsInput>
+    create: XOR<SectionCreateWithoutCurrentCowsInput, SectionUncheckedCreateWithoutCurrentCowsInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutCurrentCowsInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutCurrentCowsInput, SectionUncheckedUpdateWithoutCurrentCowsInput>
+  }
+
+  export type SectionUpdateWithoutCurrentCowsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutCurrentCowsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
   }
 
   export type ExternalIdentityUpsertWithWhereUniqueWithoutCowInput = {
@@ -62918,6 +68702,35 @@ export namespace Prisma {
   export type GroupMembershipUpdateManyWithWhereWithoutCowInput = {
     where: GroupMembershipScalarWhereInput
     data: XOR<GroupMembershipUpdateManyMutationInput, GroupMembershipUncheckedUpdateManyWithoutCowInput>
+  }
+
+  export type CowSectionHistoryUpsertWithWhereUniqueWithoutCowInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    update: XOR<CowSectionHistoryUpdateWithoutCowInput, CowSectionHistoryUncheckedUpdateWithoutCowInput>
+    create: XOR<CowSectionHistoryCreateWithoutCowInput, CowSectionHistoryUncheckedCreateWithoutCowInput>
+  }
+
+  export type CowSectionHistoryUpdateWithWhereUniqueWithoutCowInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    data: XOR<CowSectionHistoryUpdateWithoutCowInput, CowSectionHistoryUncheckedUpdateWithoutCowInput>
+  }
+
+  export type CowSectionHistoryUpdateManyWithWhereWithoutCowInput = {
+    where: CowSectionHistoryScalarWhereInput
+    data: XOR<CowSectionHistoryUpdateManyMutationInput, CowSectionHistoryUncheckedUpdateManyWithoutCowInput>
+  }
+
+  export type CowSectionHistoryScalarWhereInput = {
+    AND?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
+    OR?: CowSectionHistoryScalarWhereInput[]
+    NOT?: CowSectionHistoryScalarWhereInput | CowSectionHistoryScalarWhereInput[]
+    id?: StringFilter<"CowSectionHistory"> | string
+    cowId?: StringFilter<"CowSectionHistory"> | string
+    sectionId?: StringFilter<"CowSectionHistory"> | string
+    startDate?: DateTimeFilter<"CowSectionHistory"> | Date | string
+    endDate?: DateTimeNullableFilter<"CowSectionHistory"> | Date | string | null
+    source?: StringFilter<"CowSectionHistory"> | string
+    createdAt?: DateTimeFilter<"CowSectionHistory"> | Date | string
   }
 
   export type MilkRecordUpsertWithWhereUniqueWithoutCowInput = {
@@ -63077,8 +68890,73 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CowEvent"> | Date | string
   }
 
-  export type CowCreateWithoutExternalIdsInput = {
+  export type FarmCreateWithoutSectionsInput = {
     id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitCreateNestedManyWithoutFarmInput
+    cows?: CowCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
+    barns?: BarnCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutSectionsInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
+    cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
+    barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutSectionsInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutSectionsInput, FarmUncheckedCreateWithoutSectionsInput>
+  }
+
+  export type BarnCreateWithoutSectionsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutBarnsInput
+    cows?: CowCreateNestedManyWithoutBarnInput
+    operations?: OperationRequestCreateNestedManyWithoutBarnInput
+  }
+
+  export type BarnUncheckedCreateWithoutSectionsInput = {
+    id?: string
+    farmId: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cows?: CowUncheckedCreateNestedManyWithoutBarnInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutBarnInput
+  }
+
+  export type BarnCreateOrConnectWithoutSectionsInput = {
+    where: BarnWhereUniqueInput
+    create: XOR<BarnCreateWithoutSectionsInput, BarnUncheckedCreateWithoutSectionsInput>
+  }
+
+  export type CowCreateWithoutCurrentSectionInput = {
+    id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63091,7 +68969,657 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    events?: EventCreateNestedManyWithoutCowInput
+    observations?: ObservationCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
+    operations?: OperationRequestCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventCreateNestedManyWithoutCowInput
+  }
+
+  export type CowUncheckedCreateWithoutCurrentSectionInput = {
+    id?: string
+    farmId: string
+    groupId?: string | null
+    barnId?: string | null
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    events?: EventUncheckedCreateNestedManyWithoutCowInput
+    observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
+  }
+
+  export type CowCreateOrConnectWithoutCurrentSectionInput = {
+    where: CowWhereUniqueInput
+    create: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput>
+  }
+
+  export type CowCreateManyCurrentSectionInputEnvelope = {
+    data: CowCreateManyCurrentSectionInput | CowCreateManyCurrentSectionInput[]
+  }
+
+  export type EventCreateWithoutSectionInput = {
+    id?: string
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+    type?: EventTypeCreateNestedOneWithoutEventsInput
+    cow?: CowCreateNestedOneWithoutEventsInput
+    group?: GroupUnitCreateNestedOneWithoutEventsInput
+    farm?: FarmCreateNestedOneWithoutEventsInput
+  }
+
+  export type EventUncheckedCreateWithoutSectionInput = {
+    id?: string
+    typeId?: string | null
+    cowId?: string | null
+    groupId?: string | null
+    farmId?: string | null
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+  }
+
+  export type EventCreateOrConnectWithoutSectionInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput>
+  }
+
+  export type EventCreateManySectionInputEnvelope = {
+    data: EventCreateManySectionInput | EventCreateManySectionInput[]
+  }
+
+  export type CowSectionHistoryCreateWithoutSectionInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    cow: CowCreateNestedOneWithoutSectionHistoryInput
+  }
+
+  export type CowSectionHistoryUncheckedCreateWithoutSectionInput = {
+    id?: string
+    cowId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type CowSectionHistoryCreateOrConnectWithoutSectionInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    create: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput>
+  }
+
+  export type CowSectionHistoryCreateManySectionInputEnvelope = {
+    data: CowSectionHistoryCreateManySectionInput | CowSectionHistoryCreateManySectionInput[]
+  }
+
+  export type GroupSectionHistoryCreateWithoutSectionInput = {
+    id?: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+    group: GroupUnitCreateNestedOneWithoutSectionHistoryInput
+  }
+
+  export type GroupSectionHistoryUncheckedCreateWithoutSectionInput = {
+    id?: string
+    groupId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type GroupSectionHistoryCreateOrConnectWithoutSectionInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    create: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput>
+  }
+
+  export type GroupSectionHistoryCreateManySectionInputEnvelope = {
+    data: GroupSectionHistoryCreateManySectionInput | GroupSectionHistoryCreateManySectionInput[]
+  }
+
+  export type FarmUpsertWithoutSectionsInput = {
+    update: XOR<FarmUpdateWithoutSectionsInput, FarmUncheckedUpdateWithoutSectionsInput>
+    create: XOR<FarmCreateWithoutSectionsInput, FarmUncheckedCreateWithoutSectionsInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutSectionsInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutSectionsInput, FarmUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type FarmUpdateWithoutSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUpdateManyWithoutFarmNestedInput
+    cows?: CowUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
+    barns?: BarnUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
+    cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
+    barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type BarnUpsertWithoutSectionsInput = {
+    update: XOR<BarnUpdateWithoutSectionsInput, BarnUncheckedUpdateWithoutSectionsInput>
+    create: XOR<BarnCreateWithoutSectionsInput, BarnUncheckedCreateWithoutSectionsInput>
+    where?: BarnWhereInput
+  }
+
+  export type BarnUpdateToOneWithWhereWithoutSectionsInput = {
+    where?: BarnWhereInput
+    data: XOR<BarnUpdateWithoutSectionsInput, BarnUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type BarnUpdateWithoutSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutBarnsNestedInput
+    cows?: CowUpdateManyWithoutBarnNestedInput
+    operations?: OperationRequestUpdateManyWithoutBarnNestedInput
+  }
+
+  export type BarnUncheckedUpdateWithoutSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cows?: CowUncheckedUpdateManyWithoutBarnNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutBarnNestedInput
+  }
+
+  export type CowUpsertWithWhereUniqueWithoutCurrentSectionInput = {
+    where: CowWhereUniqueInput
+    update: XOR<CowUpdateWithoutCurrentSectionInput, CowUncheckedUpdateWithoutCurrentSectionInput>
+    create: XOR<CowCreateWithoutCurrentSectionInput, CowUncheckedCreateWithoutCurrentSectionInput>
+  }
+
+  export type CowUpdateWithWhereUniqueWithoutCurrentSectionInput = {
+    where: CowWhereUniqueInput
+    data: XOR<CowUpdateWithoutCurrentSectionInput, CowUncheckedUpdateWithoutCurrentSectionInput>
+  }
+
+  export type CowUpdateManyWithWhereWithoutCurrentSectionInput = {
+    where: CowScalarWhereInput
+    data: XOR<CowUpdateManyMutationInput, CowUncheckedUpdateManyWithoutCurrentSectionInput>
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutSectionInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutSectionInput, EventUncheckedUpdateWithoutSectionInput>
+    create: XOR<EventCreateWithoutSectionInput, EventUncheckedCreateWithoutSectionInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutSectionInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutSectionInput, EventUncheckedUpdateWithoutSectionInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutSectionInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutSectionInput>
+  }
+
+  export type CowSectionHistoryUpsertWithWhereUniqueWithoutSectionInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    update: XOR<CowSectionHistoryUpdateWithoutSectionInput, CowSectionHistoryUncheckedUpdateWithoutSectionInput>
+    create: XOR<CowSectionHistoryCreateWithoutSectionInput, CowSectionHistoryUncheckedCreateWithoutSectionInput>
+  }
+
+  export type CowSectionHistoryUpdateWithWhereUniqueWithoutSectionInput = {
+    where: CowSectionHistoryWhereUniqueInput
+    data: XOR<CowSectionHistoryUpdateWithoutSectionInput, CowSectionHistoryUncheckedUpdateWithoutSectionInput>
+  }
+
+  export type CowSectionHistoryUpdateManyWithWhereWithoutSectionInput = {
+    where: CowSectionHistoryScalarWhereInput
+    data: XOR<CowSectionHistoryUpdateManyMutationInput, CowSectionHistoryUncheckedUpdateManyWithoutSectionInput>
+  }
+
+  export type GroupSectionHistoryUpsertWithWhereUniqueWithoutSectionInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    update: XOR<GroupSectionHistoryUpdateWithoutSectionInput, GroupSectionHistoryUncheckedUpdateWithoutSectionInput>
+    create: XOR<GroupSectionHistoryCreateWithoutSectionInput, GroupSectionHistoryUncheckedCreateWithoutSectionInput>
+  }
+
+  export type GroupSectionHistoryUpdateWithWhereUniqueWithoutSectionInput = {
+    where: GroupSectionHistoryWhereUniqueInput
+    data: XOR<GroupSectionHistoryUpdateWithoutSectionInput, GroupSectionHistoryUncheckedUpdateWithoutSectionInput>
+  }
+
+  export type GroupSectionHistoryUpdateManyWithWhereWithoutSectionInput = {
+    where: GroupSectionHistoryScalarWhereInput
+    data: XOR<GroupSectionHistoryUpdateManyMutationInput, GroupSectionHistoryUncheckedUpdateManyWithoutSectionInput>
+  }
+
+  export type CowCreateWithoutSectionHistoryInput = {
+    id?: string
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutCowsInput
+    group?: GroupUnitCreateNestedOneWithoutCowsInput
+    barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
+    externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    events?: EventCreateNestedManyWithoutCowInput
+    observations?: ObservationCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
+    operations?: OperationRequestCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventCreateNestedManyWithoutCowInput
+  }
+
+  export type CowUncheckedCreateWithoutSectionHistoryInput = {
+    id?: string
+    farmId: string
+    groupId?: string | null
+    barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    events?: EventUncheckedCreateNestedManyWithoutCowInput
+    observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
+  }
+
+  export type CowCreateOrConnectWithoutSectionHistoryInput = {
+    where: CowWhereUniqueInput
+    create: XOR<CowCreateWithoutSectionHistoryInput, CowUncheckedCreateWithoutSectionHistoryInput>
+  }
+
+  export type SectionCreateWithoutCowSectionHistoryInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutCowSectionHistoryInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutCowSectionHistoryInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutCowSectionHistoryInput, SectionUncheckedCreateWithoutCowSectionHistoryInput>
+  }
+
+  export type CowUpsertWithoutSectionHistoryInput = {
+    update: XOR<CowUpdateWithoutSectionHistoryInput, CowUncheckedUpdateWithoutSectionHistoryInput>
+    create: XOR<CowCreateWithoutSectionHistoryInput, CowUncheckedCreateWithoutSectionHistoryInput>
+    where?: CowWhereInput
+  }
+
+  export type CowUpdateToOneWithWhereWithoutSectionHistoryInput = {
+    where?: CowWhereInput
+    data: XOR<CowUpdateWithoutSectionHistoryInput, CowUncheckedUpdateWithoutSectionHistoryInput>
+  }
+
+  export type CowUpdateWithoutSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
+    group?: GroupUnitUpdateOneWithoutCowsNestedInput
+    barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
+    externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    events?: EventUpdateManyWithoutCowNestedInput
+    observations?: ObservationUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUpdateManyWithoutCowNestedInput
+  }
+
+  export type CowUncheckedUpdateWithoutSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    events?: EventUncheckedUpdateManyWithoutCowNestedInput
+    observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
+  }
+
+  export type SectionUpsertWithoutCowSectionHistoryInput = {
+    update: XOR<SectionUpdateWithoutCowSectionHistoryInput, SectionUncheckedUpdateWithoutCowSectionHistoryInput>
+    create: XOR<SectionCreateWithoutCowSectionHistoryInput, SectionUncheckedCreateWithoutCowSectionHistoryInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutCowSectionHistoryInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutCowSectionHistoryInput, SectionUncheckedUpdateWithoutCowSectionHistoryInput>
+  }
+
+  export type SectionUpdateWithoutCowSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutCowSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type GroupUnitCreateWithoutSectionHistoryInput = {
+    id?: string
+    name: string
+    type: string
+    headCount?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutGroupsInput
+    cows?: CowCreateNestedManyWithoutGroupInput
+    memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    events?: EventCreateNestedManyWithoutGroupInput
+    feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUnitUncheckedCreateWithoutSectionHistoryInput = {
+    id?: string
+    farmId: string
+    name: string
+    type: string
+    headCount?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cows?: CowUncheckedCreateNestedManyWithoutGroupInput
+    memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    events?: EventUncheckedCreateNestedManyWithoutGroupInput
+    feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUnitCreateOrConnectWithoutSectionHistoryInput = {
+    where: GroupUnitWhereUniqueInput
+    create: XOR<GroupUnitCreateWithoutSectionHistoryInput, GroupUnitUncheckedCreateWithoutSectionHistoryInput>
+  }
+
+  export type SectionCreateWithoutGroupHistoryInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutGroupHistoryInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutGroupHistoryInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutGroupHistoryInput, SectionUncheckedCreateWithoutGroupHistoryInput>
+  }
+
+  export type GroupUnitUpsertWithoutSectionHistoryInput = {
+    update: XOR<GroupUnitUpdateWithoutSectionHistoryInput, GroupUnitUncheckedUpdateWithoutSectionHistoryInput>
+    create: XOR<GroupUnitCreateWithoutSectionHistoryInput, GroupUnitUncheckedCreateWithoutSectionHistoryInput>
+    where?: GroupUnitWhereInput
+  }
+
+  export type GroupUnitUpdateToOneWithWhereWithoutSectionHistoryInput = {
+    where?: GroupUnitWhereInput
+    data: XOR<GroupUnitUpdateWithoutSectionHistoryInput, GroupUnitUncheckedUpdateWithoutSectionHistoryInput>
+  }
+
+  export type GroupUnitUpdateWithoutSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    headCount?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
+    cows?: CowUpdateManyWithoutGroupNestedInput
+    memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    events?: EventUpdateManyWithoutGroupNestedInput
+    feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUnitUncheckedUpdateWithoutSectionHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    headCount?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
+    memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    events?: EventUncheckedUpdateManyWithoutGroupNestedInput
+    feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type SectionUpsertWithoutGroupHistoryInput = {
+    update: XOR<SectionUpdateWithoutGroupHistoryInput, SectionUncheckedUpdateWithoutGroupHistoryInput>
+    create: XOR<SectionCreateWithoutGroupHistoryInput, SectionUncheckedCreateWithoutGroupHistoryInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutGroupHistoryInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutGroupHistoryInput, SectionUncheckedUpdateWithoutGroupHistoryInput>
+  }
+
+  export type SectionUpdateWithoutGroupHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutGroupHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type CowCreateWithoutExternalIdsInput = {
+    id?: string
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutCowsInput
+    group?: GroupUnitCreateNestedOneWithoutCowsInput
+    barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
+    memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -63105,6 +69633,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63115,6 +69645,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -63141,6 +69672,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutExternalIdsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63153,7 +69685,9 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -63167,6 +69701,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63177,6 +69713,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -63187,6 +69724,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutMembershipsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63199,7 +69737,9 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -63213,6 +69753,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63223,6 +69765,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -63246,6 +69789,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutGroupsInput
     cows?: CowCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     events?: EventCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
   }
@@ -63260,6 +69804,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     events?: EventUncheckedCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
   }
@@ -63282,6 +69827,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63294,7 +69840,9 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -63308,6 +69856,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63318,6 +69868,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -63347,6 +69898,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
     cows?: CowUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     events?: EventUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
   }
@@ -63361,14 +69913,24 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     events?: EventUncheckedUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
   }
 
-  export type IntegrationBatchCreateWithoutSourceInput = {
+  export type IntegrationBatchCreateWithoutDataSourceInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -63378,10 +69940,19 @@ export namespace Prisma {
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
   }
 
-  export type IntegrationBatchUncheckedCreateWithoutSourceInput = {
+  export type IntegrationBatchUncheckedCreateWithoutDataSourceInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -63391,29 +69962,29 @@ export namespace Prisma {
     mixBatches?: MixBatchUncheckedCreateNestedManyWithoutBatchInput
   }
 
-  export type IntegrationBatchCreateOrConnectWithoutSourceInput = {
+  export type IntegrationBatchCreateOrConnectWithoutDataSourceInput = {
     where: IntegrationBatchWhereUniqueInput
-    create: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput>
+    create: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput>
   }
 
-  export type IntegrationBatchCreateManySourceInputEnvelope = {
-    data: IntegrationBatchCreateManySourceInput | IntegrationBatchCreateManySourceInput[]
+  export type IntegrationBatchCreateManyDataSourceInputEnvelope = {
+    data: IntegrationBatchCreateManyDataSourceInput | IntegrationBatchCreateManyDataSourceInput[]
   }
 
-  export type IntegrationBatchUpsertWithWhereUniqueWithoutSourceInput = {
+  export type IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput = {
     where: IntegrationBatchWhereUniqueInput
-    update: XOR<IntegrationBatchUpdateWithoutSourceInput, IntegrationBatchUncheckedUpdateWithoutSourceInput>
-    create: XOR<IntegrationBatchCreateWithoutSourceInput, IntegrationBatchUncheckedCreateWithoutSourceInput>
+    update: XOR<IntegrationBatchUpdateWithoutDataSourceInput, IntegrationBatchUncheckedUpdateWithoutDataSourceInput>
+    create: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput>
   }
 
-  export type IntegrationBatchUpdateWithWhereUniqueWithoutSourceInput = {
+  export type IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput = {
     where: IntegrationBatchWhereUniqueInput
-    data: XOR<IntegrationBatchUpdateWithoutSourceInput, IntegrationBatchUncheckedUpdateWithoutSourceInput>
+    data: XOR<IntegrationBatchUpdateWithoutDataSourceInput, IntegrationBatchUncheckedUpdateWithoutDataSourceInput>
   }
 
-  export type IntegrationBatchUpdateManyWithWhereWithoutSourceInput = {
+  export type IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput = {
     where: IntegrationBatchScalarWhereInput
-    data: XOR<IntegrationBatchUpdateManyMutationInput, IntegrationBatchUncheckedUpdateManyWithoutSourceInput>
+    data: XOR<IntegrationBatchUpdateManyMutationInput, IntegrationBatchUncheckedUpdateManyWithoutDataSourceInput>
   }
 
   export type IntegrationBatchScalarWhereInput = {
@@ -63422,8 +69993,17 @@ export namespace Prisma {
     NOT?: IntegrationBatchScalarWhereInput | IntegrationBatchScalarWhereInput[]
     id?: StringFilter<"IntegrationBatch"> | string
     sourceId?: StringFilter<"IntegrationBatch"> | string
+    source?: StringNullableFilter<"IntegrationBatch"> | string | null
     filename?: StringNullableFilter<"IntegrationBatch"> | string | null
+    fileHash?: StringNullableFilter<"IntegrationBatch"> | string | null
     status?: StringFilter<"IntegrationBatch"> | string
+    startedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
+    recordsRead?: IntFilter<"IntegrationBatch"> | number
+    recordsInserted?: IntFilter<"IntegrationBatch"> | number
+    recordsUpdated?: IntFilter<"IntegrationBatch"> | number
+    recordsSkipped?: IntFilter<"IntegrationBatch"> | number
+    errorMessage?: StringNullableFilter<"IntegrationBatch"> | string | null
     recordCount?: IntFilter<"IntegrationBatch"> | number
     errors?: StringNullableFilter<"IntegrationBatch"> | string | null
     processedAt?: DateTimeNullableFilter<"IntegrationBatch"> | Date | string | null
@@ -63810,6 +70390,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutMilkRecordsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63822,8 +70403,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -63836,6 +70419,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -63847,6 +70432,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -63861,13 +70447,22 @@ export namespace Prisma {
 
   export type IntegrationBatchCreateWithoutMilkRecordsInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
     createdAt?: Date | string
-    source: DataSourceCreateNestedOneWithoutBatchesInput
+    dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
   }
@@ -63875,8 +70470,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedCreateWithoutMilkRecordsInput = {
     id?: string
     sourceId: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -63903,6 +70507,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutMilkRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63915,8 +70520,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -63929,6 +70536,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63940,6 +70549,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -63960,13 +70570,22 @@ export namespace Prisma {
 
   export type IntegrationBatchUpdateWithoutMilkRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    source?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
   }
@@ -63974,8 +70593,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedUpdateWithoutMilkRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63995,6 +70623,7 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutGroupsInput
     cows?: CowCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     events?: EventCreateNestedManyWithoutGroupInput
   }
 
@@ -64009,6 +70638,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     events?: EventUncheckedCreateNestedManyWithoutGroupInput
   }
 
@@ -64019,13 +70649,22 @@ export namespace Prisma {
 
   export type IntegrationBatchCreateWithoutFeedRecordsInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
     createdAt?: Date | string
-    source: DataSourceCreateNestedOneWithoutBatchesInput
+    dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     mixBatches?: MixBatchCreateNestedManyWithoutBatchInput
   }
@@ -64033,8 +70672,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedCreateWithoutFeedRecordsInput = {
     id?: string
     sourceId: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -64070,6 +70718,7 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
     cows?: CowUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     events?: EventUpdateManyWithoutGroupNestedInput
   }
 
@@ -64084,6 +70733,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     events?: EventUncheckedUpdateManyWithoutGroupNestedInput
   }
 
@@ -64100,13 +70750,22 @@ export namespace Prisma {
 
   export type IntegrationBatchUpdateWithoutFeedRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    source?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
   }
@@ -64114,8 +70773,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedUpdateWithoutFeedRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64495,13 +71163,22 @@ export namespace Prisma {
 
   export type IntegrationBatchCreateWithoutMixBatchesInput = {
     id?: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
     createdAt?: Date | string
-    source: DataSourceCreateNestedOneWithoutBatchesInput
+    dataSource: DataSourceCreateNestedOneWithoutBatchesInput
     milkRecords?: MilkRecordCreateNestedManyWithoutBatchInput
     feedRecords?: FeedRecordCreateNestedManyWithoutBatchInput
   }
@@ -64509,8 +71186,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedCreateWithoutMixBatchesInput = {
     id?: string
     sourceId: string
+    source?: string | null
     filename?: string | null
+    fileHash?: string | null
     status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
@@ -64609,13 +71295,22 @@ export namespace Prisma {
 
   export type IntegrationBatchUpdateWithoutMixBatchesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    source?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutBatchesNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutBatchNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutBatchNestedInput
   }
@@ -64623,8 +71318,17 @@ export namespace Prisma {
   export type IntegrationBatchUncheckedUpdateWithoutMixBatchesInput = {
     id?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64807,6 +71511,7 @@ export namespace Prisma {
     metadata?: string | null
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
   }
 
@@ -64814,6 +71519,7 @@ export namespace Prisma {
     id?: string
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -64871,6 +71577,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutEventsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -64883,8 +71590,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -64897,6 +71606,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -64908,6 +71619,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -64931,6 +71643,7 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutGroupsInput
     cows?: CowCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordCreateNestedManyWithoutGroupInput
   }
 
@@ -64945,12 +71658,50 @@ export namespace Prisma {
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutGroupInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+    sectionHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutGroupInput
     feedRecords?: FeedRecordUncheckedCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUnitCreateOrConnectWithoutEventsInput = {
     where: GroupUnitWhereUniqueInput
     create: XOR<GroupUnitCreateWithoutEventsInput, GroupUnitUncheckedCreateWithoutEventsInput>
+  }
+
+  export type SectionCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    barn?: BarnCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutEventsInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutEventsInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutEventsInput, SectionUncheckedCreateWithoutEventsInput>
   }
 
   export type FarmCreateWithoutEventsInput = {
@@ -64965,6 +71716,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -64981,6 +71733,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -65030,6 +71783,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65042,8 +71796,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -65056,6 +71812,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65067,6 +71825,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -65096,6 +71855,7 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutGroupsNestedInput
     cows?: CowUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
   }
 
@@ -65110,7 +71870,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type SectionUpsertWithoutEventsInput = {
+    update: XOR<SectionUpdateWithoutEventsInput, SectionUncheckedUpdateWithoutEventsInput>
+    create: XOR<SectionCreateWithoutEventsInput, SectionUncheckedCreateWithoutEventsInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutEventsInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutEventsInput, SectionUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type SectionUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
   }
 
   export type FarmUpsertWithoutEventsInput = {
@@ -65136,6 +71940,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -65152,12 +71957,14 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowCreateWithoutObservationsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -65170,8 +71977,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
@@ -65184,6 +71993,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -65195,6 +72006,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
@@ -65220,6 +72032,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutObservationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65232,8 +72045,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
@@ -65246,6 +72061,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65257,6 +72074,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
@@ -65276,6 +72094,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -65292,6 +72111,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -65324,6 +72144,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -65340,12 +72161,14 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowCreateWithoutGeneticIndexInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -65358,8 +72181,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -65372,6 +72197,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -65383,6 +72210,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -65408,6 +72236,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutGeneticIndexInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65420,8 +72249,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -65434,6 +72265,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65445,6 +72278,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -65464,6 +72298,7 @@ export namespace Prisma {
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -65480,6 +72315,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -65604,6 +72440,7 @@ export namespace Prisma {
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -65620,6 +72457,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -65951,6 +72789,7 @@ export namespace Prisma {
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -65967,6 +72806,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -66176,6 +73016,7 @@ export namespace Prisma {
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -66192,6 +73033,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -66814,6 +73656,7 @@ export namespace Prisma {
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
@@ -66830,6 +73673,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
@@ -66841,6 +73685,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutBarnInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -66852,8 +73697,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -66866,6 +73713,8 @@ export namespace Prisma {
     id?: string
     farmId: string
     groupId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -66877,6 +73726,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -66892,6 +73742,47 @@ export namespace Prisma {
 
   export type CowCreateManyBarnInputEnvelope = {
     data: CowCreateManyBarnInput | CowCreateManyBarnInput[]
+  }
+
+  export type SectionCreateWithoutBarnInput = {
+    id?: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutSectionsInput
+    currentCows?: CowCreateNestedManyWithoutCurrentSectionInput
+    events?: EventCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionUncheckedCreateWithoutBarnInput = {
+    id?: string
+    farmId: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    currentCows?: CowUncheckedCreateNestedManyWithoutCurrentSectionInput
+    events?: EventUncheckedCreateNestedManyWithoutSectionInput
+    cowSectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+    groupHistory?: GroupSectionHistoryUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutBarnInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput>
+  }
+
+  export type SectionCreateManyBarnInputEnvelope = {
+    data: SectionCreateManyBarnInput | SectionCreateManyBarnInput[]
   }
 
   export type OperationRequestCreateWithoutBarnInput = {
@@ -66998,6 +73889,7 @@ export namespace Prisma {
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
@@ -67014,6 +73906,7 @@ export namespace Prisma {
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
@@ -67032,6 +73925,22 @@ export namespace Prisma {
   export type CowUpdateManyWithWhereWithoutBarnInput = {
     where: CowScalarWhereInput
     data: XOR<CowUpdateManyMutationInput, CowUncheckedUpdateManyWithoutBarnInput>
+  }
+
+  export type SectionUpsertWithWhereUniqueWithoutBarnInput = {
+    where: SectionWhereUniqueInput
+    update: XOR<SectionUpdateWithoutBarnInput, SectionUncheckedUpdateWithoutBarnInput>
+    create: XOR<SectionCreateWithoutBarnInput, SectionUncheckedCreateWithoutBarnInput>
+  }
+
+  export type SectionUpdateWithWhereUniqueWithoutBarnInput = {
+    where: SectionWhereUniqueInput
+    data: XOR<SectionUpdateWithoutBarnInput, SectionUncheckedUpdateWithoutBarnInput>
+  }
+
+  export type SectionUpdateManyWithWhereWithoutBarnInput = {
+    where: SectionScalarWhereInput
+    data: XOR<SectionUpdateManyMutationInput, SectionUncheckedUpdateManyWithoutBarnInput>
   }
 
   export type OperationRequestUpsertWithWhereUniqueWithoutBarnInput = {
@@ -67063,6 +73972,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
   }
 
@@ -67079,6 +73989,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
   }
 
@@ -67094,6 +74005,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     farm: FarmCreateNestedOneWithoutBarnsInput
     cows?: CowCreateNestedManyWithoutBarnInput
+    sections?: SectionCreateNestedManyWithoutBarnInput
   }
 
   export type BarnUncheckedCreateWithoutOperationsInput = {
@@ -67103,6 +74015,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cows?: CowUncheckedCreateNestedManyWithoutBarnInput
+    sections?: SectionUncheckedCreateNestedManyWithoutBarnInput
   }
 
   export type BarnCreateOrConnectWithoutOperationsInput = {
@@ -67112,6 +74025,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutOperationsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -67124,8 +74038,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -67138,6 +74054,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -67149,6 +74067,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -67295,6 +74214,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
   }
 
@@ -67311,6 +74231,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
   }
 
@@ -67332,6 +74253,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutBarnsNestedInput
     cows?: CowUpdateManyWithoutBarnNestedInput
+    sections?: SectionUpdateManyWithoutBarnNestedInput
   }
 
   export type BarnUncheckedUpdateWithoutOperationsInput = {
@@ -67341,6 +74263,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutBarnNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutBarnNestedInput
   }
 
   export type CowUpsertWithoutOperationsInput = {
@@ -67356,6 +74279,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutOperationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -67368,8 +74292,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -67382,6 +74308,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -67393,6 +74321,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -68159,6 +75088,7 @@ export namespace Prisma {
 
   export type CowCreateWithoutCowEventsInput = {
     id?: string
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -68171,8 +75101,10 @@ export namespace Prisma {
     farm: FarmCreateNestedOneWithoutCowsInput
     group?: GroupUnitCreateNestedOneWithoutCowsInput
     barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
     externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
@@ -68185,6 +75117,8 @@ export namespace Prisma {
     farmId: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -68196,6 +75130,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
     memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
     milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
@@ -68221,6 +75156,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutCowEventsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68233,8 +75169,10 @@ export namespace Prisma {
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -68247,6 +75185,8 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68258,6 +75198,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -68278,6 +75219,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
   }
 
@@ -68294,6 +75236,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
   }
 
@@ -68326,6 +75269,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
   }
 
@@ -68342,6 +75286,7 @@ export namespace Prisma {
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
   }
 
@@ -68359,6 +75304,8 @@ export namespace Prisma {
     id?: string
     groupId?: string | null
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -68375,6 +75322,7 @@ export namespace Prisma {
     typeId?: string | null
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     severity?: string
     title: string
     description?: string | null
@@ -68433,6 +75381,18 @@ export namespace Prisma {
   export type BarnCreateManyFarmInput = {
     id?: string
     name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SectionCreateManyFarmInput = {
+    id?: string
+    barnId?: string | null
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -68498,6 +75458,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUpdateManyWithoutGroupNestedInput
     events?: EventUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUpdateManyWithoutGroupNestedInput
   }
@@ -68512,6 +75473,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutGroupNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+    sectionHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutGroupNestedInput
     events?: EventUncheckedUpdateManyWithoutGroupNestedInput
     feedRecords?: FeedRecordUncheckedUpdateManyWithoutGroupNestedInput
   }
@@ -68528,6 +75490,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutFarmInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68539,8 +75502,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -68553,6 +75518,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68564,6 +75531,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -68576,6 +75544,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68598,6 +75568,7 @@ export namespace Prisma {
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
   }
 
   export type EventUncheckedUpdateWithoutFarmInput = {
@@ -68605,6 +75576,7 @@ export namespace Prisma {
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68618,6 +75590,7 @@ export namespace Prisma {
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68785,6 +75758,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUpdateManyWithoutBarnNestedInput
+    sections?: SectionUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUpdateManyWithoutBarnNestedInput
   }
 
@@ -68794,12 +75768,57 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cows?: CowUncheckedUpdateManyWithoutBarnNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutBarnNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutBarnNestedInput
   }
 
   export type BarnUncheckedUpdateManyWithoutFarmInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SectionUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    barn?: BarnUpdateOneWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -68969,6 +75988,8 @@ export namespace Prisma {
     id?: string
     farmId: string
     barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -68988,10 +76009,20 @@ export namespace Prisma {
     source?: string
   }
 
+  export type GroupSectionHistoryCreateManyGroupInput = {
+    id?: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
   export type EventCreateManyGroupInput = {
     id?: string
     typeId?: string | null
     cowId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -69025,6 +76056,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutGroupInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69036,8 +76068,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -69050,6 +76084,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69061,6 +76097,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -69073,6 +76110,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69108,6 +76147,33 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
   }
 
+  export type GroupSectionHistoryUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    section?: SectionUpdateOneRequiredWithoutGroupHistoryNestedInput
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateManyWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type EventUpdateWithoutGroupInput = {
     id?: StringFieldUpdateOperationsInput | string
     severity?: StringFieldUpdateOperationsInput | string
@@ -69118,6 +76184,7 @@ export namespace Prisma {
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
   }
 
@@ -69125,6 +76192,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -69138,6 +76206,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -69227,6 +76296,15 @@ export namespace Prisma {
     source?: string
   }
 
+  export type CowSectionHistoryCreateManyCowInput = {
+    id?: string
+    sectionId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
   export type MilkRecordCreateManyCowInput = {
     id?: string
     cowNumber: string
@@ -69247,6 +76325,7 @@ export namespace Prisma {
     id?: string
     typeId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -69359,6 +76438,33 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CowSectionHistoryUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    section?: SectionUpdateOneRequiredWithoutCowSectionHistoryNestedInput
+  }
+
+  export type CowSectionHistoryUncheckedUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CowSectionHistoryUncheckedUpdateManyWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MilkRecordUpdateWithoutCowInput = {
     id?: StringFieldUpdateOperationsInput | string
     cowNumber?: StringFieldUpdateOperationsInput | string
@@ -69417,6 +76523,7 @@ export namespace Prisma {
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
   }
 
@@ -69424,6 +76531,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -69437,6 +76545,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     typeId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -69637,20 +76746,252 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type IntegrationBatchCreateManySourceInput = {
+  export type CowCreateManyCurrentSectionInput = {
     id?: string
-    filename?: string | null
+    farmId: string
+    groupId?: string | null
+    barnId?: string | null
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
     status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventCreateManySectionInput = {
+    id?: string
+    typeId?: string | null
+    cowId?: string | null
+    groupId?: string | null
+    farmId?: string | null
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+  }
+
+  export type CowSectionHistoryCreateManySectionInput = {
+    id?: string
+    cowId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type GroupSectionHistoryCreateManySectionInput = {
+    id?: string
+    groupId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    source?: string
+    createdAt?: Date | string
+  }
+
+  export type CowUpdateWithoutCurrentSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
+    group?: GroupUnitUpdateOneWithoutCowsNestedInput
+    barn?: BarnUpdateOneWithoutCowsNestedInput
+    externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    events?: EventUpdateManyWithoutCowNestedInput
+    observations?: ObservationUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUpdateManyWithoutCowNestedInput
+  }
+
+  export type CowUncheckedUpdateWithoutCurrentSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    events?: EventUncheckedUpdateManyWithoutCowNestedInput
+    observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
+  }
+
+  export type CowUncheckedUpdateManyWithoutCurrentSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EventTypeUpdateOneWithoutEventsNestedInput
+    cow?: CowUpdateOneWithoutEventsNestedInput
+    group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    farm?: FarmUpdateOneWithoutEventsNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    typeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EventUncheckedUpdateManyWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    typeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CowSectionHistoryUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cow?: CowUpdateOneRequiredWithoutSectionHistoryNestedInput
+  }
+
+  export type CowSectionHistoryUncheckedUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CowSectionHistoryUncheckedUpdateManyWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cowId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUnitUpdateOneRequiredWithoutSectionHistoryNestedInput
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupSectionHistoryUncheckedUpdateManyWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationBatchCreateManyDataSourceInput = {
+    id?: string
+    source?: string | null
+    filename?: string | null
+    fileHash?: string | null
+    status?: string
+    startedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    recordsRead?: number
+    recordsInserted?: number
+    recordsUpdated?: number
+    recordsSkipped?: number
+    errorMessage?: string | null
     recordCount?: number
     errors?: string | null
     processedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type IntegrationBatchUpdateWithoutSourceInput = {
+  export type IntegrationBatchUpdateWithoutDataSourceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69660,10 +77001,19 @@ export namespace Prisma {
     mixBatches?: MixBatchUpdateManyWithoutBatchNestedInput
   }
 
-  export type IntegrationBatchUncheckedUpdateWithoutSourceInput = {
+  export type IntegrationBatchUncheckedUpdateWithoutDataSourceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69673,10 +77023,19 @@ export namespace Prisma {
     mixBatches?: MixBatchUncheckedUpdateManyWithoutBatchNestedInput
   }
 
-  export type IntegrationBatchUncheckedUpdateManyWithoutSourceInput = {
+  export type IntegrationBatchUncheckedUpdateManyWithoutDataSourceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordsRead?: IntFieldUpdateOperationsInput | number
+    recordsInserted?: IntFieldUpdateOperationsInput | number
+    recordsUpdated?: IntFieldUpdateOperationsInput | number
+    recordsSkipped?: IntFieldUpdateOperationsInput | number
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     recordCount?: IntFieldUpdateOperationsInput | number
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70203,6 +77562,7 @@ export namespace Prisma {
     id?: string
     cowId?: string | null
     groupId?: string | null
+    sectionId?: string | null
     farmId?: string | null
     severity?: string
     title: string
@@ -70222,6 +77582,7 @@ export namespace Prisma {
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
   }
 
@@ -70229,6 +77590,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -70242,6 +77604,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     cowId?: NullableStringFieldUpdateOperationsInput | string | null
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
     farmId?: NullableStringFieldUpdateOperationsInput | string | null
     severity?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -70637,6 +78000,8 @@ export namespace Prisma {
     id?: string
     farmId: string
     groupId?: string | null
+    currentSectionId?: string | null
+    afiId: string
     number: string
     name?: string | null
     birthDate?: Date | string | null
@@ -70644,6 +78009,18 @@ export namespace Prisma {
     lactation?: number
     dim?: number
     lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SectionCreateManyBarnInput = {
+    id?: string
+    farmId: string
+    name: string
+    externalCode?: string | null
+    dtmCode?: string | null
+    afiCode?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70682,6 +78059,7 @@ export namespace Prisma {
 
   export type CowUpdateWithoutBarnInput = {
     id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70693,8 +78071,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
     group?: GroupUnitUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
     externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
@@ -70707,6 +78087,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70718,6 +78100,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
     memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
     milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
@@ -70730,6 +78113,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
     number?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70737,6 +78122,50 @@ export namespace Prisma {
     lactation?: IntFieldUpdateOperationsInput | number
     dim?: IntFieldUpdateOperationsInput | number
     lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SectionUpdateWithoutBarnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutSectionsNestedInput
+    currentCows?: CowUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutBarnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentCows?: CowUncheckedUpdateManyWithoutCurrentSectionNestedInput
+    events?: EventUncheckedUpdateManyWithoutSectionNestedInput
+    cowSectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+    groupHistory?: GroupSectionHistoryUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionUncheckedUpdateManyWithoutBarnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    externalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
+    afiCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

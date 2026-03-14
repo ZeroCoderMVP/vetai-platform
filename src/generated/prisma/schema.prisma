@@ -30,55 +30,121 @@ model Farm {
   reportInstances ReportInstance[]
 
   barns      Barn[]
+  sections   Section[]
   operations OperationRequest[]
   dashboards DashboardSnapshot[]
 }
 
-/// Универсальная сущность группы/секции
+/// Логическая производственная группа животных
 model GroupUnit {
   id        String   @id @default(cuid())
   farmId    String
   name      String
-  type      String // feeding_group | production_group | section | maternity
+  type      String // feeding_group | production_group | maternity
   headCount Int      @default(0)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  farm        Farm              @relation(fields: [farmId], references: [id])
-  cows        Cow[]
-  memberships GroupMembership[]
-  events      Event[]
-  feedRecords FeedRecord[]
+  farm           Farm                  @relation(fields: [farmId], references: [id])
+  cows           Cow[]
+  memberships    GroupMembership[]
+  sectionHistory GroupSectionHistory[]
+  events         Event[]
+  feedRecords    FeedRecord[]
 }
 
 /// Основной объект учета — корова
 model Cow {
-  id          String    @id @default(cuid())
-  farmId      String
-  groupId     String?
-  barnId      String?
-  number      String // Бирка / номер
-  name        String?
-  birthDate   DateTime?
-  status      String    @default("active") // active | dry | culled | dead
-  lactation   Int       @default(0)
-  dim         Int       @default(0) // Days in Milk
-  lastCalving DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id               String    @id @default(cuid())
+  farmId           String
+  groupId          String?
+  barnId           String?
+  currentSectionId String?
+  afiId            String
+  number           String // Бирка / номер
+  name             String?
+  birthDate        DateTime?
+  status           String    @default("active") // active | dry | culled | dead
+  lactation        Int       @default(0)
+  dim              Int       @default(0) // Days in Milk
+  lastCalving      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  farm         Farm                @relation(fields: [farmId], references: [id])
-  group        GroupUnit?          @relation(fields: [groupId], references: [id])
-  barn         Barn?               @relation(fields: [barnId], references: [id])
-  externalIds  ExternalIdentity[]
-  memberships  GroupMembership[]
-  milkRecords  MilkRecord[]
-  events       Event[]
-  observations Observation[]
-  geneticIndex GeneticIndexValue[]
-  operations   OperationRequest[]
-  cowEvents    CowEvent[]
+  farm           Farm                @relation(fields: [farmId], references: [id])
+  group          GroupUnit?          @relation(fields: [groupId], references: [id])
+  barn           Barn?               @relation(fields: [barnId], references: [id])
+  currentSection Section?            @relation(fields: [currentSectionId], references: [id])
+  externalIds    ExternalIdentity[]
+  memberships    GroupMembership[]
+  sectionHistory CowSectionHistory[]
+  milkRecords    MilkRecord[]
+  events         Event[]
+  observations   Observation[]
+  geneticIndex   GeneticIndexValue[]
+  operations     OperationRequest[]
+  cowEvents      CowEvent[]
+
+  @@index([farmId, afiId])
+}
+
+/// Физическая секция/загон размещения животных
+model Section {
+  id           String   @id @default(cuid())
+  farmId       String
+  barnId       String?
+  name         String
+  externalCode String?
+  dtmCode      String?
+  afiCode      String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  farm              Farm                  @relation(fields: [farmId], references: [id])
+  barn              Barn?                 @relation(fields: [barnId], references: [id])
+  currentCows       Cow[]
+  events            Event[]
+  cowSectionHistory CowSectionHistory[]
+  groupHistory      GroupSectionHistory[]
+
+  @@unique([farmId, name])
+  @@index([farmId, isActive])
+}
+
+/// История размещения коровы по секциям
+model CowSectionHistory {
+  id        String    @id @default(cuid())
+  cowId     String
+  sectionId String
+  startDate DateTime
+  endDate   DateTime?
+  source    String    @default("import")
+  createdAt DateTime  @default(now())
+
+  cow     Cow     @relation(fields: [cowId], references: [id])
+  section Section @relation(fields: [sectionId], references: [id])
+
+  @@index([cowId, startDate])
+  @@index([sectionId, startDate])
+}
+
+/// История размещения группы в секции
+model GroupSectionHistory {
+  id        String    @id @default(cuid())
+  groupId   String
+  sectionId String
+  startDate DateTime
+  endDate   DateTime?
+  source    String    @default("import")
+  createdAt DateTime  @default(now())
+
+  group   GroupUnit @relation(fields: [groupId], references: [id])
+  section Section   @relation(fields: [sectionId], references: [id])
+
+  @@index([groupId, startDate])
+  @@index([sectionId, startDate])
 }
 
 /// Сопоставление внутренних ID с внешними системами
@@ -124,16 +190,25 @@ model DataSource {
 
 /// Пакет загрузки данных из источника
 model IntegrationBatch {
-  id          String    @id @default(cuid())
-  sourceId    String
-  filename    String?
-  status      String    @default("pending") // pending | processing | completed | error
-  recordCount Int       @default(0)
-  errors      String? // JSON array of errors
-  processedAt DateTime?
-  createdAt   DateTime  @default(now())
+  id              String    @id @default(cuid())
+  sourceId        String
+  source          String?
+  filename        String?
+  fileHash        String?
+  status          String    @default("pending") // pending | processing | completed | error
+  startedAt       DateTime?
+  finishedAt      DateTime?
+  recordsRead     Int       @default(0)
+  recordsInserted Int       @default(0)
+  recordsUpdated  Int       @default(0)
+  recordsSkipped  Int       @default(0)
+  errorMessage    String?
+  recordCount     Int       @default(0)
+  errors          String? // JSON array of errors
+  processedAt     DateTime?
+  createdAt       DateTime  @default(now())
 
-  source      DataSource   @relation(fields: [sourceId], references: [id])
+  dataSource  DataSource   @relation(fields: [sourceId], references: [id])
   milkRecords MilkRecord[]
   feedRecords FeedRecord[]
   mixBatches  MixBatch[]
@@ -334,6 +409,7 @@ model Event {
   typeId      String?
   cowId       String?
   groupId     String?
+  sectionId   String?
   farmId      String?
   severity    String   @default("info")
   title       String
@@ -342,13 +418,16 @@ model Event {
   source      String   @default("system")
   metadata    String? // JSON
 
-  type  EventType? @relation(fields: [typeId], references: [id])
-  cow   Cow?       @relation(fields: [cowId], references: [id])
-  group GroupUnit? @relation(fields: [groupId], references: [id])
-  farm  Farm?      @relation(fields: [farmId], references: [id])
+  type    EventType? @relation(fields: [typeId], references: [id])
+  cow     Cow?       @relation(fields: [cowId], references: [id])
+  group   GroupUnit? @relation(fields: [groupId], references: [id])
+  section Section?   @relation(fields: [sectionId], references: [id])
+  farm    Farm?      @relation(fields: [farmId], references: [id])
 
   @@index([timestamp])
   @@index([cowId, timestamp])
+  @@index([groupId, timestamp])
+  @@index([sectionId, timestamp])
   @@index([severity, timestamp])
 }
 
@@ -582,6 +661,7 @@ model Barn {
   name       String
   farm       Farm               @relation(fields: [farmId], references: [id])
   cows       Cow[]
+  sections   Section[]
   operations OperationRequest[]
   createdAt  DateTime           @default(now())
   updatedAt  DateTime           @updatedAt

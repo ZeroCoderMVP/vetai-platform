@@ -20,6 +20,7 @@ export async function GET(request: Request) {
           number: "8055", 
           farmId: farm.id, 
           barnId: barn.id, 
+          afiId: "8055", 
           status: "active" 
         } 
       });
