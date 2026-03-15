@@ -300,6 +300,7 @@ model AfimilkDayMilk {
   @@unique([farmId, cowNumber, date])
   @@index([farmId, date])
   @@index([cowId, date])
+  @@index([cowNumber, date])
 }
 
 /// Запись кормления

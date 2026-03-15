@@ -70,6 +70,7 @@ curl http://localhost:3000/api/import
 AFI ingestion сейчас поддерживает:
 - `*.json` — текущий импорт событий/списков AFI;
 - `DAY_MILK.DAT` — отдельный импорт в таблицу `AfimilkDayMilk` (не смешивается с `MilkRecord` из AIC);
+  - рабочая трактовка 6 значений: `1/3/5 = avg10`, `2/4/6 = actual`;
 - `*.M00` и прочие неподдержанные форматы — файл переносится в `./data/error/afimilk` с причиной `unsupported binary format for now`.
 
 ## Runtime Paths
