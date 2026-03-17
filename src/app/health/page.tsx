@@ -153,7 +153,7 @@ export default function HealthPage() {
                   {afimilk.healthIssues.items
                     .sort((a: any, b: any) => (a.yieldLast24HPercent ?? 0) - (b.yieldLast24HPercent ?? 0))
                     .map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td><span className={`badge ${item.status === "Дойная" ? "badge-success" : "badge-info"}`}>{item.status}</span></td>
@@ -193,7 +193,7 @@ export default function HealthPage() {
                 </thead>
                 <tbody>
                   {afimilk.mastitisSuspects.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -221,7 +221,7 @@ export default function HealthPage() {
                 </thead>
                 <tbody>
                   {afimilk.ketosisSuspects.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -250,7 +250,7 @@ export default function HealthPage() {
                 </thead>
                 <tbody>
                   {afimilk.digestionProblems.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td><span className="badge badge-neutral">{item.status}</span></td>
@@ -279,7 +279,7 @@ export default function HealthPage() {
                 </thead>
                 <tbody>
                   {afimilk.abortionSuspects.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.gynStatus}</td>
@@ -310,7 +310,7 @@ export default function HealthPage() {
                   </thead>
                   <tbody>
                     {afimilk.lamenessSuspects.items.map((item: any) => (
-                      <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                      <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                         <td><strong>#{item.cow}</strong></td>
                         <td>{item.group}</td>
                         <td><span className="badge badge-neutral">{item.status}</span></td>

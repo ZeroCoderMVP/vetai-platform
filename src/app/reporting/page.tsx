@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 
 type ReportTemplate = {
@@ -23,9 +24,27 @@ const getAuthorityLogo = (authority: string) => {
 };
 
 export default function ReportingPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Загрузка...</div>}>
+      <ReportingContent />
+    </Suspense>
+  );
+}
+
+function ReportingContent() {
+  const searchParams = useSearchParams();
+  const typeParam = searchParams.get("type"); // e.g. 'economics'
+  
   const [activeTab, setActiveTab] = useState("all");
   const [templates, setTemplates] = useState<ReportTemplate[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Map incoming type query to an appropriate tab
+  useEffect(() => {
+    if (typeParam === 'economics') {
+      setActiveTab('MANAGEMENT');
+    }
+  }, [typeParam]);
 
   useEffect(() => {
     fetch("/api/reporting/templates")

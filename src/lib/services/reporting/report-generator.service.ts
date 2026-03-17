@@ -53,7 +53,7 @@ export class ReportGeneratorService {
         validationIssues = result.validationIssues;
       }
       else if (code === "MGMT-HERD" || type === "MANAGEMENT") {
-        const result = await this.buildReproductionReport(instance);
+        const result = await this.buildManagementHerdReport(instance);
         payload = result.payload;
         summary = result.summary;
         validationIssues = result.validationIssues;
@@ -162,15 +162,97 @@ export class ReportGeneratorService {
     };
   }
 
-  private static async buildReproductionReport(instance: any) {
+  private static async buildManagementHerdReport(instance: any) {
+    const { farmId, periodStart, periodEnd } = instance;
+
+    // 1. Total active animals
+    const totalAnimals = await prisma.cow.count({
+      where: { farmId, status: 'active' }
+    });
+
+    // 2. Animals by group (mocking group categories by fetching distinct groups)
+    const groupsRaw = await prisma.cow.groupBy({
+      by: ['groupId'],
+      where: { farmId, status: 'active', groupId: { not: null } },
+      _count: { id: true }
+    });
+
+    // Fetch group names
+    const groupIds = groupsRaw.map(g => g.groupId).filter(Boolean) as string[];
+    const groupsInfo = await prisma.groupUnit.findMany({
+      where: { id: { in: groupIds } },
+      select: { id: true, name: true }
+    });
+
+    const animalGroups = groupsRaw.map((g: any) => {
+      const groupData = groupsInfo.find((info: any) => info.id === g.groupId);
+      return {
+        groupName: groupData?.name || "Неизвестная группа",
+        headCount: g._count.id
+      };
+    });
+
+    // 3. Events in the specific period (Calving, Insemination, Health)
+    let periodEvents: { type: string, count: number }[] = [];
+    if (periodStart && periodEnd) {
+      const eventsRaw = await prisma.event.groupBy({
+        by: ['typeId'],
+        where: {
+          farmId: farmId,
+          timestamp: {
+             gte: new Date(periodStart),
+             lte: new Date(periodEnd)
+          },
+          typeId: { not: null }
+        },
+        _count: { id: true }
+      });
+      
+      const typeIds = eventsRaw.map(e => e.typeId as string);
+      const typesInfo = await prisma.eventType.findMany({
+        where: { id: { in: typeIds } },
+        select: { id: true, name: true }
+      });
+
+      periodEvents = eventsRaw.map(e => {
+        const tInfo = typesInfo.find(t => t.id === e.typeId);
+        return {
+          type: tInfo?.name || "Неизвестно",
+          count: e._count.id
+        };
+      });
+    } else {
+       // Fallback to all time if no period
+       const eventsRaw = await prisma.event.groupBy({
+        by: ['typeId'],
+        where: { farmId: farmId, typeId: { not: null } },
+        _count: { id: true }
+      });
+      
+      const typeIds = eventsRaw.map(e => e.typeId as string);
+      const typesInfo = await prisma.eventType.findMany({
+        where: { id: { in: typeIds } },
+        select: { id: true, name: true }
+      });
+
+      periodEvents = eventsRaw.map(e => {
+        const tInfo = typesInfo.find(t => t.id === e.typeId);
+        return {
+          type: tInfo?.name || "Неизвестно",
+          count: e._count.id
+        };
+      });
+    }
+
+    const totalEvents = periodEvents.reduce((acc: number, curr: any) => acc + curr.count, 0);
+
     return {
       payload: { 
-        events: [
-          { type: "Осеменение", count: 45 },
-          { type: "Отел", count: 22 }
-        ]
+        totalAnimals,
+        groupsDistribution: animalGroups,
+        periodEvents
       },
-      summary: { totalEvents: 67 },
+      summary: { totalHead: totalAnimals, totalPeriodEvents: totalEvents },
       validationIssues: []
     };
   }

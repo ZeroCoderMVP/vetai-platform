@@ -8,34 +8,28 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // We would fetch real report by params.id here
-    setTimeout(() => {
-      setReport({
-        id: resolvedParams.id,
-        title: "Отчет по молочной продуктивности — март 2026",
-        status: "READY_FOR_REVIEW",
-        format: "XLSX",
-        periodStart: "2026-03-01T00:00:00.000Z",
-        periodEnd: "2026-03-31T23:59:59.000Z",
-        generatedAt: "2026-03-13T09:15:00.000Z",
-        template: {
-          name: "Отчет по молочной продуктивности",
-          authority: "INTERNAL"
-        },
-        farm: {
-          name: "АО «Гатчинское»"
-        },
-        validationIssues: [
-          { severity: "WARNING", code: "DATA_GAP", message: "Отсутствуют данные за 10 марта для 3х коров" }
-        ],
-        summary: {
-          totalRows: 1450,
-          totalMilk: 45670,
-        }
-      });
+  const fetchReport = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/reporting/instances/${resolvedParams.id}`);
+      if (!res.ok) throw new Error("Failed to load report");
+      const data = await res.json();
+      
+      // Parse JSON strings to objects for UI rendering if they exist
+      if (data.payloadJson) data.payload = JSON.parse(data.payloadJson);
+      if (data.summaryJson) data.summary = JSON.parse(data.summaryJson);
+      
+      setReport(data);
+    } catch (err) {
+      console.error(err);
+      alert("Ошибка загрузки отчета");
+    } finally {
       setLoading(false);
-    }, 500);
+    }
+  };
+
+  useEffect(() => {
+    fetchReport();
   }, [resolvedParams.id]);
 
   if (loading) return <AppLayout title="Загрузка..."><div style={{padding: "var(--space-4)"}}>Загрузка данных отчета...</div></AppLayout>;
@@ -66,32 +60,60 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
         <div style={{ display: "flex", gap: "var(--space-2)", alignItems: "center" }}>
           <button 
             className="btn btn-outline" 
+            disabled={loading}
             onClick={async () => {
-              alert("Запуск генерации и проверки...");
-              await fetch(`/api/reporting/reports/${report.id}/generate`, { method: "POST" });
-              alert("Отчет сгенерирован (mock)");
+              try {
+                setLoading(true);
+                const res = await fetch(`/api/reporting/reports/${report.id}/generate`, { method: "POST" });
+                if (!res.ok) throw new Error("Ошибка генерации");
+                await fetchReport(); // refresh data
+              } catch (err) {
+                alert("Ошибка генерации отчета");
+              } finally {
+                setLoading(false);
+              }
             }}
           >
-            Сгенерировать / Проверить
+            Сгенерировать
           </button>
           
           <button 
             className="btn btn-outline"
+            disabled={report.status !== "GENERATED" && report.status !== "READY_FOR_REVIEW" && report.status !== "APPROVED"}
             onClick={async () => {
-              alert(`Запуск экспорта в ${report.format}...`);
-              await fetch(`/api/reporting/reports/${report.id}/export`, { 
-                method: "POST", 
-                body: JSON.stringify({ format: report.format }) 
-              });
-              alert("Файл экспортирован (mock)");
+              try {
+                setLoading(true);
+                const res = await fetch(`/api/reporting/reports/${report.id}/export`, { 
+                  method: "POST", 
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ format: "CSV" }) // Hardcoded CSV for now
+                });
+                
+                if (!res.ok) throw new Error("Ошибка экспорта");
+                
+                const blob = await res.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `report_${report.id}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+              } catch (err) {
+                alert("Ошибка получения файла экспорта");
+              } finally {
+                setLoading(false);
+              }
             }}
           >
-            Экспорт ({report.format})
+            Скачать CSV
           </button>
           
           <button 
             className="btn btn-primary"
-            onClick={() => alert("Отчет утвержден и отправлен (mock)")}
+            disabled={report.status === "APPROVED"}
+            onClick={() => alert("Утверждение пока не реализовано.")}
           >
             Утвердить
           </button>
@@ -100,20 +122,20 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
 
       <div className="grid-3" style={{ gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
         <div className="card">
-          <div className="card-header"><span className="card-title">Строк в отчете</span></div>
-          <div className="card-body" style={{ fontSize: 24, fontWeight: 600 }}>{report.summary.totalRows}</div>
+          <div className="card-header"><span className="card-title">Итоговое значение (Сводка)</span></div>
+          <div className="card-body" style={{ fontSize: 24, fontWeight: 600 }}>
+            {report.summary?.totalHead || report.summary?.totalYield || report.summary?.totalPeriodEvents || 0}
+          </div>
         </div>
         <div className="card">
-          <div className="card-header"><span className="card-title">Предупреждений</span></div>
-          <div className="card-body" style={{ fontSize: 24, fontWeight: 600, color: "#f59e0b" }}>{report.validationIssues.length}</div>
-        </div>
-        <div className="card">
-          <div className="card-header"><span className="card-title">Ошибок</span></div>
-          <div className="card-body" style={{ fontSize: 24, fontWeight: 600, color: "#ef4444" }}>0</div>
+          <div className="card-header"><span className="card-title">Ошибок генерации</span></div>
+          <div className="card-body" style={{ fontSize: 24, fontWeight: 600, color: report.status === "VALIDATION_ERROR" ? "#ef4444" : "var(--text-secondary)" }}>
+            {report.status === "VALIDATION_ERROR" ? "Есть ошибки" : "0"}
+          </div>
         </div>
       </div>
 
-      {report.validationIssues.length > 0 && (
+      {report.validationIssues?.length > 0 && (
         <div className="card" style={{ marginBottom: "var(--space-6)", borderColor: "rgba(245, 158, 11, 0.3)" }}>
           <div className="card-header" style={{ background: "rgba(245, 158, 11, 0.05)" }}>
             <span className="card-title" style={{ color: "#f59e0b" }}>⚠️ Результаты проверки качества данных</span>
@@ -131,8 +153,16 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
 
       <div className="card">
         <div className="card-header"><span className="card-title">Содержимое отчета (Предпросмотр)</span></div>
-        <div className="card-body" style={{ height: 400, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-tertiary)" }}>
-          Таблица предварительного просмотра данных будет доступна после завершения обработки строк...
+        <div className="card-body">
+          {report.payload ? (
+            <pre style={{ whiteSpace: 'pre-wrap', fontSize: 13, background: 'var(--surface-sunken)', padding: 'var(--space-3)', borderRadius: 'var(--radius-md)', overflowX: 'auto' }}>
+              {JSON.stringify(report.payload, null, 2)}
+            </pre>
+          ) : (
+            <div style={{ height: 200, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-tertiary)" }}>
+              Данные недоступны. Нажмите "Сгенерировать".
+            </div>
+          )}
         </div>
       </div>
     </AppLayout>

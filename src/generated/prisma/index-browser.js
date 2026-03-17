@@ -131,6 +131,7 @@ exports.Prisma.GroupUnitScalarFieldEnum = {
   name: 'name',
   type: 'type',
   headCount: 'headCount',
+  description: 'description',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -275,7 +275,7 @@ export function parsePenEfficiency(filePath: string): PenEfficiencyRow[] {
       recipeName: String(row["Название технологической группы"] || row["Recipe"] || ""),
       groupType: String(row["Тип технологической группы"] || row["Type"] || ""),
       date,
-      headCount: Number(row["Коров #"] || row["Heads"] || 0),
+      headCount: Number(row["Коровы #"] || row["Коров #"] || row["Heads"] || 0),
       iofc: Number(row["IOFC, Р"] || row["IOFC"] || 0),
       avgProductivity: Number(row["Средняя продуктивность коров"] || row["Productivity"] || 0),
       milkYield: Number(row["Количество молока, Kg"] || row["MilkYield"] || 0),

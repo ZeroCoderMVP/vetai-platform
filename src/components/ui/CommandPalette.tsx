@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 interface SearchResult {
-  type: "cow" | "page" | "action";
+  type: "cow" | "page" | "action" | "group" | "event";
   label: string;
   description?: string;
   href: string;
@@ -28,17 +28,22 @@ export default function CommandPalette() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selected, setSelected] = useState(0);
   const [cowNumbers, setCowNumbers] = useState<string[]>([]);
+  const [groups, setGroups] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // Load cow numbers once
+  // Load data once
   useEffect(() => {
-    fetch("/api/farm")
-      .then(r => r.json())
-      .then(d => {
-        if (d.allCowNumbers) setCowNumbers(d.allCowNumbers);
-      })
-      .catch(() => {});
+    Promise.all([
+      fetch("/api/farm").then(r => r.json()).catch(() => ({})),
+      fetch("/api/groups").then(r => r.json()).catch(() => ({})),
+      fetch("/api/events?limit=100").then(r => r.json()).catch(() => ({}))
+    ]).then(([farmData, groupsData, eventsData]) => {
+      if (farmData.allCowNumbers) setCowNumbers(farmData.allCowNumbers);
+      if (groupsData.success && groupsData.data) setGroups(groupsData.data);
+      if (eventsData.success && eventsData.events) setEvents(eventsData.events);
+    });
   }, []);
 
   // Keyboard shortcut: Ctrl+K or Cmd+K
@@ -84,7 +89,7 @@ export default function CommandPalette() {
     }
 
     // Search cows
-    const cowMatches = cowNumbers.filter(n => n.includes(q)).slice(0, 8);
+    const cowMatches = cowNumbers.filter(n => n.includes(q)).slice(0, 5);
     for (const cow of cowMatches) {
       matches.push({
         type: "cow",
@@ -95,9 +100,33 @@ export default function CommandPalette() {
       });
     }
 
+    // Search groups
+    const groupMatches = groups.filter(g => (g.name || "").toLowerCase().includes(q) || (g.code || "").toLowerCase().includes(q)).slice(0, 5);
+    for (const g of groupMatches) {
+      matches.push({
+        type: "group",
+        label: `Группа: ${g.name || g.code}`,
+        description: g.category || "Производственная группа",
+        href: `/groups/${g.id}`,
+        icon: "👥",
+      });
+    }
+
+    // Search events
+    const eventMatches = events.filter(e => (e.title || "").toLowerCase().includes(q) || (e.description || "").toLowerCase().includes(q)).slice(0, 5);
+    for (const e of eventMatches) {
+      matches.push({
+        type: "event",
+        label: e.title || "Событие",
+        description: e.description ? (e.description.length > 40 ? e.description.substring(0, 40) + "..." : e.description) : "Лента событий",
+        href: `/events/${e.id}`,
+        icon: "🔔",
+      });
+    }
+
     setResults(matches);
     setSelected(0);
-  }, [query, cowNumbers]);
+  }, [query, cowNumbers, groups, events]);
 
   const navigate = useCallback((result: SearchResult) => {
     setOpen(false);
@@ -193,11 +222,11 @@ export default function CommandPalette() {
                 </div>
                 <span style={{
                   fontSize: 9, padding: "1px 6px", borderRadius: 4,
-                  background: r.type === "cow" ? "rgba(15,168,122,0.12)" : r.type === "page" ? "rgba(139,92,246,0.12)" : "rgba(249,115,22,0.12)",
-                  color: r.type === "cow" ? "var(--primary-400)" : r.type === "page" ? "var(--primary-400)" : "var(--accent-orange)",
+                  background: r.type === "cow" ? "rgba(15,168,122,0.12)" : r.type === "page" ? "rgba(139,92,246,0.12)" : r.type === "group" ? "rgba(59,130,246,0.12)" : r.type === "event" ? "rgba(239,68,68,0.12)" : "rgba(249,115,22,0.12)",
+                  color: r.type === "cow" ? "var(--primary-400)" : r.type === "page" ? "var(--primary-400)" : r.type === "group" ? "#3b82f6" : r.type === "event" ? "#ef4444" : "var(--accent-orange)",
                   fontWeight: 600, textTransform: "uppercase",
                 }}>
-                  {r.type === "cow" ? "корова" : r.type === "page" ? "страница" : "действие"}
+                  {r.type === "cow" ? "корова" : r.type === "page" ? "страница" : r.type === "group" ? "группа" : r.type === "event" ? "событие" : "действие"}
                 </span>
               </div>
             ))

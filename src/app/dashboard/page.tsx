@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
+import { useDateParams } from "@/hooks/useDateParams";
 
 interface DashboardData {
   status?: string;
@@ -26,6 +28,7 @@ interface DashboardData {
     recordCount: number;
   };
   groups: Array<{
+    id: string | null;
     name: string;
     planned: number;
     actual: number;
@@ -100,8 +103,9 @@ function getToday(): string {
   return new Date().toISOString().split("T")[0];
 }
 
+
 // Enhanced bar chart component using CSS
-function SimpleBarChart({ data, maxValue }: { data: Array<{ label: string; value: number; target?: number; subValue?: string; color?: string }>; maxValue: number }) {
+function SimpleBarChart({ data, maxValue, onRowClick }: { data: Array<{ id?: string, label: string; value: number; target?: number; subValue?: string; color?: string }>; maxValue: number, onRowClick?: (id: string) => void }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
       {data.map((item, i) => {
@@ -109,9 +113,19 @@ function SimpleBarChart({ data, maxValue }: { data: Array<{ label: string; value
         const targetPct = item.target && maxValue > 0 ? Math.min((item.target / maxValue) * 100, 100) : 0;
         
         return (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+          <div 
+            key={i} 
+            style={{ 
+              display: "flex", alignItems: "center", gap: "var(--space-3)", 
+              cursor: item.id && onRowClick ? "pointer" : "default" 
+            }}
+            onClick={() => {
+              if (item.id && onRowClick) onRowClick(item.id);
+            }}
+            className={item.id && onRowClick ? "hover:bg-white/5 transition-colors p-1 -mx-1 rounded-md" : ""}
+          >
             <div style={{ width: 130, display: "flex", flexDirection: "column", flexShrink: 0, textAlign: "right" }}>
-              <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: item.id && onRowClick ? "var(--primary-400)" : "var(--text-primary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</span>
               {item.subValue && <span style={{ fontSize: 11, color: "var(--text-tertiary)" }}>{item.subValue}</span>}
             </div>
             
@@ -184,12 +198,20 @@ function SparkLine({ data, color = "var(--primary-400)" }: { data: number[]; col
 }
 
 export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Загрузка...</div>}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
+
+function DashboardContent() {
   const router = useRouter();
   const [data, setData] = useState<DashboardData | null>(null);
   const [farmData, setFarmData] = useState<FarmData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [dateFrom, setDateFrom] = useState(getDaysAgo(30));
-  const [dateTo, setDateTo] = useState(getToday());
+  
+  const { dateFrom, dateTo, setDateRange } = useDateParams(30);
 
   const loadData = useCallback(() => {
     setLoading(true);
@@ -206,8 +228,7 @@ export default function DashboardPage() {
   useEffect(() => { loadData(); }, [loadData]);
 
   const handleDateChange = (from: string, to: string) => {
-    setDateFrom(from);
-    setDateTo(to);
+    setDateRange(from, to);
   };
 
   if (loading) {
@@ -257,7 +278,7 @@ export default function DashboardPage() {
       {/* KPI Cards Row 1 — Ключевые показатели */}
       <div className="kpi-grid">
         {/* Надой */}
-        <div className="kpi-card green" style={{ cursor: "pointer" }} onClick={() => router.push("/milking")}>
+        <div className="kpi-card green" style={{ cursor: "pointer" }} onClick={() => router.push(`/milk-balance?from=${dateFrom}&to=${dateTo}`)}>
           <div className="kpi-header">
             <span className="kpi-label">Надой за сессию</span>
             <div className="kpi-icon green">🥛</div>
@@ -275,7 +296,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Кормление */}
-        <div className="kpi-card blue" style={{ cursor: "pointer" }} onClick={() => router.push("/feeding")}>
+        <div className="kpi-card blue" style={{ cursor: "pointer" }} onClick={() => router.push(`/feeding?from=${dateFrom}&to=${dateTo}`)}>
           <div className="kpi-header">
             <span className="kpi-label">Подано корма</span>
             <div className="kpi-icon blue">🌾</div>
@@ -292,7 +313,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Доход минус корм */}
-        <div className="kpi-card purple" style={{ cursor: "pointer" }} onClick={() => router.push("/feeding")}>
+        <div className="kpi-card purple" style={{ cursor: "pointer" }} onClick={() => router.push(`/feeding?from=${dateFrom}&to=${dateTo}`)}>
           <div className="kpi-header">
             <span className="kpi-label">Дох−корм ср.</span>
             <div className="kpi-icon purple">💰</div>
@@ -350,7 +371,7 @@ export default function DashboardPage() {
         </div>
 
         {/* СВ потребление */}
-        <div className="kpi-card blue" style={{ cursor: "pointer" }} onClick={() => router.push("/feeding")}>
+        <div className="kpi-card blue" style={{ cursor: "pointer" }} onClick={() => router.push(`/feeding?from=${dateFrom}&to=${dateTo}`)}>
           <div className="kpi-header">
             <span className="kpi-label">Сухое вещество</span>
             <div className="kpi-icon blue">📦</div>
@@ -365,7 +386,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Себестоимость */}
-        <div className="kpi-card purple" style={{ cursor: "pointer" }} onClick={() => router.push("/feeding")}>
+        <div className="kpi-card purple" style={{ cursor: "pointer" }} onClick={() => router.push(`/feeding?from=${dateFrom}&to=${dateTo}`)}>
           <div className="kpi-header">
             <span className="kpi-label">Стоимость / голову</span>
             <div className="kpi-icon purple">📊</div>
@@ -468,6 +489,7 @@ export default function DashboardPage() {
                   .filter(g => g.actual > 0)
                   .slice(0, 12)
                   .map(g => ({
+                    id: g.id || undefined,
                     label: g.name,
                     value: g.actual,
                     target: g.planned,
@@ -475,6 +497,7 @@ export default function DashboardPage() {
                     color: g.efficiency >= 95 ? "var(--success)" : g.efficiency > 80 ? "var(--warning)" : "var(--danger)",
                   }))}
                 maxValue={Math.max(...data.groups.map(g => Math.max(g.actual, g.planned)))}
+                onRowClick={(id) => router.push(`/groups/${id}?from=${dateFrom}&to=${dateTo}`)}
               />
             ) : (
               <div className="empty-state" style={{ padding: "var(--space-8)" }}>
@@ -494,7 +517,7 @@ export default function DashboardPage() {
             <div className="event-list" style={{ maxHeight: 360, overflowY: "auto" }}>
               {/* AfiFarm events */}
               {farmData?.afimilk?.mastitisSuspects?.items?.map((item: any) => (
-                <div key={`mast-${item.cow}`} className="event-item">
+                <div key={`mast-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--danger)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на мастит</strong> — #{item.cow}</div>
@@ -503,7 +526,7 @@ export default function DashboardPage() {
                 </div>
               ))}
               {farmData?.afimilk?.ketosisSuspects?.items?.map((item: any) => (
-                <div key={`ket-${item.cow}`} className="event-item">
+                <div key={`ket-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--warning)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на кетоз</strong> — #{item.cow}</div>
@@ -512,7 +535,7 @@ export default function DashboardPage() {
                 </div>
               ))}
               {farmData?.afimilk?.heatSuspects?.items?.slice(0, 5).map((item: any) => (
-                <div key={`heat-${item.cow}`} className="event-item">
+                <div key={`heat-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--primary-400)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на охоту</strong> — #{item.cow}</div>
@@ -521,7 +544,7 @@ export default function DashboardPage() {
                 </div>
               ))}
               {farmData?.afimilk?.freshCows?.items?.map((item: any) => (
-                <div key={`fresh-${item.cow}`} className="event-item">
+                <div key={`fresh-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--info)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Новотельная корова</strong> — #{item.cow}</div>
@@ -531,7 +554,7 @@ export default function DashboardPage() {
               ))}
               {/* DB events */}
               {data?.events?.map((ev) => (
-                <div key={ev.id} className="event-item">
+                <div key={ev.id} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/events/${ev.id}`)}>
                   <span className="event-dot" style={{ background: ev.severity === "critical" ? "var(--danger)" : ev.severity === "warning" ? "var(--warning)" : "var(--info)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>{ev.title}</strong></div>
@@ -677,7 +700,13 @@ export default function DashboardPage() {
                 <tbody>
                   {data.groups.map((g) => (
                     <tr key={g.name}>
-                      <td><strong>{g.name}</strong></td>
+                      <td>
+                        {g.id ? (
+                          <Link href={`/groups/${g.id}?from=${dateFrom}&to=${dateTo}`} className="text-blue-600 hover:underline"><strong>{g.name}</strong></Link>
+                        ) : (
+                          <strong>{g.name}</strong>
+                        )}
+                      </td>
                       <td><span className="badge badge-neutral">{g.groupType || "—"}</span></td>
                       <td>{g.headCount || "—"}</td>
                       <td>{formatNum(g.planned)}</td>

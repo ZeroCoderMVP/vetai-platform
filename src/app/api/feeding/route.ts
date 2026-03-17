@@ -57,17 +57,19 @@ export async function GET(request: Request) {
     const remainderPercent = totalActual > 0 ? (totalRemainder / totalActual) * 100 : 0;
 
     // Группы — ручная агрегация
-    const groupMap: Record<string, { planned: number; actual: number; remainder: number; count: number }> = {};
+    const groupMap: Record<string, { planned: number; actual: number; remainder: number; count: number; groupId: string | null }> = {};
     for (const r of records) {
       const gn = (r as any).groupName || "N/A";
-      if (!groupMap[gn]) groupMap[gn] = { planned: 0, actual: 0, remainder: 0, count: 0 };
+      if (!groupMap[gn]) groupMap[gn] = { planned: 0, actual: 0, remainder: 0, count: 0, groupId: null };
       groupMap[gn].planned += (r as any).planned || 0;
       groupMap[gn].actual += (r as any).actual || 0;
       groupMap[gn].remainder += (r as any).remainder || 0;
+      groupMap[gn].groupId = (r as any).groupId || groupMap[gn].groupId;
       groupMap[gn].count++;
     }
 
     const groups = Object.entries(groupMap).map(([name, g]) => ({
+      id: g.groupId,
       groupName: name,
       totalPlanned: Math.round(g.planned),
       totalActual: Math.round(g.actual),

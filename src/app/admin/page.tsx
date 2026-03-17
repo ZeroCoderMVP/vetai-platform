@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
 
 const roles = [
@@ -10,15 +11,94 @@ const roles = [
   { name: "Волков А.Б.", role: "ИТ-специалист", email: "volkov@vetai.ru", status: "Активен" },
 ];
 
-const integrations = [
-  { name: "Afimilk", type: "API JSON", status: "active", lastSync: "05.03.2026 13:49", records: "9 отчётов" },
-  { name: "DTM", type: "Excel импорт", status: "active", lastSync: "05.03.2026", records: "5 файлов" },
-  { name: "AIC Waikato DairyTRACE", type: ".AIC файлы", status: "active", lastSync: "05.03.2026 06:28", records: "22 записи" },
+const plannedIntegrations = [
   { name: "Видеонаблюдение (ONVIF)", type: "RTSP/ONVIF", status: "planned", lastSync: "—", records: "—" },
   { name: "IoT-датчики", type: "MQTT", status: "planned", lastSync: "—", records: "—" },
 ];
 
+type IntegrationBatch = {
+  id: string;
+  status: string;
+  recordsInserted: number;
+  recordCount: number;
+  createdAt: string;
+};
+
+type DataSource = {
+  id: string;
+  name: string;
+  type: string;
+  status: string;
+  batches: IntegrationBatch[];
+};
+
+type ApiTotals = {
+  records: number;
+  cows: number;
+  events: number;
+};
+
 export default function AdminPage() {
+  const [sources, setSources] = useState<DataSource[]>([]);
+  const [totals, setTotals] = useState<ApiTotals>({ records: 0, cows: 0, events: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/import")
+      .then((res) => {
+        if (!res.ok) throw new Error("Ошибка загрузки данных интеграций");
+        return res.json();
+      })
+      .then((data) => {
+        setSources(data.sources || []);
+        if (data.totals) setTotals(data.totals);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "—";
+    return new Intl.DateTimeFormat("ru-RU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(dateString));
+  };
+
+  const dbActiveIntegrations = sources.map((source) => {
+    const latestBatch = source.batches?.[0];
+    const recordsText = latestBatch 
+      ? `${latestBatch.recordsInserted} загружено` 
+      : "0 загружено";
+
+    let displayType = "Локальные файлы";
+    if (source.name === "afimilk") displayType = "API JSON";
+    if (source.name === "dtm") displayType = "Excel импорт";
+    if (source.name === "aic") displayType = ".AIC файлы";
+
+    const displayName = source.name === "afimilk" ? "Afimilk" :
+                        source.name === "dtm" ? "DTM" :
+                        source.name === "aic" ? "AIC Waikato DairyTRACE" : source.name;
+
+    return {
+      name: displayName,
+      type: displayType,
+      status: source.status === "active" ? "active" : "error",
+      lastSync: formatDate(latestBatch?.createdAt),
+      records: recordsText,
+    };
+  });
+
+  const allIntegrations = [...dbActiveIntegrations, ...plannedIntegrations];
+
   return (
     <AppLayout title="Администрирование">
       <div className="page-header">
@@ -40,9 +120,9 @@ export default function AdminPage() {
                 ["Организация", "АО «Гатчинское»"],
                 ["Ферма", "Ферма №1"],
                 ["Адрес", "Ленинградская обл."],
-                ["Поголовье", "~1300 голов"],
-                ["Загонов/групп", "22+"],
-                ["Тип содержания", "Беспривязное"],
+                ["Поголовье", loading ? "..." : `~${totals.cows} голов`],
+                ["Всего записей доений", loading ? "..." : `${totals.records}`],
+                ["Всего событий", loading ? "..." : `${totals.events}`],
               ].map(([label, value]) => (
                 <div key={label} style={{ display: "flex", justifyContent: "space-between" }}>
                   <span style={{ color: "var(--text-secondary)", fontSize: 13 }}>{label}</span>
@@ -64,9 +144,9 @@ export default function AdminPage() {
                 ["Платформа", "ВЕТАИ v1.0.0"],
                 ["Стек", "Next.js 14 + TypeScript"],
                 ["База данных", "SQLite (MVP)"],
-                ["Последнее обновление", "12.03.2026"],
+                ["Последнее обновление БД", loading || !dbActiveIntegrations[0] ? "—" : (dbActiveIntegrations[0].lastSync || "—").split(' ')[0]],
                 ["Доильный зал", "AIC Waikato @ 192.168.50.138"],
-                ["Статус", "✅ Работает"],
+                ["Статус API", error ? "❌ Ошибка" : loading ? "⏳ Опрос..." : "✅ Работает"],
               ].map(([label, value]) => (
                 <div key={label} style={{ display: "flex", justifyContent: "space-between" }}>
                   <span style={{ color: "var(--text-secondary)", fontSize: 13 }}>{label}</span>
@@ -127,34 +207,45 @@ export default function AdminPage() {
           <span className="card-title">🔗 Интеграции</span>
         </div>
         <div className="card-body" style={{ padding: 0 }}>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Система</th>
-                  <th>Тип</th>
-                  <th>Статус</th>
-                  <th>Последняя синхронизация</th>
-                  <th>Данные</th>
-                </tr>
-              </thead>
-              <tbody>
-                {integrations.map((int) => (
-                  <tr key={int.name}>
-                    <td><strong>{int.name}</strong></td>
-                    <td style={{ fontSize: 12 }}>{int.type}</td>
-                    <td>
-                      <span className={`badge ${int.status === "active" ? "badge-success" : "badge-neutral"}`}>
-                        {int.status === "active" ? "✅ Активна" : "📋 Планируется"}
-                      </span>
-                    </td>
-                    <td style={{ fontSize: 12, color: "var(--text-secondary)" }}>{int.lastSync}</td>
-                    <td>{int.records}</td>
+          {error && (
+            <div style={{ padding: "1rem", color: "var(--danger-500)", background: "var(--danger-50)" }}>
+              {error}
+            </div>
+          )}
+          {loading ? (
+            <div style={{ padding: "2rem", textAlign: "center", color: "var(--text-secondary)" }}>
+              ⏳ Загрузка статусов интеграций...
+            </div>
+          ) : (
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Система</th>
+                    <th>Тип</th>
+                    <th>Статус</th>
+                    <th>Последняя синхронизация</th>
+                    <th>Данные</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {allIntegrations.map((int) => (
+                    <tr key={int.name}>
+                      <td><strong>{int.name}</strong></td>
+                      <td style={{ fontSize: 12 }}>{int.type}</td>
+                      <td>
+                        <span className={`badge ${int.status === "active" ? "badge-success" : int.status === "error" ? "badge-danger" : "badge-neutral"}`}>
+                          {int.status === "active" ? "✅ Активна" : int.status === "error" ? "❌ Ошибка" : "📋 Планируется"}
+                        </span>
+                      </td>
+                      <td style={{ fontSize: 12, color: "var(--text-secondary)" }}>{int.lastSync}</td>
+                      <td>{int.records}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </AppLayout>

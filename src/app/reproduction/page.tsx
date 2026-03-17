@@ -105,7 +105,7 @@ export default function ReproductionPage() {
                   {afimilk.heatSuspects.items
                     .sort((a: any, b: any) => (b.heatIndicatorS1 ?? 0) - (a.heatIndicatorS1 ?? 0))
                     .map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>
@@ -157,7 +157,7 @@ export default function ReproductionPage() {
                 </thead>
                 <tbody>
                   {afimilk.animalsToBreed.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -188,7 +188,7 @@ export default function ReproductionPage() {
                 </thead>
                 <tbody>
                   {afimilk.calvingAnimals.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -212,7 +212,7 @@ export default function ReproductionPage() {
                 </thead>
                 <tbody>
                   {afimilk.freshCows.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>

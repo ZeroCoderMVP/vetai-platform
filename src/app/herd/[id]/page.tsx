@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import Link from "next/link";
 import type { DigitalTwinData } from "@/lib/cow21twin";
@@ -77,7 +77,10 @@ export default function AnimalCardPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/farm").then(r => r.json()),
-      cowId === "21" ? import("@/lib/cow21twin").then(m => m.getCow21DigitalTwin()) : Promise.resolve(null),
+      fetch(`/api/herd/${cowId}`).then(r => {
+        if (!r.ok) return null;
+        return r.json();
+      })
     ]).then(([farmData, twinData]) => {
       setData(farmData);
       setTwin(twinData);
@@ -87,9 +90,9 @@ export default function AnimalCardPage() {
 
   if (loading) return <AppLayout title={`Корова #${cowId}`}><div className="empty-state"><div className="empty-state-icon">⏳</div><div className="empty-state-text">Загрузка цифрового двойника...</div></div></AppLayout>;
 
-  // For non-#21 cows, render a basic card from farm data
-  if (!twin || !data) {
-    return <AppLayout title={`Корова #${cowId}`}><div className="empty-state"><div className="empty-state-icon">🐄</div><div className="empty-state-text">Цифровой двойник для коровы #{cowId} недоступен. Полный профиль — у коровы #21.</div></div></AppLayout>;
+  // Fallback if not found in db
+  if (!twin || (twin as any).error || !data) {
+    notFound();
   }
 
   const p = twin.profile;
@@ -101,18 +104,18 @@ export default function AnimalCardPage() {
   const sccTrend = dailySummary.map(d => d.avgSCC);
 
   return (
-    <AppLayout title={`Корова #${cowId}`}>
+    <AppLayout title={`Корова #${p.number}`}>
       {/* ══════ PROFILE HEADER ══════ */}
       <div className="card" style={{ marginBottom: "var(--space-4)", overflow: "hidden" }}>
         <div style={{ height: 4, background: alerts.length > 0 ? "var(--warning)" : "var(--success)" }} />
         <div className="card-body" style={{ padding: "var(--space-5)" }}>
           <div style={{ display: "flex", gap: "var(--space-5)", alignItems: "center" }}>
-            <div style={{ width: 80, height: 80, borderRadius: "var(--radius-xl)", flexShrink: 0, background: "linear-gradient(135deg, var(--primary-500), var(--primary-300))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 800, color: "#fff", boxShadow: "0 4px 20px rgba(15,168,122,0.3)" }}>
-              #{cowId}
+            <div style={{ width: 80, height: 80, borderRadius: "var(--radius-xl)", flexShrink: 0, background: "linear-gradient(135deg, var(--primary-500), var(--primary-300))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#fff", boxShadow: "0 4px 20px rgba(15,168,122,0.3)" }}>
+              🐄
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: 6 }}>
-                <h2 style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>Корова #{cowId}</h2>
+                <h2 style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>Корова #{p.number}</h2>
                 <span style={{ fontSize: 12, color: "var(--text-tertiary)", background: "var(--bg-elevated)", padding: "2px 8px", borderRadius: "var(--radius-sm)" }}>{p.regNumber}</span>
                 <span style={{ fontSize: 11, color: "var(--text-tertiary)" }}>{p.electronicId}</span>
               </div>
@@ -120,7 +123,7 @@ export default function AnimalCardPage() {
                 <span className="badge badge-success">{p.status}</span>
                 <span className="badge badge-primary">Лактация {p.lactation}</span>
                 <span className="badge badge-info">Дни лакт. {p.dim}</span>
-                <span className="badge badge-neutral">{p.group.name}</span>
+                <Link href={`/groups/${p.group.id}`}><span className="badge badge-neutral hover:bg-gray-200 transition-colors cursor-pointer">{p.group.name}</span></Link>
                 <span className="badge badge-primary">{p.gynStatus}</span>
                 <span className="badge badge-neutral">{p.breed}</span>
                 {alerts.length > 0 && <span className="badge badge-warning">⚠️ {alerts.length} тревог{alerts.length > 1 ? "и" : "а"}</span>}
@@ -654,20 +657,33 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
       </div>
       <div className="card-body" style={{ padding: 0 }}>
         <div className="event-list">
-          {filtered.map(e => (
-            <div key={e.id} className="event-item">
-              <span className="event-dot" style={{ background: catColors[e.category] || "var(--text-tertiary)" }} />
-              <div className="event-content">
-                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                  <span>{e.icon}</span>
-                  <strong style={{ fontSize: 13 }}>{e.title}</strong>
-                  {e.severity && <SeverityDot s={e.severity} />}
+          {filtered.map(e => {
+            const isClickable = e.eventId && typeof e.eventId === "string" && e.eventId.length > 5;
+            const content = (
+              <>
+                <span className="event-dot" style={{ background: catColors[e.category] || "var(--text-tertiary)" }} />
+                <div className="event-content">
+                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <span>{e.icon}</span>
+                    <strong style={{ fontSize: 13, textDecoration: isClickable ? "underline" : "none" }}>{e.title}</strong>
+                    {e.severity && <SeverityDot s={e.severity} />}
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>{e.description}</div>
+                  <div className="event-time">{e.date} · {catLabels[e.category] || e.category}</div>
                 </div>
-                <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>{e.description}</div>
-                <div className="event-time">{e.date} · {catLabels[e.category] || e.category}</div>
+              </>
+            );
+
+            return isClickable ? (
+              <Link key={e.id} href={`/events/${e.eventId}`} className="event-item hover:bg-gray-50 transition-colors cursor-pointer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                {content}
+              </Link>
+            ) : (
+              <div key={e.id} className="event-item">
+                {content}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

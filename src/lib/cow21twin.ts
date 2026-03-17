@@ -120,6 +120,7 @@ export interface TimelineEvent {
   title: string;
   description: string;
   severity?: 'info' | 'warning' | 'critical';
+  eventId?: string;
 }
 
 export interface InfographicData {

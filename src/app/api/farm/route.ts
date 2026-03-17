@@ -55,14 +55,24 @@ export async function GET() {
   }
 
   try {
+    // Identify "today" based on the latest record in the DB to handle generic mock dates
+    const latestMilkRec = await prisma.milkRecord.findFirst({ orderBy: { date: "desc" } });
+    const targetDate = latestMilkRec?.date || new Date();
+    const startOfTargetDate = new Date(targetDate);
+    startOfTargetDate.setUTCHours(0, 0, 0, 0);
+    const endOfTargetDate = new Date(targetDate);
+    endOfTargetDate.setUTCHours(23, 59, 59, 999);
+
     const [totalAnimals, cows, milkRecords, events] = await Promise.all([
       prisma.cow.count(),
       prisma.cow.findMany({
-        select: { number: true, lactation: true, dim: true, status: true, group: { select: { name: true } } },
+        select: { id: true, number: true, lactation: true, dim: true, status: true, group: { select: { name: true } } },
       }),
       prisma.milkRecord.findMany({
-        orderBy: { date: "desc" },
-        take: 300,
+        where: {
+          date: { gte: startOfTargetDate, lte: endOfTargetDate }
+        },
+        orderBy: { date: "desc" }
       }),
       prisma.event.findMany({
         orderBy: { timestamp: "desc" },
@@ -113,6 +123,7 @@ export async function GET() {
       const cow = cowMap.get(cowNumber);
       const normalized = {
         cow: cowNumber,
+        cowId: event.cow?.id || cow?.id || null,
         group: Number(event.group?.name || cow?.group?.name || 0) || 0,
         lactationNumber: cow?.lactation || 0,
         dim: cow?.dim || 0,

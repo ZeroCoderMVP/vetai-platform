@@ -21,8 +21,12 @@ const navigation = [
   {
     section: "Производство",
     items: [
+      { href: "/groups", label: "Группы", icon: "🐄" },
+      { href: "/groups?type=calves", label: "Телята", icon: "🌱" },
+      { href: "/sections", label: "Размещение", icon: "🗺️" },
       { href: "/herd", label: "Стадо", icon: "🐄" },
       { href: "/milking", label: "Учёт молока", icon: "🥛" },
+      { href: "/milk-balance", label: "Баланс молока", icon: "⚖️" },
       { href: "/feeding", label: "Кормление", icon: "🌾" },
       { href: "/video", label: "Видеоаналитика", icon: "📹" },
     ],

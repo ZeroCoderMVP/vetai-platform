@@ -6740,6 +6740,7 @@ export namespace Prisma {
     name: string | null
     type: string | null
     headCount: number | null
+    description: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6751,6 +6752,7 @@ export namespace Prisma {
     name: string | null
     type: string | null
     headCount: number | null
+    description: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6762,6 +6764,7 @@ export namespace Prisma {
     name: number
     type: number
     headCount: number
+    description: number
     isActive: number
     createdAt: number
     updatedAt: number
@@ -6783,6 +6786,7 @@ export namespace Prisma {
     name?: true
     type?: true
     headCount?: true
+    description?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -6794,6 +6798,7 @@ export namespace Prisma {
     name?: true
     type?: true
     headCount?: true
+    description?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -6805,6 +6810,7 @@ export namespace Prisma {
     name?: true
     type?: true
     headCount?: true
+    description?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -6903,6 +6909,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount: number
+    description: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -6933,6 +6940,7 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     headCount?: boolean
+    description?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6951,6 +6959,7 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     headCount?: boolean
+    description?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6963,6 +6972,7 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     headCount?: boolean
+    description?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6975,12 +6985,13 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     headCount?: boolean
+    description?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type GroupUnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "name" | "type" | "headCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["groupUnit"]>
+  export type GroupUnitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "name" | "type" | "headCount" | "description" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["groupUnit"]>
   export type GroupUnitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     cows?: boolean | GroupUnit$cowsArgs<ExtArgs>
@@ -7013,6 +7024,7 @@ export namespace Prisma {
       name: string
       type: string
       headCount: number
+      description: string | null
       isActive: boolean
       createdAt: Date
       updatedAt: Date
@@ -7450,6 +7462,7 @@ export namespace Prisma {
     readonly name: FieldRef<"GroupUnit", 'String'>
     readonly type: FieldRef<"GroupUnit", 'String'>
     readonly headCount: FieldRef<"GroupUnit", 'Int'>
+    readonly description: FieldRef<"GroupUnit", 'String'>
     readonly isActive: FieldRef<"GroupUnit", 'Boolean'>
     readonly createdAt: FieldRef<"GroupUnit", 'DateTime'>
     readonly updatedAt: FieldRef<"GroupUnit", 'DateTime'>
@@ -54592,6 +54605,7 @@ export namespace Prisma {
     name: 'name',
     type: 'type',
     headCount: 'headCount',
+    description: 'description',
     isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -55393,6 +55407,7 @@ export namespace Prisma {
     name?: StringFilter<"GroupUnit"> | string
     type?: StringFilter<"GroupUnit"> | string
     headCount?: IntFilter<"GroupUnit"> | number
+    description?: StringNullableFilter<"GroupUnit"> | string | null
     isActive?: BoolFilter<"GroupUnit"> | boolean
     createdAt?: DateTimeFilter<"GroupUnit"> | Date | string
     updatedAt?: DateTimeFilter<"GroupUnit"> | Date | string
@@ -55410,6 +55425,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     headCount?: SortOrder
+    description?: SortOrderInput | SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55430,6 +55446,7 @@ export namespace Prisma {
     name?: StringFilter<"GroupUnit"> | string
     type?: StringFilter<"GroupUnit"> | string
     headCount?: IntFilter<"GroupUnit"> | number
+    description?: StringNullableFilter<"GroupUnit"> | string | null
     isActive?: BoolFilter<"GroupUnit"> | boolean
     createdAt?: DateTimeFilter<"GroupUnit"> | Date | string
     updatedAt?: DateTimeFilter<"GroupUnit"> | Date | string
@@ -55447,6 +55464,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     headCount?: SortOrder
+    description?: SortOrderInput | SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55466,6 +55484,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"GroupUnit"> | string
     type?: StringWithAggregatesFilter<"GroupUnit"> | string
     headCount?: IntWithAggregatesFilter<"GroupUnit"> | number
+    description?: StringNullableWithAggregatesFilter<"GroupUnit"> | string | null
     isActive?: BoolWithAggregatesFilter<"GroupUnit"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"GroupUnit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"GroupUnit"> | Date | string
@@ -58986,6 +59005,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59003,6 +59023,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59018,6 +59039,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59035,6 +59057,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59051,6 +59074,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59061,6 +59085,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59072,6 +59097,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63126,6 +63152,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     headCount?: SortOrder
+    description?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -63141,6 +63168,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     headCount?: SortOrder
+    description?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -63152,6 +63180,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     headCount?: SortOrder
+    description?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -68920,6 +68949,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -68935,6 +68965,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -69457,6 +69488,7 @@ export namespace Prisma {
     name?: StringFilter<"GroupUnit"> | string
     type?: StringFilter<"GroupUnit"> | string
     headCount?: IntFilter<"GroupUnit"> | number
+    description?: StringNullableFilter<"GroupUnit"> | string | null
     isActive?: BoolFilter<"GroupUnit"> | boolean
     createdAt?: DateTimeFilter<"GroupUnit"> | Date | string
     updatedAt?: DateTimeFilter<"GroupUnit"> | Date | string
@@ -70299,6 +70331,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -70315,6 +70348,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -70818,6 +70852,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -70834,6 +70869,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71732,6 +71768,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -71748,6 +71785,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -71815,6 +71853,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71831,6 +71870,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72071,6 +72111,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -72087,6 +72128,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -72182,6 +72224,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -72198,6 +72241,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73299,6 +73343,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -73315,6 +73360,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -73396,6 +73442,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73412,6 +73459,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74329,6 +74377,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -74345,6 +74394,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -74545,6 +74595,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74561,6 +74612,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -78035,6 +78087,7 @@ export namespace Prisma {
     name: string
     type: string
     headCount?: number
+    description?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -78212,6 +78265,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -78227,6 +78281,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -78242,6 +78297,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     headCount?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

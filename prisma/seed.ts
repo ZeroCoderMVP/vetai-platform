@@ -1,8 +1,8 @@
-import { seedFromExistingData } from "../src/services/importService";
+import { runImport } from "../src/services/importService";
 
 async function main() {
   console.log("🌱 Начало seed из существующих данных...\n");
-  await seedFromExistingData();
+  await runImport();
 }
 
 main().catch((err) => {

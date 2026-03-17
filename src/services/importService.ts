@@ -150,6 +150,37 @@ async function getOrCreateCow(farmId: string, cowNumber: string) {
   });
 }
 
+async function getOrCreateGroup(farmId: string, groupName: string, realName?: string | null, headCount?: number | null) {
+  if (!groupName) return null;
+  const existing = await prisma.groupUnit.findFirst({ where: { farmId, name: groupName } });
+  
+  const updateData: any = {};
+  if (realName && realName !== groupName && (!existing?.description || existing.description !== realName)) {
+    updateData.description = realName;
+  }
+  if (headCount !== undefined && headCount !== null && headCount > (existing?.headCount || 0)) {
+    updateData.headCount = headCount;
+  }
+
+  if (existing) {
+    if (Object.keys(updateData).length > 0) {
+      return prisma.groupUnit.update({ where: { id: existing.id }, data: updateData });
+    }
+    return existing;
+  }
+
+  return prisma.groupUnit.create({
+    data: {
+      farmId,
+      name: groupName,
+      description: realName || null,
+      type: "feeding_group",
+      isActive: true,
+      headCount: headCount || 0,
+    },
+  });
+}
+
 function parseDateYYMMDD(raw: string): Date {
   if (!/^\d{6}$/.test(raw)) {
     throw new Error(`Некорректный формат даты AIC: ${raw}`);
@@ -258,9 +289,21 @@ async function importAfimilkFile(filePath: string, farm: { id: string }, batchId
 
     const cow = await getOrCreateCow(farm.id, cowNum);
 
-    const updateData: Record<string, number> = {};
+    const updateData: Record<string, any> = {};
     if (typeof row.lactationNumber === "number") updateData.lactation = row.lactationNumber;
     if (typeof row.dim === "number") updateData.dim = row.dim;
+    
+    // Привязываем корову к группе AFI
+    const rawGroup = row.group || row.GroupNumber || row.groupNumber || row.animalGroup;
+    if (rawGroup !== undefined && rawGroup !== null) {
+      const groupName = String(rawGroup).trim();
+      if (groupName) {
+        const group = await getOrCreateGroup(farm.id, groupName);
+        if (group) {
+          updateData.groupId = group.id;
+        }
+      }
+    }
 
     if (Object.keys(updateData).length > 0) {
       await prisma.cow.update({ where: { id: cow.id }, data: updateData });
@@ -278,6 +321,7 @@ async function importAfimilkFile(filePath: string, farm: { id: string }, batchId
       data: {
         cowId: cow.id,
         farmId: farm.id,
+        groupId: updateData.groupId || null,
         severity,
         title: `${reportName}: корова #${cowNum}`,
         description: JSON.stringify(row).slice(0, 1000),
@@ -457,7 +501,7 @@ async function importAicFile(filePath: string, farm: { id: string }, batchId: st
   return stats;
 }
 
-async function importDtmFile(filePath: string, batchId: string): Promise<SourceImportResult> {
+async function importDtmFile(filePath: string, farm: { id: string }, batchId: string): Promise<SourceImportResult> {
   const stats: ImportStats = {
     recordsRead: 0,
     recordsInserted: 0,
@@ -522,9 +566,11 @@ async function importDtmFile(filePath: string, batchId: string): Promise<SourceI
       if (parsed.penHistory) {
         for (const row of parsed.penHistory) {
           stats.recordsRead += 1;
+          const targetGroupMatch = await getOrCreateGroup(farm.id, row.groupCode, row.recipeName, row.headCount);
           await prisma.feedRecord.create({
             data: {
               groupName: row.groupCode,
+              groupId: targetGroupMatch?.id || null,
               date: new Date(row.date),
               recipe: row.recipeName || null,
               planned: row.targetWeight || null,
@@ -548,9 +594,11 @@ async function importDtmFile(filePath: string, batchId: string): Promise<SourceI
       if (parsed.penEfficiency) {
         for (const row of parsed.penEfficiency) {
           stats.recordsRead += 1;
+          const targetGroupMatch = await getOrCreateGroup(farm.id, row.groupCode, row.recipeName, row.headCount);
           await prisma.feedRecord.create({
             data: {
               groupName: row.groupCode,
+              groupId: targetGroupMatch?.id || null,
               date: new Date(row.date),
               recipe: row.recipeName || null,
               planned: null,
@@ -574,9 +622,11 @@ async function importDtmFile(filePath: string, batchId: string): Promise<SourceI
       if (parsed.manualWeighings) {
         for (const row of parsed.manualWeighings) {
           stats.recordsRead += 1;
+          const targetGroupMatch = await getOrCreateGroup(farm.id, row.groupCode);
           await prisma.feedRecord.create({
             data: {
               groupName: row.groupCode,
+              groupId: targetGroupMatch?.id || null,
               date: new Date(row.date),
               remainder: row.weight || null,
               source: "dtm",
@@ -592,9 +642,11 @@ async function importDtmFile(filePath: string, batchId: string): Promise<SourceI
       if (parsed.generic) {
         for (const row of parsed.generic.rows) {
           stats.recordsRead += 1;
+          const targetGroupMatch = await getOrCreateGroup(farm.id, row.groupName, row.recipe, (row as any).headCount || null);
           await prisma.feedRecord.create({
             data: {
               groupName: row.groupName,
+              groupId: targetGroupMatch?.id || null,
               date: new Date(row.date),
               recipe: row.recipe,
               planned: row.planned,
@@ -674,7 +726,7 @@ async function executeFileImport(sourceName: SourceName, filePath: string, farm:
     } else if (sourceName === "aic") {
       result = await importAicFile(filePath, farm, batch.id);
     } else {
-      result = await importDtmFile(filePath, batch.id);
+      result = await importDtmFile(filePath, farm, batch.id);
     }
 
     await completeBatch(batch.id, result);

@@ -23,6 +23,7 @@ export async function GET(request: Request) {
         orderBy: { date: "desc" },
         skip: (page - 1) * limit,
         take: limit,
+        include: { consumptions: { include: { ingredient: true } } },
       }),
       (prisma as any).mixBatch.count({ where }),
     ]);

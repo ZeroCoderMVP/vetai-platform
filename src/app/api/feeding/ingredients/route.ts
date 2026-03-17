@@ -23,11 +23,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Все записи потребления
     const records = await (prisma as any).ingredientConsumption.findMany({
       where,
       orderBy: { ingredientName: "asc" },
-      take: 1000,
     });
 
     // Разделяем на ингредиенты и ковши/группы
@@ -47,7 +45,7 @@ export async function GET(request: Request) {
       if (!map[name]) {
         map[name] = { target: 0, actual: 0, dm: 0, errorSum: 0, errorAbsSum: 0, count: 0 };
       }
-      map[name].target += r.targetWeight || 0;
+      map[name].target += (r.targetWeight || r.indicatorWeight || r.totalConsumption || 0);
       map[name].actual += r.actualWeight || 0;
       map[name].dm += r.loadedDM || 0;
       map[name].errorSum += r.errorPercent || 0;

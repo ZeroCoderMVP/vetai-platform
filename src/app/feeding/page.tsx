@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import Link from "next/link";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
+import { useDateParams } from "@/hooks/useDateParams";
 
 // ==========================================
 // Типы
@@ -22,6 +24,7 @@ interface FeedingSummary {
 }
 
 interface GroupStat {
+  id: string | null;
   groupName: string;
   totalPlanned: number;
   totalActual: number;
@@ -54,6 +57,7 @@ interface MixRecord {
   mixDuration: string | null;
   mixer: string | null;
   totalDuration: string | null;
+  consumptions?: any[];
 }
 
 interface IngredientStat {
@@ -84,10 +88,6 @@ interface FeedRecord {
 // ==========================================
 // Утилиты
 // ==========================================
-
-function getToday(): string {
-  return new Date().toISOString().split("T")[0];
-}
 
 function getDaysAgo(days: number): string {
   const d = new Date();
@@ -213,9 +213,16 @@ const TABS: { id: TabName; label: string; icon: string }[] = [
 // ==========================================
 
 export default function FeedingPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Загрузка...</div>}>
+      <FeedingContent />
+    </Suspense>
+  );
+}
+
+function FeedingContent() {
   const [activeTab, setActiveTab] = useState<TabName>("overview");
-  const [dateFrom, setDateFrom] = useState(getDaysAgo(30));
-  const [dateTo, setDateTo] = useState(getToday());
+  const { dateFrom, dateTo, setDateRange } = useDateParams(30);
   const [loading, setLoading] = useState(true);
 
   // Data
@@ -267,8 +274,7 @@ export default function FeedingPage() {
   }, [loadData]);
 
   const handleDateChange = (from: string, to: string) => {
-    setDateFrom(from);
-    setDateTo(to);
+    setDateRange(from, to);
   };
 
   return (
@@ -305,8 +311,8 @@ export default function FeedingPage() {
         </div>
       ) : (
         <>
-          {activeTab === "overview" && <OverviewTab summary={summary} daily={daily} groups={groups} />}
-          {activeTab === "groups" && <GroupsTab groups={groups} records={records} />}
+          {activeTab === "overview" && <OverviewTab summary={summary} daily={daily} groups={groups} dateFrom={dateFrom} dateTo={dateTo} />}
+          {activeTab === "groups" && <GroupsTab groups={groups} records={records} dateFrom={dateFrom} dateTo={dateTo} />}
           {activeTab === "mixes" && <MixesTab mixes={mixes} />}
           {activeTab === "ingredients" && <IngredientsTab ingredients={ingredients} byGroup={ingredientsByGroup} />}
         </>
@@ -319,7 +325,7 @@ export default function FeedingPage() {
 // Tab: Обзор
 // ==========================================
 
-function OverviewTab({ summary, daily, groups }: { summary: FeedingSummary | null; daily: DailyPoint[]; groups: GroupStat[] }) {
+function OverviewTab({ summary, daily, groups, dateFrom, dateTo }: { summary: FeedingSummary | null; daily: DailyPoint[]; groups: GroupStat[]; dateFrom: string; dateTo: string; }) {
   if (!summary || summary.recordCount === 0) {
     return (
       <div className="empty-state">
@@ -380,7 +386,7 @@ function OverviewTab({ summary, daily, groups }: { summary: FeedingSummary | nul
           </span>
         </div>
 
-        <div className="kpi-card purple">
+        <div className="kpi-card purple" style={{ cursor: "pointer" }} onClick={() => window.location.href = `/reports?type=economics&from=${dateFrom}&to=${dateTo}`}>
           <div className="kpi-header">
             <span className="kpi-label">Доход минус корм (ср.)</span>
             <div className="kpi-icon purple">💰</div>
@@ -439,7 +445,10 @@ function OverviewTab({ summary, daily, groups }: { summary: FeedingSummary | nul
             </div>
             <div>
               <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 4 }}>Стоимость на голову</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: "var(--text-primary)" }}>
+              <div 
+                style={{ fontSize: 20, fontWeight: 700, color: "var(--text-primary)", cursor: "pointer" }}
+                onClick={() => window.location.href = `/reports?type=economics&from=${dateFrom}&to=${dateTo}`}
+              >
                 {summary.avgFeedCostPerHead !== 0 ? `${summary.avgFeedCostPerHead} ₽` : "—"}
               </div>
             </div>
@@ -466,7 +475,7 @@ function OverviewTab({ summary, daily, groups }: { summary: FeedingSummary | nul
 // Tab: Группы
 // ==========================================
 
-function GroupsTab({ groups, records }: { groups: GroupStat[]; records: FeedRecord[] }) {
+function GroupsTab({ groups, records, dateFrom, dateTo }: { groups: GroupStat[]; records: FeedRecord[]; dateFrom: string; dateTo: string; }) {
   if (groups.length === 0) {
     return (
       <div className="empty-state">
@@ -500,7 +509,13 @@ function GroupsTab({ groups, records }: { groups: GroupStat[]; records: FeedReco
                 const isNormal = g.efficiency >= 95 && g.efficiency <= 105;
                 return (
                   <tr key={g.groupName}>
-                    <td><strong>{g.groupName}</strong></td>
+                    <td>
+                      {g.id ? (
+                        <Link href={`/groups/${g.id}?from=${dateFrom}&to=${dateTo}`} className="text-blue-600 hover:underline"><strong>{g.groupName}</strong></Link>
+                      ) : (
+                        <strong>{g.groupName}</strong>
+                      )}
+                    </td>
                     <td style={{ textAlign: "right" }}>{g.totalPlanned.toLocaleString("ru-RU")}</td>
                     <td style={{ textAlign: "right" }}>{g.totalActual.toLocaleString("ru-RU")}</td>
                     <td style={{ textAlign: "right" }}>{g.avgRemainder}</td>
@@ -532,10 +547,165 @@ function GroupsTab({ groups, records }: { groups: GroupStat[]; records: FeedReco
 }
 
 // ==========================================
+// ==========================================
+// Drill-down Chart для ингредиентов
+// ==========================================
+
+function MixDrillDownChart({ consumptions }: { consumptions: any[] }) {
+  if (!consumptions || consumptions.length === 0) {
+    return <div style={{ padding: "var(--space-4)", textAlign: "center", color: "var(--text-muted)" }}>Нет данных об ингредиентах для этого замеса</div>;
+  }
+
+  // Фильтруем пустые
+  const valid = consumptions.filter((c: any) => (c.targetWeight || c.indicatorWeight || c.totalConsumption || 0) > 0 || c.actualWeight > 0);
+  const maxVal = Math.max(...valid.map((c: any) => Math.max(c.targetWeight || c.indicatorWeight || c.totalConsumption || 0, c.actualWeight || 0)), 1);
+
+  const chartHeight = 220;
+  const barWidth = 60;
+  const gap = 40;
+  const chartWidth = valid.length * (barWidth + gap) + gap;
+
+  return (
+    <div style={{ 
+      padding: "var(--space-4)", 
+      background: "var(--bg-elevated)", 
+      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.02)",
+      borderBottom: "1px solid var(--border-secondary)",
+      overflowX: "auto"
+    }}>
+      <h4 style={{ marginBottom: "var(--space-4)", display: "flex", alignItems: "center", gap: 8, fontSize: 16 }}>
+        <span style={{ fontSize: 20 }}>📊</span> 
+        Разбор загрузки ингредиентов
+      </h4>
+
+      <div style={{ position: "relative", width: "fit-content", minWidth: "100%" }}>
+        <svg width={Math.max(chartWidth, 600)} height={chartHeight} style={{ overflow: "visible" }}>
+          {/* Фон: сетка */}
+          {[0, 0.25, 0.5, 0.75, 1].map((f) => {
+            const y = 30 + (chartHeight - 60) * (1 - f);
+            return (
+              <g key={f}>
+                <line x1={0} y1={y} x2={Math.max(chartWidth, 600)} y2={y} stroke="var(--border-secondary)" strokeWidth="1" strokeDasharray="4 4" />
+                <text x={0} y={y - 4} fontSize="10" fill="var(--text-muted)">{Math.round(maxVal * f).toLocaleString("ru-RU")} кг</text>
+              </g>
+            );
+          })}
+
+          {valid.map((c: any, i: number) => {
+            const target = c.targetWeight || c.indicatorWeight || c.totalConsumption || 0;
+            const actual = c.actualWeight || 0;
+            const diff = actual - target;
+            const errorPercent = target > 0 ? (diff / target) * 100 : 0;
+            
+            // Цветовое кодирование: зеленый (<=3%), желтый (<=10%), красный (>10%)
+            const absErr = Math.abs(errorPercent);
+            const isTargetZeroWarning = target === 0 && actual > 0;
+            let color = "var(--success)"; // зеленый
+            if (absErr > 3 && absErr <= 10) color = "var(--warning)"; // желтый
+            if (absErr > 10 || isTargetZeroWarning) color = "var(--danger)"; // красный
+
+            const costPerKg = c.ingredient?.costPerKg || 0; // рублей за кг
+            const financialLoss = Math.abs(diff) * costPerKg;
+
+            const tHeight = (target / maxVal) * (chartHeight - 60);
+            const aHeight = (actual / maxVal) * (chartHeight - 60);
+            
+            const x = gap + i * (barWidth + gap);
+            const baseY = chartHeight - 30;
+
+            const tooltipText = [
+              `${c.ingredientName}`,
+              `План: ${target.toFixed(1)} кг`,
+              `Факт: ${actual.toFixed(1)} кг`,
+              errorPercent ? `Отклонение: ${errorPercent > 0 ? "+" : ""}${errorPercent.toFixed(1)}% (${diff > 0 ? "+" : ""}${diff.toFixed(1)} кг)` : "",
+              financialLoss > 0 ? `Финансовые потери: ${Math.round(financialLoss).toLocaleString("ru-RU")} ₽` : "В норме"
+            ].filter(Boolean).join("\n");
+
+            return (
+              <g key={c.id} style={{ cursor: "pointer" }} className="hover-group">
+                {/* Невидимый прямоугольник для hover области */}
+                <rect x={x - gap/2} y={0} width={barWidth + gap} height={chartHeight} fill="transparent" />
+                <title>{tooltipText}</title>
+
+                {/* Целевой бар (План) - серый пунктир / полупрозрачный фон */}
+                <rect 
+                  x={x} 
+                  y={baseY - tHeight} 
+                  width={barWidth} 
+                  height={tHeight} 
+                  fill="none" 
+                  stroke="var(--border-strong)" 
+                  strokeWidth="2" 
+                  strokeDasharray="4"
+                  rx="2"
+                />
+
+                {/* Фактический бар (Waterfall / Bar) - раскрашенный */}
+                <rect 
+                  x={x + 4} 
+                  y={baseY - aHeight} 
+                  width={barWidth - 8} 
+                  height={aHeight} 
+                  fill={color} 
+                  opacity="0.9"
+                  rx="2"
+                />
+
+                {/* Название ингредиента под баром */}
+                <text 
+                  x={x + barWidth / 2} 
+                  y={baseY + 16} 
+                  textAnchor="middle" 
+                  fontSize="11" 
+                  fill="var(--text-secondary)"
+                  fontWeight="500"
+                >
+                  {c.ingredientName.length > 15 ? c.ingredientName.substring(0,13) + "…" : c.ingredientName}
+                </text>
+
+                {/* Финансовый маркер над баром если есть ошибка $>0 */}
+                {financialLoss > 0 && absErr > 3 && (
+                  <text 
+                    x={x + barWidth / 2} 
+                    y={Math.min(baseY - Math.max(tHeight, aHeight) - 10, baseY - 10)} 
+                    textAnchor="middle" 
+                    fontSize="11" 
+                    fill="var(--danger)"
+                    fontWeight="700"
+                  >
+                    -{Math.round(financialLoss).toLocaleString("ru-RU")} ₽
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+      <div style={{ marginTop: "var(--space-4)", display: "flex", gap: "var(--space-4)", fontSize: 13, color: "var(--text-secondary)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 12, height: 12, border: "2px dashed var(--border-strong)" }}></span> План (целевой вес)
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 12, height: 12, background: "var(--success)" }}></span> В норме (≤3%)
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 12, height: 12, background: "var(--warning)" }}></span> Отклонение (≤10%)
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 12, height: 12, background: "var(--danger)" }}></span> Критично ({">"}10%)
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
 // Tab: Замесы
 // ==========================================
 
 function MixesTab({ mixes }: { mixes: MixRecord[] }) {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   if (mixes.length === 0) {
     return (
       <div className="empty-state">
@@ -548,6 +718,10 @@ function MixesTab({ mixes }: { mixes: MixRecord[] }) {
     );
   }
 
+  const toggleExpand = (id: string) => {
+    setExpandedId((prev) => (prev === id ? null : id));
+  };
+
   return (
     <div className="card">
       <div className="card-header">
@@ -559,6 +733,7 @@ function MixesTab({ mixes }: { mixes: MixRecord[] }) {
           <table>
             <thead>
               <tr>
+                <th style={{ width: 40 }}></th>
                 <th>#</th>
                 <th>Рецепт</th>
                 <th>Код загона</th>
@@ -572,24 +747,43 @@ function MixesTab({ mixes }: { mixes: MixRecord[] }) {
               </tr>
             </thead>
             <tbody>
-              {mixes.map((m, i) => (
-                <tr key={m.id}>
-                  <td>{m.dtmBatchId || i + 1}</td>
-                  <td><strong>{m.recipeName}</strong></td>
-                  <td>{m.groupCode || "—"}</td>
-                  <td>{formatDate(m.date)}</td>
-                  <td>{m.startTime || "—"}</td>
-                  <td>{m.endTime || "—"}</td>
-                  <td>{m.loadDuration || "—"}</td>
-                  <td>{m.mixDuration || "—"}</td>
-                  <td>
-                    {m.mixer ? (
-                      <span className="badge badge-info">{m.mixer}</span>
-                    ) : "—"}
-                  </td>
-                  <td>{m.totalDuration || "—"}</td>
-                </tr>
-              ))}
+              {mixes.map((m, i) => {
+                const isExpanded = expandedId === m.id;
+                return (
+                  <React.Fragment key={m.id}>
+                    <tr 
+                      onClick={() => toggleExpand(m.id)} 
+                      style={{ cursor: "pointer", background: isExpanded ? "var(--bg-elevated)" : undefined }}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td style={{ color: "var(--text-muted)", fontSize: 16 }}>
+                        {isExpanded ? "▼" : "▶"}
+                      </td>
+                      <td>{m.dtmBatchId || i + 1}</td>
+                      <td><strong>{m.recipeName}</strong></td>
+                      <td>{m.groupCode || "—"}</td>
+                      <td>{formatDate(m.date)}</td>
+                      <td>{m.startTime || "—"}</td>
+                      <td>{m.endTime || "—"}</td>
+                      <td>{m.loadDuration || "—"}</td>
+                      <td>{m.mixDuration || "—"}</td>
+                      <td>
+                        {m.mixer ? (
+                          <span className="badge badge-info">{m.mixer}</span>
+                        ) : "—"}
+                      </td>
+                      <td>{m.totalDuration || "—"}</td>
+                    </tr>
+                    {isExpanded && (
+                      <tr>
+                        <td colSpan={11} style={{ padding: 0, border: "none" }}>
+                          <MixDrillDownChart consumptions={m.consumptions || []} />
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>

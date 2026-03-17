@@ -1,17 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
+import { useDateParams } from "@/hooks/useDateParams";
 
-function getToday(): string {
-  return new Date().toISOString().split("T")[0];
-}
-function getDaysAgo(days: number): string {
-  const d = new Date(); d.setDate(d.getDate() - days);
-  return d.toISOString().split("T")[0];
-}
+
 
 interface UiEvent {
   id: string;
@@ -24,13 +19,20 @@ interface UiEvent {
 }
 
 export default function EventsPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Загрузка...</div>}>
+      <EventsContent />
+    </Suspense>
+  );
+}
+
+function EventsContent() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [eventsData, setEventsData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-  const [dateFrom, setDateFrom] = useState(getDaysAgo(7));
-  const [dateTo, setDateTo] = useState(getToday());
+  const { dateFrom, dateTo, setDateRange } = useDateParams(7);
 
   useEffect(() => {
     Promise.all([
@@ -94,7 +96,7 @@ export default function EventsPage() {
           <p className="page-subtitle">{events.length} событий · Данные Afimilk</p>
         </div>
         <div className="page-header-actions">
-          <DateRangePicker from={dateFrom} to={dateTo} onChange={(f, t) => { setDateFrom(f); setDateTo(t); }} />
+          <DateRangePicker from={dateFrom} to={dateTo} onChange={(f, t) => setDateRange(f, t)} />
         </div>
       </div>
 
@@ -120,7 +122,7 @@ export default function EventsPage() {
         <div className="card-body" style={{ padding: 0 }}>
           <div className="event-list" style={{ maxHeight: 600, overflowY: "auto" }}>
             {filteredEvents.map((event, i) => (
-              <div key={i} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${event.cow}`)}>
+              <div key={i} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/events/${event.id}`)}>
                 <span className="event-dot" style={{ 
                   background: event.severity === "danger" ? "var(--danger)" :
                               event.severity === "warning" ? "var(--warning)" :

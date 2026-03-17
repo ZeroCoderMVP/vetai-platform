@@ -19,7 +19,8 @@ async function main() {
           number: "8055", 
           farmId: farm.id, 
           barnId: barn.id, 
-          status: "active" 
+          status: "active",
+          afiId: "8055"
         } 
       });
     }

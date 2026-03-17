@@ -38,14 +38,15 @@ model Farm {
 
 /// Логическая производственная группа животных
 model GroupUnit {
-  id        String   @id @default(cuid())
-  farmId    String
-  name      String
-  type      String // feeding_group | production_group | maternity
-  headCount Int      @default(0)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  farmId      String
+  name        String
+  type        String // feeding_group | production_group | maternity
+  headCount   Int      @default(0)
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   farm           Farm                  @relation(fields: [farmId], references: [id])
   cows           Cow[]

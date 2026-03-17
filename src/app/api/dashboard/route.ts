@@ -34,6 +34,7 @@ export async function GET() {
       feedCost: number;
       groupType: string;
       count: number;
+      groupId: string | null;
     }> = {};
 
     const dayMap: Record<string, { planned: number; actual: number; remainder: number; count: number }> = {};
@@ -58,7 +59,7 @@ export async function GET() {
 
       const gn = r.groupName || "N/A";
       if (!groupMap[gn]) {
-        groupMap[gn] = { planned: 0, actual: 0, remainder: 0, headCount: 0, iofc: 0, feedCost: 0, groupType: "", count: 0 };
+        groupMap[gn] = { planned: 0, actual: 0, remainder: 0, headCount: 0, iofc: 0, feedCost: 0, groupType: "", count: 0, groupId: null };
       }
       groupMap[gn].planned += r.planned || 0;
       groupMap[gn].actual += r.actual || 0;
@@ -67,6 +68,7 @@ export async function GET() {
       if (r.iofc) groupMap[gn].iofc = r.iofc;
       if (r.feedCostPerHead) groupMap[gn].feedCost = r.feedCostPerHead;
       if (r.groupType) groupMap[gn].groupType = r.groupType;
+      groupMap[gn].groupId = r.groupId || groupMap[gn].groupId;
       groupMap[gn].count++;
 
       const dateStr = r.date instanceof Date ? r.date.toISOString().split("T")[0] : String(r.date).split("T")[0];
@@ -132,6 +134,7 @@ export async function GET() {
 
     const groups = Object.entries(groupMap)
       .map(([name, g]) => ({
+        id: g.groupId,
         name,
         planned: Math.round(g.planned),
         actual: Math.round(g.actual),
