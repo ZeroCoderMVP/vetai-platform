@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getMockDashboardData } from "@/lib/mockData";
+import { getSystemDate } from "@/lib/systemDate";
 
 const ALLOW_MOCK = process.env.VETAI_ALLOW_MOCK === "1";
 
@@ -13,8 +14,8 @@ export async function GET(request: NextRequest) {
   const fromParam = searchParams.get("from");
   const toParam = searchParams.get("to");
 
-  const today = new Date();
-  const thirtyDaysAgo = new Date();
+  const today = getSystemDate();
+  const thirtyDaysAgo = getSystemDate();
   thirtyDaysAgo.setDate(today.getDate() - 30);
 
   const startDate = fromParam ? new Date(fromParam) : thirtyDaysAgo;

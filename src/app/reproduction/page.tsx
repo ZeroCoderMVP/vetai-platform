@@ -104,8 +104,8 @@ export default function ReproductionPage() {
                 <tbody>
                   {afimilk.heatSuspects.items
                     .sort((a: any, b: any) => (b.heatIndicatorS1 ?? 0) - (a.heatIndicatorS1 ?? 0))
-                    .map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
+                    .map((item: any, i: number) => (
+                    <tr key={`${item.cow}-${i}`} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>
@@ -156,8 +156,8 @@ export default function ReproductionPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {afimilk.animalsToBreed.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
+                  {afimilk.animalsToBreed.items.map((item: any, i: number) => (
+                    <tr key={`${item.cow}-${i}`} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -187,8 +187,8 @@ export default function ReproductionPage() {
                   <tr><th>Корова</th><th>Группа</th><th>Лактация</th></tr>
                 </thead>
                 <tbody>
-                  {afimilk.calvingAnimals.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
+                  {afimilk.calvingAnimals.items.map((item: any, i: number) => (
+                    <tr key={`${item.cow}-${i}`} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>
@@ -211,8 +211,8 @@ export default function ReproductionPage() {
                   <tr><th>Корова</th><th>Группа</th><th>Лактация</th><th>DIM</th></tr>
                 </thead>
                 <tbody>
-                  {afimilk.freshCows.items.map((item: any) => (
-                    <tr key={item.cow} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
+                  {afimilk.freshCows.items.map((item: any, i: number) => (
+                    <tr key={`${item.cow}-${i}`} style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cowId || item.cow}`)}>
                       <td><strong>#{item.cow}</strong></td>
                       <td>{item.group}</td>
                       <td>{item.lactationNumber}</td>

@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams, useSearchParams, notFound } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import Link from "next/link";
 import type { DigitalTwinData } from "@/lib/cow21twin";
+import { getSystemDate } from "@/lib/systemDate";
 
 // ---- Reusable micro-components ----
 
@@ -68,11 +69,19 @@ const TABS = [
 
 export default function AnimalCardPage() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const cowId = params.id as string;
+  const opId = searchParams.get("op");
   const [data, setData] = useState<any>(null);
   const [twin, setTwin] = useState<DigitalTwinData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    if (opId) {
+      setActiveTab("history");
+    }
+  }, [opId]);
 
   useEffect(() => {
     Promise.all([
@@ -297,7 +306,7 @@ function RadarChart({ scores }: { scores: { axis: string; value: number; max: nu
 // ---- MILKING TAB ----
 function MilkingTab({ twin, dailySummary }: { twin: DigitalTwinData; dailySummary: any[] }) {
   const sessions = twin.milkingSessions;
-  const latestDate = sessions.length > 0 ? sessions[sessions.length - 1].date : new Date().toISOString().split('T')[0];
+  const latestDate = sessions.length > 0 ? sessions[sessions.length - 1].date : getSystemDate().toISOString().split('T')[0];
   const todaySessions = sessions.filter(s => s.date === latestDate);
   const h = 180, w = 560, pad = 45;
   const yields = dailySummary.map(d => d.totalYield);
@@ -750,11 +759,11 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
             );
 
             return isClickable ? (
-              <Link key={e.id} href={`/events/${e.eventId}`} className="event-item hover:bg-gray-50 transition-colors cursor-pointer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link key={`${e.id}-${e.eventId}`} href={`/events/${e.eventId}`} className="event-item hover:bg-gray-50 transition-colors cursor-pointer" style={{ textDecoration: 'none', color: 'inherit' }}>
                 {content}
               </Link>
             ) : (
-              <div key={e.id} className="event-item">
+              <div key={`${e.id}-${e.category}`} className="event-item">
                 {content}
               </div>
             );

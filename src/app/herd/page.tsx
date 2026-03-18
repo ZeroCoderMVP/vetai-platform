@@ -60,24 +60,29 @@ export default function HerdPage() {
     return Array.from(new Set(data.items.map((animal) => animal.group))).sort((a, b) => a.localeCompare(b));
   }, [data]);
 
-  const lactationData = useMemo(() => {
-    const counts = { '1': 0, '2': 0, '3': 0, '4': 0, '5+': 0 };
+  const herdStructureData = useMemo(() => {
+    const counts = { 'Телки': 0, 'Нетели': 0, 'Быки': 0, 'Дойные': 0, 'Сухостойные': 0 };
     filteredAnimals.forEach(a => {
-      const l = a.lactation || 0;
-      if (l === 1) counts['1']++;
-      else if (l === 2) counts['2']++;
-      else if (l === 3) counts['3']++;
-      else if (l === 4) counts['4']++;
-      else if (l >= 5) counts['5+']++;
+      const s = a.status?.toLowerCase() || "";
+      if (s.includes("телка") || s.includes("тёлка") || s === "heifer") counts['Телки']++;
+      else if (s.includes("нетел") || s === "pregnant heifer") counts['Нетели']++;
+      else if (s.includes("бык") || s === "bull") counts['Быки']++;
+      else if (s.includes("сухостой") || s === "dry") counts['Сухостойные']++;
+      else if (s.includes("дойн") || s === "milk") counts['Дойные']++;
+      else {
+        // Fallback guess
+        if (a.lactation && a.lactation > 0) counts['Дойные']++;
+        else counts['Телки']++;
+      }
     });
     return [
       {
         name: 'Состав стада',
-        '1 лактация': counts['1'],
-        '2 лактация': counts['2'],
-        '3 лактация': counts['3'],
-        '4 лактация': counts['4'],
-        '5+ лактация': counts['5+'],
+        'Телки': counts['Телки'],
+        'Нетели': counts['Нетели'],
+        'Быки': counts['Быки'],
+        'Дойные': counts['Дойные'],
+        'Сухостойные': counts['Сухостойные'],
       }
     ];
   }, [filteredAnimals]);
@@ -164,12 +169,12 @@ export default function HerdPage() {
 
       <div className="card" style={{ marginBottom: "var(--space-4)" }}>
         <div className="card-header">
-          <span className="card-title">📊 Структура стада по возрасту (лактациям)</span>
+          <span className="card-title">📊 Структура стада</span>
         </div>
         <div className="card-body" style={{ height: 200, padding: "var(--space-4)" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={lactationData}
+              data={herdStructureData}
               layout="vertical"
               margin={{ top: 0, right: 30, left: 20, bottom: 0 }}
             >
@@ -181,11 +186,11 @@ export default function HerdPage() {
                 formatter={(value: any) => [value, 'голов']}
               />
               <Legend verticalAlign="top" height={36}/>
-              <Bar dataKey="1 лактация" stackId="a" fill="#3b82f6" />
-              <Bar dataKey="2 лактация" stackId="a" fill="#10b981" />
-              <Bar dataKey="3 лактация" stackId="a" fill="#f59e0b" />
-              <Bar dataKey="4 лактация" stackId="a" fill="#ef4444" />
-              <Bar dataKey="5+ лактация" stackId="a" fill="#8b5cf6" />
+              <Bar dataKey="Дойные" stackId="a" fill="#3b82f6" />
+              <Bar dataKey="Сухостойные" stackId="a" fill="#10b981" />
+              <Bar dataKey="Телки" stackId="a" fill="#f59e0b" />
+              <Bar dataKey="Нетели" stackId="a" fill="#ef4444" />
+              <Bar dataKey="Быки" stackId="a" fill="#8b5cf6" />
             </BarChart>
           </ResponsiveContainer>
         </div>

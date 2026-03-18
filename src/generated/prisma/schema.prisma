@@ -98,6 +98,7 @@ model Section {
   farmId       String
   barnId       String?
   name         String
+  type         String?
   externalCode String?
   dtmCode      String?
   afiCode      String?

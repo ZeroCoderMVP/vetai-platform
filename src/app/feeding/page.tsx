@@ -5,6 +5,7 @@ import Link from "next/link";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import { useDateParams } from "@/hooks/useDateParams";
+import { getSystemDate } from "@/lib/systemDate";
 
 // ==========================================
 // Типы
@@ -90,7 +91,7 @@ interface FeedRecord {
 // ==========================================
 
 function getDaysAgo(days: number): string {
-  const d = new Date();
+  const d = getSystemDate();
   d.setDate(d.getDate() - days);
   return d.toISOString().split("T")[0];
 }

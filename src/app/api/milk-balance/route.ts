@@ -55,27 +55,51 @@ export async function GET(request: Request) {
 
     // 3. Формируем структуру ответа
     
-    // Формируем датасет по дням для графика экономики
-    const dailyDataMap = new Map<string, { revenue: number; sold: number }>();
+    // Формируем детальный датасет по дням для журнала и графика экономики
+    const dailyBalanceMap = new Map<string, { yield: number; sold: number; calves: number; loss: number; revenue: number }>();
     
-    economicFacts.forEach((fact) => {
-      const dateStr = fact.period.toISOString().split("T")[0];
-      if (!dailyDataMap.has(dateStr)) {
-        dailyDataMap.set(dateStr, { revenue: 0, sold: 0 });
+    afiRecords.forEach((record) => {
+      const dateStr = record.date.toISOString().split("T")[0];
+      if (!dailyBalanceMap.has(dateStr)) {
+        dailyBalanceMap.set(dateStr, { yield: 0, sold: 0, calves: 0, loss: 0, revenue: 0 });
       }
-      
-      const dayData = dailyDataMap.get(dateStr)!;
-      if (fact.type === "milk_revenue") dayData.revenue += fact.value;
-      if (fact.type === "milk_sold") dayData.sold += fact.value;
+      dailyBalanceMap.get(dateStr)!.yield += (record.actualTotal || 0);
     });
 
-    const dailyEconomics = Array.from(dailyDataMap.entries())
+    economicFacts.forEach((fact) => {
+      const dateStr = fact.period.toISOString().split("T")[0];
+      if (!dailyBalanceMap.has(dateStr)) {
+        dailyBalanceMap.set(dateStr, { yield: 0, sold: 0, calves: 0, loss: 0, revenue: 0 });
+      }
+      
+      const dayData = dailyBalanceMap.get(dateStr)!;
+      if (fact.type === "milk_revenue") dayData.revenue += fact.value;
+      if (fact.type === "milk_sold") dayData.sold += fact.value;
+      if (fact.type === "milk_calves") dayData.calves += fact.value;
+      if (fact.type === "milk_loss") dayData.loss += fact.value;
+    });
+
+    const dailyEntries = Array.from(dailyBalanceMap.entries())
+      .sort((a, b) => b[0].localeCompare(a[0])); // Сортируем по убыванию даты для журнала
+
+    const dailyEconomics = dailyEntries
+      .sort((a, b) => a[0].localeCompare(b[0])) // Сортируем по возрастанию для графика
       .map(([date, data]) => ({
         date,
         revenue: Math.round(data.revenue * 100) / 100,
         averagePrice: data.sold > 0 ? Math.round((data.revenue / data.sold) * 100) / 100 : 0
-      }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+      }));
+
+    const journal = dailyEntries
+      .sort((a, b) => b[0].localeCompare(a[0])) // Сортируем по убыванию (новые сверху)
+      .map(([date, data]) => ({
+        date,
+        yield: Math.round(data.yield * 10) / 10,
+        sold: Math.round(data.sold * 10) / 10,
+        calves: Math.round(data.calves * 10) / 10,
+        loss: Math.round(data.loss * 10) / 10,
+        revenue: Math.round(data.revenue * 10) / 10,
+      }));
 
     // Вычисляем неучтенное молоко (разница между валовым надоем и распределенным)
     const distributedMilk = milkSold + milkCalves + milkLoss;
@@ -97,6 +121,7 @@ export async function GET(request: Request) {
           averagePrice: milkSold > 0 ? Math.round((milkRevenue / milkSold) * 100) / 100 : 0,
           daily: dailyEconomics
         },
+        journal
       },
     });
   } catch (error: any) {

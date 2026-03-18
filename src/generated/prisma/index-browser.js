@@ -160,6 +160,7 @@ exports.Prisma.SectionScalarFieldEnum = {
   farmId: 'farmId',
   barnId: 'barnId',
   name: 'name',
+  type: 'type',
   externalCode: 'externalCode',
   dtmCode: 'dtmCode',
   afiCode: 'afiCode',

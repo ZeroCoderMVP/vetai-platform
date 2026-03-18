@@ -250,6 +250,16 @@ function DashboardContent() {
   const milk = farmData?.milkingSummary || data?.milking;
   const hasNoData = data?.status === "no_data" && farmData?.status === "no_data";
 
+  const dLen = data?.daily?.length || 0;
+  const todayMilk = dLen > 0 ? data!.daily[dLen - 1].milkYield : 0;
+  const yesterdayMilk = dLen > 1 ? data!.daily[dLen - 2].milkYield : 0;
+  const milkDelta = todayMilk - yesterdayMilk;
+  const milkDeltaPct = yesterdayMilk > 0 ? (milkDelta / yesterdayMilk) * 100 : 0;
+
+  const todayFeed = dLen > 0 ? data!.daily[dLen - 1].actual : 0;
+  const yesterdayFeed = dLen > 1 ? data!.daily[dLen - 2].actual : 0;
+  const feedDelta = todayFeed - yesterdayFeed;
+  const feedDeltaPct = yesterdayFeed > 0 ? (feedDelta / yesterdayFeed) * 100 : 0;
 
   if (hasNoData) {
     return (
@@ -291,10 +301,17 @@ function DashboardContent() {
             <span className="kpi-unit">кг</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "var(--space-2)" }}>
-            <span className="kpi-change neutral">
-              {kpi ? `${kpi.milkingCows} коров · ${kpi.averageMilkPerCow.toFixed(1)} кг/гол` : `${milk?.cowCount || 0} коров`}
-            </span>
-            {data?.daily && <SparkLine data={data.daily.map(d => d.actual)} />}
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {dLen > 1 && (
+                <span className={`kpi-change ${milkDelta > 0 ? "positive" : milkDelta < 0 ? "negative" : "neutral"}`} style={{ fontSize: 13, fontWeight: 600 }}>
+                  {milkDelta > 0 ? "▲ +" : milkDelta < 0 ? "▼ " : ""}{formatNum(Math.abs(Math.round(milkDelta)))} кг ({Math.abs(milkDeltaPct).toFixed(1)}%)
+                </span>
+              )}
+              <span className="kpi-change neutral" style={{ fontSize: 11 }}>
+                {kpi ? `${kpi.milkingCows} коров · ${kpi.averageMilkPerCow.toFixed(1)} кг/гол` : `${milk?.cowCount || 0} коров`}
+              </span>
+            </div>
+            {data?.daily && <SparkLine data={data.daily.map(d => d.milkYield)} />}
           </div>
         </div>
 
@@ -309,9 +326,16 @@ function DashboardContent() {
             <span className="kpi-unit">кг</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "var(--space-2)" }}>
-            <span className={`kpi-change ${feed && feed.efficiency >= 95 ? "positive" : feed && feed.efficiency > 0 ? "negative" : "neutral"}`}>
-              {feed ? `${feed.efficiency}% эфф.` : "—"} · План {feed ? formatNum(feed.totalPlanned) : "—"}
-            </span>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {dLen > 1 && (
+                <span className={`kpi-change ${feedDelta > 0 ? "positive" : feedDelta < 0 ? "negative" : "neutral"}`} style={{ fontSize: 13, fontWeight: 600 }}>
+                  {feedDelta > 0 ? "▲ +" : feedDelta < 0 ? "▼ " : ""}{formatNum(Math.abs(Math.round(feedDelta)))} кг ({Math.abs(feedDeltaPct).toFixed(1)}%)
+                </span>
+              )}
+              <span className={`kpi-change ${feed && feed.efficiency >= 95 ? "positive" : feed && feed.efficiency > 0 ? "negative" : "neutral"}`} style={{ fontSize: 11 }}>
+                {feed ? `${feed.efficiency}% эфф.` : "—"} · План {feed ? formatNum(feed.totalPlanned) : "—"}
+              </span>
+            </div>
           </div>
         </div>
 

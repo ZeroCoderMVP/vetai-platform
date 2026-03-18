@@ -7,6 +7,7 @@ import { format, subDays } from "date-fns";
 import { ArrowLeft, Users, Calendar, Activity, TrendingUp, ChevronRight, Calculator, CheckCircle2 } from "lucide-react";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { getSystemDate } from "@/lib/systemDate";
 
 type CowInGroup = {
   id: string;
@@ -47,8 +48,8 @@ export default function GroupDetailsPage() {
   const [error, setError] = useState<string | null>(null);
 
   // Default to last 7 days including today
-  const [dateFrom, setDateFrom] = useState<string>(format(subDays(new Date(), 6), "yyyy-MM-dd"));
-  const [dateTo, setDateTo] = useState<string>(format(new Date(), "yyyy-MM-dd"));
+  const [dateFrom, setDateFrom] = useState<string>(format(subDays(getSystemDate(), 6), "yyyy-MM-dd"));
+  const [dateTo, setDateTo] = useState<string>(format(getSystemDate(), "yyyy-MM-dd"));
 
   const handleDateChange = (from: string, to: string) => {
     setDateFrom(from);
@@ -329,8 +330,8 @@ export default function GroupDetailsPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
-                  {group.cows.map((cow) => (
-                    <tr key={cow.id} className="hover:bg-white/5 transition-colors">
+                  {group.cows.map((cow: any, i: number) => (
+                    <tr key={`${cow.id || i}-${i}`} className="hover:bg-white/5 transition-colors">
                       <td className="px-6 py-4 font-medium text-white">
                         <Link href={`/herd/${cow.id}`} className="hover:text-blue-400 hover:underline transition-colors">
                           {cow.number}

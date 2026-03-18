@@ -4,13 +4,14 @@ import { useState, useEffect, useCallback } from "react";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import ExportButton from "@/components/ui/ExportButton";
+import { getSystemDate } from "@/lib/systemDate";
 
 function getToday(): string {
-  return new Date().toISOString().split("T")[0];
+  return getSystemDate().toISOString().split("T")[0];
 }
 
 function getDaysAgo(days: number): string {
-  const d = new Date();
+  const d = getSystemDate();
   d.setDate(d.getDate() - days);
   return d.toISOString().split("T")[0];
 }

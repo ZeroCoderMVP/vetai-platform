@@ -52,6 +52,7 @@ export async function GET(request: Request) {
           }
         : undefined,
       orderBy: { number: "asc" },
+      take: 200,
       select: {
         id: true,
         number: true,

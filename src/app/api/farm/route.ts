@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getMockFarmData } from "@/lib/mockData";
+import { getSystemDate } from "@/lib/systemDate";
 
 const ALLOW_MOCK = process.env.VETAI_ALLOW_MOCK === "1";
 
@@ -58,9 +59,11 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const fromParam = searchParams.get("from");
     const toParam = searchParams.get("to");
-  
-    const today = new Date();
-    const thirtyDaysAgo = new Date();
+
+// ... existing code ...
+
+    const today = getSystemDate();
+    const thirtyDaysAgo = getSystemDate();
     thirtyDaysAgo.setDate(today.getDate() - 30);
   
     const startDate = fromParam ? new Date(fromParam) : thirtyDaysAgo;
@@ -71,10 +74,10 @@ export async function GET(request: NextRequest) {
     const endOfTargetDate = new Date(endDate);
     endOfTargetDate.setUTCHours(23, 59, 59, 999);
 
-    const [totalAnimals, cows, milkRecords, events] = await Promise.all([
+    const [totalAnimals, allCowNumbersObj, milkRecords, events] = await Promise.all([
       prisma.cow.count(),
       prisma.cow.findMany({
-        select: { id: true, number: true, lactation: true, dim: true, status: true, group: { select: { name: true } } },
+        select: { number: true },
       }),
       prisma.milkRecord.findMany({
         where: {
@@ -93,7 +96,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(buildEmptyFarmResponse());
     }
 
-    const cowMap = new Map(cows.map((cow) => [cow.number, cow]));
+    const eventCowIds = Array.from(new Set(events.filter(e => e.cowId).map(e => e.cowId as string)));
+    const detailedCows = eventCowIds.length > 0 ? await prisma.cow.findMany({
+        where: { id: { in: eventCowIds } },
+        select: { id: true, number: true, lactation: true, dim: true, status: true, group: { select: { name: true } } },
+    }) : [];
+
+    const cowMap = new Map(detailedCows.map((cow) => [cow.number, cow]));
 
     const bySCC = { normal: 0, elevated: 0, high: 0 };
     const byConductivity = { normal: 0, warning: 0, critical: 0 };
@@ -172,7 +181,7 @@ export async function GET(request: NextRequest) {
         lastUpdate: events[0]?.timestamp || validMilkRecords[0]?.date || null,
       },
       totalAnimals,
-      allCowNumbers: cows.map((cow) => cow.number).sort((a, b) => Number(a) - Number(b)),
+      allCowNumbers: Array.from(new Set(allCowNumbersObj.map((cow) => cow.number))).sort((a, b) => Number(a) - Number(b)),
       milkingRecords: validMilkRecords,
       milkingSummary: {
         date: validMilkRecords[0]?.date || null,

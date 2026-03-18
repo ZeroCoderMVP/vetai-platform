@@ -9610,6 +9610,7 @@ export namespace Prisma {
     farmId: string | null
     barnId: string | null
     name: string | null
+    type: string | null
     externalCode: string | null
     dtmCode: string | null
     afiCode: string | null
@@ -9623,6 +9624,7 @@ export namespace Prisma {
     farmId: string | null
     barnId: string | null
     name: string | null
+    type: string | null
     externalCode: string | null
     dtmCode: string | null
     afiCode: string | null
@@ -9636,6 +9638,7 @@ export namespace Prisma {
     farmId: number
     barnId: number
     name: number
+    type: number
     externalCode: number
     dtmCode: number
     afiCode: number
@@ -9651,6 +9654,7 @@ export namespace Prisma {
     farmId?: true
     barnId?: true
     name?: true
+    type?: true
     externalCode?: true
     dtmCode?: true
     afiCode?: true
@@ -9664,6 +9668,7 @@ export namespace Prisma {
     farmId?: true
     barnId?: true
     name?: true
+    type?: true
     externalCode?: true
     dtmCode?: true
     afiCode?: true
@@ -9677,6 +9682,7 @@ export namespace Prisma {
     farmId?: true
     barnId?: true
     name?: true
+    type?: true
     externalCode?: true
     dtmCode?: true
     afiCode?: true
@@ -9763,6 +9769,7 @@ export namespace Prisma {
     farmId: string
     barnId: string | null
     name: string
+    type: string | null
     externalCode: string | null
     dtmCode: string | null
     afiCode: string | null
@@ -9793,6 +9800,7 @@ export namespace Prisma {
     farmId?: boolean
     barnId?: boolean
     name?: boolean
+    type?: boolean
     externalCode?: boolean
     dtmCode?: boolean
     afiCode?: boolean
@@ -9813,6 +9821,7 @@ export namespace Prisma {
     farmId?: boolean
     barnId?: boolean
     name?: boolean
+    type?: boolean
     externalCode?: boolean
     dtmCode?: boolean
     afiCode?: boolean
@@ -9828,6 +9837,7 @@ export namespace Prisma {
     farmId?: boolean
     barnId?: boolean
     name?: boolean
+    type?: boolean
     externalCode?: boolean
     dtmCode?: boolean
     afiCode?: boolean
@@ -9843,6 +9853,7 @@ export namespace Prisma {
     farmId?: boolean
     barnId?: boolean
     name?: boolean
+    type?: boolean
     externalCode?: boolean
     dtmCode?: boolean
     afiCode?: boolean
@@ -9851,7 +9862,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "barnId" | "name" | "externalCode" | "dtmCode" | "afiCode" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
+  export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "barnId" | "name" | "type" | "externalCode" | "dtmCode" | "afiCode" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
   export type SectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     farm?: boolean | FarmDefaultArgs<ExtArgs>
     barn?: boolean | Section$barnArgs<ExtArgs>
@@ -9885,6 +9896,7 @@ export namespace Prisma {
       farmId: string
       barnId: string | null
       name: string
+      type: string | null
       externalCode: string | null
       dtmCode: string | null
       afiCode: string | null
@@ -10324,6 +10336,7 @@ export namespace Prisma {
     readonly farmId: FieldRef<"Section", 'String'>
     readonly barnId: FieldRef<"Section", 'String'>
     readonly name: FieldRef<"Section", 'String'>
+    readonly type: FieldRef<"Section", 'String'>
     readonly externalCode: FieldRef<"Section", 'String'>
     readonly dtmCode: FieldRef<"Section", 'String'>
     readonly afiCode: FieldRef<"Section", 'String'>
@@ -54640,6 +54653,7 @@ export namespace Prisma {
     farmId: 'farmId',
     barnId: 'barnId',
     name: 'name',
+    type: 'type',
     externalCode: 'externalCode',
     dtmCode: 'dtmCode',
     afiCode: 'afiCode',
@@ -55644,6 +55658,7 @@ export namespace Prisma {
     farmId?: StringFilter<"Section"> | string
     barnId?: StringNullableFilter<"Section"> | string | null
     name?: StringFilter<"Section"> | string
+    type?: StringNullableFilter<"Section"> | string | null
     externalCode?: StringNullableFilter<"Section"> | string | null
     dtmCode?: StringNullableFilter<"Section"> | string | null
     afiCode?: StringNullableFilter<"Section"> | string | null
@@ -55663,6 +55678,7 @@ export namespace Prisma {
     farmId?: SortOrder
     barnId?: SortOrderInput | SortOrder
     name?: SortOrder
+    type?: SortOrderInput | SortOrder
     externalCode?: SortOrderInput | SortOrder
     dtmCode?: SortOrderInput | SortOrder
     afiCode?: SortOrderInput | SortOrder
@@ -55686,6 +55702,7 @@ export namespace Prisma {
     farmId?: StringFilter<"Section"> | string
     barnId?: StringNullableFilter<"Section"> | string | null
     name?: StringFilter<"Section"> | string
+    type?: StringNullableFilter<"Section"> | string | null
     externalCode?: StringNullableFilter<"Section"> | string | null
     dtmCode?: StringNullableFilter<"Section"> | string | null
     afiCode?: StringNullableFilter<"Section"> | string | null
@@ -55705,6 +55722,7 @@ export namespace Prisma {
     farmId?: SortOrder
     barnId?: SortOrderInput | SortOrder
     name?: SortOrder
+    type?: SortOrderInput | SortOrder
     externalCode?: SortOrderInput | SortOrder
     dtmCode?: SortOrderInput | SortOrder
     afiCode?: SortOrderInput | SortOrder
@@ -55724,6 +55742,7 @@ export namespace Prisma {
     farmId?: StringWithAggregatesFilter<"Section"> | string
     barnId?: StringNullableWithAggregatesFilter<"Section"> | string | null
     name?: StringWithAggregatesFilter<"Section"> | string
+    type?: StringNullableWithAggregatesFilter<"Section"> | string | null
     externalCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
     dtmCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
     afiCode?: StringNullableWithAggregatesFilter<"Section"> | string | null
@@ -59268,6 +59287,7 @@ export namespace Prisma {
   export type SectionCreateInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -59287,6 +59307,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -59302,6 +59323,7 @@ export namespace Prisma {
   export type SectionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59321,6 +59343,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59338,6 +59361,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -59349,6 +59373,7 @@ export namespace Prisma {
   export type SectionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59362,6 +59387,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63388,6 +63414,7 @@ export namespace Prisma {
     farmId?: SortOrder
     barnId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
     externalCode?: SortOrder
     dtmCode?: SortOrder
     afiCode?: SortOrder
@@ -63401,6 +63428,7 @@ export namespace Prisma {
     farmId?: SortOrder
     barnId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
     externalCode?: SortOrder
     dtmCode?: SortOrder
     afiCode?: SortOrder
@@ -63414,6 +63442,7 @@ export namespace Prisma {
     farmId?: SortOrder
     barnId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
     externalCode?: SortOrder
     dtmCode?: SortOrder
     afiCode?: SortOrder
@@ -69297,6 +69326,7 @@ export namespace Prisma {
   export type SectionCreateWithoutFarmInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -69314,6 +69344,7 @@ export namespace Prisma {
     id?: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -69762,6 +69793,7 @@ export namespace Prisma {
     farmId?: StringFilter<"Section"> | string
     barnId?: StringNullableFilter<"Section"> | string | null
     name?: StringFilter<"Section"> | string
+    type?: StringNullableFilter<"Section"> | string | null
     externalCode?: StringNullableFilter<"Section"> | string | null
     dtmCode?: StringNullableFilter<"Section"> | string | null
     afiCode?: StringNullableFilter<"Section"> | string | null
@@ -70391,6 +70423,7 @@ export namespace Prisma {
   export type SectionCreateWithoutCurrentCowsInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -70409,6 +70442,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -70924,6 +70958,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutCurrentCowsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70942,6 +70977,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71621,6 +71657,7 @@ export namespace Prisma {
   export type SectionCreateWithoutCowSectionHistoryInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -71639,6 +71676,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -71734,6 +71772,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutCowSectionHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71752,6 +71791,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71803,6 +71843,7 @@ export namespace Prisma {
   export type SectionCreateWithoutGroupHistoryInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -71821,6 +71862,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -71894,6 +71936,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutGroupHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71912,6 +71955,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74412,6 +74456,7 @@ export namespace Prisma {
   export type SectionCreateWithoutEventsInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -74430,6 +74475,7 @@ export namespace Prisma {
     farmId: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -74636,6 +74682,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74654,6 +74701,7 @@ export namespace Prisma {
     farmId?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76521,6 +76569,7 @@ export namespace Prisma {
   export type SectionCreateWithoutBarnInput = {
     id?: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -76538,6 +76587,7 @@ export namespace Prisma {
     id?: string
     farmId: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -78201,6 +78251,7 @@ export namespace Prisma {
     id?: string
     barnId?: string | null
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -78656,6 +78707,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutFarmInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78673,6 +78725,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78689,6 +78742,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     barnId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81049,6 +81103,7 @@ export namespace Prisma {
     id?: string
     farmId: string
     name: string
+    type?: string | null
     externalCode?: string | null
     dtmCode?: string | null
     afiCode?: string | null
@@ -81163,6 +81218,7 @@ export namespace Prisma {
   export type SectionUpdateWithoutBarnInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81180,6 +81236,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81196,6 +81253,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     farmId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
     externalCode?: NullableStringFieldUpdateOperationsInput | string | null
     dtmCode?: NullableStringFieldUpdateOperationsInput | string | null
     afiCode?: NullableStringFieldUpdateOperationsInput | string | null

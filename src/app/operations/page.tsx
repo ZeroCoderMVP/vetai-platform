@@ -4,11 +4,13 @@ import AppLayout from "@/components/layout/AppLayout";
 import Link from "next/link";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import { getSystemDate } from "@/lib/systemDate";
 
 export default function OperationsPage() {
   const [operations, setOperations] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("ALL");
 
   useEffect(() => {
     async function fetchData() {
@@ -109,10 +111,41 @@ export default function OperationsPage() {
       )}
 
       <div className="card">
-        <div className="card-header flex justify-between">
-          <span className="card-title">Очередь задач</span>
-          <div className="flex gap-2 text-sm">
-            <span className="text-gray-500">Фильтры: Все</span>
+        <div className="card-header flex flex-col gap-4">
+          <div className="flex justify-between items-center">
+            <span className="card-title">Очередь задач</span>
+          </div>
+          <div className="flex gap-2 border-b border-[var(--border-default)] pb-2 flex-wrap">
+            <button 
+              className={`px-4 py-2 text-sm font-medium rounded-t-md ${activeTab === "ALL" ? "bg-[var(--bg-elevated)] border-b-2 border-primary text-primary" : "text-gray-500 hover:text-gray-700"}`}
+              onClick={() => setActiveTab("ALL")}
+            >
+              Все
+            </button>
+            <button 
+              className={`px-4 py-2 text-sm font-medium rounded-t-md ${activeTab === "TREATMENT" ? "bg-[var(--bg-elevated)] border-b-2 border-primary text-primary" : "text-gray-500 hover:text-gray-700"}`}
+              onClick={() => setActiveTab("TREATMENT")}
+            >
+              Лечение
+            </button>
+            <button 
+              className={`px-4 py-2 text-sm font-medium rounded-t-md ${activeTab === "REPRODUCTION" ? "bg-[var(--bg-elevated)] border-b-2 border-primary text-primary" : "text-gray-500 hover:text-gray-700"}`}
+              onClick={() => setActiveTab("REPRODUCTION")}
+            >
+              Воспроизводство
+            </button>
+            <button 
+              className={`px-4 py-2 text-sm font-medium rounded-t-md ${activeTab === "VACCINATION" ? "bg-[var(--bg-elevated)] border-b-2 border-primary text-primary" : "text-gray-500 hover:text-gray-700"}`}
+              onClick={() => setActiveTab("VACCINATION")}
+            >
+              Вакцинация
+            </button>
+            <button 
+              className={`px-4 py-2 text-sm font-medium rounded-t-md ${activeTab === "HOOF_TRIM" ? "bg-[var(--bg-elevated)] border-b-2 border-primary text-primary" : "text-gray-500 hover:text-gray-700"}`}
+              onClick={() => setActiveTab("HOOF_TRIM")}
+            >
+              Расчистка копыт
+            </button>
           </div>
         </div>
         <div className="card-body p-0">
@@ -133,8 +166,18 @@ export default function OperationsPage() {
                 <tr><td colSpan={7} className="text-center p-6" style={{ color: 'var(--text-tertiary)' }}>Загрузка...</td></tr>
               ) : operations.length === 0 ? (
                 <tr><td colSpan={7} className="text-center p-6" style={{ color: 'var(--text-tertiary)' }}>Нет активных операций. Выполните сидирование БД или вызовите POST /api/operations.</td></tr>
-              ) : operations.map((op: any) => (
-                <tr key={op.id} className="cursor-pointer transition-colors" style={{ borderBottom: '1px solid var(--border-default)' }} onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-hover)'} onMouseOut={(e) => e.currentTarget.style.background = 'transparent'} onClick={() => window.location.href = `/operations/${op.id}`}>
+              ) : operations
+                  .filter((op: any) => {
+                    if (activeTab === "ALL") return true;
+                    const ot = (op.operationType || "").toUpperCase();
+                    if (activeTab === "TREATMENT") return ot.includes("TREATMENT") || ot.includes("HEALTH");
+                    if (activeTab === "REPRODUCTION") return ot.includes("INSEMINATION") || ot.includes("CHECK") || ot.includes("PREGNANCY") || ot.includes("CALVING") || ot.includes("REPRODUCTION");
+                    if (activeTab === "VACCINATION") return ot.includes("VACCIN");
+                    if (activeTab === "HOOF_TRIM") return ot.includes("HOOF");
+                    return false;
+                  })
+                  .map((op: any) => (
+                <tr key={op.id} className="cursor-pointer transition-colors" style={{ borderBottom: '1px solid var(--border-default)' }} onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-hover)'} onMouseOut={(e) => e.currentTarget.style.background = 'transparent'} onClick={() => window.location.href = `/herd/${op.cowId}?op=${op.id}`}>
                   <td className="p-3 text-center">{getPriorityIcon(op.priority)}</td>
                   <td className="p-3 font-medium text-blue-600">{op.cow?.number || op.cowId}</td>
                   <td className="p-3 font-medium">{op.operationType}</td>
@@ -142,7 +185,7 @@ export default function OperationsPage() {
                   <td className="p-3 text-sm">{format(new Date(op.eventDate), 'dd MMM yyyy, HH:mm', { locale: ru })}</td>
                   <td className="p-3 text-sm">
                     {op.dueDate ? (
-                      <span className={new Date(op.dueDate) < new Date() && op.status !== 'VERIFIED' ? 'text-red-500 font-bold' : ''}>
+                      <span className={new Date(op.dueDate) < getSystemDate() && op.status !== 'VERIFIED' ? 'text-red-500 font-bold' : ''}>
                         {format(new Date(op.dueDate), 'dd MMM, HH:mm', { locale: ru })}
                       </span>
                     ) : '-'}

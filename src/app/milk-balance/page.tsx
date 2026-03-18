@@ -30,6 +30,14 @@ type MilkBalanceData = {
       averagePrice: number;
     }[];
   };
+  journal?: {
+    date: string;
+    yield: number;
+    sold: number;
+    calves: number;
+    loss: number;
+    revenue: number;
+  }[];
 };
 
 export default function MilkBalancePage() {
@@ -319,6 +327,59 @@ function MilkBalanceContent() {
                   <p className="text-sm text-gray-500">Посмотреть группы дойных коров и телят</p>
                 </div>
               </Link>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h3 className="text-lg font-semibold mb-4 flex items-center">
+              <span className="bg-blue-100 text-blue-800 p-1.5 rounded-lg mr-2">📋</span>
+              Журнал движения молока
+            </h3>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left align-middle mt-2 border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-200 bg-gray-50/50 text-gray-500 font-medium">
+                    <th className="py-3 px-4 rounded-tl-lg">Дата</th>
+                    <th className="py-3 px-4">Валовый надой</th>
+                    <th className="py-3 px-4">Реализация 🟢</th>
+                    <th className="py-3 px-4">Выпойка 🔵</th>
+                    <th className="py-3 px-4">Потери 🔴</th>
+                    <th className="py-3 px-4 text-right rounded-tr-lg">Выручка</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {!data.journal || data.journal.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="py-8 text-center text-gray-500 italic">
+                        Данных о движении молока за выбранный период не найдено.
+                      </td>
+                    </tr>
+                  ) : (
+                    data.journal.map((row) => (
+                      <tr key={row.date} className="hover:bg-gray-50 transition-colors">
+                        <td className="py-3 px-4 font-medium text-gray-700">
+                          {new Date(row.date).toLocaleDateString('ru-RU')}
+                        </td>
+                        <td className="py-3 px-4 font-bold text-gray-900 drop-shadow-sm">
+                          {row.yield > 0 ? `${row.yield.toLocaleString("ru-RU")} кг` : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-[#10b981] font-semibold">
+                          {row.sold > 0 ? `${row.sold.toLocaleString("ru-RU")} кг` : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-[#64748b]">
+                          {row.calves > 0 ? `${row.calves.toLocaleString("ru-RU")} кг` : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-[#ef4444]">
+                          {row.loss > 0 ? `${row.loss.toLocaleString("ru-RU")} кг` : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-right text-gray-900 font-mono">
+                          {row.revenue > 0 ? `${row.revenue.toLocaleString("ru-RU")} ₽` : '-'}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
