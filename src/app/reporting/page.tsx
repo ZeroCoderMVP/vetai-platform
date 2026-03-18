@@ -102,7 +102,20 @@ function ReportingContent() {
               key={template.id} 
               className="card" 
               style={{ display: "flex", flexDirection: "column", height: "100%", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}
-              onClick={() => window.location.href = `/reporting/reports/${template.id}`}
+              onClick={async () => {
+                try {
+                  const res = await fetch("/api/reporting/instances", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ templateId: template.id })
+                  });
+                  if (!res.ok) throw new Error("Ошибка создания черновика");
+                  const data = await res.json();
+                  window.location.href = `/reporting/reports/${data.id}`;
+                } catch (e: any) {
+                  alert(e.message);
+                }
+              }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-4px)";
                 e.currentTarget.style.boxShadow = "var(--shadow-md)";

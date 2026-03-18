@@ -10,7 +10,8 @@
     "import:afimilk": "tsx scripts/import.ts afimilk",
     "import:dtm": "tsx scripts/import.ts dtm",
     "import:aic": "tsx scripts/import.ts aic",
-    "import:all": "tsx scripts/import.ts all"
+    "import:all": "tsx scripts/import.ts all",
+    "seed:demo": "tsx scripts/seed-demo.ts"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.5.0",

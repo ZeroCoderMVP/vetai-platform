@@ -100,7 +100,10 @@ export async function GET(
       .map((e: any) => ({
         id: e.id,
         date: e.timestamp.toISOString().split('T')[0],
-        type: 'insemination' as any,
+        type: (e.title.toLowerCase().includes('отел') ? 'calving' 
+            : e.title.toLowerCase().includes('узи') || e.title.toLowerCase().includes('стельная') ? 'pregnancy_check' 
+            : e.title.toLowerCase().includes('сухостой') ? 'dry_off'
+            : 'insemination') as any,
         title: e.title,
         description: e.description || '',
       }));

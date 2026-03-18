@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getMockFarmData } from "@/lib/mockData";
 
@@ -49,18 +49,26 @@ function buildEmptyFarmResponse() {
   };
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   if (ALLOW_MOCK) {
     return NextResponse.json({ ...getMockFarmData(), status: "mock" });
   }
 
   try {
-    // Identify "today" based on the latest record in the DB to handle generic mock dates
-    const latestMilkRec = await prisma.milkRecord.findFirst({ orderBy: { date: "desc" } });
-    const targetDate = latestMilkRec?.date || new Date();
-    const startOfTargetDate = new Date(targetDate);
+    const searchParams = request.nextUrl.searchParams;
+    const fromParam = searchParams.get("from");
+    const toParam = searchParams.get("to");
+  
+    const today = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+  
+    const startDate = fromParam ? new Date(fromParam) : thirtyDaysAgo;
+    const endDate = toParam ? new Date(toParam) : today;
+    
+    const startOfTargetDate = new Date(startDate);
     startOfTargetDate.setUTCHours(0, 0, 0, 0);
-    const endOfTargetDate = new Date(targetDate);
+    const endOfTargetDate = new Date(endDate);
     endOfTargetDate.setUTCHours(23, 59, 59, 999);
 
     const [totalAnimals, cows, milkRecords, events] = await Promise.all([
@@ -75,8 +83,8 @@ export async function GET() {
         orderBy: { date: "desc" }
       }),
       prisma.event.findMany({
+        where: { timestamp: { gte: startOfTargetDate, lte: endOfTargetDate } },
         orderBy: { timestamp: "desc" },
-        take: 300,
         include: { cow: true, group: true },
       }),
     ]);

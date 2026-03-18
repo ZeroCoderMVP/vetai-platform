@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ReportInstanceService } from "@/lib/services/reporting/report-instance.service";
+import prisma from "@/lib/prisma";
 
 export async function GET() {
   try {
@@ -14,10 +15,35 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { templateId, farmId, periodStart, periodEnd, title, format } = body;
+    let { templateId, farmId, periodStart, periodEnd, title, format } = body;
     
-    if (!templateId || !farmId || !periodStart || !periodEnd || !title || !format) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    if (!templateId) {
+      return NextResponse.json({ error: "Missing templateId" }, { status: 400 });
+    }
+
+    const template = await prisma.reportTemplate.findUnique({ where: { id: templateId } });
+    if (!template) {
+      return NextResponse.json({ error: "Template not found" }, { status: 404 });
+    }
+
+    if (!farmId) {
+      const firstFarm = await prisma.farm.findFirst();
+      if (!firstFarm) return NextResponse.json({ error: "No farm found in DB" }, { status: 400 });
+      farmId = firstFarm.id;
+    }
+
+    if (!periodStart || !periodEnd) {
+      const today = new Date();
+      periodStart = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1)).toISOString();
+      periodEnd = new Date(Date.UTC(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59)).toISOString();
+    }
+
+    if (!title) {
+      title = `${template.name} (${new Date().toLocaleString('ru', { month: 'long', year: 'numeric' })})`;
+    }
+
+    if (!format) {
+      format = template.defaultFormat || "CSV";
     }
 
     const instance = await ReportInstanceService.createDraft(

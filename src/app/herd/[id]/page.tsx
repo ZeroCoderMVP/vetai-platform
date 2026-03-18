@@ -297,7 +297,8 @@ function RadarChart({ scores }: { scores: { axis: string; value: number; max: nu
 // ---- MILKING TAB ----
 function MilkingTab({ twin, dailySummary }: { twin: DigitalTwinData; dailySummary: any[] }) {
   const sessions = twin.milkingSessions;
-  const todaySessions = sessions.filter(s => s.date === '2026-03-13');
+  const latestDate = sessions.length > 0 ? sessions[sessions.length - 1].date : new Date().toISOString().split('T')[0];
+  const todaySessions = sessions.filter(s => s.date === latestDate);
   const h = 180, w = 560, pad = 45;
   const yields = dailySummary.map(d => d.totalYield);
   const maxY = Math.max(...yields) * 1.1, minY = Math.min(...yields) * 0.9, range = maxY - minY || 1;
@@ -444,25 +445,98 @@ function BCSChart({ data }: { data: { date: string; score: number; dim: number }
 }
 
 // ---- REPRODUCTION TAB ----
+// Helper component for horizontal timeline
+function HorizontalTimeline({ events, profile }: { events: any[], profile: any }) {
+  const stages = [
+    { key: "insemination", label: "Осеменение", expected: true },
+    { key: "pregnancy_check", label: "Стельная", expected: true },
+    { key: "dry_off", label: "Сухостой", expected: true },
+    { key: "late_dry_off", label: "Поздний сухостой", expected: true },
+    { key: "calving", label: "Отёл", expected: true }
+  ];
+
+  // Map events to stages
+  const resolvedStages = stages.map((s, i) => {
+    // try to find event matching type
+    const found = events.find(e => 
+      e.type === s.key || 
+      (s.key === "pregnancy_check" && (e.title.toLowerCase().includes("стельная") || e.title.includes("УЗИ"))) ||
+      (s.key === "insemination" && e.title.toLowerCase().includes("осеменен")) ||
+      (s.key === "calving" && e.title.toLowerCase().includes("отел")) ||
+      (s.key === "dry_off" && e.title.toLowerCase().includes("сухостой") && !e.title.toLowerCase().includes("поздн")) ||
+      (s.key === "late_dry_off" && e.title.toLowerCase().includes("поздний сухостой"))
+    );
+    
+    // Fallback based on profile state (very naive approach for MVP if events are sparse)
+    const isCompleted = !!found || (i === 1 && profile.gynStatus === 'Стельная');
+
+    return {
+      ...s,
+      completed: isCompleted,
+      date: found?.date || (isCompleted ? '✓' : ''),
+    };
+  });
+
+  // Calculate progress
+  return (
+    <div style={{ marginBottom: "var(--space-4)" }}>
+      <div className="card-header"><span className="card-title">⏳ Жизненный цикл лактации</span></div>
+      <div className="card-body" style={{ display: "flex", justifyContent: "space-between", position: "relative", padding: "var(--space-5) 20px" }}>
+        {/* Connecting line */}
+        <div style={{ position: "absolute", top: "50%", left: "40px", right: "40px", height: "4px", background: "var(--bg-elevated)", transform: "translateY(-50%)", zIndex: 0 }} />
+        
+        {resolvedStages.map((st, i) => (
+          <div key={st.key} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 1, width: "100px" }}>
+            <div style={{
+              width: "24px", height: "24px", borderRadius: "50%",
+              background: st.completed ? "var(--success)" : "var(--bg-surface)",
+              border: `4px solid ${st.completed ? "var(--success)" : "var(--border-subtle)"}`,
+              marginBottom: "8px", transition: "all 0.3s ease"
+            }} />
+            <div style={{ fontSize: "12px", fontWeight: st.completed ? 600 : 400, color: st.completed ? "var(--text-primary)" : "var(--text-tertiary)", textAlign: "center" }}>
+              {st.label}
+            </div>
+            <div style={{ fontSize: "10px", color: "var(--text-tertiary)", marginTop: "2px" }}>
+              {st.date || "Ожидается"}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ReproductionTab({ twin }: { twin: DigitalTwinData }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+    <>
+      {/* 9.4 MVP Map Horizontal Timeline */}
+      <div className="card" style={{ marginBottom: "var(--space-4)" }}>
+        <HorizontalTimeline events={twin.reproductionEvents} profile={twin.profile} />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
       {/* Reproduction timeline */}
       <div className="card">
         <div className="card-header"><span className="card-title">🧬 Репродуктивная история</span></div>
         <div className="card-body" style={{ padding: 0 }}>
           <div className="event-list">
-            {twin.reproductionEvents.map(e => (
-              <div key={e.id} className="event-item">
-                <span className="event-dot" style={{ background: e.type === "calving" ? "var(--success)" : e.type === "insemination" ? "var(--primary-400)" : e.type === "pregnancy_check" ? "var(--info)" : "var(--warning)" }} />
-                <div className="event-content">
-                  <div className="event-text"><strong>{e.title}</strong></div>
-                  <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{e.description}</div>
-                  {e.result && <span className={`badge ${e.result === "Успех" || e.result === "Стельная" ? "badge-success" : "badge-danger"}`} style={{ marginTop: 4 }}>{e.result}</span>}
-                  <div className="event-time">{e.date}{e.sireName ? ` · 🐂 ${e.sireName}` : ""}</div>
-                </div>
+            {twin.reproductionEvents.length === 0 ? (
+              <div style={{ padding: "var(--space-4) 20px", color: "var(--text-secondary)", textAlign: "center", fontStyle: "italic" }}>
+                Нет записей о репродуктивных событиях
               </div>
-            ))}
+            ) : (
+              twin.reproductionEvents.map(e => (
+                <div key={e.id} className="event-item">
+                  <span className="event-dot" style={{ background: e.type === "calving" ? "var(--success)" : e.type === "insemination" ? "var(--primary-400)" : e.type === "pregnancy_check" ? "var(--info)" : "var(--warning)" }} />
+                  <div className="event-content">
+                    <div className="event-text"><strong>{e.title}</strong></div>
+                    <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{e.description}</div>
+                    {e.result && <span className={`badge ${e.result === "Успех" || e.result === "Стельная" ? "badge-success" : "badge-danger"}`} style={{ marginTop: 4 }}>{e.result}</span>}
+                    <div className="event-time">{e.date}{e.sireName ? ` · 🐂 ${e.sireName}` : ""}</div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -503,6 +577,7 @@ function ReproductionTab({ twin }: { twin: DigitalTwinData }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import { useDateParams } from "@/hooks/useDateParams";
+import { ComposedChart, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface DashboardData {
   status?: string;
@@ -45,6 +46,8 @@ interface DashboardData {
     planned: number;
     actual: number;
     remainder: number;
+    milkYield: number;
+    eventCount: number;
   }>;
   mixBatches: number;
   ingredients: number;
@@ -216,14 +219,14 @@ function DashboardContent() {
   const loadData = useCallback(() => {
     setLoading(true);
     Promise.all([
-      fetch("/api/dashboard").then(r => r.json()).catch(() => null),
-      fetch("/api/farm").then(r => r.json()).catch(() => null),
+      fetch(`/api/dashboard?from=${dateFrom}&to=${dateTo}`).then(r => r.json()).catch(() => null),
+      fetch(`/api/farm?from=${dateFrom}&to=${dateTo}`).then(r => r.json()).catch(() => null),
     ]).then(([dashData, farm]) => {
       if (dashData && !dashData.error) setData(dashData);
       if (farm && !farm.error) setFarmData(farm);
       setLoading(false);
     });
-  }, []);
+  }, [dateFrom, dateTo]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -575,9 +578,76 @@ function DashboardContent() {
         </div>
       </div>
 
-      {/* Row 3: Additional cards */}
-      <div className="grid-3" style={{ marginTop: "var(--space-4)" }}>
-        {/* Сухое вещество */}
+      <div className="grid-dashboard" style={{ marginTop: "var(--space-4)" }}>
+
+        {/* Focus on Risks / Фокус на рисках */}
+        <div className="card">
+          <div className="card-header">
+            <span className="card-title">⚠️ Фокус на рисках (Тревоги здоровья vs Надой)</span>
+          </div>
+          <div className="card-body" style={{ height: 360 }}>
+            {data?.daily && data.daily.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={data.daily} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
+                  <XAxis 
+                    dataKey="date" 
+                    tickFormatter={(val) => formatDate(val).substring(0, 5)} 
+                    tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    yAxisId="left" 
+                    tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right" 
+                    tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <Tooltip 
+                    contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                    labelFormatter={(l) => formatDate(l as string)}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="milkYield" 
+                    name="Валовый надой (кг)" 
+                    yAxisId="right"
+                    fill="url(#milkGradient)" 
+                    stroke="var(--accent-blue)" 
+                    strokeWidth={2}
+                  />
+                  <Bar 
+                    dataKey="eventCount" 
+                    name="Событий (шт)" 
+                    yAxisId="left"
+                    barSize={20} 
+                    fill="var(--danger)" 
+                    radius={[4, 4, 0, 0]} 
+                  />
+                  <defs>
+                    <linearGradient id="milkGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--accent-blue)" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="var(--accent-blue)" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                </ComposedChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="empty-state" style={{ height: "100%" }}>
+                <div className="empty-state-text">Нет данных за этот период</div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right column: Сухое вещество */}
         <div className="card">
           <div className="card-header">
             <span className="card-title">📦 Сухое вещество</span>

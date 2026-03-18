@@ -32,6 +32,7 @@ export class ReportInstanceService {
             }
           }
         },
+        farm: true,
         validationIssues: true,
         exports: true,
         submissions: true,

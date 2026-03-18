@@ -1,18 +1,31 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getMockDashboardData } from "@/lib/mockData";
 
 const ALLOW_MOCK = process.env.VETAI_ALLOW_MOCK === "1";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   if (ALLOW_MOCK) {
     return NextResponse.json({ ...getMockDashboardData(), status: "mock" });
   }
 
+  const searchParams = request.nextUrl.searchParams;
+  const fromParam = searchParams.get("from");
+  const toParam = searchParams.get("to");
+
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
+
+  const startDate = fromParam ? new Date(fromParam) : thirtyDaysAgo;
+  const endDate = toParam ? new Date(toParam) : today;
+  endDate.setHours(23, 59, 59, 999);
+  startDate.setHours(0, 0, 0, 0);
+
   try {
     const feedRecords = await prisma.feedRecord.findMany({
+      where: { date: { gte: startDate, lte: endDate } },
       orderBy: { date: "desc" },
-      take: 500,
     });
 
     let totalPlanned = 0;
@@ -37,7 +50,7 @@ export async function GET() {
       groupId: string | null;
     }> = {};
 
-    const dayMap: Record<string, { planned: number; actual: number; remainder: number; count: number }> = {};
+    const dayMap: Record<string, { planned: number; actual: number; remainder: number; count: number; milkYield: number; eventCount: number }> = {};
 
     for (const r of feedRecords) {
       totalPlanned += r.planned || 0;
@@ -72,7 +85,7 @@ export async function GET() {
       groupMap[gn].count++;
 
       const dateStr = r.date instanceof Date ? r.date.toISOString().split("T")[0] : String(r.date).split("T")[0];
-      if (!dayMap[dateStr]) dayMap[dateStr] = { planned: 0, actual: 0, remainder: 0, count: 0 };
+      if (!dayMap[dateStr]) dayMap[dateStr] = { planned: 0, actual: 0, remainder: 0, count: 0, milkYield: 0, eventCount: 0 };
       dayMap[dateStr].planned += r.planned || 0;
       dayMap[dateStr].actual += r.actual || 0;
       dayMap[dateStr].remainder += r.remainder || 0;
@@ -85,14 +98,22 @@ export async function GET() {
     let mixBatches: any[] = [];
     let ingredients: any[] = [];
     try {
-      mixBatches = await (prisma as any).mixBatch.findMany({ orderBy: { date: "desc" }, take: 100 });
-      ingredients = await (prisma as any).ingredientConsumption.findMany({ take: 100 });
+      mixBatches = await (prisma as any).mixBatch.findMany({ 
+         where: { date: { gte: startDate, lte: endDate } },
+         orderBy: { date: "desc" }
+      });
+      ingredients = await (prisma as any).ingredientConsumption.findMany({ 
+         where: { date: { gte: startDate, lte: endDate } } 
+      });
     } catch {}
 
     let milkSummary = { totalYield: 0, avgYield: 0, cowCount: 0, recordCount: 0 };
     let milkRecords: any[] = [];
     try {
-      milkRecords = await prisma.milkRecord.findMany({ orderBy: { date: "desc" }, take: 500 });
+      milkRecords = await prisma.milkRecord.findMany({ 
+         where: { date: { gte: startDate, lte: endDate } },
+         orderBy: { date: "desc" }
+      });
       const totalYield = milkRecords.reduce((sum, r) => sum + (r.yield || 0), 0);
       const cowSet = new Set(milkRecords.map((r) => r.cowNumber));
       milkSummary = {
@@ -101,11 +122,26 @@ export async function GET() {
         cowCount: cowSet.size,
         recordCount: milkRecords.length,
       };
+
+      for (const r of milkRecords) {
+        const dateStr = r.date instanceof Date ? r.date.toISOString().split("T")[0] : String(r.date).split("T")[0];
+        if (!dayMap[dateStr]) dayMap[dateStr] = { planned: 0, actual: 0, remainder: 0, count: 0, milkYield: 0, eventCount: 0 };
+        dayMap[dateStr].milkYield += (r.yield || 0);
+      }
     } catch {}
 
     let recentEvents: any[] = [];
     try {
-      recentEvents = await prisma.event.findMany({ orderBy: { timestamp: "desc" }, take: 20 });
+      recentEvents = await prisma.event.findMany({ 
+         where: { timestamp: { gte: startDate, lte: endDate } },
+         orderBy: { timestamp: "desc" }
+      });
+
+      for (const e of recentEvents) {
+        const dateStr = e.timestamp instanceof Date ? e.timestamp.toISOString().split("T")[0] : String(e.timestamp).split("T")[0];
+        if (!dayMap[dateStr]) dayMap[dateStr] = { planned: 0, actual: 0, remainder: 0, count: 0, milkYield: 0, eventCount: 0 };
+        dayMap[dateStr].eventCount++;
+      }
     } catch {}
 
     if (feedRecords.length === 0 && milkRecords.length === 0 && recentEvents.length === 0) {
@@ -155,6 +191,8 @@ export async function GET() {
         planned: Math.round(d.planned),
         actual: Math.round(d.actual),
         remainder: Math.round(d.remainder),
+        milkYield: Math.round(d.milkYield * 10) / 10,
+        eventCount: d.eventCount
       }));
 
     return NextResponse.json({

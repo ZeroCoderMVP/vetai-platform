@@ -34,6 +34,8 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
 
   if (loading) return <AppLayout title="Загрузка..."><div style={{padding: "var(--space-4)"}}>Загрузка данных отчета...</div></AppLayout>;
 
+  if (!report) return <AppLayout title="Ошибка"><div style={{padding: "var(--space-4)"}}>Отчет не найден или произошла ошибка при загрузке.</div></AppLayout>;
+
   return (
     <AppLayout title={report.title}>
       <div className="page-header" style={{ marginBottom: "var(--space-6)" }}>
@@ -53,7 +55,7 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
           <div style={{ display: "flex", gap: "var(--space-4)", fontSize: 13, color: "var(--text-secondary)", marginTop: "var(--space-2)" }}>
             <span>Хозяйство: <b>{report.farm.name}</b></span>
             <span>Период: {new Date(report.periodStart).toLocaleDateString("ru-RU")} — {new Date(report.periodEnd).toLocaleDateString("ru-RU")}</span>
-            <span>Сформирован: {new Date(report.generatedAt).toLocaleString("ru-RU")}</span>
+            <span>Сформирован: {report.reportDate ? new Date(report.reportDate).toLocaleString("ru-RU") : "Черновик"}</span>
           </div>
         </div>
         
@@ -155,9 +157,76 @@ export default function ReportDetailsPage({ params }: { params: Promise<{ id: st
         <div className="card-header"><span className="card-title">Содержимое отчета (Предпросмотр)</span></div>
         <div className="card-body">
           {report.payload ? (
-            <pre style={{ whiteSpace: 'pre-wrap', fontSize: 13, background: 'var(--surface-sunken)', padding: 'var(--space-3)', borderRadius: 'var(--radius-md)', overflowX: 'auto' }}>
-              {JSON.stringify(report.payload, null, 2)}
-            </pre>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+              {Object.entries(report.payload).map(([key, value]) => {
+                // Formatting key names for better display
+                const labelMap: Record<string, string> = {
+                  totalAnimals: "Всего животных",
+                  groupsDistribution: "Распределение по группам",
+                  periodEvents: "События за период"
+                };
+                const displayKey = labelMap[key] || key;
+
+                if (Array.isArray(value)) {
+                   if (value.length === 0) return <div key={key}><b>{displayKey}</b>: Нет данных</div>;
+                   const headers = Object.keys(value[0]);
+                   return (
+                     <div key={key} style={{ overflowX: "auto" }}>
+                       <h4 style={{ marginBottom: "var(--space-3)", display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                          <span style={{ width: 4, height: 16, background: "var(--brand-primary)", borderRadius: 2 }}></span>
+                          {displayKey}
+                       </h4>
+                       <table className="table w-full" style={{ fontSize: 13, textAlign: "left", width: "100%", borderCollapse: "collapse" }}>
+                         <thead>
+                           <tr style={{ borderBottom: "2px solid var(--border-subtle)", background: "var(--surface-sunken)" }}>
+                             {headers.map(h => <th key={h} style={{ padding: "var(--space-2) var(--space-3)" }}>{h === "groupName" ? "Группа" : h === "headCount" ? "Головы" : h}</th>)}
+                           </tr>
+                         </thead>
+                         <tbody>
+                           {value.map((row, i) => (
+                             <tr key={i} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                               {headers.map(h => <td key={h} style={{ padding: "var(--space-2) var(--space-3)" }}>{String(row[h])}</td>)}
+                             </tr>
+                           ))}
+                         </tbody>
+                       </table>
+                     </div>
+                   );
+                } else if (typeof value === "object" && value !== null) {
+                   return (
+                     <div key={key}>
+                       <h4 style={{ marginBottom: "var(--space-3)", display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                          <span style={{ width: 4, height: 16, background: "var(--brand-primary)", borderRadius: 2 }}></span>
+                          {displayKey}
+                       </h4>
+                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "var(--space-3)" }}>
+                         {Object.entries(value).map(([k, v]) => {
+                            const nestedLabelMap: Record<string, string> = {
+                               calvings: "Отелы",
+                               inseminations: "Осеменения",
+                               healthIssues: "Заболевания",
+                               milkYield: "Надой (л)"
+                            };
+                            return (
+                              <div key={k} style={{ padding: "var(--space-3)", background: "var(--surface-sunken)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
+                                <div style={{ fontSize: 12, color: "var(--text-tertiary)", marginBottom: "var(--space-1)" }}>{nestedLabelMap[k] || k}</div>
+                                <div style={{ fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>{String(v)}</div>
+                              </div>
+                            );
+                         })}
+                       </div>
+                     </div>
+                   );
+                } else {
+                   return (
+                     <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "var(--space-3)", background: "var(--surface-sunken)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
+                       <span style={{ color: "var(--text-secondary)", fontWeight: 500 }}>{displayKey}</span>
+                       <span style={{ fontSize: 18, fontWeight: 600 }}>{String(value)}</span>
+                     </div>
+                   )
+                }
+              })}
+            </div>
           ) : (
             <div style={{ height: 200, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-tertiary)" }}>
               Данные недоступны. Нажмите "Сгенерировать".

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
 import ExportButton from "@/components/ui/ExportButton";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts';
 
 type HerdItem = {
   id: string;
@@ -58,6 +59,28 @@ export default function HerdPage() {
     if (!data) return [];
     return Array.from(new Set(data.items.map((animal) => animal.group))).sort((a, b) => a.localeCompare(b));
   }, [data]);
+
+  const lactationData = useMemo(() => {
+    const counts = { '1': 0, '2': 0, '3': 0, '4': 0, '5+': 0 };
+    filteredAnimals.forEach(a => {
+      const l = a.lactation || 0;
+      if (l === 1) counts['1']++;
+      else if (l === 2) counts['2']++;
+      else if (l === 3) counts['3']++;
+      else if (l === 4) counts['4']++;
+      else if (l >= 5) counts['5+']++;
+    });
+    return [
+      {
+        name: 'Состав стада',
+        '1 лактация': counts['1'],
+        '2 лактация': counts['2'],
+        '3 лактация': counts['3'],
+        '4 лактация': counts['4'],
+        '5+ лактация': counts['5+'],
+      }
+    ];
+  }, [filteredAnimals]);
 
   if (loading || !data) {
     return (
@@ -137,6 +160,35 @@ export default function HerdPage() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="card" style={{ marginBottom: "var(--space-4)" }}>
+        <div className="card-header">
+          <span className="card-title">📊 Структура стада по возрасту (лактациям)</span>
+        </div>
+        <div className="card-body" style={{ height: 200, padding: "var(--space-4)" }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={lactationData}
+              layout="vertical"
+              margin={{ top: 0, right: 30, left: 20, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border-subtle)" />
+              <XAxis type="number" hide />
+              <YAxis dataKey="name" type="category" hide />
+              <Tooltip 
+                contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                formatter={(value: any) => [value, 'голов']}
+              />
+              <Legend verticalAlign="top" height={36}/>
+              <Bar dataKey="1 лактация" stackId="a" fill="#3b82f6" />
+              <Bar dataKey="2 лактация" stackId="a" fill="#10b981" />
+              <Bar dataKey="3 лактация" stackId="a" fill="#f59e0b" />
+              <Bar dataKey="4 лактация" stackId="a" fill="#ef4444" />
+              <Bar dataKey="5+ лактация" stackId="a" fill="#8b5cf6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       <div className="card">

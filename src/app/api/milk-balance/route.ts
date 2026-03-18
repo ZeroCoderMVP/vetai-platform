@@ -55,6 +55,28 @@ export async function GET(request: Request) {
 
     // 3. Формируем структуру ответа
     
+    // Формируем датасет по дням для графика экономики
+    const dailyDataMap = new Map<string, { revenue: number; sold: number }>();
+    
+    economicFacts.forEach((fact) => {
+      const dateStr = fact.period.toISOString().split("T")[0];
+      if (!dailyDataMap.has(dateStr)) {
+        dailyDataMap.set(dateStr, { revenue: 0, sold: 0 });
+      }
+      
+      const dayData = dailyDataMap.get(dateStr)!;
+      if (fact.type === "milk_revenue") dayData.revenue += fact.value;
+      if (fact.type === "milk_sold") dayData.sold += fact.value;
+    });
+
+    const dailyEconomics = Array.from(dailyDataMap.entries())
+      .map(([date, data]) => ({
+        date,
+        revenue: Math.round(data.revenue * 100) / 100,
+        averagePrice: data.sold > 0 ? Math.round((data.revenue / data.sold) * 100) / 100 : 0
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+
     // Вычисляем неучтенное молоко (разница между валовым надоем и распределенным)
     const distributedMilk = milkSold + milkCalves + milkLoss;
     const unaccountedMilk = totalYield > 0 ? Math.max(0, totalYield - distributedMilk) : 0;
@@ -73,6 +95,7 @@ export async function GET(request: Request) {
         economics: {
           milkRevenue: Math.round(milkRevenue * 100) / 100,
           averagePrice: milkSold > 0 ? Math.round((milkRevenue / milkSold) * 100) / 100 : 0,
+          daily: dailyEconomics
         },
       },
     });

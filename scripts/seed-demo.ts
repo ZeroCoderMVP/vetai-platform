@@ -418,6 +418,52 @@ async function main() {
     }
     console.log(`Создано: Event ${eventCount}`);
 
+    // 6. Задачи (OperationRequest) для Work Plans
+    console.log("Генерация: Задачи План-Факт (OperationRequest)...");
+    let opsCount = 0;
+    const opTypes = ["INSEMINATION", "TREATMENT", "GROUP_TRANSFER", "HOOF_TRIM", "VACCINATION", "PREGNANCY_CHECK"];
+    const opTitles = {
+      "INSEMINATION": "Осеменение",
+      "TREATMENT": "Лечение мастита",
+      "GROUP_TRANSFER": "Перевод в сухостой",
+      "HOOF_TRIM": "Обрезка копыт",
+      "VACCINATION": "Плановая вакцинация",
+      "PREGNANCY_CHECK": "УЗИ на стельность"
+    };
+    
+    // Выберем 20 случайных коров для создания задач на ближайшие дни
+    for (let i = 0; i < 30; i++) {
+      const cow = activeCows[randomInt(0, activeCows.length - 1)];
+      const opTypeStr = opTypes[randomInt(0, opTypes.length - 1)] as keyof typeof opTitles;
+      const title = opTitles[opTypeStr];
+      const priority = Math.random() < 0.2 ? "CRITICAL" : Math.random() < 0.5 ? "HIGH" : "MEDIUM";
+      const statusOptions = ["CREATED", "PENDING_AFIMILK_ENTRY", "IN_PROGRESS", "ENTERED_IN_AFIMILK", "OVERDUE", "VERIFIED"];
+      const status = statusOptions[randomInt(0, statusOptions.length - 1)];
+      
+      const opDate = new Date(startDate.getTime());
+      opDate.setDate(opDate.getDate() + randomInt(DAYS_TO_SEED - 5, DAYS_TO_SEED + 5));
+      const dueDate = new Date(opDate.getTime());
+      dueDate.setHours(dueDate.getHours() + 24);
+
+      await prisma.operationRequest.create({
+        data: {
+          farmId: farm.id,
+          cowId: cow.id,
+          operationType: opTypeStr,
+          title: title,
+          description: `Задача "${title}" по животному с номером ${cow.number}`,
+          eventDate: opDate,
+          dueDate: dueDate,
+          priority: priority,
+          status: status,
+          createdById: "system_seeder",
+          source: "AUTO_RULE"
+        }
+      });
+      opsCount++;
+    }
+    console.log(`Создано: OperationRequest ${opsCount}`);
+
     console.log("=========================================");
     console.log("Генерация демо-данных Stage 1 успешно завершена!");
     console.log("=========================================");
