@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { OperationsService } from "@/lib/services/operations.service";
+import prisma from "@/lib/prisma";
 
 export async function GET(request: Request) {
   try {
@@ -26,9 +27,26 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    // Default mock user ID for creation since we bypass auth
     const userId = "user_1"; 
     
+    if (body.cowNumber) {
+      const cow = await prisma.cow.findFirst({ where: { number: body.cowNumber } });
+      if (!cow) {
+        return NextResponse.json({ error: "Корова с таким номером не найдена" }, { status: 404 });
+      }
+      body.cowId = cow.id;
+      body.farmId = cow.farmId;
+      delete body.cowNumber;
+    }
+    
+    // Fallback farmId if nothing found
+    if (!body.farmId) {
+       const farm = await prisma.farm.findFirst();
+       if (farm) body.farmId = farm.id;
+    }
+
+    if (!body.eventDate) body.eventDate = new Date();
+
     const operation = await OperationsService.createOperation(body, userId);
     return NextResponse.json(operation);
   } catch (err: any) {

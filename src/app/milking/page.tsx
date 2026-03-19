@@ -311,7 +311,12 @@ export default function MilkingPage() {
 
 function MilkingSessionCard({ milkingNum, records, milkingLabels }: { milkingNum: string, records: any[], milkingLabels: Record<number, string> }) {
   const [expanded, setExpanded] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   const totalYield = records.reduce((s: number, r: any) => s + r.yield, 0);
+
+  const displayRecords = showAll 
+    ? [...records].sort((a: any, b: any) => b.yield - a.yield) 
+    : [...records].sort((a: any, b: any) => b.yield - a.yield).slice(0, 50);
 
   return (
     <div className="card" style={{ marginBottom: "var(--space-4)" }}>
@@ -335,7 +340,7 @@ function MilkingSessionCard({ milkingNum, records, milkingLabels }: { milkingNum
         <div className="card-body" style={{ padding: 0 }}>
           <div className="table-container" style={{ maxHeight: 350, overflowY: "auto" }}>
             <table>
-              <thead>
+              <thead style={{ position: "sticky", top: 0, background: "white", zIndex: 1 }}>
                 <tr>
                   <th>Корова</th>
                   <th>Стойло</th>
@@ -348,7 +353,7 @@ function MilkingSessionCard({ milkingNum, records, milkingLabels }: { milkingNum
                 </tr>
               </thead>
               <tbody>
-                {records.sort((a: any, b: any) => b.yield - a.yield).map((r: any, i: number) => (
+                {displayRecords.map((r: any, i: number) => (
                   <tr key={i}>
                     <td><strong>#{r.cowNumber}</strong></td>
                     <td>{r.stall}</td>
@@ -368,6 +373,13 @@ function MilkingSessionCard({ milkingNum, records, milkingLabels }: { milkingNum
                 ))}
               </tbody>
             </table>
+            {!showAll && records.length > 50 && (
+              <div style={{ textAlign: "center", padding: "12px", borderTop: "1px solid var(--border-subtle)", background: "var(--bg-surface-hover)" }}>
+                <button className="btn btn-ghost" onClick={(e) => { e.stopPropagation(); setShowAll(true); }} style={{ fontSize: 13, fontWeight: 500 }}>
+                  Показать остальные {records.length - 50} записей
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -25,6 +25,7 @@ const navigation = [
       { href: "/groups?type=calves", label: "Телята", icon: "🌱" },
       { href: "/sections", label: "Размещение", icon: "🗺️" },
       { href: "/herd", label: "Стадо", icon: "🐄" },
+      { href: "/herd-structure", label: "Структура стада", icon: "📊" },
       { href: "/milking", label: "Учёт молока", icon: "🥛" },
       { href: "/milk-balance", label: "Баланс молока", icon: "⚖️" },
       { href: "/feeding", label: "Кормление", icon: "🌾" },
@@ -35,6 +36,7 @@ const navigation = [
     section: "Ветеринария",
     items: [
       { href: "/health", label: "Здоровье", icon: "💊" },
+      { href: "/work-plans", label: "Планы работ", icon: "📝" },
       { href: "/reproduction", label: "Воспроизводство", icon: "🧬" },
       { href: "/operations", label: "Контроль AfiMilk", icon: "📋" },
     ],

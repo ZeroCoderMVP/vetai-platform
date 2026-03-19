@@ -87,16 +87,17 @@ function MilkBalanceContent() {
 
   return (
     <AppLayout title="Баланс молока">
-      <div className="flex justify-between items-center mb-6">
+      <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">⚖️ Баланс молока</h1>
-          <p className="text-sm text-gray-500 mt-1">Отслеживание распределения валового надоя и выручки</p>
+          <h1 className="page-title" style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>⚖️ Баланс молока</h1>
+          <p style={{ color: "var(--text-secondary)", marginTop: 4, fontSize: 14 }}>Отслеживание распределения валового надоя и выручки</p>
         </div>
-        <div className="flex items-center space-x-4">
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <DateRangePicker from={dateFrom} to={dateTo} onChange={handleDateChange} />
           <button 
             onClick={loadData}
-            className="p-2 border rounded-md hover:bg-gray-50 bg-white shadow-sm flex items-center justify-center transition-colors"
+            className="btn btn-ghost"
+            style={{ padding: "8px 12px", border: "1px solid var(--border-subtle)" }}
             title="Обновить"
           >
             🔄
@@ -105,22 +106,22 @@ function MilkBalanceContent() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64 bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="text-gray-500 flex flex-col items-center">
-            <span className="text-3xl mb-4 animate-spin">⏳</span>
+        <div className="card" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 250 }}>
+          <div style={{ color: "var(--text-secondary)", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span style={{ fontSize: 32, marginBottom: 16 }}>⏳</span>
             <span>Загрузка данных баланса...</span>
           </div>
         </div>
       ) : error ? (
-        <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-xl shadow-sm">
-          <h3 className="text-lg font-medium text-red-800">Ошибка загрузки</h3>
-          <p className="text-red-700 mt-2">{error}</p>
-          <button onClick={loadData} className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors">
+        <div className="card" style={{ borderLeft: "4px solid var(--danger)", padding: 24 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 600, color: "var(--danger)" }}>Ошибка загрузки</h3>
+          <p style={{ color: "var(--text-secondary)", marginTop: 8 }}>{error}</p>
+          <button onClick={loadData} className="btn btn-primary" style={{ marginTop: 16 }}>
             Попробовать снова
           </button>
         </div>
       ) : data ? (
-        <div className="space-y-6">
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {/* Main KPI Row */}
           <div className="kpi-grid">
             <div className="kpi-card blue">
@@ -178,16 +179,15 @@ function MilkBalanceContent() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: 24, alignItems: "stretch" }}>
             {/* Visual Distribution Bar */}
-            {/* Visual Distribution Bar */}
-            <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col h-full">
-              <h3 className="text-lg font-semibold mb-6 flex items-center">
-                <span className="bg-indigo-100 text-indigo-800 p-1.5 rounded-lg mr-2">📊</span>
-                Структура распределения молока
-              </h3>
+            <div className="card">
+              <div className="card-header">
+                <span className="card-title">📊 Структура распределения молока</span>
+              </div>
               
-              <div style={{ width: '100%', height: 350, flex: 1 }}>
+              <div className="card-body" style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
                   <BarChart
                     data={[
@@ -218,45 +218,45 @@ function MilkBalanceContent() {
               </div>
 
               {data.unaccountedMilk > 0 && (
-                <div className="p-4 bg-orange-50 border border-orange-200 rounded-xl flex items-start mt-4">
-                  <span className="text-xl mr-3">⚠️</span>
+                <div style={{ padding: 16, backgroundColor: "rgba(245,158,11,0.1)", border: "1px solid var(--warning)", borderRadius: 8, display: "flex", alignItems: "flex-start", marginTop: 16 }}>
+                  <span style={{ fontSize: 20, marginRight: 12 }}>⚠️</span>
                   <div>
-                    <h4 className="text-orange-800 font-medium">Обнаружено расхождение баланса</h4>
-                    <p className="text-sm text-orange-700 mt-1">
-                      Разница между валовым надоем ({data.totalYield} кг) и суммой введенных потоков распределения ({data.distributedMilk} кг) составляет <strong>{data.unaccountedMilk} кг</strong>. 
+                    <h4 style={{ color: "var(--warning)", fontWeight: 600, margin: 0 }}>Обнаружено расхождение баланса</h4>
+                    <p style={{ fontSize: 14, color: "var(--text-secondary)", marginTop: 4, margin: 0 }}>
+                      Разница между валовым надоем ({data.totalYield.toLocaleString("ru-RU")} кг) и суммой введенных потоков распределения ({data.distributedMilk.toLocaleString("ru-RU")} кг) составляет <strong>{data.unaccountedMilk.toLocaleString("ru-RU")} кг</strong>. 
                       Пожалуйста, проверьте ручной ввод данных реализации.
                     </p>
                   </div>
                 </div>
               )}
+              </div>
             </div>
 
             {/* Economics Info */}
-            <div className="lg:col-span-1 bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col h-full">
-              <h3 className="text-lg font-semibold mb-6 flex items-center">
-                <span className="bg-emerald-100 text-emerald-800 p-1.5 rounded-lg mr-2">💰</span>
-                Экономика
-              </h3>
+            <div className="card">
+              <div className="card-header">
+                <span className="card-title">💰 Экономика</span>
+              </div>
               
-              <div className="flex-1 flex flex-col space-y-4">
-                <div className="flex justify-between items-end">
+              <div className="card-body" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                   <div>
-                    <div className="text-sm text-gray-500 mb-1">Выручка от реализации</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                    <div style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 4 }}>Выручка от реализации</div>
+                    <div style={{ fontSize: 24, fontWeight: 700, color: "var(--text-primary)" }}>
                       {data.economics.milkRevenue.toLocaleString("ru-RU", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} 
-                      <span className="text-base font-normal text-gray-500 ml-1">₽</span>
+                      <span style={{ fontSize: 16, fontWeight: 400, color: "var(--text-secondary)", marginLeft: 4 }}>₽</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-500 mb-1">Средняя цена</div>
-                    <div className="text-lg font-semibold text-gray-700">
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 4 }}>Средняя цена</div>
+                    <div style={{ fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
                       {data.economics.averagePrice.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} 
-                      <span className="text-xs font-normal text-gray-500 ml-1">₽/кг</span>
+                      <span style={{ fontSize: 12, fontWeight: 400, color: "var(--text-secondary)", marginLeft: 4 }}>₽/кг</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex-1 mt-4" style={{ minHeight: 180 }}>
+                <div style={{ flex: 1, minHeight: 180, marginTop: 16 }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                       data={data.economics.daily || []}
@@ -300,86 +300,91 @@ function MilkBalanceContent() {
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
-              </div>
               
-              <div className="mt-8 pt-4 border-t border-gray-100">
-                 <Link href={`/reports?type=economics&from=${dateFrom}&to=${dateTo}`} className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center justify-center bg-blue-50 py-2 rounded-lg transition-colors">
+              <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid var(--border-subtle)", textAlign: "center" }}>
+                 <Link href={`/reports?type=economics&from=${dateFrom}&to=${dateTo}`} style={{ fontSize: 14, fontWeight: 500, color: "var(--primary)", textDecoration: "none" }}>
                    Детализация по экономике →
                  </Link>
+              </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold mb-4">Связанные разделы</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link href={`/milking?from=${dateFrom}&to=${dateTo}`} className="flex items-center p-4 border rounded-xl hover:bg-gray-50 hover:border-blue-300 transition-all group">
-                <div className="bg-blue-100 p-3 rounded-lg text-xl mr-4 group-hover:bg-blue-200 transition-colors">🥛</div>
-                <div>
-                  <h4 className="font-medium text-gray-900">Детализация доений (AIC)</h4>
-                  <p className="text-sm text-gray-500">Посмотреть записи доения по отдельным коровам и сессиям</p>
-                </div>
-              </Link>
-              <Link href={`/groups?from=${dateFrom}&to=${dateTo}`} className="flex items-center p-4 border rounded-xl hover:bg-gray-50 hover:border-green-300 transition-all group">
-                <div className="bg-green-100 p-3 rounded-lg text-xl mr-4 group-hover:bg-green-200 transition-colors">🐄</div>
-                <div>
-                  <h4 className="font-medium text-gray-900">Производственные группы</h4>
-                  <p className="text-sm text-gray-500">Посмотреть группы дойных коров и телят</p>
-                </div>
-              </Link>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: 24, alignItems: "stretch" }}>
+            <div className="card">
+              <div className="card-header">
+                <span className="card-title">Связанные разделы</span>
+              </div>
+              <div className="card-body" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <Link href={`/milking?from=${dateFrom}&to=${dateTo}`} style={{ display: "flex", alignItems: "center", padding: 16, border: "1px solid var(--border-subtle)", borderRadius: 12, textDecoration: "none", color: "inherit", transition: "all 0.2s" }} onMouseOver={e => e.currentTarget.style.borderColor = "var(--primary)"} onMouseOut={e => e.currentTarget.style.borderColor = "var(--border-subtle)"}>
+                  <div style={{ backgroundColor: "rgba(59,130,246,0.1)", padding: 12, borderRadius: 8, fontSize: 24, marginRight: 16 }}>🥛</div>
+                  <div>
+                    <h4 style={{ fontWeight: 600, margin: "0 0 4px 0" }}>Детализация доений (AIC)</h4>
+                    <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0 }}>Посмотреть записи доения по отдельным коровам и сессиям</p>
+                  </div>
+                </Link>
+                <Link href={`/groups?from=${dateFrom}&to=${dateTo}`} style={{ display: "flex", alignItems: "center", padding: 16, border: "1px solid var(--border-subtle)", borderRadius: 12, textDecoration: "none", color: "inherit", transition: "all 0.2s" }} onMouseOver={e => e.currentTarget.style.borderColor = "var(--success)"} onMouseOut={e => e.currentTarget.style.borderColor = "var(--border-subtle)"}>
+                  <div style={{ backgroundColor: "rgba(16,185,129,0.1)", padding: 12, borderRadius: 8, fontSize: 24, marginRight: 16 }}>🐄</div>
+                  <div>
+                    <h4 style={{ fontWeight: 600, margin: "0 0 4px 0" }}>Производственные группы</h4>
+                    <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0 }}>Посмотреть группы дойных коров и телят</p>
+                  </div>
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold mb-4 flex items-center">
-              <span className="bg-blue-100 text-blue-800 p-1.5 rounded-lg mr-2">📋</span>
-              Журнал движения молока
-            </h3>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left align-middle mt-2 border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50/50 text-gray-500 font-medium">
-                    <th className="py-3 px-4 rounded-tl-lg">Дата</th>
-                    <th className="py-3 px-4">Валовый надой</th>
-                    <th className="py-3 px-4">Реализация 🟢</th>
-                    <th className="py-3 px-4">Выпойка 🔵</th>
-                    <th className="py-3 px-4">Потери 🔴</th>
-                    <th className="py-3 px-4 text-right rounded-tr-lg">Выручка</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {!data.journal || data.journal.length === 0 ? (
-                    <tr>
-                      <td colSpan={6} className="py-8 text-center text-gray-500 italic">
-                        Данных о движении молока за выбранный период не найдено.
-                      </td>
-                    </tr>
-                  ) : (
-                    data.journal.map((row) => (
-                      <tr key={row.date} className="hover:bg-gray-50 transition-colors">
-                        <td className="py-3 px-4 font-medium text-gray-700">
-                          {new Date(row.date).toLocaleDateString('ru-RU')}
-                        </td>
-                        <td className="py-3 px-4 font-bold text-gray-900 drop-shadow-sm">
-                          {row.yield > 0 ? `${row.yield.toLocaleString("ru-RU")} кг` : '-'}
-                        </td>
-                        <td className="py-3 px-4 text-[#10b981] font-semibold">
-                          {row.sold > 0 ? `${row.sold.toLocaleString("ru-RU")} кг` : '-'}
-                        </td>
-                        <td className="py-3 px-4 text-[#64748b]">
-                          {row.calves > 0 ? `${row.calves.toLocaleString("ru-RU")} кг` : '-'}
-                        </td>
-                        <td className="py-3 px-4 text-[#ef4444]">
-                          {row.loss > 0 ? `${row.loss.toLocaleString("ru-RU")} кг` : '-'}
-                        </td>
-                        <td className="py-3 px-4 text-right text-gray-900 font-mono">
-                          {row.revenue > 0 ? `${row.revenue.toLocaleString("ru-RU")} ₽` : '-'}
-                        </td>
+
+            <div className="card">
+              <div className="card-header">
+                <span className="card-title">📋 Журнал движения молока</span>
+              </div>
+              <div className="card-body" style={{ padding: 0 }}>
+                <div style={{ overflowX: "auto" }}>
+                  <table style={{ width: "100%", fontSize: 13, textAlign: "left", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ backgroundColor: "var(--bg-surface-hover)", color: "var(--text-secondary)", borderBottom: "1px solid var(--border-subtle)" }}>
+                        <th style={{ padding: "12px 16px", fontWeight: 500 }}>Дата</th>
+                        <th style={{ padding: "12px 16px", fontWeight: 500 }}>Надой</th>
+                        <th style={{ padding: "12px 16px", fontWeight: 500 }}>Реал-я 🟢</th>
+                        <th style={{ padding: "12px 16px", fontWeight: 500 }}>Выпойка 🔵</th>
+                        <th style={{ padding: "12px 16px", fontWeight: 500 }}>Потери 🔴</th>
+                        <th style={{ padding: "12px 16px", fontWeight: 500, textAlign: "right" }}>Выручка</th>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    </thead>
+                    <tbody>
+                      {!data.journal || data.journal.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} style={{ padding: "32px 16px", textAlign: "center", color: "var(--text-tertiary)" }}>
+                            Данных о движении молока за выбранный период не найдено.
+                          </td>
+                        </tr>
+                      ) : (
+                        data.journal.map((row) => (
+                          <tr key={row.date} style={{ borderBottom: "1px solid var(--border-subtle)", transition: "background-color 0.2s" }} onMouseOver={e => e.currentTarget.style.backgroundColor = "var(--bg-surface-hover)"} onMouseOut={e => e.currentTarget.style.backgroundColor = "transparent"}>
+                            <td style={{ padding: "12px 16px", fontWeight: 500, color: "var(--text-primary)" }}>
+                              {new Date(row.date).toLocaleDateString('ru-RU')}
+                            </td>
+                            <td style={{ padding: "12px 16px", fontWeight: 700 }}>
+                              {row.yield > 0 ? `${row.yield.toLocaleString("ru-RU")} кг` : '-'}
+                            </td>
+                            <td style={{ padding: "12px 16px", color: "var(--success)", fontWeight: 600 }}>
+                              {row.sold > 0 ? `${row.sold.toLocaleString("ru-RU")} кг` : '-'}
+                            </td>
+                            <td style={{ padding: "12px 16px", color: "var(--info)" }}>
+                              {row.calves > 0 ? `${row.calves.toLocaleString("ru-RU")} кг` : '-'}
+                            </td>
+                            <td style={{ padding: "12px 16px", color: "var(--danger)" }}>
+                              {row.loss > 0 ? `${row.loss.toLocaleString("ru-RU")} кг` : '-'}
+                            </td>
+                            <td style={{ padding: "12px 16px", textAlign: "right", fontFamily: "monospace", fontSize: 14 }}>
+                              {row.revenue > 0 ? `${row.revenue.toLocaleString("ru-RU")} ₽` : '-'}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>

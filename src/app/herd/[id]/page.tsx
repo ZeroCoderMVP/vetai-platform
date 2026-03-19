@@ -68,6 +68,8 @@ const TABS = [
 ];
 
 export default function AnimalCardPage() {
+  // Adding a random comment to ensure file hash changes!
+  // Force Update: 2026-03-19T14:26:00
   const params = useParams();
   const searchParams = useSearchParams();
   const cowId = params.id as string;
@@ -128,14 +130,14 @@ export default function AnimalCardPage() {
                 <span style={{ fontSize: 12, color: "var(--text-tertiary)", background: "var(--bg-elevated)", padding: "2px 8px", borderRadius: "var(--radius-sm)" }}>{p.regNumber}</span>
                 <span style={{ fontSize: 11, color: "var(--text-tertiary)" }}>{p.electronicId}</span>
               </div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                <span className="badge badge-success">{p.status}</span>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                <span className="badge badge-success">{p.status === "active" ? "Активная" : p.status === "dry" ? "Сухостойная" : p.status}</span>
                 <span className="badge badge-primary">Лактация {p.lactation}</span>
                 <span className="badge badge-info">Дни лакт. {p.dim}</span>
                 <Link href={`/groups/${p.group.id}`}><span className="badge badge-neutral hover:bg-gray-200 transition-colors cursor-pointer">{p.group.name}</span></Link>
                 <span className="badge badge-primary">{p.gynStatus}</span>
-                <span className="badge badge-neutral">{p.breed}</span>
-                {alerts.length > 0 && <span className="badge badge-warning">⚠️ {alerts.length} тревог{alerts.length > 1 ? "и" : "а"}</span>}
+                <span className="badge badge-neutral">{p.breed === "Holstein" ? "Голштинская" : p.breed}</span>
+                {alerts.length > 0 && <span className="badge badge-warning">⚠️ {alerts.length} активных тревог</span>}
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -726,11 +728,43 @@ function GeneticsTab({ twin }: { twin: DigitalTwinData }) {
   );
 }
 
+const translateAfiEvent = (title: string) => {
+  const t: Record<string, string> = {
+    "AnimalSuspectedHeat": "Подозрение на охоту",
+    "AnimalsSuspectedHeat": "Подозрение на охоту",
+    "AnimalSuspectedAbortion": "Подозрение на аборт",
+    "AnimalsSuspectedAbortion": "Подозрение на аборт",
+    "AnimalCalved": "Отёл",
+    "AnimalsCalved": "Отёл",
+    "AnimalCalving": "Отёл",
+    "AnimalsCalving": "Отёл",
+    "AnimalInseminated": "Осеменение",
+    "AnimalsInseminated": "Осеменение",
+    "AnimalDry": "Запуск (Сухостой)",
+    "AnimalsDry": "Запуск (Сухостой)",
+    "AnimalTreatment": "Лечение",
+    "AnimalsTreatment": "Лечение",
+    "AnimalDisease": "Заболевание",
+    "AnimalsDisease": "Заболевание",
+    "AnimalSick": "Заболевание",
+    "AnimalsSick": "Заболевание",
+    "HoofTrim": "Расчистка копыт",
+    "AnimalVaccination": "Вакцинация",
+    "AnimalsVaccination": "Вакцинация"
+  };
+  for (const key of Object.keys(t)) {
+     if (title.startsWith(key)) return title.replace(key, t[key]);
+  }
+  return t[title] || title;
+};
+
 // ---- HISTORY TAB ----
 function HistoryTab({ twin }: { twin: DigitalTwinData }) {
   const catColors: Record<string, string> = { milking: "var(--primary-400)", health: "var(--danger)", reproduction: "var(--info)", management: "var(--warning)", genetics: "var(--purple-400, #a855f7)" };
   const catLabels: Record<string, string> = { milking: "Доение", health: "Здоровье", reproduction: "Воспроизводство", management: "Менеджмент", genetics: "Генетика" };
   const [filter, setFilter] = useState<string>("all");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  
   const filtered = filter === "all" ? twin.timeline : twin.timeline.filter(e => e.category === filter);
 
   return (
@@ -748,30 +782,51 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
       <div className="card-body" style={{ padding: 0 }}>
         <div className="event-list">
           {filtered.map(e => {
-            const isClickable = e.eventId && typeof e.eventId === "string" && e.eventId.length > 5;
+            const isClickable = e.description && e.description.trim().startsWith('{');
+            const isExpanded = expandedId === e.id;
+            
             const content = (
               <>
                 <span className="event-dot" style={{ background: catColors[e.category] || "var(--text-tertiary)" }} />
-                <div className="event-content">
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                    <span>{e.icon}</span>
-                    <strong style={{ fontSize: 13, textDecoration: isClickable ? "underline" : "none" }}>{e.title}</strong>
-                    {e.severity && <SeverityDot s={e.severity} />}
+                <div className="event-content" style={{ width: "100%", paddingRight: 16 }}>
+                  <div style={{ display: "flex", gap: 6, alignItems: "center", width: "100%", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      <span>{e.icon}</span>
+                      <strong style={{ fontSize: 13, textDecoration: isClickable ? "underline" : "none", textDecorationStyle: "dashed", cursor: isClickable ? "pointer" : "default" }}>
+                        {translateAfiEvent(e.title)}
+                      </strong>
+                      {e.severity && <SeverityDot s={e.severity} />}
+                    </div>
+                    {isClickable && (
+                      <span style={{ fontSize: 12, color: "var(--primary)", fontWeight: 500, cursor: "pointer" }}>
+                         {isExpanded ? "Скрыть" : "Раскрыть"}
+                      </span>
+                    )}
                   </div>
-                  <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>
-                    {e.description && e.description.trim().startsWith('{') 
-                      ? "📊 Системная запись (нажмите чтобы открыть карточку)" 
-                      : e.description}
+                  <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 4 }}>
+                    {isClickable && !isExpanded
+                      ? "📊 Системная запись (нажмите чтобы открыть raw данные)" 
+                      : (!isClickable ? e.description : null)}
                   </div>
                   <div className="event-time">{e.date} · {catLabels[e.category] || e.category}</div>
+                  
+                  {isExpanded && isClickable && (
+                    <div style={{ marginTop: 12, padding: 12, backgroundColor: "var(--bg-elevated)", borderRadius: 6, border: "1px solid var(--border-subtle)", fontSize: 11, fontFamily: "monospace", overflowX: "auto", whiteSpace: "pre-wrap", color: "var(--text-secondary)" }}>
+                      {e.description}
+                    </div>
+                  )}
                 </div>
               </>
             );
 
             return isClickable ? (
-              <Link key={`${e.id}-${e.eventId}`} href={`/events/${e.eventId}`} className="event-item hover:bg-gray-50 transition-colors cursor-pointer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div 
+                key={`${e.id}-${e.category}`} 
+                onClick={() => setExpandedId(prev => prev === e.id ? null : e.id)}
+                className="event-item hover:bg-gray-50 transition-colors" 
+              >
                 {content}
-              </Link>
+              </div>
             ) : (
               <div key={`${e.id}-${e.category}`} className="event-item">
                 {content}
@@ -781,97 +836,5 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
         </div>
       </div>
     </div>
-  );
-}
-
-// ---- INFOGRAPHICS TAB ----
-function InfographicsTab({ twin }: { twin: DigitalTwinData }) {
-  const inf = twin.infographics;
-  const ls = inf.lifetimeStats;
-  return (
-    <>
-      {/* Lifetime stats hero */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--space-3)", marginBottom: "var(--space-4)" }}>
-        {[
-          { l: "Пожизненный надой", v: `${(ls.totalMilk / 1000).toFixed(1)} т`, c: "green" },
-          { l: "Отёлов / Дней в стаде", v: `${ls.totalCalvings} / ${ls.daysInHerd}`, c: "blue" },
-          { l: "Ср. пик лактации", v: `${ls.avgPeakYield} кг`, c: "amber" },
-          { l: "Доход (lifetime)", v: `${(ls.revenue / 1000).toFixed(0)} тыс ₽`, c: "purple" },
-        ].map((k, i) => (
-          <div key={i} className={`kpi-card ${k.c}`}>
-            <div style={{ fontSize: 11, color: "var(--text-secondary)" }}>{k.l}</div>
-            <div style={{ fontSize: 22, fontWeight: 700 }}>{k.v}</div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
-        {/* Lactation comparison */}
-        <div className="card">
-          <div className="card-header"><span className="card-title">📊 Сравнение лактаций</span></div>
-          <div className="card-body" style={{ padding: 0 }}>
-            <div className="table-container">
-              <table>
-                <thead><tr><th>Лактация</th><th>Пик, кг</th><th>Всего, кг</th><th>Ср. суточн.</th><th>Дней</th></tr></thead>
-                <tbody>
-                  {inf.lactationComparison.map((l, i) => (
-                    <tr key={i} style={{ background: i === inf.lactationComparison.length - 1 ? "rgba(15,168,122,0.05)" : undefined }}>
-                      <td><strong>Лактация {l.lactation}</strong>{i === inf.lactationComparison.length - 1 && <span className="badge badge-success" style={{ marginLeft: 6 }}>текущая</span>}</td>
-                      <td>{l.peakYield}</td><td><strong>{l.totalYield.toLocaleString()}</strong></td>
-                      <td>{l.avgDailyYield}</td><td>{l.days}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Monthly trends */}
-        <div className="card">
-          <div className="card-header"><span className="card-title">📈 Месячные тренды</span></div>
-          <div className="card-body" style={{ padding: 0 }}>
-            <div className="table-container">
-              <table>
-                <thead><tr><th>Месяц</th><th>Надой, кг</th><th>Сом.кл.</th><th>Жир %</th><th>Белок %</th></tr></thead>
-                <tbody>
-                  {inf.monthlyTrends.map((m, i) => (
-                    <tr key={i}>
-                      <td>{m.month}</td><td><strong>{m.yield.toLocaleString()}</strong></td>
-                      <td><span className={`badge ${m.scc < 200 ? "badge-success" : "badge-warning"}`}>{m.scc}</span></td>
-                      <td>{m.fat}%</td><td>{m.protein}%</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Radar + Rankings side by side */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)", marginTop: "var(--space-4)" }}>
-        <div className="card">
-          <div className="card-header"><span className="card-title">🎯 Профиль животного</span></div>
-          <div className="card-body" style={{ display: "flex", justifyContent: "center" }}>
-            <RadarChart scores={inf.radarScores} />
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-header"><span className="card-title">🏆 Рейтинг в стаде</span></div>
-          <div className="card-body">
-            {inf.herdRankings.map((r, i) => (
-              <div key={i} style={{ marginBottom: 12 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 }}>
-                  <span style={{ color: "var(--text-secondary)" }}>{r.metric}</span>
-                  <strong style={{ color: r.percentile >= 80 ? "var(--success)" : "var(--text-primary)" }}>Топ {100 - r.percentile}%</strong>
-                </div>
-                <ProgressBar value={r.percentile} max={100} color={r.percentile >= 80 ? "var(--success)" : r.percentile >= 50 ? "var(--primary-400)" : "var(--warning)"} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
   );
 }

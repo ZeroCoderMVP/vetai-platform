@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     const thirtyDaysAgo = getSystemDate();
     thirtyDaysAgo.setDate(today.getDate() - 30);
   
-    const startDate = fromParam ? new Date(fromParam) : thirtyDaysAgo;
+    const startDate = fromParam ? new Date(fromParam) : today;
     const endDate = toParam ? new Date(toParam) : today;
     
     const startOfTargetDate = new Date(startDate);
