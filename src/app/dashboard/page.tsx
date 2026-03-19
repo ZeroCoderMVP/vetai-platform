@@ -543,8 +543,8 @@ function DashboardContent() {
           <div className="card-body" style={{ padding: 0 }}>
             <div className="event-list" style={{ maxHeight: 360, overflowY: "auto" }}>
               {/* AfiFarm events */}
-              {farmData?.afimilk?.mastitisSuspects?.items?.map((item: any) => (
-                <div key={`mast-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+              {farmData?.afimilk?.mastitisSuspects?.items?.map((item: any, i: number) => (
+                <div key={`mast-${item.cow}-${i}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--danger)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на мастит</strong> — #{item.cow}</div>
@@ -552,8 +552,8 @@ function DashboardContent() {
                   </div>
                 </div>
               ))}
-              {farmData?.afimilk?.ketosisSuspects?.items?.map((item: any) => (
-                <div key={`ket-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+              {farmData?.afimilk?.ketosisSuspects?.items?.map((item: any, i: number) => (
+                <div key={`ket-${item.cow}-${i}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--warning)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на кетоз</strong> — #{item.cow}</div>
@@ -561,8 +561,8 @@ function DashboardContent() {
                   </div>
                 </div>
               ))}
-              {farmData?.afimilk?.heatSuspects?.items?.slice(0, 5).map((item: any) => (
-                <div key={`heat-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+              {farmData?.afimilk?.heatSuspects?.items?.slice(0, 5).map((item: any, i: number) => (
+                <div key={`heat-${item.cow}-${i}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--primary-400)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Подозрение на охоту</strong> — #{item.cow}</div>
@@ -570,8 +570,8 @@ function DashboardContent() {
                   </div>
                 </div>
               ))}
-              {farmData?.afimilk?.freshCows?.items?.map((item: any) => (
-                <div key={`fresh-${item.cow}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
+              {farmData?.afimilk?.freshCows?.items?.map((item: any, i: number) => (
+                <div key={`fresh-${item.cow}-${i}`} className="event-item" style={{ cursor: "pointer" }} onClick={() => router.push(`/herd/${item.cow}`)}>
                   <span className="event-dot" style={{ background: "var(--info)" }} />
                   <div className="event-content">
                     <div className="event-text"><strong>Новотельная корова</strong> — #{item.cow}</div>

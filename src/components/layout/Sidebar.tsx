@@ -15,7 +15,7 @@ const navigation = [
     items: [
       { href: "/dashboard", label: "Дашборд", icon: "📊" },
       { href: "/dashboard/executive", label: "Руководитель", icon: "👑" },
-      { href: "/events", label: "События", icon: "🔔", badgeKey: "alerts" },
+      { href: "/events", label: "События", icon: "🔔" },
     ],
   },
   {
@@ -42,6 +42,7 @@ const navigation = [
   {
     section: "Система",
     items: [
+      { href: "/scenarios", label: "Сценарии", icon: "🔮" },
       { href: "/reporting", label: "Отчетность", icon: "📄" },
       { href: "/admin", label: "Администрирование", icon: "⚙️" },
     ],

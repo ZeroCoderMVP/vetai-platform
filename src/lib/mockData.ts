@@ -337,10 +337,10 @@ function buildMilkingRecords(): MilkingRecord[] {
 
   // Add 30-day history for Cow #21
   const cow21 = ALL_COWS.find(c => c.number === '21')!;
-  for (let day = 1; day <= 30; day++) {
+  for (let day = 1; day <= 90; day++) {
     const dateStr = daysAgo(day);
     for (const s of sessionTimes) {
-      const dayOffset = (30 - day) / 30; // 0 = oldest, 1 = newest
+      const dayOffset = (90 - day) / 90; // 0 = oldest, 1 = newest
       const baseYield = cow21.avgYield * (0.9 + 0.1 * dayOffset); // slight upward trend
       const sessionFactor = s.session === 1 ? 0.40 : 0.30;
       const sessionYield = Math.round((baseYield * 3 * sessionFactor + randBetween(-2, 2)) * 10) / 10;
@@ -519,9 +519,9 @@ export function getMockDashboardData(): DashboardResponse {
   const avgIOFC = iofcGroups.length > 0 ? Math.round(iofcGroups.reduce((s, g) => s + (g.iofc || 0), 0) / iofcGroups.length) : null;
   const totalFeedCost = groups.reduce((s, g) => s + (g.feedCost || 0) * g.headCount, 0);
 
-  // Daily data (30 days)
+  // Daily data (90 days)
   const daily: DashboardDaily[] = [];
-  for (let i = 29; i >= 0; i--) {
+  for (let i = 89; i >= 0; i--) {
     const dayPlanned = Math.round(totalPlanned / 30 + randBetween(-200, 200));
     const dayEff = randBetween(0.93, 0.99);
     const dayActual = Math.round(dayPlanned * dayEff);

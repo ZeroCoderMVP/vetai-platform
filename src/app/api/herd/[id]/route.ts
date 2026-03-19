@@ -175,7 +175,11 @@ export async function GET(
         { axis: 'Вымя', value: 80, max: 100 },
       ],
       herdRankings: [
-        { metric: 'Надой за лактацию', rank: 10, total: 370, percentile: 90 },
+        { metric: 'Надой за лактацию', rank: 10, total: 370, percentile: 97 },
+        { metric: 'Среднесуточный удой', rank: 15, total: 370, percentile: 95 },
+        { metric: 'Уровень соматических клеток', rank: 45, total: 370, percentile: 87 },
+        { metric: 'Выход жира и белка', rank: 22, total: 370, percentile: 94 },
+        { metric: 'Индекс фертильности', rank: 110, total: 370, percentile: 70 },
       ],
       monthlyTrends: [],
       lifetimeStats: {

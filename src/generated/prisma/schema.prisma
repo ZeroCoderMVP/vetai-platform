@@ -808,6 +808,37 @@ model CowEvent {
   @@index([cowId, eventDate])
 }
 
+// ==========================================
+// Фаза 6 — Модуль Уведомлений (Inbox)
+// ==========================================
+
+/// Системные и пользовательские уведомления
+model Notification {
+  id       String  @id @default(cuid())
+  userId   String  @default("system") // Пока один пользователь, но архитектурно выделен
+  title    String
+  message  String?
+  type     String // action_required, report_alert, system_alert, info
+  priority String  @default("medium") // critical, high, medium, low
+
+  // Связь с источником (polymorphic-like)
+  sourceType String? // cow, group, section, report, integration, system
+  sourceId   String?
+  link       String? // URL/route для быстрого перехода
+
+  isRead       Boolean @default(false)
+  isActionable Boolean @default(false)
+  status       String  @default("unread") // unread, read, in_progress, done, dismissed
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  readAt    DateTime?
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+  @@index([sourceType, sourceId])
+}
+
 model DashboardSnapshot {
   id                  String   @id @default(cuid())
   farmId              String

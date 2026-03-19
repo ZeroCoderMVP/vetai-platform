@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/components/ThemeProvider";
+import Link from "next/link";
 
 interface HeaderProps {
   title: string;
@@ -36,10 +37,17 @@ export default function Header({ title, userName = "Лебедев Алекса�
         >
           <span className="theme-icon">{theme === "dark" ? "☀️" : "🌙"}</span>
         </button>
-        <button className="header-btn" title="Уведомления">
+        <Link href="/notifications" className="header-btn" title="Уведомления" style={{ textDecoration: 'none', position: 'relative' }}>
           🔔
-          {alertCount > 0 && <span className="badge" />}
-        </button>
+          {alertCount > 0 && (
+            <span className="badge" style={{ 
+              position: 'absolute', top: 4, right: 4, background: 'var(--status-critical)', color: 'white', 
+              fontSize: '10px', fontWeight: 'bold', padding: '2px 4px', borderRadius: '10px', minWidth: '16px', textAlign: 'center'
+            }}>
+              {alertCount > 99 ? '99+' : alertCount}
+            </span>
+          )}
+        </Link>
         <button className="header-btn" title="Настройки">
           ⚙️
         </button>

@@ -641,6 +641,24 @@ exports.Prisma.CowEventScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  priority: 'priority',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  link: 'link',
+  isRead: 'isRead',
+  isActionable: 'isActionable',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  readAt: 'readAt'
+};
+
 exports.Prisma.DashboardSnapshotScalarFieldEnum = {
   id: 'id',
   farmId: 'farmId',
@@ -713,6 +731,7 @@ exports.Prisma.ModelName = {
   OperationComment: 'OperationComment',
   OperationAttachment: 'OperationAttachment',
   CowEvent: 'CowEvent',
+  Notification: 'Notification',
   DashboardSnapshot: 'DashboardSnapshot'
 };
 

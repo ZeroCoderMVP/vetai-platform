@@ -432,21 +432,27 @@ function HealthTab({ twin }: { twin: DigitalTwinData }) {
 }
 
 function BCSChart({ data }: { data: { date: string; score: number; dim: number }[] }) {
-  const w = 300, h = 100, pad = 30;
-  const minS = 2.5, maxS = 4.0, range = maxS - minS;
+  const w = 300, h = 100, padX = 15, padY = 20;
+  // Calculate dynamic range with some padding, but keep the 2.75-3.50 zone visible
+  const minVal = Math.min(...data.map(d => d.score), 2.7);
+  const maxVal = Math.max(...data.map(d => d.score), 3.6);
+  const minS = minVal - 0.1, maxS = maxVal + 0.1, range = maxS - minS;
+  
   return (
     <svg viewBox={`0 0 ${w} ${h}`} style={{ width: "100%", maxHeight: 120 }}>
-      <rect x={pad} y={pad + (1 - (3.5 - minS) / range) * (h - pad * 2)} width={w - pad * 2} height={(0.75 / range) * (h - pad * 2)} fill="rgba(15,168,122,0.08)" />
+      {/* Target zone 2.75 - 3.50 green background */}
+      <rect x={padX} y={padY + (1 - (3.5 - minS) / range) * (h - padY * 2)} width={w - padX * 2} height={((3.5 - 2.75) / range) * (h - padY * 2)} fill="rgba(15,168,122,0.08)" />
       {data.map((d, i) => {
         if (i === 0) return null;
-        const x1 = pad + ((i - 1) / (data.length - 1)) * (w - pad * 2), y1 = pad + (1 - (data[i - 1].score - minS) / range) * (h - pad * 2);
-        const x2 = pad + (i / (data.length - 1)) * (w - pad * 2), y2 = pad + (1 - (d.score - minS) / range) * (h - pad * 2);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--warning)" strokeWidth="2" />;
+        const x1 = padX + ((i - 1) / (data.length - 1)) * (w - padX * 2), y1 = padY + (1 - (data[i - 1].score - minS) / range) * (h - padY * 2);
+        const x2 = padX + (i / (data.length - 1)) * (w - padX * 2), y2 = padY + (1 - (d.score - minS) / range) * (h - padY * 2);
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--warning)" strokeWidth="2.5" strokeLinecap="round" />;
       })}
       {data.map((d, i) => {
-        const x = pad + (i / (data.length - 1)) * (w - pad * 2), y = pad + (1 - (d.score - minS) / range) * (h - pad * 2);
-        return <g key={i}><circle cx={x} cy={y} r="4" fill="var(--warning)" stroke="var(--bg-surface)" strokeWidth="2" />
-          {(i === 0 || i === data.length - 1 || d.score === Math.min(...data.map(v => v.score))) && <text x={x} y={y - 8} textAnchor="middle" fontSize="9" fill="var(--text-primary)" fontWeight="600">{d.score}</text>}
+        const x = padX + (i / (data.length - 1)) * (w - padX * 2), y = padY + (1 - (d.score - minS) / range) * (h - padY * 2);
+        return <g key={i}>
+          <circle cx={x} cy={y} r="4.5" fill="var(--warning)" stroke="var(--bg-surface)" strokeWidth="2" />
+          <text x={x} y={y - 10} textAnchor="middle" fontSize="10" fill="var(--text-primary)" fontWeight="700">{d.score.toFixed(2)}</text>
         </g>;
       })}
     </svg>
@@ -752,7 +758,11 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
                     <strong style={{ fontSize: 13, textDecoration: isClickable ? "underline" : "none" }}>{e.title}</strong>
                     {e.severity && <SeverityDot s={e.severity} />}
                   </div>
-                  <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>{e.description}</div>
+                  <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>
+                    {e.description && e.description.trim().startsWith('{') 
+                      ? "📊 Системная запись (нажмите чтобы открыть карточку)" 
+                      : e.description}
+                  </div>
                   <div className="event-time">{e.date} · {catLabels[e.category] || e.category}</div>
                 </div>
               </>
