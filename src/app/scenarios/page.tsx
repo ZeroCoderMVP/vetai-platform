@@ -19,6 +19,10 @@ import {
 import { getScenarioStorage } from "@/lib/scenarios/scenarioStorage";
 import { calculateScenarioForecast } from "@/lib/scenarios/scenarioEngine";
 
+import { ScenarioModelProfile } from "@/types/scenarioModel";
+import { getScenarioModelStorage } from "@/lib/scenarios/model/scenarioModelStorage";
+import { defaultScenarioModelProfile } from "@/lib/scenarios/model/scenarioModelDefaults";
+
 export default function ScenariosPage() {
   const [mounted, setMounted] = useState(false);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
@@ -29,6 +33,10 @@ export default function ScenariosPage() {
   const [calculation, setCalculation] = useState<ScenarioCalculationResult | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [baselineKpi, setBaselineKpi] = useState<KPIValues | null>(null);
+
+  // Model Profiles state
+  const [profiles, setProfiles] = useState<ScenarioModelProfile[]>([]);
+  const [activeProfileId, setActiveProfileId] = useState<string>('default-profile-v1');
 
   useEffect(() => {
     fetch('/api/scenarios/baseline')
@@ -42,6 +50,12 @@ export default function ScenariosPage() {
     const all = storage.getAll();
     setScenarios(all);
     
+    // Load Model Profiles
+    const modelStorage = getScenarioModelStorage();
+    const allProfiles = modelStorage.getAll();
+    setProfiles(allProfiles);
+    setActiveProfileId(modelStorage.getActive().id);
+
     const baseline = all.find(s => s.id === 'baseline');
     if (baseline) {
       setCurrentParams(baseline.parameters);
@@ -50,12 +64,15 @@ export default function ScenariosPage() {
     setMounted(true);
   }, []);
 
-  // Recalculate anytime parameters, baseline or horizon change, if mounted
+  // Use the active profile from state, or fallback if deleted
+  const activeProfile = profiles.find(p => p.id === activeProfileId) || defaultScenarioModelProfile;
+
+  // Recalculate anytime parameters, baseline, horizon, or the active profile change
   useEffect(() => {
     if (!mounted || !baselineKpi) return;
-    const result = calculateScenarioForecast(selectedId, baselineKpi, currentParams, horizon);
+    const result = calculateScenarioForecast(selectedId, baselineKpi, currentParams, horizon, activeProfile);
     setCalculation(result);
-  }, [currentParams, horizon, selectedId, mounted, baselineKpi]);
+  }, [currentParams, horizon, selectedId, mounted, baselineKpi, activeProfile]);
 
   const handleSelect = (id: string) => {
     const storage = getScenarioStorage();
@@ -64,6 +81,10 @@ export default function ScenariosPage() {
       setSelectedId(id);
       setCurrentParams(sc.parameters);
       setHorizon(sc.timeHorizon);
+      // Optional: Load the specific profile tied to this scenario if it exists:
+      if (sc.modelProfileId && profiles.some(p => p.id === sc.modelProfileId)) {
+         setActiveProfileId(sc.modelProfileId);
+      }
     }
   };
 
@@ -80,6 +101,7 @@ export default function ScenariosPage() {
       timeHorizon: horizon,
       parameters: { ...currentParams },
       isBaseline: false,
+      modelProfileId: activeProfileId // tie current profile
     });
     setScenarios(storage.getAll());
     setSelectedId(newScen.id);
@@ -95,30 +117,48 @@ export default function ScenariosPage() {
       ...sc,
       parameters: currentParams,
       timeHorizon: horizon,
+      modelProfileId: activeProfileId
     });
     setScenarios(storage.getAll());
     setTimeout(() => setIsSaving(false), 500); // UI feedback
   };
 
+  // Rule Profile Handlers
+  const handleSaveProfile = (profile: ScenarioModelProfile) => {
+    const storage = getScenarioModelStorage();
+    storage.saveProfile(profile);
+    setProfiles(storage.getAll());
+  };
+
+  const handleDeleteProfile = (id: string) => {
+    const storage = getScenarioModelStorage();
+    storage.deleteProfile(id);
+    const updated = storage.getAll();
+    setProfiles(updated);
+    if (activeProfileId === id) {
+       setActiveProfileId(updated[0].id);
+    }
+  };
+
   if (!mounted || !calculation) {
     return (
       <AppLayout title="Сценарное управление">
-        <div className="empty-state">
-          <div className="empty-state-icon">⏳</div>
-          <div className="empty-state-text">Загрузка сценарного движка...</div>
+        <div className="empty-state bg-white border border-[var(--border-subtle)]">
+          <div className="empty-state-icon text-5xl mb-4">🔮</div>
+          <div className="empty-state-text text-xl font-medium">Загрузка сценарного движка...</div>
+          <div className="text-gray-500 mt-2">Инициализация правил и профилей модели</div>
         </div>
       </AppLayout>
     );
   }
 
-  const selectedScenario = scenarios.find(s => s.id === selectedId);
-  const isBaseline = selectedScenario?.isBaseline || false;
-
   const currentForecast = calculation.forecasts[horizon - 1].kpi;
+  const isBaseline = !!(scenarios.find(s => s.id === selectedId)?.isBaseline);
 
   return (
     <AppLayout title="Сценарное управление">
-      <div className="animate-fade-in w-full">
+      <div className="animate-fade-in w-full pb-10">
+
         <ScenarioHeader
           scenarios={scenarios}
           selectedId={selectedId}
@@ -128,9 +168,39 @@ export default function ScenariosPage() {
           onSave={handleSave}
           onCreate={handleCreate}
           isSaving={isSaving}
+          activeProfileName={activeProfile.name}
         />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 'var(--space-6)', marginTop: 'var(--space-6)' }}>
+        {/* Diagnostic Bar Above Grid */}
+        {calculation.diagnostics && (
+          <div className="mb-6 flex gap-4 p-4 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-elevated)]">
+            <div className="flex-1 flex flex-col justify-center border-r pr-4" style={{ borderColor: 'var(--border-subtle)' }}>
+              <span className="text-xs text-[var(--text-secondary)] mb-1 uppercase tracking-wider font-semibold">Насыщение ингредиентов</span>
+              <div className="flex items-center gap-2">
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className={`h-2.5 rounded-full ${calculation.diagnostics.saturationLevel > 90 ? 'bg-red-500' : 'bg-green-500'}`} style={{ width: `${calculation.diagnostics.saturationLevel}%` }}></div>
+                </div>
+                <span className="text-sm font-bold w-12 text-right">{calculation.diagnostics.saturationLevel}%</span>
+              </div>
+            </div>
+            
+            <div className="flex-1 flex flex-col justify-center border-r px-4" style={{ borderColor: 'var(--border-subtle)' }}>
+               <span className="text-xs text-[var(--text-secondary)] mb-1 uppercase tracking-wider font-semibold">Угроза высоких остатков (Risk)</span>
+               {calculation.diagnostics.feedResidualsAlert ? (
+                 <span className="text-sm font-medium text-red-600 flex items-center gap-1">⚠️ Выявлен перекорм или низкая утилизация</span>
+               ) : (
+                 <span className="text-sm font-medium text-green-600 flex items-center gap-1">✅ Риск остатков в норме</span>
+               )}
+            </div>
+
+            <div className="flex-1 flex flex-col justify-center pl-4">
+               <span className="text-xs text-[var(--text-secondary)] mb-1 uppercase tracking-wider font-semibold">Маржинальная эффективность (IOFC/КГ)</span>
+               <span className="text-lg font-bold">{calculation.diagnostics.marginalEfficiency.toFixed(2)} ₽/литр</span>
+            </div>
+          </div>
+        )}
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 'var(--space-6)' }}>
           {/* Left sidebar - Controls */}
           <div>
             <ScenarioControls 

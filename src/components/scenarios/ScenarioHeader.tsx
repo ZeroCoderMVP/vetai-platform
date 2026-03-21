@@ -1,5 +1,7 @@
 import { Scenario } from "@/types/scenario";
 import { ChangeEvent } from "react";
+import Link from "next/link";
+import ScenarioModelSettingsButton from "./settings/ScenarioModelSettingsButton";
 
 interface ScenarioHeaderProps {
   scenarios: Scenario[];
@@ -10,6 +12,8 @@ interface ScenarioHeaderProps {
   onSave: () => void;
   onCreate: () => void;
   isSaving: boolean;
+  onOpenSettings?: () => void;
+  activeProfileName?: string;
 }
 
 export default function ScenarioHeader({
@@ -21,6 +25,8 @@ export default function ScenarioHeader({
   onSave,
   onCreate,
   isSaving,
+  onOpenSettings,
+  activeProfileName
 }: ScenarioHeaderProps) {
   const current = scenarios.find((s) => s.id === selectedId);
   const options = [1, 3, 6, 12];
@@ -39,6 +45,12 @@ export default function ScenarioHeader({
       </div>
 
       <div className="page-header-actions" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <Link href="/scenarios/settings" style={{ textDecoration: 'none' }}>
+          <ScenarioModelSettingsButton 
+            activeProfileName={activeProfileName || "По умолчанию"}
+          />
+        </Link>
+
         <select
           value={selectedId}
           onChange={(e) => onSelect(e.target.value)}

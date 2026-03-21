@@ -83,7 +83,7 @@ function ReportingContent() {
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           // Merge logic if needed, or just append generic db ones
-          const dbMapped = data.map(d => ({
+          const dbMapped: ReportTemplate[] = data.map((d: any) => ({
             id: d.id, code: d.code, name: d.name, description: d.description,
             reportType: d.reportType || "REGULATORY", periodicity: "По требованию",
             kpis: ["Стандартные KPI"], defaultFormat: d.defaultFormat || "PDF", status: "active"

@@ -67,6 +67,7 @@ export interface ScenarioFactorImpact {
   change: string;
   effect: string;
   comment: string;
+  riskLevel?: 'none' | 'low' | 'medium' | 'high';
 }
 
 export interface Scenario {
@@ -78,6 +79,7 @@ export interface Scenario {
   timeHorizon: ForecastHorizon;
   parameters: ScenarioParameters;
   isBaseline?: boolean; // If true, this represents the current farm state
+  modelProfileId?: string; // Links this scenario explicitly to a config version
 }
 
 export interface ScenarioCalculationResult {
@@ -86,6 +88,11 @@ export interface ScenarioCalculationResult {
   forecasts: ForecastPoint[]; // points up to the timeHorizon
   insights: ScenarioExplanation[];
   impactTable: ScenarioFactorImpact[];
+  diagnostics?: {
+    marginalEfficiency: number;
+    feedResidualsAlert: boolean;
+    saturationLevel: number;
+  };
 }
 
 export const defaultBaselineParameters: ScenarioParameters = {

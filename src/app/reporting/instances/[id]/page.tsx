@@ -53,7 +53,7 @@ export default function InstanceDetailPage() {
             <span style={{ color: 'var(--text-tertiary)' }}>/</span>
             <Link href={`/reporting/templates/mvp-morning-brief`} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>{instance.templateName}</Link>
             <span style={{ color: 'var(--text-tertiary)' }}>/</span>
-            <span style={{ color: 'var(--text-primary)' }}>Экземпляр #{id.slice(0, 8)}</span>
+            <span style={{ color: 'var(--text-primary)' }}>Экземпляр #{(id as string)?.slice(0, 8)}</span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

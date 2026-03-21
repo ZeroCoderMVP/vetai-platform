@@ -1,80 +1,117 @@
 import { KPIValues, ScenarioParameters, ForecastPoint, ScenarioFactorImpact, ScenarioExplanation, ScenarioCalculationResult, defaultBaselineParameters } from '@/types/scenario';
+import { ScenarioModelProfile } from '@/types/scenarioModel';
+import { defaultScenarioModelProfile } from '@/lib/scenarios/model/scenarioModelDefaults';
 
 export function calculateScenarioForecast(
   scenarioId: string,
   baselineKpi: KPIValues,
   parameters: ScenarioParameters,
-  timeHorizon: 1 | 3 | 6 | 12
+  timeHorizon: 1 | 3 | 6 | 12,
+  modelProfile: ScenarioModelProfile = defaultScenarioModelProfile
 ): ScenarioCalculationResult {
   const baseline = baselineKpi;
   const forecasts: ForecastPoint[] = [];
+  const config = modelProfile.config;
+
+  let peakMilkDiff = 0;
+  let hasFeedResidualsAlert = false;
+  let highestSaturation = 0;
 
   for (let month = 1; month <= timeHorizon; month++) {
-    // Math.min limits rapid growth, but allows strong impacts
-    const factor = Math.min(1, month / 3); // Effects propagate faster for demo purposes
+    const factor = Math.min(1, month / config.lagRules.milkLagDays);
 
-    // 1. Feeding block
+    // 1. Feeding block - Ingredient Rules
     const accuracyDiff = parameters.feeding.feedingAccuracy - defaultBaselineParameters.feeding.feedingAccuracy;
-    const efficiencyBoost = accuracyDiff * 0.25 * factor; // stronger precision effect
+    const efficiencyBoost = accuracyDiff * 0.25 * factor; 
     
-    // Concentrate share impact (more concentrate = more milk, but higher cost)
-    const concentrateDiff = parameters.feeding.concentrateShare - defaultBaselineParameters.feeding.concentrateShare;
-    const milkBoostConcentrate = concentrateDiff * 0.4 * factor; 
+    // Concentrate logic using Rule Engine
+    const concRule = config.ingredientResponseRules.find(r => r.ingredientCode === 'conc_base');
+    const concShare = parameters.feeding.concentrateShare; 
+    let concMilkBoost = 0;
+    let concentrateSaturation = 0;
 
-    // Silage/Haylage impact
-    const roughageDiff = (parameters.feeding.silageShare + parameters.feeding.haylageShare) - 
-                         (defaultBaselineParameters.feeding.silageShare + defaultBaselineParameters.feeding.haylageShare);
-    const healthBoost = roughageDiff * 0.1 * factor; // more roughage = better health, less milk drops
+    if (concRule && concRule.enabled) {
+      const diffX = concShare - defaultBaselineParameters.feeding.concentrateShare;
+      const deltaKg = diffX * 0.5;
+      
+      if (deltaKg > 0) {
+        // Diminishing returns logic
+        const saturationSpan = concRule.saturationStart - concRule.baselineX;
+        const effDelta = deltaKg > saturationSpan
+                         ? saturationSpan + ((deltaKg - saturationSpan) * concRule.diminishingReturnFactor)
+                         : deltaKg;
+        
+        concMilkBoost = effDelta * (concRule.maxMilkDelta / 10) * factor; 
+        
+        const satSpanEnd = concRule.saturationEnd - concRule.baselineX;
+        concentrateSaturation = satSpanEnd > 0 ? (deltaKg / satSpanEnd) : 0;
+      } else {
+        concMilkBoost = deltaKg * (concRule.maxMilkDelta / 10) * concRule.deficiencyPenaltyFactor * factor;
+      }
+    } else {
+      concMilkBoost = (parameters.feeding.concentrateShare - defaultBaselineParameters.feeding.concentrateShare) * 0.4 * factor;
+    }
 
-    // 2. Groups block
+    if (concentrateSaturation > highestSaturation) highestSaturation = concentrateSaturation;
+
+    // Feed utilization (Residuals)
+    const extraFeedIntake = concShare - defaultBaselineParameters.feeding.concentrateShare;
+    let residualsGrowth = 0;
+    if (extraFeedIntake > (config.feedUtilizationRules.intakeSlowdownPoint - 100)) {
+       residualsGrowth = extraFeedIntake * config.feedUtilizationRules.extraFeedToRefusalFactor;
+       hasFeedResidualsAlert = true;
+    }
+
+    // 2. Groups block with Risk Rules
     const densityDiff = parameters.groups.stockingDensity - 100;
-    const densityPenalty = densityDiff > 0 ? (densityDiff * -0.2 * factor) : 0; // high density kills yield
-    const densityCulling = densityDiff > 0 ? (densityDiff * 0.1 * factor) : 0; // high density kills cows
+    const densityPenalty = densityDiff > 0 ? (densityDiff * -0.2 * factor) : 0; 
+    const densityCulling = densityDiff > 0 ? (densityDiff * 0.1 * factor) : 0; 
 
     // 3. Reproduction block
     const crDiff = parameters.reproduction.conceptionRate - defaultBaselineParameters.reproduction.conceptionRate;
-    const cowIncreasePercent = (crDiff * 0.4) * (month / 6); // More cows linearly over months
+    const cowIncreasePercent = (crDiff * 0.4) * (month / 6); 
 
     // KPIs modifications
     const newMilkingCows = Math.max(Math.round(baseline.milkingCows * 0.5), baseline.milkingCows * (1 + cowIncreasePercent / 100) - densityCulling);
     const newTotalAnimals = Math.max(Math.round(baseline.totalAnimals * 0.5), baseline.totalAnimals * (1 + cowIncreasePercent / 100) - densityCulling);
 
-    const newAvgMilk = Math.max(5, baseline.averageMilkPerCow + milkBoostConcentrate + densityPenalty + healthBoost + (accuracyDiff * 0.08 * factor));
+    const healthBoost = 0; 
+    const newAvgMilk = Math.max(5, baseline.averageMilkPerCow + concMilkBoost + densityPenalty + healthBoost + (accuracyDiff * 0.08 * factor));
+    const MathAvgMilk = Math.round(newAvgMilk * 10) / 10;
+    if (MathAvgMilk - baseline.averageMilkPerCow > peakMilkDiff) peakMilkDiff = MathAvgMilk - baseline.averageMilkPerCow;
+    
     const newTotalMilk = newMilkingCows * newAvgMilk;
 
     // 4. Economics block
-    const newFeedEfficiency = Math.max(50, Math.min(100, baseline.feedEfficiency + efficiencyBoost));
+    const newFeedEfficiency = Math.max(50, Math.min(100, baseline.feedEfficiency + efficiencyBoost - residualsGrowth * 2));
     
-    // Feed scale: default index 1, plus concentrate is expensive
-    const feedScale = parameters.economics.feedCostIndex * (1 + (concentrateDiff * 0.015));
+    const feedScale = parameters.economics.feedCostIndex * (1 + (extraFeedIntake * 0.015)) + (residualsGrowth * 0.01);
     const newFeedCostPerHead = baseline.feedCostPerHead * feedScale;
-    const newTotalFeedCost = newTotalAnimals * newFeedCostPerHead; // simple
+    const newTotalFeedCost = newTotalAnimals * newFeedCostPerHead; 
     
-    const revenue = newTotalMilk * parameters.economics.milkPrice;
+    const revenue = newTotalMilk * config.economicsRules.milkPrice;
     const IOFC = (revenue - newTotalFeedCost) / newMilkingCows;
     
     const newCostPerLiter = newTotalMilk > 0 
       ? ((newTotalFeedCost + baseline.costPerLiter * baseline.totalDailyMilk * parameters.economics.vetCostIndex * 0.4) / newTotalMilk)
       : baseline.costPerLiter * 2;
 
-    // Repro stats
     const newPregRate = Math.max(0, baseline.pregnancyRate + crDiff * factor);
 
-    // Economic Base
-    const baseRevenue = baseline.totalDailyMilk * defaultBaselineParameters.economics.milkPrice;
+    const baseRevenue = baseline.totalDailyMilk * config.economicsRules.milkPrice;
     const baseTotalFeedCost = baseline.totalAnimals * baseline.feedCostPerHead;
     const baseEconDaily = baseRevenue - baseTotalFeedCost - (baseline.costPerLiter * baseline.totalDailyMilk * 0.4); 
     
     const scenEconDaily = revenue - newTotalFeedCost - (baseline.costPerLiter * baseline.totalDailyMilk * parameters.economics.vetCostIndex * 0.4);
     const dailyEconDelta = scenEconDaily - baseEconDaily;
-    const totalEconomicEffect = dailyEconDelta * 30.4; // Monthly effect
+    const totalEconomicEffect = dailyEconDelta * 30.4; 
 
     forecasts.push({
       month,
       kpi: {
         totalAnimals: Math.round(newTotalAnimals),
         milkingCows: Math.round(newMilkingCows),
-        averageMilkPerCow: Math.round(newAvgMilk * 10) / 10,
+        averageMilkPerCow: MathAvgMilk,
         totalDailyMilk: Math.round(newTotalMilk),
         feedEfficiency: Math.round(newFeedEfficiency * 10) / 10,
         feedCostPerHead: Math.round(newFeedCostPerHead * 10) / 10,
@@ -93,15 +130,19 @@ export function calculateScenarioForecast(
   }
 
   const finalKpi = forecasts[timeHorizon - 1].kpi;
-  const insights = generateInsights(baseline, finalKpi, parameters, timeHorizon);
-  const impactTable = generateImpactTable(baseline, finalKpi, parameters);
+  const insightsAndImpacts = generateInsights(baseline, finalKpi, parameters, timeHorizon, modelProfile);
 
   return {
     scenarioId,
     baselineKpi: baseline,
     forecasts,
-    insights,
-    impactTable,
+    insights: insightsAndImpacts.insights,
+    impactTable: insightsAndImpacts.impactTable,
+    diagnostics: {
+      marginalEfficiency: peakMilkDiff > 0 ? (finalKpi.totalEconomicEffect / (peakMilkDiff * 1000)) : 0, 
+      feedResidualsAlert: hasFeedResidualsAlert,
+      saturationLevel: Math.min(100, Math.round(highestSaturation * 100))
+    }
   };
 }
 
@@ -109,9 +150,12 @@ function generateInsights(
   base: KPIValues,
   scen: KPIValues,
   p: ScenarioParameters,
-  horizon: number
-): ScenarioExplanation[] {
+  horizon: number,
+  modelProfile: ScenarioModelProfile
+): { insights: ScenarioExplanation[], impactTable: ScenarioFactorImpact[] } {
   const insights: ScenarioExplanation[] = [];
+  const impactTable: ScenarioFactorImpact[] = [];
+  const config = modelProfile.config;
   
   const milkDiff = scen.averageMilkPerCow - base.averageMilkPerCow;
   if (milkDiff < -2) {
@@ -128,6 +172,55 @@ function generateInsights(
     });
   }
 
+  // Diagnostic Insights from Rule Engine
+  const concDiff = p.feeding.concentrateShare - defaultBaselineParameters.feeding.concentrateShare;
+  if (concDiff > 5) {
+    const concRule = config.ingredientResponseRules.find(r => r.ingredientCode === 'conc_base');
+    if (concRule && concDiff > (concRule.saturationStart - concRule.baselineX)) {
+      insights.push({
+        type: 'risk',
+        title: 'Близость к потолку отдачи',
+        description: `Дополнительный комбикорм дает слабую маржинальную отдачу из-за эффекта насыщения.`
+      });
+      impactTable.push({
+        factor: 'Увеличение концентратов',
+        change: `+${concDiff}%`,
+        effect: 'Убывающая отдача',
+        comment: 'Основная прибавка переходит в остатки и удорожание.',
+        riskLevel: 'high'
+      });
+    } else {
+      impactTable.push({
+        factor: 'Увеличение концентратов',
+        change: `+${concDiff}%`,
+        effect: 'Рост молока',
+        comment: 'Находится в пределах эффективной зоны отклика.',
+        riskLevel: 'low'
+      });
+    }
+  }
+
+  // Risk Penalty checks
+  if (config.riskPenaltyRules) {
+    const refusalRisk = config.riskPenaltyRules.find(r => r.code === 'HIGH_REFUSAL');
+    if (refusalRisk && refusalRisk.enabled && p.feeding.targetRemainder > refusalRisk.thresholdYellow) {
+      insights.push({
+        type: 'negative',
+        title: refusalRisk.name,
+        description: refusalRisk.warningText
+      });
+    }
+    
+    const concOverloadRisk = config.riskPenaltyRules.find(r => r.code === 'CONC_OVERLOAD');
+    if (concOverloadRisk && concOverloadRisk.enabled && p.feeding.concentrateShare > concOverloadRisk.thresholdYellow) {
+       insights.push({
+         type: 'risk',
+         title: concOverloadRisk.name,
+         description: concOverloadRisk.warningText
+       });
+    }
+  }
+
   if (scen.totalEconomicEffect < -50000) {
     insights.push({
       type: 'risk',
@@ -142,48 +235,5 @@ function generateInsights(
     });
   }
 
-  const densityDiff = p.groups.stockingDensity - 100;
-  if (densityDiff > 5) {
-    insights.push({
-      type: 'risk',
-      title: 'Скученность',
-      description: `Высокая плотность посадки (${p.groups.stockingDensity}%) приведет к стрессу, болезням и падению продуктивности.`
-    });
-  }
-
-  const crDiff = p.reproduction.conceptionRate - defaultBaselineParameters.reproduction.conceptionRate;
-  if (crDiff > 5 && horizon > 3) {
-    insights.push({
-      type: 'recommendation',
-      title: 'Отличный воспроизводственный тренд',
-      description: `Рост Conception Rate начнет приводить к увеличению поголовья со 2-го полугодия.`
-    });
-  }
-
-  const accuracyDiff = p.feeding.feedingAccuracy - defaultBaselineParameters.feeding.feedingAccuracy;
-  if (accuracyDiff > 2) {
-    insights.push({
-      type: 'recommendation',
-      title: 'Оптимизация кормления',
-      description: `Рост точности кормления повысит кормовую эффективность и снизит потерю ингредиентов.`
-    });
-  }
-
-  if (insights.length === 0) {
-    insights.push({
-      type: 'recommendation',
-      title: 'Нет существенных сдвигов',
-      description: `Параметры близки к базовым. Попробуйте агрессивнее изменить состав рациона или экономику.`
-    });
-  }
-
-  return insights.slice(0, 4); // return max 4 top insights
-}
-
-function generateImpactTable(
-  base: KPIValues,
-  scen: KPIValues,
-  p: ScenarioParameters
-): ScenarioFactorImpact[] {
-  return []; // Replaced by insights directly per mockup
+  return { insights: insights.slice(0, 5), impactTable };
 }

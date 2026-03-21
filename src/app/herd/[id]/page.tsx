@@ -838,3 +838,16 @@ function HistoryTab({ twin }: { twin: DigitalTwinData }) {
     </div>
   );
 }
+
+// ---- INFOGRAPHICS TAB (STUB) ----
+function InfographicsTab({ twin }: { twin: DigitalTwinData }) {
+  return (
+    <div className="card">
+      <div className="card-header"><span className="card-title">📈 Инфографика</span></div>
+      <div className="card-body" style={{ textAlign: "center", padding: "var(--space-8)", color: "var(--text-secondary)" }}>
+        <span style={{ fontSize: 48, marginBottom: 16, display: "block" }}>🚧</span>
+        Этот раздел находится в разработке
+      </div>
+    </div>
+  );
+}
