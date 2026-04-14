@@ -47,6 +47,11 @@ const navigation = [
       { href: "/scenarios", label: "Сценарии", icon: "🔮" },
       { href: "/reporting", label: "Отчетность", icon: "📄" },
       { href: "/admin", label: "Администрирование", icon: "⚙️" },
+      { href: "/sync", label: "Синхронизация", icon: "🔄" },
+      { href: "/conflicts", label: "Конфликты", icon: "⚠️" },
+      { href: "/paper-inbox", label: "Скан-Журналы", icon: "📸" },
+      { href: "/inbox", label: "Входящие", icon: "📥" },
+      { href: "/outbox", label: "Исходящие", icon: "📤" },
     ],
   },
 ];

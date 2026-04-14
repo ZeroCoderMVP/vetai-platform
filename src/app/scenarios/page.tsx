@@ -33,6 +33,7 @@ export default function ScenariosPage() {
   const [calculation, setCalculation] = useState<ScenarioCalculationResult | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [baselineKpi, setBaselineKpi] = useState<KPIValues | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Model Profiles state
   const [profiles, setProfiles] = useState<ScenarioModelProfile[]>([]);
@@ -42,9 +43,16 @@ export default function ScenariosPage() {
     fetch('/api/scenarios/baseline')
       .then(res => res.json())
       .then(data => {
-        if (!data.error) setBaselineKpi(data);
+        if (!data.error) {
+          setBaselineKpi(data);
+        } else {
+          setLoadError(data.error || "Ошибка API");
+        }
       })
-      .catch(err => console.error("Failed to fetch scenario baseline:", err));
+      .catch(err => {
+        console.error("Failed to fetch scenario baseline:", err);
+        setLoadError(err.message || "Сбой загрузки данных");
+      });
 
     const storage = getScenarioStorage();
     const all = storage.getAll();
@@ -70,8 +78,13 @@ export default function ScenariosPage() {
   // Recalculate anytime parameters, baseline, horizon, or the active profile change
   useEffect(() => {
     if (!mounted || !baselineKpi) return;
-    const result = calculateScenarioForecast(selectedId, baselineKpi, currentParams, horizon, activeProfile);
-    setCalculation(result);
+    try {
+      const result = calculateScenarioForecast(selectedId, baselineKpi, currentParams, horizon, activeProfile);
+      setCalculation(result);
+    } catch (e: any) {
+      console.error("Scenario calculation failed:", e);
+      setLoadError("Ошибка алгоритма симуляции: " + e.message);
+    }
   }, [currentParams, horizon, selectedId, mounted, baselineKpi, activeProfile]);
 
   const handleSelect = (id: string) => {
@@ -139,6 +152,24 @@ export default function ScenariosPage() {
        setActiveProfileId(updated[0].id);
     }
   };
+
+  if (loadError) {
+    return (
+      <AppLayout title="Сценарное управление">
+        <div className="empty-state bg-white border border-[var(--border-subtle)]">
+          <div className="empty-state-icon text-5xl mb-4">⚠️</div>
+          <div className="empty-state-text text-xl font-medium text-red-600">Движок остановлен</div>
+          <div className="text-gray-500 mt-2">{loadError}</div>
+          <button 
+            className="mt-4 px-4 py-2 bg-[var(--primary)] text-white font-medium rounded-md hover:opacity-90 transition-opacity"
+            onClick={() => window.location.reload()}
+          >
+            Перезапустить
+          </button>
+        </div>
+      </AppLayout>
+    );
+  }
 
   if (!mounted || !calculation) {
     return (

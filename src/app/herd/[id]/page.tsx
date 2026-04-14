@@ -61,10 +61,10 @@ const TABS = [
   { id: "milking", label: "Доение", icon: "🥛" },
   { id: "health", label: "Здоровье", icon: "💊" },
   { id: "reproduction", label: "Воспроизводство", icon: "🧬" },
-  { id: "breeding", label: "Племработа", icon: "🐄" },
-  { id: "genetics", label: "Генетика", icon: "🧪" },
+  { id: "breeding", label: "Племраб. (Демо)", icon: "🐄" },
+  { id: "genetics", label: "Генетика (Демо)", icon: "🧪" },
   { id: "history", label: "История", icon: "📋" },
-  { id: "infographics", label: "Инфографика", icon: "📈" },
+  { id: "infographics", label: "Инфографика (Демо)", icon: "📈" },
 ];
 
 export default function AnimalCardPage() {

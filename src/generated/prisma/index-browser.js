@@ -397,7 +397,14 @@ exports.Prisma.EventScalarFieldEnum = {
   description: 'description',
   timestamp: 'timestamp',
   source: 'source',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  receivedAt: 'receivedAt',
+  sourceRecordId: 'sourceRecordId',
+  dedupeKey: 'dedupeKey',
+  confirmationStatus: 'confirmationStatus',
+  confirmedAt: 'confirmedAt',
+  confirmedById: 'confirmedById',
+  confidenceScore: 'confidenceScore'
 };
 
 exports.Prisma.ObservationScalarFieldEnum = {
@@ -679,6 +686,38 @@ exports.Prisma.DashboardSnapshotScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OutboxMessageScalarFieldEnum = {
+  id: 'id',
+  farmId: 'farmId',
+  dataSourceId: 'dataSourceId',
+  operationRequestId: 'operationRequestId',
+  eventId: 'eventId',
+  payloadJson: 'payloadJson',
+  status: 'status',
+  attempts: 'attempts',
+  nextRetryAt: 'nextRetryAt',
+  lastAttemptAt: 'lastAttemptAt',
+  externalAckId: 'externalAckId',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TaskScalarFieldEnum = {
+  id: 'id',
+  farmId: 'farmId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  dueDate: 'dueDate',
+  assigneeId: 'assigneeId',
+  cowId: 'cowId',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -732,7 +771,9 @@ exports.Prisma.ModelName = {
   OperationAttachment: 'OperationAttachment',
   CowEvent: 'CowEvent',
   Notification: 'Notification',
-  DashboardSnapshot: 'DashboardSnapshot'
+  DashboardSnapshot: 'DashboardSnapshot',
+  OutboxMessage: 'OutboxMessage',
+  Task: 'Task'
 };
 
 /**

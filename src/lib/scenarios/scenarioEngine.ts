@@ -11,7 +11,13 @@ export function calculateScenarioForecast(
 ): ScenarioCalculationResult {
   const baseline = baselineKpi;
   const forecasts: ForecastPoint[] = [];
-  const config = modelProfile.config;
+  
+  // 🔥 ЗАЩИТА ОТ ПУСТЫХ ИЛИ ПОВРЕЖДЕННЫХ ПРОФИЛЕЙ ИЗ lOCAL STORAGE
+  const config = modelProfile?.config || defaultScenarioModelProfile.config;
+  if (!config.lagRules) config.lagRules = defaultScenarioModelProfile.config.lagRules;
+  if (!config.ingredientResponseRules) config.ingredientResponseRules = defaultScenarioModelProfile.config.ingredientResponseRules;
+  if (!config.feedUtilizationRules) config.feedUtilizationRules = defaultScenarioModelProfile.config.feedUtilizationRules;
+  if (!config.economicsRules) config.economicsRules = defaultScenarioModelProfile.config.economicsRules;
 
   let peakMilkDiff = 0;
   let hasFeedResidualsAlert = false;

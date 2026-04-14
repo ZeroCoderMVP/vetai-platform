@@ -26,14 +26,16 @@ model Farm {
   cows            Cow[]
   afimilkDayMilk  AfimilkDayMilk[]
   events          Event[]
+  tasks           Task[]
   economic        EconomicFact[]
   reportTemplates ReportTemplate[]
   reportInstances ReportInstance[]
 
   barns      Barn[]
   sections   Section[]
-  operations OperationRequest[]
-  dashboards DashboardSnapshot[]
+  operations     OperationRequest[]
+  dashboards     DashboardSnapshot[]
+  outboxMessages OutboxMessage[]
 }
 
 /// Логическая производственная группа животных
@@ -87,6 +89,7 @@ model Cow {
   observations   Observation[]
   geneticIndex   GeneticIndexValue[]
   operations     OperationRequest[]
+  tasks          Task[]
   cowEvents      CowEvent[]
 
   @@index([farmId, afiId])
@@ -189,7 +192,8 @@ model DataSource {
   status      String    @default("active") // active | error | disabled
   config      String? // JSON config
 
-  batches IntegrationBatch[]
+  batches        IntegrationBatch[]
+  outboxMessages OutboxMessage[]
 }
 
 /// Пакет загрузки данных из источника
@@ -453,11 +457,23 @@ model Event {
   source      String   @default("system")
   metadata    String? // JSON
 
+  // Provenance & Trust Layer
+  receivedAt         DateTime?
+  sourceRecordId     String?
+  dedupeKey          String?
+  confirmationStatus String    @default("UNCONFIRMED") // UNCONFIRMED, CONFIRMED_HUMAN, CONFLICT, SOURCE_OK
+  confirmedAt        DateTime?
+  confirmedById      String?
+  confidenceScore    Float?
+
   type    EventType? @relation(fields: [typeId], references: [id])
   cow     Cow?       @relation(fields: [cowId], references: [id])
   group   GroupUnit? @relation(fields: [groupId], references: [id])
   section Section?   @relation(fields: [sectionId], references: [id])
   farm    Farm?      @relation(fields: [farmId], references: [id])
+
+  outboxMessages OutboxMessage[]
+  tasks          Task[]
 
   @@index([timestamp])
   @@index([cowId, timestamp])
@@ -737,6 +753,7 @@ model OperationRequest {
   statusHistory             OperationStatusHistory[]
   comments                  OperationComment[]
   attachments               OperationAttachment[]
+  outboxMessages            OutboxMessage[]
   createdAt                 DateTime                 @default(now())
   updatedAt                 DateTime                 @updatedAt
   deletedAt                 DateTime?
@@ -861,4 +878,56 @@ model DashboardSnapshot {
   farm Farm @relation(fields: [farmId], references: [id])
 
   @@index([farmId, snapshotDate])
+}
+
+/// Сообщение для обратной интеграции (Writeback)
+model OutboxMessage {
+  id                 String    @id @default(cuid())
+  farmId             String
+  dataSourceId       String
+  operationRequestId String?
+  eventId            String?
+  payloadJson        String
+  status             String    @default("PENDING") // PENDING, SENT, FAILED, ACKED
+  attempts           Int       @default(0)
+  nextRetryAt        DateTime?
+  lastAttemptAt      DateTime?
+  externalAckId      String?
+  errorMessage       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  farm             Farm              @relation(fields: [farmId], references: [id])
+  dataSource       DataSource        @relation(fields: [dataSourceId], references: [id])
+  operationRequest OperationRequest? @relation(fields: [operationRequestId], references: [id])
+  event            Event?            @relation(fields: [eventId], references: [id])
+
+  @@index([farmId, status])
+  @@index([dataSourceId, status])
+  @@index([nextRetryAt])
+  @@index([status])
+}
+
+/// Задача для персонала (Task Engine)
+model Task {
+  id          String    @id @default(cuid())
+  farmId      String
+  title       String
+  description String?
+  status      String    @default("TODO") // TODO, IN_PROGRESS, DONE, CANCELLED
+  priority    String    @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  dueDate     DateTime?
+  assigneeId  String?   // vet-01, feed-02
+  cowId       String?   
+  eventId     String?   
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  farm        Farm      @relation(fields: [farmId], references: [id])
+  cow         Cow?      @relation(fields: [cowId], references: [id])
+  event       Event?    @relation(fields: [eventId], references: [id])
+
+  @@index([farmId, status])
+  @@index([assigneeId, status])
+  @@index([cowId])
 }

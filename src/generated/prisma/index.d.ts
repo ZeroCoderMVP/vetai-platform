@@ -223,6 +223,16 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
  * 
  */
 export type DashboardSnapshot = $Result.DefaultSelection<Prisma.$DashboardSnapshotPayload>
+/**
+ * Model OutboxMessage
+ * Сообщение для обратной интеграции (Writeback)
+ */
+export type OutboxMessage = $Result.DefaultSelection<Prisma.$OutboxMessagePayload>
+/**
+ * Model Task
+ * Задача для персонала (Task Engine)
+ */
+export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -764,6 +774,26 @@ export class PrismaClient<
     * ```
     */
   get dashboardSnapshot(): Prisma.DashboardSnapshotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.outboxMessage`: Exposes CRUD operations for the **OutboxMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OutboxMessages
+    * const outboxMessages = await prisma.outboxMessage.findMany()
+    * ```
+    */
+  get outboxMessage(): Prisma.OutboxMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.task`: Exposes CRUD operations for the **Task** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tasks
+    * const tasks = await prisma.task.findMany()
+    * ```
+    */
+  get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1239,7 +1269,9 @@ export namespace Prisma {
     OperationAttachment: 'OperationAttachment',
     CowEvent: 'CowEvent',
     Notification: 'Notification',
-    DashboardSnapshot: 'DashboardSnapshot'
+    DashboardSnapshot: 'DashboardSnapshot',
+    OutboxMessage: 'OutboxMessage',
+    Task: 'Task'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1255,7 +1287,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "farm" | "groupUnit" | "cow" | "section" | "cowSectionHistory" | "groupSectionHistory" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "afimilkDayMilk" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "notification" | "dashboardSnapshot"
+      modelProps: "farm" | "groupUnit" | "cow" | "section" | "cowSectionHistory" | "groupSectionHistory" | "externalIdentity" | "groupMembership" | "dataSource" | "integrationBatch" | "metricDefinition" | "metricValue" | "milkRecord" | "afimilkDayMilk" | "feedRecord" | "feedRecipe" | "feedIngredient" | "recipeIngredient" | "mixBatch" | "ingredientConsumption" | "eventType" | "event" | "observation" | "economicFact" | "geneticIndexValue" | "reportTemplate" | "reportSection" | "reportLine" | "reportInstance" | "reportValidationIssue" | "reportExportJob" | "reportSubmission" | "reportAuditLog" | "barn" | "operationRequest" | "operationConfirmation" | "operationStatusHistory" | "operationComment" | "operationAttachment" | "cowEvent" | "notification" | "dashboardSnapshot" | "outboxMessage" | "task"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4367,6 +4399,154 @@ export namespace Prisma {
           }
         }
       }
+      OutboxMessage: {
+        payload: Prisma.$OutboxMessagePayload<ExtArgs>
+        fields: Prisma.OutboxMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OutboxMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OutboxMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.OutboxMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OutboxMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          findMany: {
+            args: Prisma.OutboxMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>[]
+          }
+          create: {
+            args: Prisma.OutboxMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          createMany: {
+            args: Prisma.OutboxMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OutboxMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.OutboxMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          update: {
+            args: Prisma.OutboxMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.OutboxMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OutboxMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OutboxMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.OutboxMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutboxMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.OutboxMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOutboxMessage>
+          }
+          groupBy: {
+            args: Prisma.OutboxMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OutboxMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OutboxMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<OutboxMessageCountAggregateOutputType> | number
+          }
+        }
+      }
+      Task: {
+        payload: Prisma.$TaskPayload<ExtArgs>
+        fields: Prisma.TaskFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TaskFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          findFirst: {
+            args: Prisma.TaskFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          findMany: {
+            args: Prisma.TaskFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          create: {
+            args: Prisma.TaskCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          createMany: {
+            args: Prisma.TaskCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          delete: {
+            args: Prisma.TaskDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          update: {
+            args: Prisma.TaskUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          deleteMany: {
+            args: Prisma.TaskDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TaskUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          upsert: {
+            args: Prisma.TaskUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          aggregate: {
+            args: Prisma.TaskAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTask>
+          }
+          groupBy: {
+            args: Prisma.TaskGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TaskGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TaskCountArgs<ExtArgs>
+            result: $Utils.Optional<TaskCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4517,6 +4697,8 @@ export namespace Prisma {
     cowEvent?: CowEventOmit
     notification?: NotificationOmit
     dashboardSnapshot?: DashboardSnapshotOmit
+    outboxMessage?: OutboxMessageOmit
+    task?: TaskOmit
   }
 
   /* Types for Logging */
@@ -4601,6 +4783,7 @@ export namespace Prisma {
     cows: number
     afimilkDayMilk: number
     events: number
+    tasks: number
     economic: number
     reportTemplates: number
     reportInstances: number
@@ -4608,6 +4791,7 @@ export namespace Prisma {
     sections: number
     operations: number
     dashboards: number
+    outboxMessages: number
   }
 
   export type FarmCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4615,6 +4799,7 @@ export namespace Prisma {
     cows?: boolean | FarmCountOutputTypeCountCowsArgs
     afimilkDayMilk?: boolean | FarmCountOutputTypeCountAfimilkDayMilkArgs
     events?: boolean | FarmCountOutputTypeCountEventsArgs
+    tasks?: boolean | FarmCountOutputTypeCountTasksArgs
     economic?: boolean | FarmCountOutputTypeCountEconomicArgs
     reportTemplates?: boolean | FarmCountOutputTypeCountReportTemplatesArgs
     reportInstances?: boolean | FarmCountOutputTypeCountReportInstancesArgs
@@ -4622,6 +4807,7 @@ export namespace Prisma {
     sections?: boolean | FarmCountOutputTypeCountSectionsArgs
     operations?: boolean | FarmCountOutputTypeCountOperationsArgs
     dashboards?: boolean | FarmCountOutputTypeCountDashboardsArgs
+    outboxMessages?: boolean | FarmCountOutputTypeCountOutboxMessagesArgs
   }
 
   // Custom InputTypes
@@ -4661,6 +4847,13 @@ export namespace Prisma {
    */
   export type FarmCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
   }
 
   /**
@@ -4710,6 +4903,13 @@ export namespace Prisma {
    */
   export type FarmCountOutputTypeCountDashboardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DashboardSnapshotWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountOutboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutboxMessageWhereInput
   }
 
 
@@ -4794,6 +4994,7 @@ export namespace Prisma {
     observations: number
     geneticIndex: number
     operations: number
+    tasks: number
     cowEvents: number
   }
 
@@ -4807,6 +5008,7 @@ export namespace Prisma {
     observations?: boolean | CowCountOutputTypeCountObservationsArgs
     geneticIndex?: boolean | CowCountOutputTypeCountGeneticIndexArgs
     operations?: boolean | CowCountOutputTypeCountOperationsArgs
+    tasks?: boolean | CowCountOutputTypeCountTasksArgs
     cowEvents?: boolean | CowCountOutputTypeCountCowEventsArgs
   }
 
@@ -4887,6 +5089,13 @@ export namespace Prisma {
   /**
    * CowCountOutputType without action
    */
+  export type CowCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
+  /**
+   * CowCountOutputType without action
+   */
   export type CowCountOutputTypeCountCowEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CowEventWhereInput
   }
@@ -4956,10 +5165,12 @@ export namespace Prisma {
 
   export type DataSourceCountOutputType = {
     batches: number
+    outboxMessages: number
   }
 
   export type DataSourceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     batches?: boolean | DataSourceCountOutputTypeCountBatchesArgs
+    outboxMessages?: boolean | DataSourceCountOutputTypeCountOutboxMessagesArgs
   }
 
   // Custom InputTypes
@@ -4978,6 +5189,13 @@ export namespace Prisma {
    */
   export type DataSourceCountOutputTypeCountBatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: IntegrationBatchWhereInput
+  }
+
+  /**
+   * DataSourceCountOutputType without action
+   */
+  export type DataSourceCountOutputTypeCountOutboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutboxMessageWhereInput
   }
 
 
@@ -5213,6 +5431,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type EventCountOutputType
+   */
+
+  export type EventCountOutputType = {
+    outboxMessages: number
+    tasks: number
+  }
+
+  export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    outboxMessages?: boolean | EventCountOutputTypeCountOutboxMessagesArgs
+    tasks?: boolean | EventCountOutputTypeCountTasksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventCountOutputType
+     */
+    select?: EventCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountOutboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutboxMessageWhereInput
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
+
+  /**
    * Count Type ReportTemplateCountOutputType
    */
 
@@ -5399,6 +5657,7 @@ export namespace Prisma {
     statusHistory: number
     comments: number
     attachments: number
+    outboxMessages: number
   }
 
   export type OperationRequestCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5406,6 +5665,7 @@ export namespace Prisma {
     statusHistory?: boolean | OperationRequestCountOutputTypeCountStatusHistoryArgs
     comments?: boolean | OperationRequestCountOutputTypeCountCommentsArgs
     attachments?: boolean | OperationRequestCountOutputTypeCountAttachmentsArgs
+    outboxMessages?: boolean | OperationRequestCountOutputTypeCountOutboxMessagesArgs
   }
 
   // Custom InputTypes
@@ -5445,6 +5705,13 @@ export namespace Prisma {
    */
   export type OperationRequestCountOutputTypeCountAttachmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OperationAttachmentWhereInput
+  }
+
+  /**
+   * OperationRequestCountOutputType without action
+   */
+  export type OperationRequestCountOutputTypeCountOutboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutboxMessageWhereInput
   }
 
 
@@ -5620,6 +5887,7 @@ export namespace Prisma {
     cows?: boolean | Farm$cowsArgs<ExtArgs>
     afimilkDayMilk?: boolean | Farm$afimilkDayMilkArgs<ExtArgs>
     events?: boolean | Farm$eventsArgs<ExtArgs>
+    tasks?: boolean | Farm$tasksArgs<ExtArgs>
     economic?: boolean | Farm$economicArgs<ExtArgs>
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
     reportInstances?: boolean | Farm$reportInstancesArgs<ExtArgs>
@@ -5627,6 +5895,7 @@ export namespace Prisma {
     sections?: boolean | Farm$sectionsArgs<ExtArgs>
     operations?: boolean | Farm$operationsArgs<ExtArgs>
     dashboards?: boolean | Farm$dashboardsArgs<ExtArgs>
+    outboxMessages?: boolean | Farm$outboxMessagesArgs<ExtArgs>
     _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["farm"]>
 
@@ -5660,6 +5929,7 @@ export namespace Prisma {
     cows?: boolean | Farm$cowsArgs<ExtArgs>
     afimilkDayMilk?: boolean | Farm$afimilkDayMilkArgs<ExtArgs>
     events?: boolean | Farm$eventsArgs<ExtArgs>
+    tasks?: boolean | Farm$tasksArgs<ExtArgs>
     economic?: boolean | Farm$economicArgs<ExtArgs>
     reportTemplates?: boolean | Farm$reportTemplatesArgs<ExtArgs>
     reportInstances?: boolean | Farm$reportInstancesArgs<ExtArgs>
@@ -5667,6 +5937,7 @@ export namespace Prisma {
     sections?: boolean | Farm$sectionsArgs<ExtArgs>
     operations?: boolean | Farm$operationsArgs<ExtArgs>
     dashboards?: boolean | Farm$dashboardsArgs<ExtArgs>
+    outboxMessages?: boolean | Farm$outboxMessagesArgs<ExtArgs>
     _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FarmIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5679,6 +5950,7 @@ export namespace Prisma {
       cows: Prisma.$CowPayload<ExtArgs>[]
       afimilkDayMilk: Prisma.$AfimilkDayMilkPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
       economic: Prisma.$EconomicFactPayload<ExtArgs>[]
       reportTemplates: Prisma.$ReportTemplatePayload<ExtArgs>[]
       reportInstances: Prisma.$ReportInstancePayload<ExtArgs>[]
@@ -5686,6 +5958,7 @@ export namespace Prisma {
       sections: Prisma.$SectionPayload<ExtArgs>[]
       operations: Prisma.$OperationRequestPayload<ExtArgs>[]
       dashboards: Prisma.$DashboardSnapshotPayload<ExtArgs>[]
+      outboxMessages: Prisma.$OutboxMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6091,6 +6364,7 @@ export namespace Prisma {
     cows<T extends Farm$cowsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$cowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     afimilkDayMilk<T extends Farm$afimilkDayMilkArgs<ExtArgs> = {}>(args?: Subset<T, Farm$afimilkDayMilkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AfimilkDayMilkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Farm$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends Farm$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Farm$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     economic<T extends Farm$economicArgs<ExtArgs> = {}>(args?: Subset<T, Farm$economicArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EconomicFactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reportTemplates<T extends Farm$reportTemplatesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$reportTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reportInstances<T extends Farm$reportInstancesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$reportInstancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportInstancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6098,6 +6372,7 @@ export namespace Prisma {
     sections<T extends Farm$sectionsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     operations<T extends Farm$operationsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$operationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dashboards<T extends Farm$dashboardsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$dashboardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    outboxMessages<T extends Farm$outboxMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$outboxMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6619,6 +6894,30 @@ export namespace Prisma {
   }
 
   /**
+   * Farm.tasks
+   */
+  export type Farm$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
    * Farm.economic
    */
   export type Farm$economicArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6784,6 +7083,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DashboardSnapshotScalarFieldEnum | DashboardSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.outboxMessages
+   */
+  export type Farm$outboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    where?: OutboxMessageWhereInput
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    cursor?: OutboxMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
   }
 
   /**
@@ -8389,6 +8712,7 @@ export namespace Prisma {
     observations?: boolean | Cow$observationsArgs<ExtArgs>
     geneticIndex?: boolean | Cow$geneticIndexArgs<ExtArgs>
     operations?: boolean | Cow$operationsArgs<ExtArgs>
+    tasks?: boolean | Cow$tasksArgs<ExtArgs>
     cowEvents?: boolean | Cow$cowEventsArgs<ExtArgs>
     _count?: boolean | CowCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cow"]>
@@ -8470,6 +8794,7 @@ export namespace Prisma {
     observations?: boolean | Cow$observationsArgs<ExtArgs>
     geneticIndex?: boolean | Cow$geneticIndexArgs<ExtArgs>
     operations?: boolean | Cow$operationsArgs<ExtArgs>
+    tasks?: boolean | Cow$tasksArgs<ExtArgs>
     cowEvents?: boolean | Cow$cowEventsArgs<ExtArgs>
     _count?: boolean | CowCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -8502,6 +8827,7 @@ export namespace Prisma {
       observations: Prisma.$ObservationPayload<ExtArgs>[]
       geneticIndex: Prisma.$GeneticIndexValuePayload<ExtArgs>[]
       operations: Prisma.$OperationRequestPayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
       cowEvents: Prisma.$CowEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -8927,6 +9253,7 @@ export namespace Prisma {
     observations<T extends Cow$observationsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$observationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     geneticIndex<T extends Cow$geneticIndexArgs<ExtArgs> = {}>(args?: Subset<T, Cow$geneticIndexArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneticIndexValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     operations<T extends Cow$operationsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$operationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends Cow$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Cow$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cowEvents<T extends Cow$cowEventsArgs<ExtArgs> = {}>(args?: Subset<T, Cow$cowEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CowEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -9641,6 +9968,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OperationRequestScalarFieldEnum | OperationRequestScalarFieldEnum[]
+  }
+
+  /**
+   * Cow.tasks
+   */
+  export type Cow$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -15467,6 +15818,7 @@ export namespace Prisma {
     status?: boolean
     config?: boolean
     batches?: boolean | DataSource$batchesArgs<ExtArgs>
+    outboxMessages?: boolean | DataSource$outboxMessagesArgs<ExtArgs>
     _count?: boolean | DataSourceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dataSource"]>
 
@@ -15503,6 +15855,7 @@ export namespace Prisma {
   export type DataSourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "description" | "lastSync" | "status" | "config", ExtArgs["result"]["dataSource"]>
   export type DataSourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     batches?: boolean | DataSource$batchesArgs<ExtArgs>
+    outboxMessages?: boolean | DataSource$outboxMessagesArgs<ExtArgs>
     _count?: boolean | DataSourceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DataSourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -15512,6 +15865,7 @@ export namespace Prisma {
     name: "DataSource"
     objects: {
       batches: Prisma.$IntegrationBatchPayload<ExtArgs>[]
+      outboxMessages: Prisma.$OutboxMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15916,6 +16270,7 @@ export namespace Prisma {
   export interface Prisma__DataSourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     batches<T extends DataSource$batchesArgs<ExtArgs> = {}>(args?: Subset<T, DataSource$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    outboxMessages<T extends DataSource$outboxMessagesArgs<ExtArgs> = {}>(args?: Subset<T, DataSource$outboxMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16364,6 +16719,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: IntegrationBatchScalarFieldEnum | IntegrationBatchScalarFieldEnum[]
+  }
+
+  /**
+   * DataSource.outboxMessages
+   */
+  export type DataSource$outboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    where?: OutboxMessageWhereInput
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    cursor?: OutboxMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
   }
 
   /**
@@ -31059,8 +31438,18 @@ export namespace Prisma {
 
   export type AggregateEvent = {
     _count: EventCountAggregateOutputType | null
+    _avg: EventAvgAggregateOutputType | null
+    _sum: EventSumAggregateOutputType | null
     _min: EventMinAggregateOutputType | null
     _max: EventMaxAggregateOutputType | null
+  }
+
+  export type EventAvgAggregateOutputType = {
+    confidenceScore: number | null
+  }
+
+  export type EventSumAggregateOutputType = {
+    confidenceScore: number | null
   }
 
   export type EventMinAggregateOutputType = {
@@ -31076,6 +31465,13 @@ export namespace Prisma {
     timestamp: Date | null
     source: string | null
     metadata: string | null
+    receivedAt: Date | null
+    sourceRecordId: string | null
+    dedupeKey: string | null
+    confirmationStatus: string | null
+    confirmedAt: Date | null
+    confirmedById: string | null
+    confidenceScore: number | null
   }
 
   export type EventMaxAggregateOutputType = {
@@ -31091,6 +31487,13 @@ export namespace Prisma {
     timestamp: Date | null
     source: string | null
     metadata: string | null
+    receivedAt: Date | null
+    sourceRecordId: string | null
+    dedupeKey: string | null
+    confirmationStatus: string | null
+    confirmedAt: Date | null
+    confirmedById: string | null
+    confidenceScore: number | null
   }
 
   export type EventCountAggregateOutputType = {
@@ -31106,9 +31509,24 @@ export namespace Prisma {
     timestamp: number
     source: number
     metadata: number
+    receivedAt: number
+    sourceRecordId: number
+    dedupeKey: number
+    confirmationStatus: number
+    confirmedAt: number
+    confirmedById: number
+    confidenceScore: number
     _all: number
   }
 
+
+  export type EventAvgAggregateInputType = {
+    confidenceScore?: true
+  }
+
+  export type EventSumAggregateInputType = {
+    confidenceScore?: true
+  }
 
   export type EventMinAggregateInputType = {
     id?: true
@@ -31123,6 +31541,13 @@ export namespace Prisma {
     timestamp?: true
     source?: true
     metadata?: true
+    receivedAt?: true
+    sourceRecordId?: true
+    dedupeKey?: true
+    confirmationStatus?: true
+    confirmedAt?: true
+    confirmedById?: true
+    confidenceScore?: true
   }
 
   export type EventMaxAggregateInputType = {
@@ -31138,6 +31563,13 @@ export namespace Prisma {
     timestamp?: true
     source?: true
     metadata?: true
+    receivedAt?: true
+    sourceRecordId?: true
+    dedupeKey?: true
+    confirmationStatus?: true
+    confirmedAt?: true
+    confirmedById?: true
+    confidenceScore?: true
   }
 
   export type EventCountAggregateInputType = {
@@ -31153,6 +31585,13 @@ export namespace Prisma {
     timestamp?: true
     source?: true
     metadata?: true
+    receivedAt?: true
+    sourceRecordId?: true
+    dedupeKey?: true
+    confirmationStatus?: true
+    confirmedAt?: true
+    confirmedById?: true
+    confidenceScore?: true
     _all?: true
   }
 
@@ -31194,6 +31633,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: EventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: EventMinAggregateInputType
@@ -31224,6 +31675,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: EventCountAggregateInputType | true
+    _avg?: EventAvgAggregateInputType
+    _sum?: EventSumAggregateInputType
     _min?: EventMinAggregateInputType
     _max?: EventMaxAggregateInputType
   }
@@ -31241,7 +31694,16 @@ export namespace Prisma {
     timestamp: Date
     source: string
     metadata: string | null
+    receivedAt: Date | null
+    sourceRecordId: string | null
+    dedupeKey: string | null
+    confirmationStatus: string
+    confirmedAt: Date | null
+    confirmedById: string | null
+    confidenceScore: number | null
     _count: EventCountAggregateOutputType | null
+    _avg: EventAvgAggregateOutputType | null
+    _sum: EventSumAggregateOutputType | null
     _min: EventMinAggregateOutputType | null
     _max: EventMaxAggregateOutputType | null
   }
@@ -31273,11 +31735,21 @@ export namespace Prisma {
     timestamp?: boolean
     source?: boolean
     metadata?: boolean
+    receivedAt?: boolean
+    sourceRecordId?: boolean
+    dedupeKey?: boolean
+    confirmationStatus?: boolean
+    confirmedAt?: boolean
+    confirmedById?: boolean
+    confidenceScore?: boolean
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
     section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
+    outboxMessages?: boolean | Event$outboxMessagesArgs<ExtArgs>
+    tasks?: boolean | Event$tasksArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -31293,6 +31765,13 @@ export namespace Prisma {
     timestamp?: boolean
     source?: boolean
     metadata?: boolean
+    receivedAt?: boolean
+    sourceRecordId?: boolean
+    dedupeKey?: boolean
+    confirmationStatus?: boolean
+    confirmedAt?: boolean
+    confirmedById?: boolean
+    confidenceScore?: boolean
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
@@ -31313,6 +31792,13 @@ export namespace Prisma {
     timestamp?: boolean
     source?: boolean
     metadata?: boolean
+    receivedAt?: boolean
+    sourceRecordId?: boolean
+    dedupeKey?: boolean
+    confirmationStatus?: boolean
+    confirmedAt?: boolean
+    confirmedById?: boolean
+    confidenceScore?: boolean
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
@@ -31333,15 +31819,25 @@ export namespace Prisma {
     timestamp?: boolean
     source?: boolean
     metadata?: boolean
+    receivedAt?: boolean
+    sourceRecordId?: boolean
+    dedupeKey?: boolean
+    confirmationStatus?: boolean
+    confirmedAt?: boolean
+    confirmedById?: boolean
+    confidenceScore?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "typeId" | "cowId" | "groupId" | "sectionId" | "farmId" | "severity" | "title" | "description" | "timestamp" | "source" | "metadata", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "typeId" | "cowId" | "groupId" | "sectionId" | "farmId" | "severity" | "title" | "description" | "timestamp" | "source" | "metadata" | "receivedAt" | "sourceRecordId" | "dedupeKey" | "confirmationStatus" | "confirmedAt" | "confirmedById" | "confidenceScore", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     type?: boolean | Event$typeArgs<ExtArgs>
     cow?: boolean | Event$cowArgs<ExtArgs>
     group?: boolean | Event$groupArgs<ExtArgs>
     section?: boolean | Event$sectionArgs<ExtArgs>
     farm?: boolean | Event$farmArgs<ExtArgs>
+    outboxMessages?: boolean | Event$outboxMessagesArgs<ExtArgs>
+    tasks?: boolean | Event$tasksArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     type?: boolean | Event$typeArgs<ExtArgs>
@@ -31366,6 +31862,8 @@ export namespace Prisma {
       group: Prisma.$GroupUnitPayload<ExtArgs> | null
       section: Prisma.$SectionPayload<ExtArgs> | null
       farm: Prisma.$FarmPayload<ExtArgs> | null
+      outboxMessages: Prisma.$OutboxMessagePayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -31380,6 +31878,13 @@ export namespace Prisma {
       timestamp: Date
       source: string
       metadata: string | null
+      receivedAt: Date | null
+      sourceRecordId: string | null
+      dedupeKey: string | null
+      confirmationStatus: string
+      confirmedAt: Date | null
+      confirmedById: string | null
+      confidenceScore: number | null
     }, ExtArgs["result"]["event"]>
     composites: {}
   }
@@ -31779,6 +32284,8 @@ export namespace Prisma {
     group<T extends Event$groupArgs<ExtArgs> = {}>(args?: Subset<T, Event$groupArgs<ExtArgs>>): Prisma__GroupUnitClient<$Result.GetResult<Prisma.$GroupUnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     section<T extends Event$sectionArgs<ExtArgs> = {}>(args?: Subset<T, Event$sectionArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     farm<T extends Event$farmArgs<ExtArgs> = {}>(args?: Subset<T, Event$farmArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    outboxMessages<T extends Event$outboxMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Event$outboxMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends Event$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Event$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31820,6 +32327,13 @@ export namespace Prisma {
     readonly timestamp: FieldRef<"Event", 'DateTime'>
     readonly source: FieldRef<"Event", 'String'>
     readonly metadata: FieldRef<"Event", 'String'>
+    readonly receivedAt: FieldRef<"Event", 'DateTime'>
+    readonly sourceRecordId: FieldRef<"Event", 'String'>
+    readonly dedupeKey: FieldRef<"Event", 'String'>
+    readonly confirmationStatus: FieldRef<"Event", 'String'>
+    readonly confirmedAt: FieldRef<"Event", 'DateTime'>
+    readonly confirmedById: FieldRef<"Event", 'String'>
+    readonly confidenceScore: FieldRef<"Event", 'Float'>
   }
     
 
@@ -32311,6 +32825,54 @@ export namespace Prisma {
      */
     include?: FarmInclude<ExtArgs> | null
     where?: FarmWhereInput
+  }
+
+  /**
+   * Event.outboxMessages
+   */
+  export type Event$outboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    where?: OutboxMessageWhereInput
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    cursor?: OutboxMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * Event.tasks
+   */
+  export type Event$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -46757,6 +47319,7 @@ export namespace Prisma {
     statusHistory?: boolean | OperationRequest$statusHistoryArgs<ExtArgs>
     comments?: boolean | OperationRequest$commentsArgs<ExtArgs>
     attachments?: boolean | OperationRequest$attachmentsArgs<ExtArgs>
+    outboxMessages?: boolean | OperationRequest$outboxMessagesArgs<ExtArgs>
     _count?: boolean | OperationRequestCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["operationRequest"]>
 
@@ -46874,6 +47437,7 @@ export namespace Prisma {
     statusHistory?: boolean | OperationRequest$statusHistoryArgs<ExtArgs>
     comments?: boolean | OperationRequest$commentsArgs<ExtArgs>
     attachments?: boolean | OperationRequest$attachmentsArgs<ExtArgs>
+    outboxMessages?: boolean | OperationRequest$outboxMessagesArgs<ExtArgs>
     _count?: boolean | OperationRequestCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OperationRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -46897,6 +47461,7 @@ export namespace Prisma {
       statusHistory: Prisma.$OperationStatusHistoryPayload<ExtArgs>[]
       comments: Prisma.$OperationCommentPayload<ExtArgs>[]
       attachments: Prisma.$OperationAttachmentPayload<ExtArgs>[]
+      outboxMessages: Prisma.$OutboxMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -47330,6 +47895,7 @@ export namespace Prisma {
     statusHistory<T extends OperationRequest$statusHistoryArgs<ExtArgs> = {}>(args?: Subset<T, OperationRequest$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends OperationRequest$commentsArgs<ExtArgs> = {}>(args?: Subset<T, OperationRequest$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     attachments<T extends OperationRequest$attachmentsArgs<ExtArgs> = {}>(args?: Subset<T, OperationRequest$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OperationAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    outboxMessages<T extends OperationRequest$outboxMessagesArgs<ExtArgs> = {}>(args?: Subset<T, OperationRequest$outboxMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -47900,6 +48466,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OperationAttachmentScalarFieldEnum | OperationAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * OperationRequest.outboxMessages
+   */
+  export type OperationRequest$outboxMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    where?: OutboxMessageWhereInput
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    cursor?: OutboxMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
   }
 
   /**
@@ -55810,6 +56400,2486 @@ export namespace Prisma {
 
 
   /**
+   * Model OutboxMessage
+   */
+
+  export type AggregateOutboxMessage = {
+    _count: OutboxMessageCountAggregateOutputType | null
+    _avg: OutboxMessageAvgAggregateOutputType | null
+    _sum: OutboxMessageSumAggregateOutputType | null
+    _min: OutboxMessageMinAggregateOutputType | null
+    _max: OutboxMessageMaxAggregateOutputType | null
+  }
+
+  export type OutboxMessageAvgAggregateOutputType = {
+    attempts: number | null
+  }
+
+  export type OutboxMessageSumAggregateOutputType = {
+    attempts: number | null
+  }
+
+  export type OutboxMessageMinAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    dataSourceId: string | null
+    operationRequestId: string | null
+    eventId: string | null
+    payloadJson: string | null
+    status: string | null
+    attempts: number | null
+    nextRetryAt: Date | null
+    lastAttemptAt: Date | null
+    externalAckId: string | null
+    errorMessage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutboxMessageMaxAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    dataSourceId: string | null
+    operationRequestId: string | null
+    eventId: string | null
+    payloadJson: string | null
+    status: string | null
+    attempts: number | null
+    nextRetryAt: Date | null
+    lastAttemptAt: Date | null
+    externalAckId: string | null
+    errorMessage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutboxMessageCountAggregateOutputType = {
+    id: number
+    farmId: number
+    dataSourceId: number
+    operationRequestId: number
+    eventId: number
+    payloadJson: number
+    status: number
+    attempts: number
+    nextRetryAt: number
+    lastAttemptAt: number
+    externalAckId: number
+    errorMessage: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OutboxMessageAvgAggregateInputType = {
+    attempts?: true
+  }
+
+  export type OutboxMessageSumAggregateInputType = {
+    attempts?: true
+  }
+
+  export type OutboxMessageMinAggregateInputType = {
+    id?: true
+    farmId?: true
+    dataSourceId?: true
+    operationRequestId?: true
+    eventId?: true
+    payloadJson?: true
+    status?: true
+    attempts?: true
+    nextRetryAt?: true
+    lastAttemptAt?: true
+    externalAckId?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutboxMessageMaxAggregateInputType = {
+    id?: true
+    farmId?: true
+    dataSourceId?: true
+    operationRequestId?: true
+    eventId?: true
+    payloadJson?: true
+    status?: true
+    attempts?: true
+    nextRetryAt?: true
+    lastAttemptAt?: true
+    externalAckId?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutboxMessageCountAggregateInputType = {
+    id?: true
+    farmId?: true
+    dataSourceId?: true
+    operationRequestId?: true
+    eventId?: true
+    payloadJson?: true
+    status?: true
+    attempts?: true
+    nextRetryAt?: true
+    lastAttemptAt?: true
+    externalAckId?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OutboxMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutboxMessage to aggregate.
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutboxMessages to fetch.
+     */
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OutboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OutboxMessages
+    **/
+    _count?: true | OutboxMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OutboxMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OutboxMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OutboxMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OutboxMessageMaxAggregateInputType
+  }
+
+  export type GetOutboxMessageAggregateType<T extends OutboxMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateOutboxMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOutboxMessage[P]>
+      : GetScalarType<T[P], AggregateOutboxMessage[P]>
+  }
+
+
+
+
+  export type OutboxMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutboxMessageWhereInput
+    orderBy?: OutboxMessageOrderByWithAggregationInput | OutboxMessageOrderByWithAggregationInput[]
+    by: OutboxMessageScalarFieldEnum[] | OutboxMessageScalarFieldEnum
+    having?: OutboxMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OutboxMessageCountAggregateInputType | true
+    _avg?: OutboxMessageAvgAggregateInputType
+    _sum?: OutboxMessageSumAggregateInputType
+    _min?: OutboxMessageMinAggregateInputType
+    _max?: OutboxMessageMaxAggregateInputType
+  }
+
+  export type OutboxMessageGroupByOutputType = {
+    id: string
+    farmId: string
+    dataSourceId: string
+    operationRequestId: string | null
+    eventId: string | null
+    payloadJson: string
+    status: string
+    attempts: number
+    nextRetryAt: Date | null
+    lastAttemptAt: Date | null
+    externalAckId: string | null
+    errorMessage: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: OutboxMessageCountAggregateOutputType | null
+    _avg: OutboxMessageAvgAggregateOutputType | null
+    _sum: OutboxMessageSumAggregateOutputType | null
+    _min: OutboxMessageMinAggregateOutputType | null
+    _max: OutboxMessageMaxAggregateOutputType | null
+  }
+
+  type GetOutboxMessageGroupByPayload<T extends OutboxMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OutboxMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OutboxMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OutboxMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], OutboxMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OutboxMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    dataSourceId?: boolean
+    operationRequestId?: boolean
+    eventId?: boolean
+    payloadJson?: boolean
+    status?: boolean
+    attempts?: boolean
+    nextRetryAt?: boolean
+    lastAttemptAt?: boolean
+    externalAckId?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["outboxMessage"]>
+
+  export type OutboxMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    dataSourceId?: boolean
+    operationRequestId?: boolean
+    eventId?: boolean
+    payloadJson?: boolean
+    status?: boolean
+    attempts?: boolean
+    nextRetryAt?: boolean
+    lastAttemptAt?: boolean
+    externalAckId?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["outboxMessage"]>
+
+  export type OutboxMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    dataSourceId?: boolean
+    operationRequestId?: boolean
+    eventId?: boolean
+    payloadJson?: boolean
+    status?: boolean
+    attempts?: boolean
+    nextRetryAt?: boolean
+    lastAttemptAt?: boolean
+    externalAckId?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["outboxMessage"]>
+
+  export type OutboxMessageSelectScalar = {
+    id?: boolean
+    farmId?: boolean
+    dataSourceId?: boolean
+    operationRequestId?: boolean
+    eventId?: boolean
+    payloadJson?: boolean
+    status?: boolean
+    attempts?: boolean
+    nextRetryAt?: boolean
+    lastAttemptAt?: boolean
+    externalAckId?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OutboxMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "dataSourceId" | "operationRequestId" | "eventId" | "payloadJson" | "status" | "attempts" | "nextRetryAt" | "lastAttemptAt" | "externalAckId" | "errorMessage" | "createdAt" | "updatedAt", ExtArgs["result"]["outboxMessage"]>
+  export type OutboxMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }
+  export type OutboxMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }
+  export type OutboxMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+    operationRequest?: boolean | OutboxMessage$operationRequestArgs<ExtArgs>
+    event?: boolean | OutboxMessage$eventArgs<ExtArgs>
+  }
+
+  export type $OutboxMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OutboxMessage"
+    objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
+      dataSource: Prisma.$DataSourcePayload<ExtArgs>
+      operationRequest: Prisma.$OperationRequestPayload<ExtArgs> | null
+      event: Prisma.$EventPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      farmId: string
+      dataSourceId: string
+      operationRequestId: string | null
+      eventId: string | null
+      payloadJson: string
+      status: string
+      attempts: number
+      nextRetryAt: Date | null
+      lastAttemptAt: Date | null
+      externalAckId: string | null
+      errorMessage: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["outboxMessage"]>
+    composites: {}
+  }
+
+  type OutboxMessageGetPayload<S extends boolean | null | undefined | OutboxMessageDefaultArgs> = $Result.GetResult<Prisma.$OutboxMessagePayload, S>
+
+  type OutboxMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OutboxMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OutboxMessageCountAggregateInputType | true
+    }
+
+  export interface OutboxMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OutboxMessage'], meta: { name: 'OutboxMessage' } }
+    /**
+     * Find zero or one OutboxMessage that matches the filter.
+     * @param {OutboxMessageFindUniqueArgs} args - Arguments to find a OutboxMessage
+     * @example
+     * // Get one OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OutboxMessageFindUniqueArgs>(args: SelectSubset<T, OutboxMessageFindUniqueArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OutboxMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OutboxMessageFindUniqueOrThrowArgs} args - Arguments to find a OutboxMessage
+     * @example
+     * // Get one OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OutboxMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, OutboxMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OutboxMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageFindFirstArgs} args - Arguments to find a OutboxMessage
+     * @example
+     * // Get one OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OutboxMessageFindFirstArgs>(args?: SelectSubset<T, OutboxMessageFindFirstArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OutboxMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageFindFirstOrThrowArgs} args - Arguments to find a OutboxMessage
+     * @example
+     * // Get one OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OutboxMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, OutboxMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OutboxMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OutboxMessages
+     * const outboxMessages = await prisma.outboxMessage.findMany()
+     * 
+     * // Get first 10 OutboxMessages
+     * const outboxMessages = await prisma.outboxMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const outboxMessageWithIdOnly = await prisma.outboxMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OutboxMessageFindManyArgs>(args?: SelectSubset<T, OutboxMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OutboxMessage.
+     * @param {OutboxMessageCreateArgs} args - Arguments to create a OutboxMessage.
+     * @example
+     * // Create one OutboxMessage
+     * const OutboxMessage = await prisma.outboxMessage.create({
+     *   data: {
+     *     // ... data to create a OutboxMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends OutboxMessageCreateArgs>(args: SelectSubset<T, OutboxMessageCreateArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OutboxMessages.
+     * @param {OutboxMessageCreateManyArgs} args - Arguments to create many OutboxMessages.
+     * @example
+     * // Create many OutboxMessages
+     * const outboxMessage = await prisma.outboxMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OutboxMessageCreateManyArgs>(args?: SelectSubset<T, OutboxMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OutboxMessages and returns the data saved in the database.
+     * @param {OutboxMessageCreateManyAndReturnArgs} args - Arguments to create many OutboxMessages.
+     * @example
+     * // Create many OutboxMessages
+     * const outboxMessage = await prisma.outboxMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OutboxMessages and only return the `id`
+     * const outboxMessageWithIdOnly = await prisma.outboxMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OutboxMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, OutboxMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OutboxMessage.
+     * @param {OutboxMessageDeleteArgs} args - Arguments to delete one OutboxMessage.
+     * @example
+     * // Delete one OutboxMessage
+     * const OutboxMessage = await prisma.outboxMessage.delete({
+     *   where: {
+     *     // ... filter to delete one OutboxMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OutboxMessageDeleteArgs>(args: SelectSubset<T, OutboxMessageDeleteArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OutboxMessage.
+     * @param {OutboxMessageUpdateArgs} args - Arguments to update one OutboxMessage.
+     * @example
+     * // Update one OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OutboxMessageUpdateArgs>(args: SelectSubset<T, OutboxMessageUpdateArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OutboxMessages.
+     * @param {OutboxMessageDeleteManyArgs} args - Arguments to filter OutboxMessages to delete.
+     * @example
+     * // Delete a few OutboxMessages
+     * const { count } = await prisma.outboxMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OutboxMessageDeleteManyArgs>(args?: SelectSubset<T, OutboxMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OutboxMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OutboxMessages
+     * const outboxMessage = await prisma.outboxMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OutboxMessageUpdateManyArgs>(args: SelectSubset<T, OutboxMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OutboxMessages and returns the data updated in the database.
+     * @param {OutboxMessageUpdateManyAndReturnArgs} args - Arguments to update many OutboxMessages.
+     * @example
+     * // Update many OutboxMessages
+     * const outboxMessage = await prisma.outboxMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OutboxMessages and only return the `id`
+     * const outboxMessageWithIdOnly = await prisma.outboxMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OutboxMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, OutboxMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OutboxMessage.
+     * @param {OutboxMessageUpsertArgs} args - Arguments to update or create a OutboxMessage.
+     * @example
+     * // Update or create a OutboxMessage
+     * const outboxMessage = await prisma.outboxMessage.upsert({
+     *   create: {
+     *     // ... data to create a OutboxMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OutboxMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OutboxMessageUpsertArgs>(args: SelectSubset<T, OutboxMessageUpsertArgs<ExtArgs>>): Prisma__OutboxMessageClient<$Result.GetResult<Prisma.$OutboxMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OutboxMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageCountArgs} args - Arguments to filter OutboxMessages to count.
+     * @example
+     * // Count the number of OutboxMessages
+     * const count = await prisma.outboxMessage.count({
+     *   where: {
+     *     // ... the filter for the OutboxMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends OutboxMessageCountArgs>(
+      args?: Subset<T, OutboxMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OutboxMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OutboxMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OutboxMessageAggregateArgs>(args: Subset<T, OutboxMessageAggregateArgs>): Prisma.PrismaPromise<GetOutboxMessageAggregateType<T>>
+
+    /**
+     * Group by OutboxMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutboxMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OutboxMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OutboxMessageGroupByArgs['orderBy'] }
+        : { orderBy?: OutboxMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OutboxMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOutboxMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OutboxMessage model
+   */
+  readonly fields: OutboxMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OutboxMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OutboxMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dataSource<T extends DataSourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DataSourceDefaultArgs<ExtArgs>>): Prisma__DataSourceClient<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    operationRequest<T extends OutboxMessage$operationRequestArgs<ExtArgs> = {}>(args?: Subset<T, OutboxMessage$operationRequestArgs<ExtArgs>>): Prisma__OperationRequestClient<$Result.GetResult<Prisma.$OperationRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    event<T extends OutboxMessage$eventArgs<ExtArgs> = {}>(args?: Subset<T, OutboxMessage$eventArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OutboxMessage model
+   */
+  interface OutboxMessageFieldRefs {
+    readonly id: FieldRef<"OutboxMessage", 'String'>
+    readonly farmId: FieldRef<"OutboxMessage", 'String'>
+    readonly dataSourceId: FieldRef<"OutboxMessage", 'String'>
+    readonly operationRequestId: FieldRef<"OutboxMessage", 'String'>
+    readonly eventId: FieldRef<"OutboxMessage", 'String'>
+    readonly payloadJson: FieldRef<"OutboxMessage", 'String'>
+    readonly status: FieldRef<"OutboxMessage", 'String'>
+    readonly attempts: FieldRef<"OutboxMessage", 'Int'>
+    readonly nextRetryAt: FieldRef<"OutboxMessage", 'DateTime'>
+    readonly lastAttemptAt: FieldRef<"OutboxMessage", 'DateTime'>
+    readonly externalAckId: FieldRef<"OutboxMessage", 'String'>
+    readonly errorMessage: FieldRef<"OutboxMessage", 'String'>
+    readonly createdAt: FieldRef<"OutboxMessage", 'DateTime'>
+    readonly updatedAt: FieldRef<"OutboxMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OutboxMessage findUnique
+   */
+  export type OutboxMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutboxMessage to fetch.
+     */
+    where: OutboxMessageWhereUniqueInput
+  }
+
+  /**
+   * OutboxMessage findUniqueOrThrow
+   */
+  export type OutboxMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutboxMessage to fetch.
+     */
+    where: OutboxMessageWhereUniqueInput
+  }
+
+  /**
+   * OutboxMessage findFirst
+   */
+  export type OutboxMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutboxMessage to fetch.
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutboxMessages to fetch.
+     */
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutboxMessages.
+     */
+    cursor?: OutboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutboxMessages.
+     */
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutboxMessage findFirstOrThrow
+   */
+  export type OutboxMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutboxMessage to fetch.
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutboxMessages to fetch.
+     */
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutboxMessages.
+     */
+    cursor?: OutboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutboxMessages.
+     */
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutboxMessage findMany
+   */
+  export type OutboxMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutboxMessages to fetch.
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutboxMessages to fetch.
+     */
+    orderBy?: OutboxMessageOrderByWithRelationInput | OutboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OutboxMessages.
+     */
+    cursor?: OutboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutboxMessages.
+     */
+    distinct?: OutboxMessageScalarFieldEnum | OutboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutboxMessage create
+   */
+  export type OutboxMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OutboxMessage.
+     */
+    data: XOR<OutboxMessageCreateInput, OutboxMessageUncheckedCreateInput>
+  }
+
+  /**
+   * OutboxMessage createMany
+   */
+  export type OutboxMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OutboxMessages.
+     */
+    data: OutboxMessageCreateManyInput | OutboxMessageCreateManyInput[]
+  }
+
+  /**
+   * OutboxMessage createManyAndReturn
+   */
+  export type OutboxMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many OutboxMessages.
+     */
+    data: OutboxMessageCreateManyInput | OutboxMessageCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OutboxMessage update
+   */
+  export type OutboxMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OutboxMessage.
+     */
+    data: XOR<OutboxMessageUpdateInput, OutboxMessageUncheckedUpdateInput>
+    /**
+     * Choose, which OutboxMessage to update.
+     */
+    where: OutboxMessageWhereUniqueInput
+  }
+
+  /**
+   * OutboxMessage updateMany
+   */
+  export type OutboxMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OutboxMessages.
+     */
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which OutboxMessages to update
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * Limit how many OutboxMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OutboxMessage updateManyAndReturn
+   */
+  export type OutboxMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update OutboxMessages.
+     */
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which OutboxMessages to update
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * Limit how many OutboxMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OutboxMessage upsert
+   */
+  export type OutboxMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OutboxMessage to update in case it exists.
+     */
+    where: OutboxMessageWhereUniqueInput
+    /**
+     * In case the OutboxMessage found by the `where` argument doesn't exist, create a new OutboxMessage with this data.
+     */
+    create: XOR<OutboxMessageCreateInput, OutboxMessageUncheckedCreateInput>
+    /**
+     * In case the OutboxMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OutboxMessageUpdateInput, OutboxMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * OutboxMessage delete
+   */
+  export type OutboxMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter which OutboxMessage to delete.
+     */
+    where: OutboxMessageWhereUniqueInput
+  }
+
+  /**
+   * OutboxMessage deleteMany
+   */
+  export type OutboxMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutboxMessages to delete
+     */
+    where?: OutboxMessageWhereInput
+    /**
+     * Limit how many OutboxMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OutboxMessage.operationRequest
+   */
+  export type OutboxMessage$operationRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OperationRequest
+     */
+    select?: OperationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OperationRequest
+     */
+    omit?: OperationRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OperationRequestInclude<ExtArgs> | null
+    where?: OperationRequestWhereInput
+  }
+
+  /**
+   * OutboxMessage.event
+   */
+  export type OutboxMessage$eventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+  }
+
+  /**
+   * OutboxMessage without action
+   */
+  export type OutboxMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutboxMessage
+     */
+    select?: OutboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OutboxMessage
+     */
+    omit?: OutboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutboxMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Task
+   */
+
+  export type AggregateTask = {
+    _count: TaskCountAggregateOutputType | null
+    _min: TaskMinAggregateOutputType | null
+    _max: TaskMaxAggregateOutputType | null
+  }
+
+  export type TaskMinAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    title: string | null
+    description: string | null
+    status: string | null
+    priority: string | null
+    dueDate: Date | null
+    assigneeId: string | null
+    cowId: string | null
+    eventId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TaskMaxAggregateOutputType = {
+    id: string | null
+    farmId: string | null
+    title: string | null
+    description: string | null
+    status: string | null
+    priority: string | null
+    dueDate: Date | null
+    assigneeId: string | null
+    cowId: string | null
+    eventId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TaskCountAggregateOutputType = {
+    id: number
+    farmId: number
+    title: number
+    description: number
+    status: number
+    priority: number
+    dueDate: number
+    assigneeId: number
+    cowId: number
+    eventId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TaskMinAggregateInputType = {
+    id?: true
+    farmId?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    assigneeId?: true
+    cowId?: true
+    eventId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TaskMaxAggregateInputType = {
+    id?: true
+    farmId?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    assigneeId?: true
+    cowId?: true
+    eventId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TaskCountAggregateInputType = {
+    id?: true
+    farmId?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    assigneeId?: true
+    cowId?: true
+    eventId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Task to aggregate.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tasks
+    **/
+    _count?: true | TaskCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TaskMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TaskMaxAggregateInputType
+  }
+
+  export type GetTaskAggregateType<T extends TaskAggregateArgs> = {
+        [P in keyof T & keyof AggregateTask]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTask[P]>
+      : GetScalarType<T[P], AggregateTask[P]>
+  }
+
+
+
+
+  export type TaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithAggregationInput | TaskOrderByWithAggregationInput[]
+    by: TaskScalarFieldEnum[] | TaskScalarFieldEnum
+    having?: TaskScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TaskCountAggregateInputType | true
+    _min?: TaskMinAggregateInputType
+    _max?: TaskMaxAggregateInputType
+  }
+
+  export type TaskGroupByOutputType = {
+    id: string
+    farmId: string
+    title: string
+    description: string | null
+    status: string
+    priority: string
+    dueDate: Date | null
+    assigneeId: string | null
+    cowId: string | null
+    eventId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TaskCountAggregateOutputType | null
+    _min: TaskMinAggregateOutputType | null
+    _max: TaskMaxAggregateOutputType | null
+  }
+
+  type GetTaskGroupByPayload<T extends TaskGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TaskGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TaskGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TaskGroupByOutputType[P]>
+            : GetScalarType<T[P], TaskGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    assigneeId?: boolean
+    cowId?: boolean
+    eventId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    assigneeId?: boolean
+    cowId?: boolean
+    eventId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    farmId?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    assigneeId?: boolean
+    cowId?: boolean
+    eventId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectScalar = {
+    id?: boolean
+    farmId?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    assigneeId?: boolean
+    cowId?: boolean
+    eventId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "farmId" | "title" | "description" | "status" | "priority" | "dueDate" | "assigneeId" | "cowId" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+  export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }
+  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }
+  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+    cow?: boolean | Task$cowArgs<ExtArgs>
+    event?: boolean | Task$eventArgs<ExtArgs>
+  }
+
+  export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Task"
+    objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
+      cow: Prisma.$CowPayload<ExtArgs> | null
+      event: Prisma.$EventPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      farmId: string
+      title: string
+      description: string | null
+      status: string
+      priority: string
+      dueDate: Date | null
+      assigneeId: string | null
+      cowId: string | null
+      eventId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["task"]>
+    composites: {}
+  }
+
+  type TaskGetPayload<S extends boolean | null | undefined | TaskDefaultArgs> = $Result.GetResult<Prisma.$TaskPayload, S>
+
+  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TaskCountAggregateInputType | true
+    }
+
+  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Task'], meta: { name: 'Task' } }
+    /**
+     * Find zero or one Task that matches the filter.
+     * @param {TaskFindUniqueArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TaskFindUniqueArgs>(args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Task that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TaskFindUniqueOrThrowArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Task that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindFirstArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TaskFindFirstArgs>(args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Task that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindFirstOrThrowArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tasks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tasks
+     * const tasks = await prisma.task.findMany()
+     * 
+     * // Get first 10 Tasks
+     * const tasks = await prisma.task.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const taskWithIdOnly = await prisma.task.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TaskFindManyArgs>(args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Task.
+     * @param {TaskCreateArgs} args - Arguments to create a Task.
+     * @example
+     * // Create one Task
+     * const Task = await prisma.task.create({
+     *   data: {
+     *     // ... data to create a Task
+     *   }
+     * })
+     * 
+     */
+    create<T extends TaskCreateArgs>(args: SelectSubset<T, TaskCreateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tasks.
+     * @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TaskCreateManyArgs>(args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tasks and returns the data saved in the database.
+     * @param {TaskCreateManyAndReturnArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TaskCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Task.
+     * @param {TaskDeleteArgs} args - Arguments to delete one Task.
+     * @example
+     * // Delete one Task
+     * const Task = await prisma.task.delete({
+     *   where: {
+     *     // ... filter to delete one Task
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TaskDeleteArgs>(args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Task.
+     * @param {TaskUpdateArgs} args - Arguments to update one Task.
+     * @example
+     * // Update one Task
+     * const task = await prisma.task.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TaskUpdateArgs>(args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tasks.
+     * @param {TaskDeleteManyArgs} args - Arguments to filter Tasks to delete.
+     * @example
+     * // Delete a few Tasks
+     * const { count } = await prisma.task.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TaskDeleteManyArgs>(args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tasks
+     * const task = await prisma.task.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TaskUpdateManyArgs>(args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tasks and returns the data updated in the database.
+     * @param {TaskUpdateManyAndReturnArgs} args - Arguments to update many Tasks.
+     * @example
+     * // Update many Tasks
+     * const task = await prisma.task.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TaskUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Task.
+     * @param {TaskUpsertArgs} args - Arguments to update or create a Task.
+     * @example
+     * // Update or create a Task
+     * const task = await prisma.task.upsert({
+     *   create: {
+     *     // ... data to create a Task
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Task we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TaskUpsertArgs>(args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskCountArgs} args - Arguments to filter Tasks to count.
+     * @example
+     * // Count the number of Tasks
+     * const count = await prisma.task.count({
+     *   where: {
+     *     // ... the filter for the Tasks we want to count
+     *   }
+     * })
+    **/
+    count<T extends TaskCountArgs>(
+      args?: Subset<T, TaskCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TaskCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Task.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TaskAggregateArgs>(args: Subset<T, TaskAggregateArgs>): Prisma.PrismaPromise<GetTaskAggregateType<T>>
+
+    /**
+     * Group by Task.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TaskGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TaskGroupByArgs['orderBy'] }
+        : { orderBy?: TaskGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Task model
+   */
+  readonly fields: TaskFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Task.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cow<T extends Task$cowArgs<ExtArgs> = {}>(args?: Subset<T, Task$cowArgs<ExtArgs>>): Prisma__CowClient<$Result.GetResult<Prisma.$CowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    event<T extends Task$eventArgs<ExtArgs> = {}>(args?: Subset<T, Task$eventArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Task model
+   */
+  interface TaskFieldRefs {
+    readonly id: FieldRef<"Task", 'String'>
+    readonly farmId: FieldRef<"Task", 'String'>
+    readonly title: FieldRef<"Task", 'String'>
+    readonly description: FieldRef<"Task", 'String'>
+    readonly status: FieldRef<"Task", 'String'>
+    readonly priority: FieldRef<"Task", 'String'>
+    readonly dueDate: FieldRef<"Task", 'DateTime'>
+    readonly assigneeId: FieldRef<"Task", 'String'>
+    readonly cowId: FieldRef<"Task", 'String'>
+    readonly eventId: FieldRef<"Task", 'String'>
+    readonly createdAt: FieldRef<"Task", 'DateTime'>
+    readonly updatedAt: FieldRef<"Task", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Task findUnique
+   */
+  export type TaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task findUniqueOrThrow
+   */
+  export type TaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task findFirst
+   */
+  export type TaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tasks.
+     */
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task findFirstOrThrow
+   */
+  export type TaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tasks.
+     */
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task findMany
+   */
+  export type TaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Tasks to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tasks.
+     */
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task create
+   */
+  export type TaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Task.
+     */
+    data: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+  }
+
+  /**
+   * Task createMany
+   */
+  export type TaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tasks.
+     */
+    data: TaskCreateManyInput | TaskCreateManyInput[]
+  }
+
+  /**
+   * Task createManyAndReturn
+   */
+  export type TaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tasks.
+     */
+    data: TaskCreateManyInput | TaskCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Task update
+   */
+  export type TaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Task.
+     */
+    data: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    /**
+     * Choose, which Task to update.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task updateMany
+   */
+  export type TaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tasks.
+     */
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    /**
+     * Filter which Tasks to update
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Task updateManyAndReturn
+   */
+  export type TaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to update Tasks.
+     */
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    /**
+     * Filter which Tasks to update
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Task upsert
+   */
+  export type TaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Task to update in case it exists.
+     */
+    where: TaskWhereUniqueInput
+    /**
+     * In case the Task found by the `where` argument doesn't exist, create a new Task with this data.
+     */
+    create: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+    /**
+     * In case the Task was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+  }
+
+  /**
+   * Task delete
+   */
+  export type TaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter which Task to delete.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task deleteMany
+   */
+  export type TaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tasks to delete
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Task.cow
+   */
+  export type Task$cowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cow
+     */
+    select?: CowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cow
+     */
+    omit?: CowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CowInclude<ExtArgs> | null
+    where?: CowWhereInput
+  }
+
+  /**
+   * Task.event
+   */
+  export type Task$eventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+  }
+
+  /**
+   * Task without action
+   */
+  export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -56163,7 +59233,14 @@ export namespace Prisma {
     description: 'description',
     timestamp: 'timestamp',
     source: 'source',
-    metadata: 'metadata'
+    metadata: 'metadata',
+    receivedAt: 'receivedAt',
+    sourceRecordId: 'sourceRecordId',
+    dedupeKey: 'dedupeKey',
+    confirmationStatus: 'confirmationStatus',
+    confirmedAt: 'confirmedAt',
+    confirmedById: 'confirmedById',
+    confidenceScore: 'confidenceScore'
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -56508,6 +59585,44 @@ export namespace Prisma {
   export type DashboardSnapshotScalarFieldEnum = (typeof DashboardSnapshotScalarFieldEnum)[keyof typeof DashboardSnapshotScalarFieldEnum]
 
 
+  export const OutboxMessageScalarFieldEnum: {
+    id: 'id',
+    farmId: 'farmId',
+    dataSourceId: 'dataSourceId',
+    operationRequestId: 'operationRequestId',
+    eventId: 'eventId',
+    payloadJson: 'payloadJson',
+    status: 'status',
+    attempts: 'attempts',
+    nextRetryAt: 'nextRetryAt',
+    lastAttemptAt: 'lastAttemptAt',
+    externalAckId: 'externalAckId',
+    errorMessage: 'errorMessage',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OutboxMessageScalarFieldEnum = (typeof OutboxMessageScalarFieldEnum)[keyof typeof OutboxMessageScalarFieldEnum]
+
+
+  export const TaskScalarFieldEnum: {
+    id: 'id',
+    farmId: 'farmId',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    priority: 'priority',
+    dueDate: 'dueDate',
+    assigneeId: 'assigneeId',
+    cowId: 'cowId',
+    eventId: 'eventId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -56580,6 +59695,7 @@ export namespace Prisma {
     cows?: CowListRelationFilter
     afimilkDayMilk?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
+    tasks?: TaskListRelationFilter
     economic?: EconomicFactListRelationFilter
     reportTemplates?: ReportTemplateListRelationFilter
     reportInstances?: ReportInstanceListRelationFilter
@@ -56587,6 +59703,7 @@ export namespace Prisma {
     sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
     dashboards?: DashboardSnapshotListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }
 
   export type FarmOrderByWithRelationInput = {
@@ -56599,6 +59716,7 @@ export namespace Prisma {
     cows?: CowOrderByRelationAggregateInput
     afimilkDayMilk?: AfimilkDayMilkOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
     economic?: EconomicFactOrderByRelationAggregateInput
     reportTemplates?: ReportTemplateOrderByRelationAggregateInput
     reportInstances?: ReportInstanceOrderByRelationAggregateInput
@@ -56606,6 +59724,7 @@ export namespace Prisma {
     sections?: SectionOrderByRelationAggregateInput
     operations?: OperationRequestOrderByRelationAggregateInput
     dashboards?: DashboardSnapshotOrderByRelationAggregateInput
+    outboxMessages?: OutboxMessageOrderByRelationAggregateInput
   }
 
   export type FarmWhereUniqueInput = Prisma.AtLeast<{
@@ -56621,6 +59740,7 @@ export namespace Prisma {
     cows?: CowListRelationFilter
     afimilkDayMilk?: AfimilkDayMilkListRelationFilter
     events?: EventListRelationFilter
+    tasks?: TaskListRelationFilter
     economic?: EconomicFactListRelationFilter
     reportTemplates?: ReportTemplateListRelationFilter
     reportInstances?: ReportInstanceListRelationFilter
@@ -56628,6 +59748,7 @@ export namespace Prisma {
     sections?: SectionListRelationFilter
     operations?: OperationRequestListRelationFilter
     dashboards?: DashboardSnapshotListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }, "id">
 
   export type FarmOrderByWithAggregationInput = {
@@ -56776,6 +59897,7 @@ export namespace Prisma {
     observations?: ObservationListRelationFilter
     geneticIndex?: GeneticIndexValueListRelationFilter
     operations?: OperationRequestListRelationFilter
+    tasks?: TaskListRelationFilter
     cowEvents?: CowEventListRelationFilter
   }
 
@@ -56808,6 +59930,7 @@ export namespace Prisma {
     observations?: ObservationOrderByRelationAggregateInput
     geneticIndex?: GeneticIndexValueOrderByRelationAggregateInput
     operations?: OperationRequestOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
     cowEvents?: CowEventOrderByRelationAggregateInput
   }
 
@@ -56843,6 +59966,7 @@ export namespace Prisma {
     observations?: ObservationListRelationFilter
     geneticIndex?: GeneticIndexValueListRelationFilter
     operations?: OperationRequestListRelationFilter
+    tasks?: TaskListRelationFilter
     cowEvents?: CowEventListRelationFilter
   }, "id">
 
@@ -57253,6 +60377,7 @@ export namespace Prisma {
     status?: StringFilter<"DataSource"> | string
     config?: StringNullableFilter<"DataSource"> | string | null
     batches?: IntegrationBatchListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }
 
   export type DataSourceOrderByWithRelationInput = {
@@ -57264,6 +60389,7 @@ export namespace Prisma {
     status?: SortOrder
     config?: SortOrderInput | SortOrder
     batches?: IntegrationBatchOrderByRelationAggregateInput
+    outboxMessages?: OutboxMessageOrderByRelationAggregateInput
   }
 
   export type DataSourceWhereUniqueInput = Prisma.AtLeast<{
@@ -57278,6 +60404,7 @@ export namespace Prisma {
     status?: StringFilter<"DataSource"> | string
     config?: StringNullableFilter<"DataSource"> | string | null
     batches?: IntegrationBatchListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }, "id" | "name">
 
   export type DataSourceOrderByWithAggregationInput = {
@@ -58417,11 +61544,20 @@ export namespace Prisma {
     timestamp?: DateTimeFilter<"Event"> | Date | string
     source?: StringFilter<"Event"> | string
     metadata?: StringNullableFilter<"Event"> | string | null
+    receivedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    sourceRecordId?: StringNullableFilter<"Event"> | string | null
+    dedupeKey?: StringNullableFilter<"Event"> | string | null
+    confirmationStatus?: StringFilter<"Event"> | string
+    confirmedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    confirmedById?: StringNullableFilter<"Event"> | string | null
+    confidenceScore?: FloatNullableFilter<"Event"> | number | null
     type?: XOR<EventTypeNullableScalarRelationFilter, EventTypeWhereInput> | null
     cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
     section?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
+    outboxMessages?: OutboxMessageListRelationFilter
+    tasks?: TaskListRelationFilter
   }
 
   export type EventOrderByWithRelationInput = {
@@ -58437,11 +61573,20 @@ export namespace Prisma {
     timestamp?: SortOrder
     source?: SortOrder
     metadata?: SortOrderInput | SortOrder
+    receivedAt?: SortOrderInput | SortOrder
+    sourceRecordId?: SortOrderInput | SortOrder
+    dedupeKey?: SortOrderInput | SortOrder
+    confirmationStatus?: SortOrder
+    confirmedAt?: SortOrderInput | SortOrder
+    confirmedById?: SortOrderInput | SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
     type?: EventTypeOrderByWithRelationInput
     cow?: CowOrderByWithRelationInput
     group?: GroupUnitOrderByWithRelationInput
     section?: SectionOrderByWithRelationInput
     farm?: FarmOrderByWithRelationInput
+    outboxMessages?: OutboxMessageOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -58460,11 +61605,20 @@ export namespace Prisma {
     timestamp?: DateTimeFilter<"Event"> | Date | string
     source?: StringFilter<"Event"> | string
     metadata?: StringNullableFilter<"Event"> | string | null
+    receivedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    sourceRecordId?: StringNullableFilter<"Event"> | string | null
+    dedupeKey?: StringNullableFilter<"Event"> | string | null
+    confirmationStatus?: StringFilter<"Event"> | string
+    confirmedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    confirmedById?: StringNullableFilter<"Event"> | string | null
+    confidenceScore?: FloatNullableFilter<"Event"> | number | null
     type?: XOR<EventTypeNullableScalarRelationFilter, EventTypeWhereInput> | null
     cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
     group?: XOR<GroupUnitNullableScalarRelationFilter, GroupUnitWhereInput> | null
     section?: XOR<SectionNullableScalarRelationFilter, SectionWhereInput> | null
     farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
+    outboxMessages?: OutboxMessageListRelationFilter
+    tasks?: TaskListRelationFilter
   }, "id">
 
   export type EventOrderByWithAggregationInput = {
@@ -58480,9 +61634,18 @@ export namespace Prisma {
     timestamp?: SortOrder
     source?: SortOrder
     metadata?: SortOrderInput | SortOrder
+    receivedAt?: SortOrderInput | SortOrder
+    sourceRecordId?: SortOrderInput | SortOrder
+    dedupeKey?: SortOrderInput | SortOrder
+    confirmationStatus?: SortOrder
+    confirmedAt?: SortOrderInput | SortOrder
+    confirmedById?: SortOrderInput | SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
     _count?: EventCountOrderByAggregateInput
+    _avg?: EventAvgOrderByAggregateInput
     _max?: EventMaxOrderByAggregateInput
     _min?: EventMinOrderByAggregateInput
+    _sum?: EventSumOrderByAggregateInput
   }
 
   export type EventScalarWhereWithAggregatesInput = {
@@ -58501,6 +61664,13 @@ export namespace Prisma {
     timestamp?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     source?: StringWithAggregatesFilter<"Event"> | string
     metadata?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    receivedAt?: DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
+    sourceRecordId?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    dedupeKey?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    confirmationStatus?: StringWithAggregatesFilter<"Event"> | string
+    confirmedAt?: DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
+    confirmedById?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    confidenceScore?: FloatNullableWithAggregatesFilter<"Event"> | number | null
   }
 
   export type ObservationWhereInput = {
@@ -59550,6 +62720,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryListRelationFilter
     comments?: OperationCommentListRelationFilter
     attachments?: OperationAttachmentListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }
 
   export type OperationRequestOrderByWithRelationInput = {
@@ -59590,6 +62761,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryOrderByRelationAggregateInput
     comments?: OperationCommentOrderByRelationAggregateInput
     attachments?: OperationAttachmentOrderByRelationAggregateInput
+    outboxMessages?: OutboxMessageOrderByRelationAggregateInput
   }
 
   export type OperationRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -59633,6 +62805,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryListRelationFilter
     comments?: OperationCommentListRelationFilter
     attachments?: OperationAttachmentListRelationFilter
+    outboxMessages?: OutboxMessageListRelationFilter
   }, "id">
 
   export type OperationRequestOrderByWithAggregationInput = {
@@ -60261,6 +63434,213 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"DashboardSnapshot"> | Date | string
   }
 
+  export type OutboxMessageWhereInput = {
+    AND?: OutboxMessageWhereInput | OutboxMessageWhereInput[]
+    OR?: OutboxMessageWhereInput[]
+    NOT?: OutboxMessageWhereInput | OutboxMessageWhereInput[]
+    id?: StringFilter<"OutboxMessage"> | string
+    farmId?: StringFilter<"OutboxMessage"> | string
+    dataSourceId?: StringFilter<"OutboxMessage"> | string
+    operationRequestId?: StringNullableFilter<"OutboxMessage"> | string | null
+    eventId?: StringNullableFilter<"OutboxMessage"> | string | null
+    payloadJson?: StringFilter<"OutboxMessage"> | string
+    status?: StringFilter<"OutboxMessage"> | string
+    attempts?: IntFilter<"OutboxMessage"> | number
+    nextRetryAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    lastAttemptAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    externalAckId?: StringNullableFilter<"OutboxMessage"> | string | null
+    errorMessage?: StringNullableFilter<"OutboxMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+    operationRequest?: XOR<OperationRequestNullableScalarRelationFilter, OperationRequestWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }
+
+  export type OutboxMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    dataSourceId?: SortOrder
+    operationRequestId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    payloadJson?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    nextRetryAt?: SortOrderInput | SortOrder
+    lastAttemptAt?: SortOrderInput | SortOrder
+    externalAckId?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    farm?: FarmOrderByWithRelationInput
+    dataSource?: DataSourceOrderByWithRelationInput
+    operationRequest?: OperationRequestOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
+  }
+
+  export type OutboxMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OutboxMessageWhereInput | OutboxMessageWhereInput[]
+    OR?: OutboxMessageWhereInput[]
+    NOT?: OutboxMessageWhereInput | OutboxMessageWhereInput[]
+    farmId?: StringFilter<"OutboxMessage"> | string
+    dataSourceId?: StringFilter<"OutboxMessage"> | string
+    operationRequestId?: StringNullableFilter<"OutboxMessage"> | string | null
+    eventId?: StringNullableFilter<"OutboxMessage"> | string | null
+    payloadJson?: StringFilter<"OutboxMessage"> | string
+    status?: StringFilter<"OutboxMessage"> | string
+    attempts?: IntFilter<"OutboxMessage"> | number
+    nextRetryAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    lastAttemptAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    externalAckId?: StringNullableFilter<"OutboxMessage"> | string | null
+    errorMessage?: StringNullableFilter<"OutboxMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+    operationRequest?: XOR<OperationRequestNullableScalarRelationFilter, OperationRequestWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }, "id">
+
+  export type OutboxMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    dataSourceId?: SortOrder
+    operationRequestId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    payloadJson?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    nextRetryAt?: SortOrderInput | SortOrder
+    lastAttemptAt?: SortOrderInput | SortOrder
+    externalAckId?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OutboxMessageCountOrderByAggregateInput
+    _avg?: OutboxMessageAvgOrderByAggregateInput
+    _max?: OutboxMessageMaxOrderByAggregateInput
+    _min?: OutboxMessageMinOrderByAggregateInput
+    _sum?: OutboxMessageSumOrderByAggregateInput
+  }
+
+  export type OutboxMessageScalarWhereWithAggregatesInput = {
+    AND?: OutboxMessageScalarWhereWithAggregatesInput | OutboxMessageScalarWhereWithAggregatesInput[]
+    OR?: OutboxMessageScalarWhereWithAggregatesInput[]
+    NOT?: OutboxMessageScalarWhereWithAggregatesInput | OutboxMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OutboxMessage"> | string
+    farmId?: StringWithAggregatesFilter<"OutboxMessage"> | string
+    dataSourceId?: StringWithAggregatesFilter<"OutboxMessage"> | string
+    operationRequestId?: StringNullableWithAggregatesFilter<"OutboxMessage"> | string | null
+    eventId?: StringNullableWithAggregatesFilter<"OutboxMessage"> | string | null
+    payloadJson?: StringWithAggregatesFilter<"OutboxMessage"> | string
+    status?: StringWithAggregatesFilter<"OutboxMessage"> | string
+    attempts?: IntWithAggregatesFilter<"OutboxMessage"> | number
+    nextRetryAt?: DateTimeNullableWithAggregatesFilter<"OutboxMessage"> | Date | string | null
+    lastAttemptAt?: DateTimeNullableWithAggregatesFilter<"OutboxMessage"> | Date | string | null
+    externalAckId?: StringNullableWithAggregatesFilter<"OutboxMessage"> | string | null
+    errorMessage?: StringNullableWithAggregatesFilter<"OutboxMessage"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"OutboxMessage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OutboxMessage"> | Date | string
+  }
+
+  export type TaskWhereInput = {
+    AND?: TaskWhereInput | TaskWhereInput[]
+    OR?: TaskWhereInput[]
+    NOT?: TaskWhereInput | TaskWhereInput[]
+    id?: StringFilter<"Task"> | string
+    farmId?: StringFilter<"Task"> | string
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: StringFilter<"Task"> | string
+    priority?: StringFilter<"Task"> | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    assigneeId?: StringNullableFilter<"Task"> | string | null
+    cowId?: StringNullableFilter<"Task"> | string | null
+    eventId?: StringNullableFilter<"Task"> | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }
+
+  export type TaskOrderByWithRelationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    cowId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    farm?: FarmOrderByWithRelationInput
+    cow?: CowOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
+  }
+
+  export type TaskWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TaskWhereInput | TaskWhereInput[]
+    OR?: TaskWhereInput[]
+    NOT?: TaskWhereInput | TaskWhereInput[]
+    farmId?: StringFilter<"Task"> | string
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: StringFilter<"Task"> | string
+    priority?: StringFilter<"Task"> | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    assigneeId?: StringNullableFilter<"Task"> | string | null
+    cowId?: StringNullableFilter<"Task"> | string | null
+    eventId?: StringNullableFilter<"Task"> | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
+    cow?: XOR<CowNullableScalarRelationFilter, CowWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }, "id">
+
+  export type TaskOrderByWithAggregationInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
+    assigneeId?: SortOrderInput | SortOrder
+    cowId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TaskCountOrderByAggregateInput
+    _max?: TaskMaxOrderByAggregateInput
+    _min?: TaskMinOrderByAggregateInput
+  }
+
+  export type TaskScalarWhereWithAggregatesInput = {
+    AND?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
+    OR?: TaskScalarWhereWithAggregatesInput[]
+    NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Task"> | string
+    farmId?: StringWithAggregatesFilter<"Task"> | string
+    title?: StringWithAggregatesFilter<"Task"> | string
+    description?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    status?: StringWithAggregatesFilter<"Task"> | string
+    priority?: StringWithAggregatesFilter<"Task"> | string
+    dueDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
+    assigneeId?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    cowId?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    eventId?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+  }
+
   export type FarmCreateInput = {
     id?: string
     name: string
@@ -60271,6 +63651,7 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -60278,6 +63659,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateInput = {
@@ -60290,6 +63672,7 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -60297,6 +63680,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUpdateInput = {
@@ -60309,6 +63693,7 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -60316,6 +63701,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateInput = {
@@ -60328,6 +63714,7 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -60335,6 +63722,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmCreateManyInput = {
@@ -60489,6 +63877,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -60517,6 +63906,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -60545,6 +63935,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -60573,6 +63964,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -60992,6 +64384,7 @@ export namespace Prisma {
     status?: string
     config?: string | null
     batches?: IntegrationBatchCreateNestedManyWithoutDataSourceInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUncheckedCreateInput = {
@@ -61003,6 +64396,7 @@ export namespace Prisma {
     status?: string
     config?: string | null
     batches?: IntegrationBatchUncheckedCreateNestedManyWithoutDataSourceInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUpdateInput = {
@@ -61014,6 +64408,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
     batches?: IntegrationBatchUpdateManyWithoutDataSourceNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceUncheckedUpdateInput = {
@@ -61025,6 +64420,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
     batches?: IntegrationBatchUncheckedUpdateManyWithoutDataSourceNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceCreateManyInput = {
@@ -62284,11 +65680,20 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
     section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateInput = {
@@ -62304,6 +65709,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventUpdateInput = {
@@ -62314,11 +65728,20 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
     section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
@@ -62334,6 +65757,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventCreateManyInput = {
@@ -62349,6 +65781,13 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
   }
 
   export type EventUpdateManyMutationInput = {
@@ -62359,6 +65798,13 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type EventUncheckedUpdateManyInput = {
@@ -62374,6 +65820,13 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type ObservationCreateInput = {
@@ -63530,6 +66983,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateInput = {
@@ -63567,6 +67021,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUpdateInput = {
@@ -63604,6 +67059,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateInput = {
@@ -63641,6 +67097,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestCreateManyInput = {
@@ -64363,6 +67820,223 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OutboxMessageCreateInput = {
+    id?: string
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutOutboxMessagesInput
+    dataSource: DataSourceCreateNestedOneWithoutOutboxMessagesInput
+    operationRequest?: OperationRequestCreateNestedOneWithoutOutboxMessagesInput
+    event?: EventCreateNestedOneWithoutOutboxMessagesInput
+  }
+
+  export type OutboxMessageUncheckedCreateInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    operationRequest?: OperationRequestUpdateOneWithoutOutboxMessagesNestedInput
+    event?: EventUpdateOneWithoutOutboxMessagesNestedInput
+  }
+
+  export type OutboxMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageCreateManyInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutTasksInput
+    cow?: CowCreateNestedOneWithoutTasksInput
+    event?: EventCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutTasksNestedInput
+    cow?: CowUpdateOneWithoutTasksNestedInput
+    event?: EventUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskCreateManyInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -64426,6 +68100,12 @@ export namespace Prisma {
     none?: EventWhereInput
   }
 
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
+  }
+
   export type EconomicFactListRelationFilter = {
     every?: EconomicFactWhereInput
     some?: EconomicFactWhereInput
@@ -64468,6 +68148,12 @@ export namespace Prisma {
     none?: DashboardSnapshotWhereInput
   }
 
+  export type OutboxMessageListRelationFilter = {
+    every?: OutboxMessageWhereInput
+    some?: OutboxMessageWhereInput
+    none?: OutboxMessageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -64486,6 +68172,10 @@ export namespace Prisma {
   }
 
   export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -64514,6 +68204,10 @@ export namespace Prisma {
   }
 
   export type DashboardSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OutboxMessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -65954,6 +69648,17 @@ export namespace Prisma {
     timestamp?: SortOrder
     source?: SortOrder
     metadata?: SortOrder
+    receivedAt?: SortOrder
+    sourceRecordId?: SortOrder
+    dedupeKey?: SortOrder
+    confirmationStatus?: SortOrder
+    confirmedAt?: SortOrder
+    confirmedById?: SortOrder
+    confidenceScore?: SortOrder
+  }
+
+  export type EventAvgOrderByAggregateInput = {
+    confidenceScore?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
@@ -65969,6 +69674,13 @@ export namespace Prisma {
     timestamp?: SortOrder
     source?: SortOrder
     metadata?: SortOrder
+    receivedAt?: SortOrder
+    sourceRecordId?: SortOrder
+    dedupeKey?: SortOrder
+    confirmationStatus?: SortOrder
+    confirmedAt?: SortOrder
+    confirmedById?: SortOrder
+    confidenceScore?: SortOrder
   }
 
   export type EventMinOrderByAggregateInput = {
@@ -65984,6 +69696,17 @@ export namespace Prisma {
     timestamp?: SortOrder
     source?: SortOrder
     metadata?: SortOrder
+    receivedAt?: SortOrder
+    sourceRecordId?: SortOrder
+    dedupeKey?: SortOrder
+    confirmationStatus?: SortOrder
+    confirmedAt?: SortOrder
+    confirmedById?: SortOrder
+    confidenceScore?: SortOrder
+  }
+
+  export type EventSumOrderByAggregateInput = {
+    confidenceScore?: SortOrder
   }
 
   export type ObservationCountOrderByAggregateInput = {
@@ -67030,6 +70753,120 @@ export namespace Prisma {
     inseminationCount7d?: SortOrder
   }
 
+  export type OperationRequestNullableScalarRelationFilter = {
+    is?: OperationRequestWhereInput | null
+    isNot?: OperationRequestWhereInput | null
+  }
+
+  export type EventNullableScalarRelationFilter = {
+    is?: EventWhereInput | null
+    isNot?: EventWhereInput | null
+  }
+
+  export type OutboxMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    dataSourceId?: SortOrder
+    operationRequestId?: SortOrder
+    eventId?: SortOrder
+    payloadJson?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    nextRetryAt?: SortOrder
+    lastAttemptAt?: SortOrder
+    externalAckId?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutboxMessageAvgOrderByAggregateInput = {
+    attempts?: SortOrder
+  }
+
+  export type OutboxMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    dataSourceId?: SortOrder
+    operationRequestId?: SortOrder
+    eventId?: SortOrder
+    payloadJson?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    nextRetryAt?: SortOrder
+    lastAttemptAt?: SortOrder
+    externalAckId?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutboxMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    dataSourceId?: SortOrder
+    operationRequestId?: SortOrder
+    eventId?: SortOrder
+    payloadJson?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    nextRetryAt?: SortOrder
+    lastAttemptAt?: SortOrder
+    externalAckId?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutboxMessageSumOrderByAggregateInput = {
+    attempts?: SortOrder
+  }
+
+  export type TaskCountOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    assigneeId?: SortOrder
+    cowId?: SortOrder
+    eventId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TaskMaxOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    assigneeId?: SortOrder
+    cowId?: SortOrder
+    eventId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TaskMinOrderByAggregateInput = {
+    id?: SortOrder
+    farmId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    assigneeId?: SortOrder
+    cowId?: SortOrder
+    eventId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type GroupUnitCreateNestedManyWithoutFarmInput = {
     create?: XOR<GroupUnitCreateWithoutFarmInput, GroupUnitUncheckedCreateWithoutFarmInput> | GroupUnitCreateWithoutFarmInput[] | GroupUnitUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: GroupUnitCreateOrConnectWithoutFarmInput | GroupUnitCreateOrConnectWithoutFarmInput[]
@@ -67056,6 +70893,13 @@ export namespace Prisma {
     connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
     createMany?: EventCreateManyFarmInputEnvelope
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type TaskCreateNestedManyWithoutFarmInput = {
+    create?: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput> | TaskCreateWithoutFarmInput[] | TaskUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutFarmInput | TaskCreateOrConnectWithoutFarmInput[]
+    createMany?: TaskCreateManyFarmInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type EconomicFactCreateNestedManyWithoutFarmInput = {
@@ -67107,6 +70951,13 @@ export namespace Prisma {
     connect?: DashboardSnapshotWhereUniqueInput | DashboardSnapshotWhereUniqueInput[]
   }
 
+  export type OutboxMessageCreateNestedManyWithoutFarmInput = {
+    create?: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput> | OutboxMessageCreateWithoutFarmInput[] | OutboxMessageUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutFarmInput | OutboxMessageCreateOrConnectWithoutFarmInput[]
+    createMany?: OutboxMessageCreateManyFarmInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+  }
+
   export type GroupUnitUncheckedCreateNestedManyWithoutFarmInput = {
     create?: XOR<GroupUnitCreateWithoutFarmInput, GroupUnitUncheckedCreateWithoutFarmInput> | GroupUnitCreateWithoutFarmInput[] | GroupUnitUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: GroupUnitCreateOrConnectWithoutFarmInput | GroupUnitCreateOrConnectWithoutFarmInput[]
@@ -67133,6 +70984,13 @@ export namespace Prisma {
     connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
     createMany?: EventCreateManyFarmInputEnvelope
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput> | TaskCreateWithoutFarmInput[] | TaskUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutFarmInput | TaskCreateOrConnectWithoutFarmInput[]
+    createMany?: TaskCreateManyFarmInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type EconomicFactUncheckedCreateNestedManyWithoutFarmInput = {
@@ -67182,6 +71040,13 @@ export namespace Prisma {
     connectOrCreate?: DashboardSnapshotCreateOrConnectWithoutFarmInput | DashboardSnapshotCreateOrConnectWithoutFarmInput[]
     createMany?: DashboardSnapshotCreateManyFarmInputEnvelope
     connect?: DashboardSnapshotWhereUniqueInput | DashboardSnapshotWhereUniqueInput[]
+  }
+
+  export type OutboxMessageUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput> | OutboxMessageCreateWithoutFarmInput[] | OutboxMessageUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutFarmInput | OutboxMessageCreateOrConnectWithoutFarmInput[]
+    createMany?: OutboxMessageCreateManyFarmInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -67250,6 +71115,20 @@ export namespace Prisma {
     update?: EventUpdateWithWhereUniqueWithoutFarmInput | EventUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: EventUpdateManyWithWhereWithoutFarmInput | EventUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type TaskUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput> | TaskCreateWithoutFarmInput[] | TaskUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutFarmInput | TaskCreateOrConnectWithoutFarmInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutFarmInput | TaskUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: TaskCreateManyFarmInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutFarmInput | TaskUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutFarmInput | TaskUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type EconomicFactUpdateManyWithoutFarmNestedInput = {
@@ -67350,6 +71229,20 @@ export namespace Prisma {
     deleteMany?: DashboardSnapshotScalarWhereInput | DashboardSnapshotScalarWhereInput[]
   }
 
+  export type OutboxMessageUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput> | OutboxMessageCreateWithoutFarmInput[] | OutboxMessageUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutFarmInput | OutboxMessageCreateOrConnectWithoutFarmInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutFarmInput | OutboxMessageUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: OutboxMessageCreateManyFarmInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutFarmInput | OutboxMessageUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutFarmInput | OutboxMessageUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+  }
+
   export type GroupUnitUncheckedUpdateManyWithoutFarmNestedInput = {
     create?: XOR<GroupUnitCreateWithoutFarmInput, GroupUnitUncheckedCreateWithoutFarmInput> | GroupUnitCreateWithoutFarmInput[] | GroupUnitUncheckedCreateWithoutFarmInput[]
     connectOrCreate?: GroupUnitCreateOrConnectWithoutFarmInput | GroupUnitCreateOrConnectWithoutFarmInput[]
@@ -67404,6 +71297,20 @@ export namespace Prisma {
     update?: EventUpdateWithWhereUniqueWithoutFarmInput | EventUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: EventUpdateManyWithWhereWithoutFarmInput | EventUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput> | TaskCreateWithoutFarmInput[] | TaskUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutFarmInput | TaskCreateOrConnectWithoutFarmInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutFarmInput | TaskUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: TaskCreateManyFarmInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutFarmInput | TaskUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutFarmInput | TaskUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type EconomicFactUncheckedUpdateManyWithoutFarmNestedInput = {
@@ -67502,6 +71409,20 @@ export namespace Prisma {
     update?: DashboardSnapshotUpdateWithWhereUniqueWithoutFarmInput | DashboardSnapshotUpdateWithWhereUniqueWithoutFarmInput[]
     updateMany?: DashboardSnapshotUpdateManyWithWhereWithoutFarmInput | DashboardSnapshotUpdateManyWithWhereWithoutFarmInput[]
     deleteMany?: DashboardSnapshotScalarWhereInput | DashboardSnapshotScalarWhereInput[]
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput> | OutboxMessageCreateWithoutFarmInput[] | OutboxMessageUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutFarmInput | OutboxMessageCreateOrConnectWithoutFarmInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutFarmInput | OutboxMessageUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: OutboxMessageCreateManyFarmInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutFarmInput | OutboxMessageUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutFarmInput | OutboxMessageUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
   }
 
   export type FarmCreateNestedOneWithoutGroupsInput = {
@@ -67827,6 +71748,13 @@ export namespace Prisma {
     connect?: OperationRequestWhereUniqueInput | OperationRequestWhereUniqueInput[]
   }
 
+  export type TaskCreateNestedManyWithoutCowInput = {
+    create?: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput> | TaskCreateWithoutCowInput[] | TaskUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCowInput | TaskCreateOrConnectWithoutCowInput[]
+    createMany?: TaskCreateManyCowInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
   export type CowEventCreateNestedManyWithoutCowInput = {
     create?: XOR<CowEventCreateWithoutCowInput, CowEventUncheckedCreateWithoutCowInput> | CowEventCreateWithoutCowInput[] | CowEventUncheckedCreateWithoutCowInput[]
     connectOrCreate?: CowEventCreateOrConnectWithoutCowInput | CowEventCreateOrConnectWithoutCowInput[]
@@ -67895,6 +71823,13 @@ export namespace Prisma {
     connectOrCreate?: OperationRequestCreateOrConnectWithoutCowInput | OperationRequestCreateOrConnectWithoutCowInput[]
     createMany?: OperationRequestCreateManyCowInputEnvelope
     connect?: OperationRequestWhereUniqueInput | OperationRequestWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutCowInput = {
+    create?: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput> | TaskCreateWithoutCowInput[] | TaskUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCowInput | TaskCreateOrConnectWithoutCowInput[]
+    createMany?: TaskCreateManyCowInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type CowEventUncheckedCreateNestedManyWithoutCowInput = {
@@ -68072,6 +72007,20 @@ export namespace Prisma {
     deleteMany?: OperationRequestScalarWhereInput | OperationRequestScalarWhereInput[]
   }
 
+  export type TaskUpdateManyWithoutCowNestedInput = {
+    create?: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput> | TaskCreateWithoutCowInput[] | TaskUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCowInput | TaskCreateOrConnectWithoutCowInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCowInput | TaskUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: TaskCreateManyCowInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCowInput | TaskUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCowInput | TaskUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
   export type CowEventUpdateManyWithoutCowNestedInput = {
     create?: XOR<CowEventCreateWithoutCowInput, CowEventUncheckedCreateWithoutCowInput> | CowEventCreateWithoutCowInput[] | CowEventUncheckedCreateWithoutCowInput[]
     connectOrCreate?: CowEventCreateOrConnectWithoutCowInput | CowEventCreateOrConnectWithoutCowInput[]
@@ -68210,6 +72159,20 @@ export namespace Prisma {
     update?: OperationRequestUpdateWithWhereUniqueWithoutCowInput | OperationRequestUpdateWithWhereUniqueWithoutCowInput[]
     updateMany?: OperationRequestUpdateManyWithWhereWithoutCowInput | OperationRequestUpdateManyWithWhereWithoutCowInput[]
     deleteMany?: OperationRequestScalarWhereInput | OperationRequestScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCowNestedInput = {
+    create?: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput> | TaskCreateWithoutCowInput[] | TaskUncheckedCreateWithoutCowInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCowInput | TaskCreateOrConnectWithoutCowInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCowInput | TaskUpsertWithWhereUniqueWithoutCowInput[]
+    createMany?: TaskCreateManyCowInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCowInput | TaskUpdateWithWhereUniqueWithoutCowInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCowInput | TaskUpdateManyWithWhereWithoutCowInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type CowEventUncheckedUpdateManyWithoutCowNestedInput = {
@@ -68529,11 +72492,25 @@ export namespace Prisma {
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
   }
 
+  export type OutboxMessageCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput> | OutboxMessageCreateWithoutDataSourceInput[] | OutboxMessageUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutDataSourceInput | OutboxMessageCreateOrConnectWithoutDataSourceInput[]
+    createMany?: OutboxMessageCreateManyDataSourceInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+  }
+
   export type IntegrationBatchUncheckedCreateNestedManyWithoutDataSourceInput = {
     create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
     connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
     createMany?: IntegrationBatchCreateManyDataSourceInputEnvelope
     connect?: IntegrationBatchWhereUniqueInput | IntegrationBatchWhereUniqueInput[]
+  }
+
+  export type OutboxMessageUncheckedCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput> | OutboxMessageCreateWithoutDataSourceInput[] | OutboxMessageUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutDataSourceInput | OutboxMessageCreateOrConnectWithoutDataSourceInput[]
+    createMany?: OutboxMessageCreateManyDataSourceInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
   }
 
   export type IntegrationBatchUpdateManyWithoutDataSourceNestedInput = {
@@ -68550,6 +72527,20 @@ export namespace Prisma {
     deleteMany?: IntegrationBatchScalarWhereInput | IntegrationBatchScalarWhereInput[]
   }
 
+  export type OutboxMessageUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput> | OutboxMessageCreateWithoutDataSourceInput[] | OutboxMessageUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutDataSourceInput | OutboxMessageCreateOrConnectWithoutDataSourceInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutDataSourceInput | OutboxMessageUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: OutboxMessageCreateManyDataSourceInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutDataSourceInput | OutboxMessageUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutDataSourceInput | OutboxMessageUpdateManyWithWhereWithoutDataSourceInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+  }
+
   export type IntegrationBatchUncheckedUpdateManyWithoutDataSourceNestedInput = {
     create?: XOR<IntegrationBatchCreateWithoutDataSourceInput, IntegrationBatchUncheckedCreateWithoutDataSourceInput> | IntegrationBatchCreateWithoutDataSourceInput[] | IntegrationBatchUncheckedCreateWithoutDataSourceInput[]
     connectOrCreate?: IntegrationBatchCreateOrConnectWithoutDataSourceInput | IntegrationBatchCreateOrConnectWithoutDataSourceInput[]
@@ -68562,6 +72553,20 @@ export namespace Prisma {
     update?: IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput | IntegrationBatchUpdateWithWhereUniqueWithoutDataSourceInput[]
     updateMany?: IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput | IntegrationBatchUpdateManyWithWhereWithoutDataSourceInput[]
     deleteMany?: IntegrationBatchScalarWhereInput | IntegrationBatchScalarWhereInput[]
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput> | OutboxMessageCreateWithoutDataSourceInput[] | OutboxMessageUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutDataSourceInput | OutboxMessageCreateOrConnectWithoutDataSourceInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutDataSourceInput | OutboxMessageUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: OutboxMessageCreateManyDataSourceInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutDataSourceInput | OutboxMessageUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutDataSourceInput | OutboxMessageUpdateManyWithWhereWithoutDataSourceInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
   }
 
   export type DataSourceCreateNestedOneWithoutBatchesInput = {
@@ -69310,6 +73315,34 @@ export namespace Prisma {
     connect?: FarmWhereUniqueInput
   }
 
+  export type OutboxMessageCreateNestedManyWithoutEventInput = {
+    create?: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput> | OutboxMessageCreateWithoutEventInput[] | OutboxMessageUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutEventInput | OutboxMessageCreateOrConnectWithoutEventInput[]
+    createMany?: OutboxMessageCreateManyEventInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+  }
+
+  export type TaskCreateNestedManyWithoutEventInput = {
+    create?: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput> | TaskCreateWithoutEventInput[] | TaskUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutEventInput | TaskCreateOrConnectWithoutEventInput[]
+    createMany?: TaskCreateManyEventInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type OutboxMessageUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput> | OutboxMessageCreateWithoutEventInput[] | OutboxMessageUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutEventInput | OutboxMessageCreateOrConnectWithoutEventInput[]
+    createMany?: OutboxMessageCreateManyEventInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput> | TaskCreateWithoutEventInput[] | TaskUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutEventInput | TaskCreateOrConnectWithoutEventInput[]
+    createMany?: TaskCreateManyEventInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
   export type EventTypeUpdateOneWithoutEventsNestedInput = {
     create?: XOR<EventTypeCreateWithoutEventsInput, EventTypeUncheckedCreateWithoutEventsInput>
     connectOrCreate?: EventTypeCreateOrConnectWithoutEventsInput
@@ -69358,6 +73391,62 @@ export namespace Prisma {
     delete?: FarmWhereInput | boolean
     connect?: FarmWhereUniqueInput
     update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutEventsInput, FarmUpdateWithoutEventsInput>, FarmUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type OutboxMessageUpdateManyWithoutEventNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput> | OutboxMessageCreateWithoutEventInput[] | OutboxMessageUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutEventInput | OutboxMessageCreateOrConnectWithoutEventInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutEventInput | OutboxMessageUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: OutboxMessageCreateManyEventInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutEventInput | OutboxMessageUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutEventInput | OutboxMessageUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+  }
+
+  export type TaskUpdateManyWithoutEventNestedInput = {
+    create?: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput> | TaskCreateWithoutEventInput[] | TaskUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutEventInput | TaskCreateOrConnectWithoutEventInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutEventInput | TaskUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: TaskCreateManyEventInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutEventInput | TaskUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutEventInput | TaskUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput> | OutboxMessageCreateWithoutEventInput[] | OutboxMessageUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutEventInput | OutboxMessageCreateOrConnectWithoutEventInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutEventInput | OutboxMessageUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: OutboxMessageCreateManyEventInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutEventInput | OutboxMessageUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutEventInput | OutboxMessageUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput> | TaskCreateWithoutEventInput[] | TaskUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutEventInput | TaskCreateOrConnectWithoutEventInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutEventInput | TaskUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: TaskCreateManyEventInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutEventInput | TaskUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutEventInput | TaskUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type CowCreateNestedOneWithoutObservationsInput = {
@@ -70012,6 +74101,13 @@ export namespace Prisma {
     connect?: OperationAttachmentWhereUniqueInput | OperationAttachmentWhereUniqueInput[]
   }
 
+  export type OutboxMessageCreateNestedManyWithoutOperationRequestInput = {
+    create?: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput> | OutboxMessageCreateWithoutOperationRequestInput[] | OutboxMessageUncheckedCreateWithoutOperationRequestInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutOperationRequestInput | OutboxMessageCreateOrConnectWithoutOperationRequestInput[]
+    createMany?: OutboxMessageCreateManyOperationRequestInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+  }
+
   export type OperationConfirmationUncheckedCreateNestedManyWithoutOperationRequestInput = {
     create?: XOR<OperationConfirmationCreateWithoutOperationRequestInput, OperationConfirmationUncheckedCreateWithoutOperationRequestInput> | OperationConfirmationCreateWithoutOperationRequestInput[] | OperationConfirmationUncheckedCreateWithoutOperationRequestInput[]
     connectOrCreate?: OperationConfirmationCreateOrConnectWithoutOperationRequestInput | OperationConfirmationCreateOrConnectWithoutOperationRequestInput[]
@@ -70038,6 +74134,13 @@ export namespace Prisma {
     connectOrCreate?: OperationAttachmentCreateOrConnectWithoutOperationRequestInput | OperationAttachmentCreateOrConnectWithoutOperationRequestInput[]
     createMany?: OperationAttachmentCreateManyOperationRequestInputEnvelope
     connect?: OperationAttachmentWhereUniqueInput | OperationAttachmentWhereUniqueInput[]
+  }
+
+  export type OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput = {
+    create?: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput> | OutboxMessageCreateWithoutOperationRequestInput[] | OutboxMessageUncheckedCreateWithoutOperationRequestInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutOperationRequestInput | OutboxMessageCreateOrConnectWithoutOperationRequestInput[]
+    createMany?: OutboxMessageCreateManyOperationRequestInputEnvelope
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
   }
 
   export type FarmUpdateOneRequiredWithoutOperationsNestedInput = {
@@ -70122,6 +74225,20 @@ export namespace Prisma {
     deleteMany?: OperationAttachmentScalarWhereInput | OperationAttachmentScalarWhereInput[]
   }
 
+  export type OutboxMessageUpdateManyWithoutOperationRequestNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput> | OutboxMessageCreateWithoutOperationRequestInput[] | OutboxMessageUncheckedCreateWithoutOperationRequestInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutOperationRequestInput | OutboxMessageCreateOrConnectWithoutOperationRequestInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutOperationRequestInput | OutboxMessageUpsertWithWhereUniqueWithoutOperationRequestInput[]
+    createMany?: OutboxMessageCreateManyOperationRequestInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutOperationRequestInput | OutboxMessageUpdateWithWhereUniqueWithoutOperationRequestInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutOperationRequestInput | OutboxMessageUpdateManyWithWhereWithoutOperationRequestInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+  }
+
   export type OperationConfirmationUncheckedUpdateManyWithoutOperationRequestNestedInput = {
     create?: XOR<OperationConfirmationCreateWithoutOperationRequestInput, OperationConfirmationUncheckedCreateWithoutOperationRequestInput> | OperationConfirmationCreateWithoutOperationRequestInput[] | OperationConfirmationUncheckedCreateWithoutOperationRequestInput[]
     connectOrCreate?: OperationConfirmationCreateOrConnectWithoutOperationRequestInput | OperationConfirmationCreateOrConnectWithoutOperationRequestInput[]
@@ -70176,6 +74293,20 @@ export namespace Prisma {
     update?: OperationAttachmentUpdateWithWhereUniqueWithoutOperationRequestInput | OperationAttachmentUpdateWithWhereUniqueWithoutOperationRequestInput[]
     updateMany?: OperationAttachmentUpdateManyWithWhereWithoutOperationRequestInput | OperationAttachmentUpdateManyWithWhereWithoutOperationRequestInput[]
     deleteMany?: OperationAttachmentScalarWhereInput | OperationAttachmentScalarWhereInput[]
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput = {
+    create?: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput> | OutboxMessageCreateWithoutOperationRequestInput[] | OutboxMessageUncheckedCreateWithoutOperationRequestInput[]
+    connectOrCreate?: OutboxMessageCreateOrConnectWithoutOperationRequestInput | OutboxMessageCreateOrConnectWithoutOperationRequestInput[]
+    upsert?: OutboxMessageUpsertWithWhereUniqueWithoutOperationRequestInput | OutboxMessageUpsertWithWhereUniqueWithoutOperationRequestInput[]
+    createMany?: OutboxMessageCreateManyOperationRequestInputEnvelope
+    set?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    disconnect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    delete?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    connect?: OutboxMessageWhereUniqueInput | OutboxMessageWhereUniqueInput[]
+    update?: OutboxMessageUpdateWithWhereUniqueWithoutOperationRequestInput | OutboxMessageUpdateWithWhereUniqueWithoutOperationRequestInput[]
+    updateMany?: OutboxMessageUpdateManyWithWhereWithoutOperationRequestInput | OutboxMessageUpdateManyWithWhereWithoutOperationRequestInput[]
+    deleteMany?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
   }
 
   export type OperationRequestCreateNestedOneWithoutConfirmationsInput = {
@@ -70260,6 +74391,112 @@ export namespace Prisma {
     upsert?: FarmUpsertWithoutDashboardsInput
     connect?: FarmWhereUniqueInput
     update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutDashboardsInput, FarmUpdateWithoutDashboardsInput>, FarmUncheckedUpdateWithoutDashboardsInput>
+  }
+
+  export type FarmCreateNestedOneWithoutOutboxMessagesInput = {
+    create?: XOR<FarmCreateWithoutOutboxMessagesInput, FarmUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutOutboxMessagesInput
+    connect?: FarmWhereUniqueInput
+  }
+
+  export type DataSourceCreateNestedOneWithoutOutboxMessagesInput = {
+    create?: XOR<DataSourceCreateWithoutOutboxMessagesInput, DataSourceUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: DataSourceCreateOrConnectWithoutOutboxMessagesInput
+    connect?: DataSourceWhereUniqueInput
+  }
+
+  export type OperationRequestCreateNestedOneWithoutOutboxMessagesInput = {
+    create?: XOR<OperationRequestCreateWithoutOutboxMessagesInput, OperationRequestUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: OperationRequestCreateOrConnectWithoutOutboxMessagesInput
+    connect?: OperationRequestWhereUniqueInput
+  }
+
+  export type EventCreateNestedOneWithoutOutboxMessagesInput = {
+    create?: XOR<EventCreateWithoutOutboxMessagesInput, EventUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOutboxMessagesInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type FarmUpdateOneRequiredWithoutOutboxMessagesNestedInput = {
+    create?: XOR<FarmCreateWithoutOutboxMessagesInput, FarmUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutOutboxMessagesInput
+    upsert?: FarmUpsertWithoutOutboxMessagesInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutOutboxMessagesInput, FarmUpdateWithoutOutboxMessagesInput>, FarmUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type DataSourceUpdateOneRequiredWithoutOutboxMessagesNestedInput = {
+    create?: XOR<DataSourceCreateWithoutOutboxMessagesInput, DataSourceUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: DataSourceCreateOrConnectWithoutOutboxMessagesInput
+    upsert?: DataSourceUpsertWithoutOutboxMessagesInput
+    connect?: DataSourceWhereUniqueInput
+    update?: XOR<XOR<DataSourceUpdateToOneWithWhereWithoutOutboxMessagesInput, DataSourceUpdateWithoutOutboxMessagesInput>, DataSourceUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type OperationRequestUpdateOneWithoutOutboxMessagesNestedInput = {
+    create?: XOR<OperationRequestCreateWithoutOutboxMessagesInput, OperationRequestUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: OperationRequestCreateOrConnectWithoutOutboxMessagesInput
+    upsert?: OperationRequestUpsertWithoutOutboxMessagesInput
+    disconnect?: OperationRequestWhereInput | boolean
+    delete?: OperationRequestWhereInput | boolean
+    connect?: OperationRequestWhereUniqueInput
+    update?: XOR<XOR<OperationRequestUpdateToOneWithWhereWithoutOutboxMessagesInput, OperationRequestUpdateWithoutOutboxMessagesInput>, OperationRequestUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type EventUpdateOneWithoutOutboxMessagesNestedInput = {
+    create?: XOR<EventCreateWithoutOutboxMessagesInput, EventUncheckedCreateWithoutOutboxMessagesInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOutboxMessagesInput
+    upsert?: EventUpsertWithoutOutboxMessagesInput
+    disconnect?: EventWhereInput | boolean
+    delete?: EventWhereInput | boolean
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutOutboxMessagesInput, EventUpdateWithoutOutboxMessagesInput>, EventUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type FarmCreateNestedOneWithoutTasksInput = {
+    create?: XOR<FarmCreateWithoutTasksInput, FarmUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutTasksInput
+    connect?: FarmWhereUniqueInput
+  }
+
+  export type CowCreateNestedOneWithoutTasksInput = {
+    create?: XOR<CowCreateWithoutTasksInput, CowUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: CowCreateOrConnectWithoutTasksInput
+    connect?: CowWhereUniqueInput
+  }
+
+  export type EventCreateNestedOneWithoutTasksInput = {
+    create?: XOR<EventCreateWithoutTasksInput, EventUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: EventCreateOrConnectWithoutTasksInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type FarmUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: XOR<FarmCreateWithoutTasksInput, FarmUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutTasksInput
+    upsert?: FarmUpsertWithoutTasksInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutTasksInput, FarmUpdateWithoutTasksInput>, FarmUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type CowUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<CowCreateWithoutTasksInput, CowUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: CowCreateOrConnectWithoutTasksInput
+    upsert?: CowUpsertWithoutTasksInput
+    disconnect?: CowWhereInput | boolean
+    delete?: CowWhereInput | boolean
+    connect?: CowWhereUniqueInput
+    update?: XOR<XOR<CowUpdateToOneWithWhereWithoutTasksInput, CowUpdateWithoutTasksInput>, CowUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type EventUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<EventCreateWithoutTasksInput, EventUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: EventCreateOrConnectWithoutTasksInput
+    upsert?: EventUpsertWithoutTasksInput
+    disconnect?: EventWhereInput | boolean
+    delete?: EventWhereInput | boolean
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutTasksInput, EventUpdateWithoutTasksInput>, EventUncheckedUpdateWithoutTasksInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -70560,6 +74797,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -70587,6 +74825,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -70654,10 +74893,19 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
     section?: SectionCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutFarmInput = {
@@ -70672,6 +74920,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutFarmInput = {
@@ -70681,6 +74938,43 @@ export namespace Prisma {
 
   export type EventCreateManyFarmInputEnvelope = {
     data: EventCreateManyFarmInput | EventCreateManyFarmInput[]
+  }
+
+  export type TaskCreateWithoutFarmInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cow?: CowCreateNestedOneWithoutTasksInput
+    event?: EventCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutFarmInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskCreateOrConnectWithoutFarmInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput>
+  }
+
+  export type TaskCreateManyFarmInputEnvelope = {
+    data: TaskCreateManyFarmInput | TaskCreateManyFarmInput[]
   }
 
   export type EconomicFactCreateWithoutFarmInput = {
@@ -70922,6 +75216,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutFarmInput = {
@@ -70958,6 +75253,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutFarmInput = {
@@ -71014,6 +75310,47 @@ export namespace Prisma {
 
   export type DashboardSnapshotCreateManyFarmInputEnvelope = {
     data: DashboardSnapshotCreateManyFarmInput | DashboardSnapshotCreateManyFarmInput[]
+  }
+
+  export type OutboxMessageCreateWithoutFarmInput = {
+    id?: string
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dataSource: DataSourceCreateNestedOneWithoutOutboxMessagesInput
+    operationRequest?: OperationRequestCreateNestedOneWithoutOutboxMessagesInput
+    event?: EventCreateNestedOneWithoutOutboxMessagesInput
+  }
+
+  export type OutboxMessageUncheckedCreateWithoutFarmInput = {
+    id?: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageCreateOrConnectWithoutFarmInput = {
+    where: OutboxMessageWhereUniqueInput
+    create: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput>
+  }
+
+  export type OutboxMessageCreateManyFarmInputEnvelope = {
+    data: OutboxMessageCreateManyFarmInput | OutboxMessageCreateManyFarmInput[]
   }
 
   export type GroupUnitUpsertWithWhereUniqueWithoutFarmInput = {
@@ -71155,6 +75492,47 @@ export namespace Prisma {
     timestamp?: DateTimeFilter<"Event"> | Date | string
     source?: StringFilter<"Event"> | string
     metadata?: StringNullableFilter<"Event"> | string | null
+    receivedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    sourceRecordId?: StringNullableFilter<"Event"> | string | null
+    dedupeKey?: StringNullableFilter<"Event"> | string | null
+    confirmationStatus?: StringFilter<"Event"> | string
+    confirmedAt?: DateTimeNullableFilter<"Event"> | Date | string | null
+    confirmedById?: StringNullableFilter<"Event"> | string | null
+    confidenceScore?: FloatNullableFilter<"Event"> | number | null
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutFarmInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutFarmInput, TaskUncheckedUpdateWithoutFarmInput>
+    create: XOR<TaskCreateWithoutFarmInput, TaskUncheckedCreateWithoutFarmInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutFarmInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutFarmInput, TaskUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutFarmInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: StringFilter<"Task"> | string
+    farmId?: StringFilter<"Task"> | string
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: StringFilter<"Task"> | string
+    priority?: StringFilter<"Task"> | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    assigneeId?: StringNullableFilter<"Task"> | string | null
+    cowId?: StringNullableFilter<"Task"> | string | null
+    eventId?: StringNullableFilter<"Task"> | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
   }
 
   export type EconomicFactUpsertWithWhereUniqueWithoutFarmInput = {
@@ -71415,6 +75793,42 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DashboardSnapshot"> | Date | string
   }
 
+  export type OutboxMessageUpsertWithWhereUniqueWithoutFarmInput = {
+    where: OutboxMessageWhereUniqueInput
+    update: XOR<OutboxMessageUpdateWithoutFarmInput, OutboxMessageUncheckedUpdateWithoutFarmInput>
+    create: XOR<OutboxMessageCreateWithoutFarmInput, OutboxMessageUncheckedCreateWithoutFarmInput>
+  }
+
+  export type OutboxMessageUpdateWithWhereUniqueWithoutFarmInput = {
+    where: OutboxMessageWhereUniqueInput
+    data: XOR<OutboxMessageUpdateWithoutFarmInput, OutboxMessageUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type OutboxMessageUpdateManyWithWhereWithoutFarmInput = {
+    where: OutboxMessageScalarWhereInput
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type OutboxMessageScalarWhereInput = {
+    AND?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+    OR?: OutboxMessageScalarWhereInput[]
+    NOT?: OutboxMessageScalarWhereInput | OutboxMessageScalarWhereInput[]
+    id?: StringFilter<"OutboxMessage"> | string
+    farmId?: StringFilter<"OutboxMessage"> | string
+    dataSourceId?: StringFilter<"OutboxMessage"> | string
+    operationRequestId?: StringNullableFilter<"OutboxMessage"> | string | null
+    eventId?: StringNullableFilter<"OutboxMessage"> | string | null
+    payloadJson?: StringFilter<"OutboxMessage"> | string
+    status?: StringFilter<"OutboxMessage"> | string
+    attempts?: IntFilter<"OutboxMessage"> | number
+    nextRetryAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    lastAttemptAt?: DateTimeNullableFilter<"OutboxMessage"> | Date | string | null
+    externalAckId?: StringNullableFilter<"OutboxMessage"> | string | null
+    errorMessage?: StringNullableFilter<"OutboxMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutboxMessage"> | Date | string
+  }
+
   export type FarmCreateWithoutGroupsInput = {
     id?: string
     name: string
@@ -71424,6 +75838,7 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -71431,6 +75846,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutGroupsInput = {
@@ -71442,6 +75858,7 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -71449,6 +75866,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutGroupsInput = {
@@ -71480,6 +75898,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -71507,6 +75926,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -71579,10 +75999,19 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutGroupInput = {
@@ -71597,6 +76026,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutGroupInput = {
@@ -71681,6 +76119,7 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -71688,6 +76127,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutGroupsInput = {
@@ -71699,6 +76139,7 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -71706,6 +76147,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowUpsertWithWhereUniqueWithoutGroupInput = {
@@ -71848,6 +76290,7 @@ export namespace Prisma {
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -71855,6 +76298,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutCowsInput = {
@@ -71866,6 +76310,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -71873,6 +76318,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutCowsInput = {
@@ -72150,10 +76596,19 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
     section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutCowInput = {
@@ -72168,6 +76623,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutCowInput = {
@@ -72269,6 +76733,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutCowInput = {
@@ -72305,6 +76770,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutCowInput = {
@@ -72314,6 +76780,43 @@ export namespace Prisma {
 
   export type OperationRequestCreateManyCowInputEnvelope = {
     data: OperationRequestCreateManyCowInput | OperationRequestCreateManyCowInput[]
+  }
+
+  export type TaskCreateWithoutCowInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutTasksInput
+    event?: EventCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutCowInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskCreateOrConnectWithoutCowInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput>
+  }
+
+  export type TaskCreateManyCowInputEnvelope = {
+    data: TaskCreateManyCowInput | TaskCreateManyCowInput[]
   }
 
   export type CowEventCreateWithoutCowInput = {
@@ -72365,6 +76868,7 @@ export namespace Prisma {
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -72372,6 +76876,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutCowsInput = {
@@ -72383,6 +76888,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -72390,6 +76896,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type GroupUnitUpsertWithoutCowsInput = {
@@ -72725,6 +77232,22 @@ export namespace Prisma {
     data: XOR<OperationRequestUpdateManyMutationInput, OperationRequestUncheckedUpdateManyWithoutCowInput>
   }
 
+  export type TaskUpsertWithWhereUniqueWithoutCowInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutCowInput, TaskUncheckedUpdateWithoutCowInput>
+    create: XOR<TaskCreateWithoutCowInput, TaskUncheckedCreateWithoutCowInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutCowInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutCowInput, TaskUncheckedUpdateWithoutCowInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutCowInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCowInput>
+  }
+
   export type CowEventUpsertWithWhereUniqueWithoutCowInput = {
     where: CowEventWhereUniqueInput
     update: XOR<CowEventUpdateWithoutCowInput, CowEventUncheckedUpdateWithoutCowInput>
@@ -72765,12 +77288,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutSectionsInput = {
@@ -72783,12 +77308,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutSectionsInput = {
@@ -72845,6 +77372,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -72872,6 +77400,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -72892,10 +77421,19 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     type?: EventTypeCreateNestedOneWithoutEventsInput
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutSectionInput = {
@@ -72910,6 +77448,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutSectionInput = {
@@ -72996,12 +77543,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutSectionsInput = {
@@ -73014,12 +77563,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type BarnUpsertWithoutSectionsInput = {
@@ -73141,6 +77692,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -73168,6 +77720,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -73250,6 +77803,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -73277,6 +77831,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -73513,6 +78068,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -73540,6 +78096,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -73583,6 +78140,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -73610,6 +78168,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -73637,6 +78196,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -73664,6 +78224,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -73744,6 +78305,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -73771,6 +78333,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -73872,6 +78435,47 @@ export namespace Prisma {
     data: IntegrationBatchCreateManyDataSourceInput | IntegrationBatchCreateManyDataSourceInput[]
   }
 
+  export type OutboxMessageCreateWithoutDataSourceInput = {
+    id?: string
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutOutboxMessagesInput
+    operationRequest?: OperationRequestCreateNestedOneWithoutOutboxMessagesInput
+    event?: EventCreateNestedOneWithoutOutboxMessagesInput
+  }
+
+  export type OutboxMessageUncheckedCreateWithoutDataSourceInput = {
+    id?: string
+    farmId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageCreateOrConnectWithoutDataSourceInput = {
+    where: OutboxMessageWhereUniqueInput
+    create: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput>
+  }
+
+  export type OutboxMessageCreateManyDataSourceInputEnvelope = {
+    data: OutboxMessageCreateManyDataSourceInput | OutboxMessageCreateManyDataSourceInput[]
+  }
+
   export type IntegrationBatchUpsertWithWhereUniqueWithoutDataSourceInput = {
     where: IntegrationBatchWhereUniqueInput
     update: XOR<IntegrationBatchUpdateWithoutDataSourceInput, IntegrationBatchUncheckedUpdateWithoutDataSourceInput>
@@ -73911,6 +78515,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"IntegrationBatch"> | Date | string
   }
 
+  export type OutboxMessageUpsertWithWhereUniqueWithoutDataSourceInput = {
+    where: OutboxMessageWhereUniqueInput
+    update: XOR<OutboxMessageUpdateWithoutDataSourceInput, OutboxMessageUncheckedUpdateWithoutDataSourceInput>
+    create: XOR<OutboxMessageCreateWithoutDataSourceInput, OutboxMessageUncheckedCreateWithoutDataSourceInput>
+  }
+
+  export type OutboxMessageUpdateWithWhereUniqueWithoutDataSourceInput = {
+    where: OutboxMessageWhereUniqueInput
+    data: XOR<OutboxMessageUpdateWithoutDataSourceInput, OutboxMessageUncheckedUpdateWithoutDataSourceInput>
+  }
+
+  export type OutboxMessageUpdateManyWithWhereWithoutDataSourceInput = {
+    where: OutboxMessageScalarWhereInput
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyWithoutDataSourceInput>
+  }
+
   export type DataSourceCreateWithoutBatchesInput = {
     id?: string
     name: string
@@ -73919,6 +78539,7 @@ export namespace Prisma {
     lastSync?: Date | string | null
     status?: string
     config?: string | null
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUncheckedCreateWithoutBatchesInput = {
@@ -73929,6 +78550,7 @@ export namespace Prisma {
     lastSync?: Date | string | null
     status?: string
     config?: string | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceCreateOrConnectWithoutBatchesInput = {
@@ -74143,6 +78765,7 @@ export namespace Prisma {
     lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
+    outboxMessages?: OutboxMessageUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceUncheckedUpdateWithoutBatchesInput = {
@@ -74153,6 +78776,7 @@ export namespace Prisma {
     lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: StringFieldUpdateOperationsInput | string
     config?: NullableStringFieldUpdateOperationsInput | string | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutDataSourceNestedInput
   }
 
   export type MilkRecordUpsertWithWhereUniqueWithoutBatchInput = {
@@ -74376,6 +79000,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -74403,6 +79028,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -74497,6 +79123,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -74524,6 +79151,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -74593,6 +79221,7 @@ export namespace Prisma {
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -74600,6 +79229,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutAfimilkDayMilkInput = {
@@ -74611,6 +79241,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -74618,6 +79249,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutAfimilkDayMilkInput = {
@@ -74649,6 +79281,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -74676,6 +79309,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -74755,6 +79389,7 @@ export namespace Prisma {
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -74762,6 +79397,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutAfimilkDayMilkInput = {
@@ -74773,6 +79409,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -74780,6 +79417,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowUpsertWithoutDayMilkRecordsInput = {
@@ -74817,6 +79455,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -74844,6 +79483,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -75813,10 +80453,19 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
     cow?: CowCreateNestedOneWithoutEventsInput
     group?: GroupUnitCreateNestedOneWithoutEventsInput
     section?: SectionCreateNestedOneWithoutEventsInput
     farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutTypeInput = {
@@ -75831,6 +80480,15 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutTypeInput = {
@@ -75903,6 +80561,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -75930,6 +80589,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -76023,6 +80683,7 @@ export namespace Prisma {
     groups?: GroupUnitCreateNestedManyWithoutFarmInput
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
@@ -76030,6 +80691,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutEventsInput = {
@@ -76041,6 +80703,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
@@ -76048,11 +80711,90 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutEventsInput = {
     where: FarmWhereUniqueInput
     create: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
+  }
+
+  export type OutboxMessageCreateWithoutEventInput = {
+    id?: string
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutOutboxMessagesInput
+    dataSource: DataSourceCreateNestedOneWithoutOutboxMessagesInput
+    operationRequest?: OperationRequestCreateNestedOneWithoutOutboxMessagesInput
+  }
+
+  export type OutboxMessageUncheckedCreateWithoutEventInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageCreateOrConnectWithoutEventInput = {
+    where: OutboxMessageWhereUniqueInput
+    create: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput>
+  }
+
+  export type OutboxMessageCreateManyEventInputEnvelope = {
+    data: OutboxMessageCreateManyEventInput | OutboxMessageCreateManyEventInput[]
+  }
+
+  export type TaskCreateWithoutEventInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutTasksInput
+    cow?: CowCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutEventInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskCreateOrConnectWithoutEventInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput>
+  }
+
+  export type TaskCreateManyEventInputEnvelope = {
+    data: TaskCreateManyEventInput | TaskCreateManyEventInput[]
   }
 
   export type EventTypeUpsertWithoutEventsInput = {
@@ -76117,6 +80859,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -76144,6 +80887,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -76255,6 +80999,7 @@ export namespace Prisma {
     groups?: GroupUnitUpdateManyWithoutFarmNestedInput
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
@@ -76262,6 +81007,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutEventsInput = {
@@ -76273,6 +81019,7 @@ export namespace Prisma {
     groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
@@ -76280,6 +81027,39 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type OutboxMessageUpsertWithWhereUniqueWithoutEventInput = {
+    where: OutboxMessageWhereUniqueInput
+    update: XOR<OutboxMessageUpdateWithoutEventInput, OutboxMessageUncheckedUpdateWithoutEventInput>
+    create: XOR<OutboxMessageCreateWithoutEventInput, OutboxMessageUncheckedCreateWithoutEventInput>
+  }
+
+  export type OutboxMessageUpdateWithWhereUniqueWithoutEventInput = {
+    where: OutboxMessageWhereUniqueInput
+    data: XOR<OutboxMessageUpdateWithoutEventInput, OutboxMessageUncheckedUpdateWithoutEventInput>
+  }
+
+  export type OutboxMessageUpdateManyWithWhereWithoutEventInput = {
+    where: OutboxMessageScalarWhereInput
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutEventInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutEventInput, TaskUncheckedUpdateWithoutEventInput>
+    create: XOR<TaskCreateWithoutEventInput, TaskUncheckedCreateWithoutEventInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutEventInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutEventInput, TaskUncheckedUpdateWithoutEventInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutEventInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutEventInput>
   }
 
   export type CowCreateWithoutObservationsInput = {
@@ -76306,6 +81086,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -76333,6 +81114,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -76376,6 +81158,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -76403,6 +81186,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -76416,12 +81200,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutEconomicInput = {
@@ -76434,12 +81220,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutEconomicInput = {
@@ -76468,12 +81256,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutEconomicInput = {
@@ -76486,12 +81276,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowCreateWithoutGeneticIndexInput = {
@@ -76518,6 +81310,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -76545,6 +81338,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -76588,6 +81382,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -76615,6 +81410,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -76628,12 +81424,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutReportTemplatesInput = {
@@ -76646,12 +81444,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutReportTemplatesInput = {
@@ -76772,12 +81572,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutReportTemplatesInput = {
@@ -76790,12 +81592,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type ReportSectionUpsertWithWhereUniqueWithoutTemplateInput = {
@@ -77123,12 +81927,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutReportInstancesInput = {
@@ -77141,12 +81947,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutReportInstancesInput = {
@@ -77352,12 +82160,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutReportInstancesInput = {
@@ -77370,12 +82180,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type ReportValidationIssueUpsertWithWhereUniqueWithoutReportInstanceInput = {
@@ -77994,12 +82806,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutBarnsInput = {
@@ -78012,12 +82826,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutBarnsInput = {
@@ -78049,6 +82865,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -78076,6 +82893,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -78165,6 +82983,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutBarnInput = {
@@ -78201,6 +83020,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutBarnInput = {
@@ -78233,12 +83053,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutBarnsInput = {
@@ -78251,12 +83073,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type CowUpsertWithWhereUniqueWithoutBarnInput = {
@@ -78317,12 +83141,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutOperationsInput = {
@@ -78335,12 +83161,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutOperationsInput = {
@@ -78397,6 +83225,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutCowInput
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
     cowEvents?: CowEventCreateNestedManyWithoutCowInput
   }
 
@@ -78424,6 +83253,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutCowInput
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
     cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
   }
 
@@ -78542,6 +83372,47 @@ export namespace Prisma {
     data: OperationAttachmentCreateManyOperationRequestInput | OperationAttachmentCreateManyOperationRequestInput[]
   }
 
+  export type OutboxMessageCreateWithoutOperationRequestInput = {
+    id?: string
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutOutboxMessagesInput
+    dataSource: DataSourceCreateNestedOneWithoutOutboxMessagesInput
+    event?: EventCreateNestedOneWithoutOutboxMessagesInput
+  }
+
+  export type OutboxMessageUncheckedCreateWithoutOperationRequestInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageCreateOrConnectWithoutOperationRequestInput = {
+    where: OutboxMessageWhereUniqueInput
+    create: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput>
+  }
+
+  export type OutboxMessageCreateManyOperationRequestInputEnvelope = {
+    data: OutboxMessageCreateManyOperationRequestInput | OutboxMessageCreateManyOperationRequestInput[]
+  }
+
   export type FarmUpsertWithoutOperationsInput = {
     update: XOR<FarmUpdateWithoutOperationsInput, FarmUncheckedUpdateWithoutOperationsInput>
     create: XOR<FarmCreateWithoutOperationsInput, FarmUncheckedCreateWithoutOperationsInput>
@@ -78563,12 +83434,14 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutOperationsInput = {
@@ -78581,12 +83454,14 @@ export namespace Prisma {
     cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
     events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type BarnUpsertWithoutOperationsInput = {
@@ -78655,6 +83530,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutCowNestedInput
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -78682,6 +83558,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutCowNestedInput
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -78802,6 +83679,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"OperationAttachment"> | Date | string
   }
 
+  export type OutboxMessageUpsertWithWhereUniqueWithoutOperationRequestInput = {
+    where: OutboxMessageWhereUniqueInput
+    update: XOR<OutboxMessageUpdateWithoutOperationRequestInput, OutboxMessageUncheckedUpdateWithoutOperationRequestInput>
+    create: XOR<OutboxMessageCreateWithoutOperationRequestInput, OutboxMessageUncheckedCreateWithoutOperationRequestInput>
+  }
+
+  export type OutboxMessageUpdateWithWhereUniqueWithoutOperationRequestInput = {
+    where: OutboxMessageWhereUniqueInput
+    data: XOR<OutboxMessageUpdateWithoutOperationRequestInput, OutboxMessageUncheckedUpdateWithoutOperationRequestInput>
+  }
+
+  export type OutboxMessageUpdateManyWithWhereWithoutOperationRequestInput = {
+    where: OutboxMessageScalarWhereInput
+    data: XOR<OutboxMessageUpdateManyMutationInput, OutboxMessageUncheckedUpdateManyWithoutOperationRequestInput>
+  }
+
   export type OperationRequestCreateWithoutConfirmationsInput = {
     id?: string
     afiCowExternalId?: string | null
@@ -78836,6 +83729,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutConfirmationsInput = {
@@ -78872,6 +83766,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutConfirmationsInput = {
@@ -78924,6 +83819,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutConfirmationsInput = {
@@ -78960,6 +83856,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestCreateWithoutStatusHistoryInput = {
@@ -78996,6 +83893,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutStatusHistoryInput = {
@@ -79032,6 +83930,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutStatusHistoryInput = {
@@ -79084,6 +83983,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutStatusHistoryInput = {
@@ -79120,6 +84020,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestCreateWithoutCommentsInput = {
@@ -79156,6 +84057,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationCreateNestedManyWithoutOperationRequestInput
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutCommentsInput = {
@@ -79192,6 +84094,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedCreateNestedManyWithoutOperationRequestInput
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutCommentsInput = {
@@ -79244,6 +84147,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUpdateManyWithoutOperationRequestNestedInput
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutCommentsInput = {
@@ -79280,6 +84184,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedUpdateManyWithoutOperationRequestNestedInput
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestCreateWithoutAttachmentsInput = {
@@ -79316,6 +84221,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationCreateNestedManyWithoutOperationRequestInput
     statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestUncheckedCreateWithoutAttachmentsInput = {
@@ -79352,6 +84258,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedCreateNestedManyWithoutOperationRequestInput
     statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
     comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutOperationRequestInput
   }
 
   export type OperationRequestCreateOrConnectWithoutAttachmentsInput = {
@@ -79404,6 +84311,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUpdateManyWithoutOperationRequestNestedInput
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutAttachmentsInput = {
@@ -79440,6 +84348,7 @@ export namespace Prisma {
     confirmations?: OperationConfirmationUncheckedUpdateManyWithoutOperationRequestNestedInput
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type CowCreateWithoutCowEventsInput = {
@@ -79467,6 +84376,7 @@ export namespace Prisma {
     observations?: ObservationCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
     operations?: OperationRequestCreateNestedManyWithoutCowInput
+    tasks?: TaskCreateNestedManyWithoutCowInput
   }
 
   export type CowUncheckedCreateWithoutCowEventsInput = {
@@ -79494,6 +84404,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
     geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCowInput
   }
 
   export type CowCreateOrConnectWithoutCowEventsInput = {
@@ -79537,6 +84448,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
   }
 
   export type CowUncheckedUpdateWithoutCowEventsInput = {
@@ -79564,6 +84476,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
   }
 
   export type FarmCreateWithoutDashboardsInput = {
@@ -79576,12 +84489,14 @@ export namespace Prisma {
     cows?: CowCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
     events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
     economic?: EconomicFactCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
     barns?: BarnCreateNestedManyWithoutFarmInput
     sections?: SectionCreateNestedManyWithoutFarmInput
     operations?: OperationRequestCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
   }
 
   export type FarmUncheckedCreateWithoutDashboardsInput = {
@@ -79594,12 +84509,14 @@ export namespace Prisma {
     cows?: CowUncheckedCreateNestedManyWithoutFarmInput
     afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
     events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
     economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
     reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
     reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
     barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
     sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
     operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
   }
 
   export type FarmCreateOrConnectWithoutDashboardsInput = {
@@ -79628,15 +84545,653 @@ export namespace Prisma {
     cows?: CowUpdateManyWithoutFarmNestedInput
     afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
     events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
     economic?: EconomicFactUpdateManyWithoutFarmNestedInput
     reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
     reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
     barns?: BarnUpdateManyWithoutFarmNestedInput
     sections?: SectionUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
   }
 
   export type FarmUncheckedUpdateWithoutDashboardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
+    cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
+    barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmCreateWithoutOutboxMessagesInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitCreateNestedManyWithoutFarmInput
+    cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    tasks?: TaskCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
+    barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutOutboxMessagesInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
+    cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
+    barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutOutboxMessagesInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutOutboxMessagesInput, FarmUncheckedCreateWithoutOutboxMessagesInput>
+  }
+
+  export type DataSourceCreateWithoutOutboxMessagesInput = {
+    id?: string
+    name: string
+    type: string
+    description?: string | null
+    lastSync?: Date | string | null
+    status?: string
+    config?: string | null
+    batches?: IntegrationBatchCreateNestedManyWithoutDataSourceInput
+  }
+
+  export type DataSourceUncheckedCreateWithoutOutboxMessagesInput = {
+    id?: string
+    name: string
+    type: string
+    description?: string | null
+    lastSync?: Date | string | null
+    status?: string
+    config?: string | null
+    batches?: IntegrationBatchUncheckedCreateNestedManyWithoutDataSourceInput
+  }
+
+  export type DataSourceCreateOrConnectWithoutOutboxMessagesInput = {
+    where: DataSourceWhereUniqueInput
+    create: XOR<DataSourceCreateWithoutOutboxMessagesInput, DataSourceUncheckedCreateWithoutOutboxMessagesInput>
+  }
+
+  export type OperationRequestCreateWithoutOutboxMessagesInput = {
+    id?: string
+    afiCowExternalId?: string | null
+    operationType: string
+    title: string
+    description?: string | null
+    eventDate: Date | string
+    dueDate?: Date | string | null
+    priority?: string
+    source?: string
+    status?: string
+    severity?: string | null
+    isCriticalForReporting?: boolean
+    isCriticalForReproduction?: boolean
+    isCriticalForVeterinary?: boolean
+    requiresVerification?: boolean
+    createdById: string
+    assignedToId?: string | null
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    rejectedAt?: Date | string | null
+    rejectedById?: string | null
+    rejectionReason?: string | null
+    externalReference?: string | null
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    farm: FarmCreateNestedOneWithoutOperationsInput
+    barn?: BarnCreateNestedOneWithoutOperationsInput
+    cow: CowCreateNestedOneWithoutOperationsInput
+    confirmations?: OperationConfirmationCreateNestedManyWithoutOperationRequestInput
+    statusHistory?: OperationStatusHistoryCreateNestedManyWithoutOperationRequestInput
+    comments?: OperationCommentCreateNestedManyWithoutOperationRequestInput
+    attachments?: OperationAttachmentCreateNestedManyWithoutOperationRequestInput
+  }
+
+  export type OperationRequestUncheckedCreateWithoutOutboxMessagesInput = {
+    id?: string
+    farmId: string
+    barnId?: string | null
+    cowId: string
+    afiCowExternalId?: string | null
+    operationType: string
+    title: string
+    description?: string | null
+    eventDate: Date | string
+    dueDate?: Date | string | null
+    priority?: string
+    source?: string
+    status?: string
+    severity?: string | null
+    isCriticalForReporting?: boolean
+    isCriticalForReproduction?: boolean
+    isCriticalForVeterinary?: boolean
+    requiresVerification?: boolean
+    createdById: string
+    assignedToId?: string | null
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    rejectedAt?: Date | string | null
+    rejectedById?: string | null
+    rejectionReason?: string | null
+    externalReference?: string | null
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    confirmations?: OperationConfirmationUncheckedCreateNestedManyWithoutOperationRequestInput
+    statusHistory?: OperationStatusHistoryUncheckedCreateNestedManyWithoutOperationRequestInput
+    comments?: OperationCommentUncheckedCreateNestedManyWithoutOperationRequestInput
+    attachments?: OperationAttachmentUncheckedCreateNestedManyWithoutOperationRequestInput
+  }
+
+  export type OperationRequestCreateOrConnectWithoutOutboxMessagesInput = {
+    where: OperationRequestWhereUniqueInput
+    create: XOR<OperationRequestCreateWithoutOutboxMessagesInput, OperationRequestUncheckedCreateWithoutOutboxMessagesInput>
+  }
+
+  export type EventCreateWithoutOutboxMessagesInput = {
+    id?: string
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    type?: EventTypeCreateNestedOneWithoutEventsInput
+    cow?: CowCreateNestedOneWithoutEventsInput
+    group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
+    farm?: FarmCreateNestedOneWithoutEventsInput
+    tasks?: TaskCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutOutboxMessagesInput = {
+    id?: string
+    typeId?: string | null
+    cowId?: string | null
+    groupId?: string | null
+    sectionId?: string | null
+    farmId?: string | null
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    tasks?: TaskUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutOutboxMessagesInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutOutboxMessagesInput, EventUncheckedCreateWithoutOutboxMessagesInput>
+  }
+
+  export type FarmUpsertWithoutOutboxMessagesInput = {
+    update: XOR<FarmUpdateWithoutOutboxMessagesInput, FarmUncheckedUpdateWithoutOutboxMessagesInput>
+    create: XOR<FarmCreateWithoutOutboxMessagesInput, FarmUncheckedCreateWithoutOutboxMessagesInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutOutboxMessagesInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutOutboxMessagesInput, FarmUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type FarmUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUpdateManyWithoutFarmNestedInput
+    cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
+    barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUncheckedUpdateManyWithoutFarmNestedInput
+    cows?: CowUncheckedUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUncheckedUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUncheckedUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUncheckedUpdateManyWithoutFarmNestedInput
+    barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type DataSourceUpsertWithoutOutboxMessagesInput = {
+    update: XOR<DataSourceUpdateWithoutOutboxMessagesInput, DataSourceUncheckedUpdateWithoutOutboxMessagesInput>
+    create: XOR<DataSourceCreateWithoutOutboxMessagesInput, DataSourceUncheckedCreateWithoutOutboxMessagesInput>
+    where?: DataSourceWhereInput
+  }
+
+  export type DataSourceUpdateToOneWithWhereWithoutOutboxMessagesInput = {
+    where?: DataSourceWhereInput
+    data: XOR<DataSourceUpdateWithoutOutboxMessagesInput, DataSourceUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type DataSourceUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableStringFieldUpdateOperationsInput | string | null
+    batches?: IntegrationBatchUpdateManyWithoutDataSourceNestedInput
+  }
+
+  export type DataSourceUncheckedUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSync?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableStringFieldUpdateOperationsInput | string | null
+    batches?: IntegrationBatchUncheckedUpdateManyWithoutDataSourceNestedInput
+  }
+
+  export type OperationRequestUpsertWithoutOutboxMessagesInput = {
+    update: XOR<OperationRequestUpdateWithoutOutboxMessagesInput, OperationRequestUncheckedUpdateWithoutOutboxMessagesInput>
+    create: XOR<OperationRequestCreateWithoutOutboxMessagesInput, OperationRequestUncheckedCreateWithoutOutboxMessagesInput>
+    where?: OperationRequestWhereInput
+  }
+
+  export type OperationRequestUpdateToOneWithWhereWithoutOutboxMessagesInput = {
+    where?: OperationRequestWhereInput
+    data: XOR<OperationRequestUpdateWithoutOutboxMessagesInput, OperationRequestUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type OperationRequestUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    afiCowExternalId?: NullableStringFieldUpdateOperationsInput | string | null
+    operationType?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priority?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    severity?: NullableStringFieldUpdateOperationsInput | string | null
+    isCriticalForReporting?: BoolFieldUpdateOperationsInput | boolean
+    isCriticalForReproduction?: BoolFieldUpdateOperationsInput | boolean
+    isCriticalForVeterinary?: BoolFieldUpdateOperationsInput | boolean
+    requiresVerification?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedById?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    externalReference?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    farm?: FarmUpdateOneRequiredWithoutOperationsNestedInput
+    barn?: BarnUpdateOneWithoutOperationsNestedInput
+    cow?: CowUpdateOneRequiredWithoutOperationsNestedInput
+    confirmations?: OperationConfirmationUpdateManyWithoutOperationRequestNestedInput
+    statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
+    comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
+    attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+  }
+
+  export type OperationRequestUncheckedUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: StringFieldUpdateOperationsInput | string
+    afiCowExternalId?: NullableStringFieldUpdateOperationsInput | string | null
+    operationType?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priority?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    severity?: NullableStringFieldUpdateOperationsInput | string | null
+    isCriticalForReporting?: BoolFieldUpdateOperationsInput | boolean
+    isCriticalForReproduction?: BoolFieldUpdateOperationsInput | boolean
+    isCriticalForVeterinary?: BoolFieldUpdateOperationsInput | boolean
+    requiresVerification?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedById?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    externalReference?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmations?: OperationConfirmationUncheckedUpdateManyWithoutOperationRequestNestedInput
+    statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
+    comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+  }
+
+  export type EventUpsertWithoutOutboxMessagesInput = {
+    update: XOR<EventUpdateWithoutOutboxMessagesInput, EventUncheckedUpdateWithoutOutboxMessagesInput>
+    create: XOR<EventCreateWithoutOutboxMessagesInput, EventUncheckedCreateWithoutOutboxMessagesInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutOutboxMessagesInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutOutboxMessagesInput, EventUncheckedUpdateWithoutOutboxMessagesInput>
+  }
+
+  export type EventUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    type?: EventTypeUpdateOneWithoutEventsNestedInput
+    cow?: CowUpdateOneWithoutEventsNestedInput
+    group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
+    farm?: FarmUpdateOneWithoutEventsNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutOutboxMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    typeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type FarmCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitCreateNestedManyWithoutFarmInput
+    cows?: CowCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceCreateNestedManyWithoutFarmInput
+    barns?: BarnCreateNestedManyWithoutFarmInput
+    sections?: SectionCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: GroupUnitUncheckedCreateNestedManyWithoutFarmInput
+    cows?: CowUncheckedCreateNestedManyWithoutFarmInput
+    afimilkDayMilk?: AfimilkDayMilkUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    economic?: EconomicFactUncheckedCreateNestedManyWithoutFarmInput
+    reportTemplates?: ReportTemplateUncheckedCreateNestedManyWithoutFarmInput
+    reportInstances?: ReportInstanceUncheckedCreateNestedManyWithoutFarmInput
+    barns?: BarnUncheckedCreateNestedManyWithoutFarmInput
+    sections?: SectionUncheckedCreateNestedManyWithoutFarmInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutFarmInput
+    dashboards?: DashboardSnapshotUncheckedCreateNestedManyWithoutFarmInput
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutTasksInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutTasksInput, FarmUncheckedCreateWithoutTasksInput>
+  }
+
+  export type CowCreateWithoutTasksInput = {
+    id?: string
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutCowsInput
+    group?: GroupUnitCreateNestedOneWithoutCowsInput
+    barn?: BarnCreateNestedOneWithoutCowsInput
+    currentSection?: SectionCreateNestedOneWithoutCurrentCowsInput
+    externalIds?: ExternalIdentityCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkCreateNestedManyWithoutCowInput
+    events?: EventCreateNestedManyWithoutCowInput
+    observations?: ObservationCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueCreateNestedManyWithoutCowInput
+    operations?: OperationRequestCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventCreateNestedManyWithoutCowInput
+  }
+
+  export type CowUncheckedCreateWithoutTasksInput = {
+    id?: string
+    farmId: string
+    groupId?: string | null
+    barnId?: string | null
+    currentSectionId?: string | null
+    afiId: string
+    number: string
+    name?: string | null
+    birthDate?: Date | string | null
+    status?: string
+    lactation?: number
+    dim?: number
+    lastCalving?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    externalIds?: ExternalIdentityUncheckedCreateNestedManyWithoutCowInput
+    memberships?: GroupMembershipUncheckedCreateNestedManyWithoutCowInput
+    sectionHistory?: CowSectionHistoryUncheckedCreateNestedManyWithoutCowInput
+    milkRecords?: MilkRecordUncheckedCreateNestedManyWithoutCowInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedCreateNestedManyWithoutCowInput
+    events?: EventUncheckedCreateNestedManyWithoutCowInput
+    observations?: ObservationUncheckedCreateNestedManyWithoutCowInput
+    geneticIndex?: GeneticIndexValueUncheckedCreateNestedManyWithoutCowInput
+    operations?: OperationRequestUncheckedCreateNestedManyWithoutCowInput
+    cowEvents?: CowEventUncheckedCreateNestedManyWithoutCowInput
+  }
+
+  export type CowCreateOrConnectWithoutTasksInput = {
+    where: CowWhereUniqueInput
+    create: XOR<CowCreateWithoutTasksInput, CowUncheckedCreateWithoutTasksInput>
+  }
+
+  export type EventCreateWithoutTasksInput = {
+    id?: string
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    type?: EventTypeCreateNestedOneWithoutEventsInput
+    cow?: CowCreateNestedOneWithoutEventsInput
+    group?: GroupUnitCreateNestedOneWithoutEventsInput
+    section?: SectionCreateNestedOneWithoutEventsInput
+    farm?: FarmCreateNestedOneWithoutEventsInput
+    outboxMessages?: OutboxMessageCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutTasksInput = {
+    id?: string
+    typeId?: string | null
+    cowId?: string | null
+    groupId?: string | null
+    sectionId?: string | null
+    farmId?: string | null
+    severity?: string
+    title: string
+    description?: string | null
+    timestamp: Date | string
+    source?: string
+    metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+    outboxMessages?: OutboxMessageUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutTasksInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutTasksInput, EventUncheckedCreateWithoutTasksInput>
+  }
+
+  export type FarmUpsertWithoutTasksInput = {
+    update: XOR<FarmUpdateWithoutTasksInput, FarmUncheckedUpdateWithoutTasksInput>
+    create: XOR<FarmCreateWithoutTasksInput, FarmUncheckedCreateWithoutTasksInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutTasksInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutTasksInput, FarmUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type FarmUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: GroupUnitUpdateManyWithoutFarmNestedInput
+    cows?: CowUpdateManyWithoutFarmNestedInput
+    afimilkDayMilk?: AfimilkDayMilkUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    economic?: EconomicFactUpdateManyWithoutFarmNestedInput
+    reportTemplates?: ReportTemplateUpdateManyWithoutFarmNestedInput
+    reportInstances?: ReportInstanceUpdateManyWithoutFarmNestedInput
+    barns?: BarnUpdateManyWithoutFarmNestedInput
+    sections?: SectionUpdateManyWithoutFarmNestedInput
+    operations?: OperationRequestUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79652,6 +85207,132 @@ export namespace Prisma {
     barns?: BarnUncheckedUpdateManyWithoutFarmNestedInput
     sections?: SectionUncheckedUpdateManyWithoutFarmNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutFarmNestedInput
+    dashboards?: DashboardSnapshotUncheckedUpdateManyWithoutFarmNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type CowUpsertWithoutTasksInput = {
+    update: XOR<CowUpdateWithoutTasksInput, CowUncheckedUpdateWithoutTasksInput>
+    create: XOR<CowCreateWithoutTasksInput, CowUncheckedCreateWithoutTasksInput>
+    where?: CowWhereInput
+  }
+
+  export type CowUpdateToOneWithWhereWithoutTasksInput = {
+    where?: CowWhereInput
+    data: XOR<CowUpdateWithoutTasksInput, CowUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type CowUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutCowsNestedInput
+    group?: GroupUnitUpdateOneWithoutCowsNestedInput
+    barn?: BarnUpdateOneWithoutCowsNestedInput
+    currentSection?: SectionUpdateOneWithoutCurrentCowsNestedInput
+    externalIds?: ExternalIdentityUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUpdateManyWithoutCowNestedInput
+    events?: EventUpdateManyWithoutCowNestedInput
+    observations?: ObservationUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUpdateManyWithoutCowNestedInput
+  }
+
+  export type CowUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    barnId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    afiId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lactation?: IntFieldUpdateOperationsInput | number
+    dim?: IntFieldUpdateOperationsInput | number
+    lastCalving?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalIds?: ExternalIdentityUncheckedUpdateManyWithoutCowNestedInput
+    memberships?: GroupMembershipUncheckedUpdateManyWithoutCowNestedInput
+    sectionHistory?: CowSectionHistoryUncheckedUpdateManyWithoutCowNestedInput
+    milkRecords?: MilkRecordUncheckedUpdateManyWithoutCowNestedInput
+    dayMilkRecords?: AfimilkDayMilkUncheckedUpdateManyWithoutCowNestedInput
+    events?: EventUncheckedUpdateManyWithoutCowNestedInput
+    observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
+    geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
+    operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
+  }
+
+  export type EventUpsertWithoutTasksInput = {
+    update: XOR<EventUpdateWithoutTasksInput, EventUncheckedUpdateWithoutTasksInput>
+    create: XOR<EventCreateWithoutTasksInput, EventUncheckedCreateWithoutTasksInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutTasksInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutTasksInput, EventUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type EventUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    type?: EventTypeUpdateOneWithoutEventsNestedInput
+    cow?: CowUpdateOneWithoutEventsNestedInput
+    group?: GroupUnitUpdateOneWithoutEventsNestedInput
+    section?: SectionUpdateOneWithoutEventsNestedInput
+    farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    typeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    severity?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type GroupUnitCreateManyFarmInput = {
@@ -79713,6 +85394,27 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
+  }
+
+  export type TaskCreateManyFarmInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type EconomicFactCreateManyFarmInput = {
@@ -79833,6 +85535,22 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type OutboxMessageCreateManyFarmInput = {
+    id?: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type GroupUnitUpdateWithoutFarmInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -79900,6 +85618,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -79927,6 +85646,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -80012,10 +85732,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
     section?: SectionUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutFarmInput = {
@@ -80030,6 +85759,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutFarmInput = {
@@ -80044,6 +85782,55 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type TaskUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cow?: CowUpdateOneWithoutTasksNestedInput
+    event?: EventUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EconomicFactUpdateWithoutFarmInput = {
@@ -80307,6 +86094,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutFarmInput = {
@@ -80343,6 +86131,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateManyWithoutFarmInput = {
@@ -80434,6 +86223,54 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OutboxMessageUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataSource?: DataSourceUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    operationRequest?: OperationRequestUpdateOneWithoutOutboxMessagesNestedInput
+    event?: EventUpdateOneWithoutOutboxMessagesNestedInput
+  }
+
+  export type OutboxMessageUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CowCreateManyGroupInput = {
     id?: string
     farmId: string
@@ -80480,6 +86317,13 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
   }
 
   export type FeedRecordCreateManyGroupInput = {
@@ -80528,6 +86372,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -80555,6 +86400,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -80634,10 +86480,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutGroupInput = {
@@ -80652,6 +86507,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutGroupInput = {
@@ -80666,6 +86530,13 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type FeedRecordUpdateWithoutGroupInput = {
@@ -80804,6 +86675,13 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
   }
 
   export type ObservationCreateManyCowInput = {
@@ -80855,6 +86733,20 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+  }
+
+  export type TaskCreateManyCowInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    eventId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CowEventCreateManyCowInput = {
@@ -81049,10 +86941,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
     section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutCowInput = {
@@ -81067,6 +86968,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutCowInput = {
@@ -81081,6 +86991,13 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type ObservationUpdateWithoutCowInput = {
@@ -81174,6 +87091,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutCowInput = {
@@ -81210,6 +87128,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateManyWithoutCowInput = {
@@ -81242,6 +87161,48 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TaskUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutTasksNestedInput
+    event?: EventUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CowEventUpdateWithoutCowInput = {
@@ -81303,6 +87264,13 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
   }
 
   export type CowSectionHistoryCreateManySectionInput = {
@@ -81347,6 +87315,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -81374,6 +87343,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -81402,10 +87372,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     type?: EventTypeUpdateOneWithoutEventsNestedInput
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutSectionInput = {
@@ -81420,6 +87399,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutSectionInput = {
@@ -81434,6 +87422,13 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type CowSectionHistoryUpdateWithoutSectionInput = {
@@ -81509,6 +87504,22 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type OutboxMessageCreateManyDataSourceInput = {
+    id?: string
+    farmId: string
+    operationRequestId?: string | null
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type IntegrationBatchUpdateWithoutDataSourceInput = {
     id?: StringFieldUpdateOperationsInput | string
     source?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81572,6 +87583,54 @@ export namespace Prisma {
     errors?: NullableStringFieldUpdateOperationsInput | string | null
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUpdateWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    operationRequest?: OperationRequestUpdateOneWithoutOutboxMessagesNestedInput
+    event?: EventUpdateOneWithoutOutboxMessagesNestedInput
+  }
+
+  export type OutboxMessageUncheckedUpdateWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MilkRecordCreateManyBatchInput = {
@@ -82178,6 +88237,13 @@ export namespace Prisma {
     timestamp: Date | string
     source?: string
     metadata?: string | null
+    receivedAt?: Date | string | null
+    sourceRecordId?: string | null
+    dedupeKey?: string | null
+    confirmationStatus?: string
+    confirmedAt?: Date | string | null
+    confirmedById?: string | null
+    confidenceScore?: number | null
   }
 
   export type EventUpdateWithoutTypeInput = {
@@ -82188,10 +88254,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
     cow?: CowUpdateOneWithoutEventsNestedInput
     group?: GroupUnitUpdateOneWithoutEventsNestedInput
     section?: SectionUpdateOneWithoutEventsNestedInput
     farm?: FarmUpdateOneWithoutEventsNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutEventNestedInput
+    tasks?: TaskUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutTypeInput = {
@@ -82206,6 +88281,15 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutEventNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutTypeInput = {
@@ -82220,6 +88304,133 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    dedupeKey?: NullableStringFieldUpdateOperationsInput | string | null
+    confirmationStatus?: StringFieldUpdateOperationsInput | string
+    confirmedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    confirmedById?: NullableStringFieldUpdateOperationsInput | string | null
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type OutboxMessageCreateManyEventInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    operationRequestId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskCreateManyEventInput = {
+    id?: string
+    farmId: string
+    title: string
+    description?: string | null
+    status?: string
+    priority?: string
+    dueDate?: Date | string | null
+    assigneeId?: string | null
+    cowId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutboxMessageUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    operationRequest?: OperationRequestUpdateOneWithoutOutboxMessagesNestedInput
+  }
+
+  export type OutboxMessageUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    operationRequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutTasksNestedInput
+    cow?: CowUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
+    cowId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReportSectionCreateManyTemplateInput = {
@@ -82690,6 +88901,7 @@ export namespace Prisma {
     observations?: ObservationUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUpdateManyWithoutCowNestedInput
+    tasks?: TaskUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUpdateManyWithoutCowNestedInput
   }
 
@@ -82717,6 +88929,7 @@ export namespace Prisma {
     observations?: ObservationUncheckedUpdateManyWithoutCowNestedInput
     geneticIndex?: GeneticIndexValueUncheckedUpdateManyWithoutCowNestedInput
     operations?: OperationRequestUncheckedUpdateManyWithoutCowNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCowNestedInput
     cowEvents?: CowEventUncheckedUpdateManyWithoutCowNestedInput
   }
 
@@ -82818,6 +89031,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateWithoutBarnInput = {
@@ -82854,6 +89068,7 @@ export namespace Prisma {
     statusHistory?: OperationStatusHistoryUncheckedUpdateManyWithoutOperationRequestNestedInput
     comments?: OperationCommentUncheckedUpdateManyWithoutOperationRequestNestedInput
     attachments?: OperationAttachmentUncheckedUpdateManyWithoutOperationRequestNestedInput
+    outboxMessages?: OutboxMessageUncheckedUpdateManyWithoutOperationRequestNestedInput
   }
 
   export type OperationRequestUncheckedUpdateManyWithoutBarnInput = {
@@ -82923,6 +89138,22 @@ export namespace Prisma {
     fileType?: string | null
     uploadedById: string
     createdAt?: Date | string
+  }
+
+  export type OutboxMessageCreateManyOperationRequestInput = {
+    id?: string
+    farmId: string
+    dataSourceId: string
+    eventId?: string | null
+    payloadJson: string
+    status?: string
+    attempts?: number
+    nextRetryAt?: Date | string | null
+    lastAttemptAt?: Date | string | null
+    externalAckId?: string | null
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OperationConfirmationUpdateWithoutOperationRequestInput = {
@@ -83034,6 +89265,54 @@ export namespace Prisma {
     fileType?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUpdateWithoutOperationRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    dataSource?: DataSourceUpdateOneRequiredWithoutOutboxMessagesNestedInput
+    event?: EventUpdateOneWithoutOutboxMessagesNestedInput
+  }
+
+  export type OutboxMessageUncheckedUpdateWithoutOperationRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutboxMessageUncheckedUpdateManyWithoutOperationRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    farmId?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadJson?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextRetryAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    externalAckId?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

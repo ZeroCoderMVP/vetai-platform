@@ -41,10 +41,15 @@
   --accent-amber: #f59e0b;
   --accent-orange: #f97316;
 
-  --success: #22c55e;
-  --warning: #eab308;
-  --danger: #ef4444;
+  --success: #30A46C; /* updated from Stage 2 --ok */
+  --warning: #F5A524; /* updated from Stage 2 */
+  --danger: #E5484D;  /* updated from Stage 2 --critical */
+  --critical: #E5484D; /* from Stage 2 */
+  --ok: #30A46C;       /* from Stage 2 */
+  --muted: #6B7280;    /* from Stage 2 */
   --info: #3b82f6;
+
+  --chip-bg: rgba(0, 0, 0, 0.04); /* from Stage 2 */
 
   /* Background layers */
   --bg-body: #0c0f1a;

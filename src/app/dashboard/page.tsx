@@ -501,8 +501,8 @@ function DashboardContent() {
         </div>
       </div>
 
-      {/* Main content: 2-column layout */}
-      <div className="grid-dashboard">
+            {/* Main content: 2-column layout */}
+      <div className="grid-dashboard" style={{ alignItems: "start" }}>
         {/* Left: Feed by group chart */}
         <div className="card">
           <div className="card-header">
@@ -602,9 +602,106 @@ function DashboardContent() {
         </div>
       </div>
 
-      <div className="grid-dashboard" style={{ marginTop: "var(--space-4)" }}>
+      {/* Row 2: 3 small KPI cards */}
+      <div className="grid-3" style={{ marginTop: "var(--space-4)", alignItems: "start" }}>
+        {/* Сухое вещество */}
+        <div className="card">
+          <div className="card-header">
+            <span className="card-title">📦 Сухое вещество</span>
+          </div>
+          <div className="card-body">
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Загружено СВ</span>
+                <span style={{ fontWeight: 600 }}>{feed ? formatNum(feed.totalDryMatter) : "—"} кг</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Остаток корма</span>
+                <span style={{ fontWeight: 600 }}>{feed ? formatNum(feed.totalRemainder) : "—"} кг</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Замесов всего</span>
+                <span style={{ fontWeight: 600 }}>{data?.mixBatches || 0}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Ингредиентов</span>
+                <span style={{ fontWeight: 600 }}>{data?.ingredients || 0}</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        {/* Focus on Risks / Фокус на рисках */}
+        {/* SCC */}
+        <div className="card">
+          <div className="card-header">
+            <span className="card-title">🧪 Соматические клетки</span>
+          </div>
+          <div className="card-body">
+            {farmData?.milkingSummary?.bySCC ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>&lt;200 (Норма)</span>
+                  <span className="badge badge-success">{farmData.milkingSummary.bySCC.normal}</span>
+                </div>
+                <div style={{ width: "100%", height: 6, background: "var(--bg-elevated)", borderRadius: "var(--radius-full)" }}>
+                  <div style={{
+                    width: `${(farmData.milkingSummary.bySCC.normal / Math.max(farmData.milkingSummary.bySCC.normal + farmData.milkingSummary.bySCC.elevated + farmData.milkingSummary.bySCC.high, 1)) * 100}%`,
+                    height: "100%", background: "var(--success)", borderRadius: "var(--radius-full)", transition: "width 0.5s ease"
+                  }} />
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>200-400 (Повышенная)</span>
+                  <span className="badge badge-warning">{farmData.milkingSummary.bySCC.elevated}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>&gt;400 (Высокая)</span>
+                  <span className="badge badge-danger">{farmData.milkingSummary.bySCC.high}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="empty-state" style={{ padding: "var(--space-4)" }}>
+                <div className="empty-state-text" style={{ fontSize: 12 }}>Нет данных по сом. клеткам</div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Воспроизводство */}
+        <div className="card">
+          <div className="card-header">
+            <span className="card-title">🧬 Воспроизводство</span>
+          </div>
+          <div className="card-body">
+            {kpi ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Подозрение на охоту</span>
+                  <span className="badge badge-primary">{kpi.heatSuspects}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>К осеменению</span>
+                  <span className="badge badge-info">{kpi.toBreed}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Ожидают отёл</span>
+                  <span className="badge badge-neutral">{kpi.calving}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Новотельные коровы</span>
+                  <span className="badge badge-success">{kpi.freshCows}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="empty-state" style={{ padding: "var(--space-4)" }}>
+                <div className="empty-state-text" style={{ fontSize: 12 }}>Нет данных AfiFarm</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Focus on Risks (Full width) */}
+      <div style={{ marginTop: "var(--space-4)" }}>
         <div className="card">
           <div className="card-header">
             <span className="card-title">⚠️ Фокус на рисках (Тревоги здоровья vs Надой)</span>
@@ -670,104 +767,9 @@ function DashboardContent() {
             )}
           </div>
         </div>
-
-        {/* Right column: Сухое вещество */}
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">📦 Сухое вещество</span>
-          </div>
-          <div className="card-body">
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Загружено СВ</span>
-                <span style={{ fontWeight: 600 }}>{feed ? formatNum(feed.totalDryMatter) : "—"} кг</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Остаток корма</span>
-                <span style={{ fontWeight: 600 }}>{feed ? formatNum(feed.totalRemainder) : "—"} кг</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Замесов всего</span>
-                <span style={{ fontWeight: 600 }}>{data?.mixBatches || 0}</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Ингредиентов</span>
-                <span style={{ fontWeight: 600 }}>{data?.ingredients || 0}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* SCC */}
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">🧪 Соматические клетки</span>
-          </div>
-          <div className="card-body">
-            {farmData?.milkingSummary?.bySCC ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>&lt;200 (Норма)</span>
-                  <span className="badge badge-success">{farmData.milkingSummary.bySCC.normal}</span>
-                </div>
-                <div style={{ width: "100%", height: 6, background: "var(--bg-elevated)", borderRadius: "var(--radius-full)" }}>
-                  <div style={{
-                    width: `${(farmData.milkingSummary.bySCC.normal / Math.max(farmData.milkingSummary.totalCows, 1)) * 100}%`,
-                    height: "100%", background: "var(--success)", borderRadius: "var(--radius-full)", transition: "width 0.5s ease"
-                  }} />
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>200-400 (Повышенная)</span>
-                  <span className="badge badge-warning">{farmData.milkingSummary.bySCC.elevated}</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>&gt;400 (Высокая)</span>
-                  <span className="badge badge-danger">{farmData.milkingSummary.bySCC.high}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="empty-state" style={{ padding: "var(--space-4)" }}>
-                <div className="empty-state-text" style={{ fontSize: 12 }}>Нет данных по сом. клеткам</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Воспроизводство */}
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">🧬 Воспроизводство</span>
-          </div>
-          <div className="card-body">
-            {kpi ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Подозрение на охоту</span>
-                  <span className="badge badge-primary">{kpi.heatSuspects}</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>К осеменению</span>
-                  <span className="badge badge-info">{kpi.toBreed}</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Ожидают отёл</span>
-                  <span className="badge badge-neutral">{kpi.calving}</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Новотельные коровы</span>
-                  <span className="badge badge-success">{kpi.freshCows}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="empty-state" style={{ padding: "var(--space-4)" }}>
-                <div className="empty-state-text" style={{ fontSize: 12 }}>Нет данных AfiFarm</div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
 
-      {/* Groups table */}
+{/* Groups table */}
       {data?.groups && data.groups.length > 0 && (
         <div className="card" style={{ marginTop: "var(--space-4)" }}>
           <div className="card-header">

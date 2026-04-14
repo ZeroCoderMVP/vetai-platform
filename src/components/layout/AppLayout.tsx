@@ -25,7 +25,7 @@ export default function AppLayout({ children, title, alertCount: initialAlertCou
           setAlertCount(data.unreadCount || 0);
         }
       } catch (e) {
-        console.error('Failed to fetch unread count:', e);
+        console.warn('Silent fail fetching unread count:', e);
       }
     };
     fetchUnread();
